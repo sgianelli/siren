@@ -12,20 +12,30 @@ public class Layer implements Comparable<Layer> {
     protected ArrayList<Tile> tiles;
     protected Set<Layer> children;
 
-    Layer() {
+    public Layer() {
         children = new TreeSet<Layer>();
-        bounds = new Rectangle(0, 0);
+        bounds = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
         parent = null;
         depth = 0;
         priority = 0;
+        this.tiles = new ArrayList<Tile>();
     }
 
-    void addTile(Tile tile) {
-        bounds.extend(tile.bounds);
-        tiles.add(tile);
+    public void addTile(Tile... tiles) {
+        for (Tile tile : tiles) {
+            bounds.extend(tile.bounds);
+            this.tiles.add(tile);
+        }
     }
 
-    boolean addLayer(Layer layer) {
+    // TODO(vanhornejb): Optimize it into a single pass
+    public void draw() {
+        for (Tile tile : tiles) {
+            tile.draw();
+        }
+    }
+
+    public boolean addLayer(Layer layer) {
         bounds.extend(layer.bounds);
         layer.parent = this;
         layer.depth = depth + 1;

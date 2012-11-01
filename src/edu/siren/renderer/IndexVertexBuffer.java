@@ -17,12 +17,13 @@ public class IndexVertexBuffer {
     private int vertexCount, indexCount;
     public FloatBuffer vertices;
     public ByteBuffer indices;
-    public BufferType type;
+    public int type;
 
     public IndexVertexBuffer(BufferType bufferType) {
         hasVertices = hasIndicies = valid = bound = false;
         vaoid = vboid = -1;
-        type = bufferType;
+        type = bufferType == BufferType.STATIC ? GL15.GL_STATIC_DRAW
+                : GL15.GL_DYNAMIC_DRAW;
     }
 
     public void put(Vertex... vs) {
@@ -65,7 +66,7 @@ public class IndexVertexBuffer {
                 false, Vertex.Byte.stride, Vertex.Byte.position);
 
         GL20.glVertexAttribPointer(1, Vertex.Size.color, GL11.GL_FLOAT, false,
-                Vertex.Byte.stride, Vertex.Offsets.color);
+                Vertex.Byte.stride, Vertex.Offsets.position);
 
         GL20.glVertexAttribPointer(2, Vertex.Size.texture, GL11.GL_FLOAT,
                 false, Vertex.Byte.stride, Vertex.Byte.texture);
@@ -83,16 +84,18 @@ public class IndexVertexBuffer {
         bound = true;
     }
 
-    public void bind() {
+    public void draw() {
         if (!valid) {
             return;
         } else if (!bound) {
             generateVAOVBO();
         }
 
-        for (int i = 0; i < textureIDs.length;) {
-            GL13.glActiveTexture(textureIDs[i++]);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureIDs[i++]);
+        if (textureIDs != null) {
+            for (int i = 0; i < textureIDs.length;) {
+                GL13.glActiveTexture(textureIDs[i++]);
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureIDs[i++]);
+            }
         }
 
         GL30.glBindVertexArray(vaoid);

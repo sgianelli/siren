@@ -17,19 +17,24 @@ public class Screen {
         this.width = width;
         this.height = height;
         reload();
+        System.out.println("OS name " + System.getProperty("os.name"));
+        System.out.println("OS version " + System.getProperty("os.version"));
+        System.out.println("LWJGL version " + org.lwjgl.Sys.getVersion());
+        System.out.println("OpenGL version "
+                + GL11.glGetString(GL11.GL_VERSION));
     }
 
     public void reload() throws LWJGLException {
         // Describe the format
         PixelFormat pixelFormat = new PixelFormat();
-        ContextAttribs contextAtrributes = new ContextAttribs(3, 2);
-        contextAtrributes.withForwardCompatible(true);
-        contextAtrributes.withProfileCore(true);
+        ContextAttribs cntxt = new ContextAttribs(3, 2).withProfileCore(true);
+        cntxt.withForwardCompatible(true);
+        cntxt.withProfileCore(true);
 
         // Execution Context
         Display.setDisplayMode(new DisplayMode(width, height));
         Display.setTitle(title);
-        Display.create(pixelFormat, contextAtrributes);
+        Display.create(pixelFormat, cntxt);
 
         // Do our basic GL setup
         GL11.glViewport(0, 0, width, height);
@@ -45,6 +50,10 @@ public class Screen {
         if (sync > 0) {
             Display.sync(sync);
         }
+    }
+
+    public void clear() {
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
 
     public void update() {
