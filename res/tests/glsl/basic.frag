@@ -1,9 +1,11 @@
 #version 150
 
-in vec3 Color;
+uniform sampler2D diffuse;
+in vec4 Color;
+in vec2 Tex;
 out vec4 outColor;
 
 void main()
 {
-    outColor = vec4(Color, 1.0);
+    outColor = texture(diffuse, Tex);
 }

@@ -17,11 +17,6 @@ public class Screen {
         this.width = width;
         this.height = height;
         reload();
-        System.out.println("OS name " + System.getProperty("os.name"));
-        System.out.println("OS version " + System.getProperty("os.version"));
-        System.out.println("LWJGL version " + org.lwjgl.Sys.getVersion());
-        System.out.println("OpenGL version "
-                + GL11.glGetString(GL11.GL_VERSION));
     }
 
     public void reload() throws LWJGLException {
@@ -38,8 +33,9 @@ public class Screen {
 
         // Do our basic GL setup
         GL11.glViewport(0, 0, width, height);
-        GL11.glClearColor(0.4f, 0.0f, 0.0f, 0f);
-        GL11.glViewport(0, 0, width, height);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0f);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public boolean isOpened() {

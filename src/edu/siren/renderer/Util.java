@@ -31,7 +31,8 @@ public class Util {
             // Fill the index vertex buffer
             IndexVertexBuffer ivb = new IndexVertexBuffer(BufferType.STATIC);
             ivb.put(v0, v1, v2, v3);
-            ivb.put(0, 1, 2, 2, 3, 0);
+            byte[] indicies = { 0, 1, 2, 2, 3, 0 };
+            ivb.put(indicies);
             ivb.put(texture);
 
             return ivb;

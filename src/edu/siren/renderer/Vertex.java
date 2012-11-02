@@ -9,7 +9,7 @@ public class Vertex {
         vxyzw[0] = x;
         vxyzw[1] = y;
         vxyzw[2] = z;
-        vxyzw[3] = w;
+        vxyzw[3] = 1.0f;
     }
 
     public void xyz(float x, float y, float z) {
@@ -74,8 +74,8 @@ public class Vertex {
         for (int p = 0; i < s; i++, p++)
             elements[i] = this.vst[p];
 
-        for (float e : elements) {
-            System.out.print(e + " ");
+        for (i = 0; i < Size.total; i++) {
+            System.out.print(elements[i] + " ");
         }
         System.out.println();
 

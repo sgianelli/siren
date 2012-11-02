@@ -1,12 +1,18 @@
 #version 150
 
-in vec3 color;
-in vec3 position;
+in vec4 position;
+in vec4 color;
+in vec2 tex;
 
-out vec3 Color;
+out vec4 Color;
+out vec2 Tex;
+
+uniform mat4 world;
+uniform mat4 projection;
 
 void main()
 {
+    gl_Position = projection * world * position;
+    Tex = tex;
     Color = color;
-    gl_Position = vec4(position, 10.0);
 }
