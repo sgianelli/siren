@@ -1,16 +1,35 @@
 package edu.siren.core;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.lwjgl.opengl.GL13;
+
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.IndexVertexBuffer;
 import edu.siren.renderer.Texture;
+import edu.siren.renderer.TexturePNG;
 import edu.siren.renderer.Vertex;
 
 public class Tile {
     Texture texture;
     Rectangle bounds;
     IndexVertexBuffer ivb;
+    private static final HashMap<String, Texture> cache = new HashMap<String, Texture>();
 
     public Tile(float x, float y, float width, float height) {
+        bounds = new Rectangle(x, y, width, height);
+        createIndexVertexBuffer();
+    }
+
+    public Tile(String filename, float x, float y, float width, float height)
+            throws IOException {
+        Texture cached = cache.get(filename);
+        if (cached == null) {
+            cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
+            cache.put(filename, cached);
+        }
+        this.texture = cached;
         bounds = new Rectangle(x, y, width, height);
         createIndexVertexBuffer();
     }

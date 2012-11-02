@@ -5,15 +5,12 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL13;
 
 import edu.siren.core.Layer;
 import edu.siren.core.Tile;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
-import edu.siren.renderer.Texture;
-import edu.siren.renderer.TexturePNG;
 
 public class TileTest {
     Screen screen;
@@ -28,12 +25,9 @@ public class TileTest {
         screen.sync = 60;
 
         Layer layer = new Layer();
-        Texture texture1 = new TexturePNG("res/tests/img/weeds.png",
-                GL13.GL_TEXTURE0);
-        Texture texture2 = new TexturePNG("res/tests/img/grid.png",
-                GL13.GL_TEXTURE0);
-        layer.addTile(new Tile(texture1, 0.0f, 0.0f, 10.0f, 10.0f), // Center
-                new Tile(texture2, -5f, -5f, 0.5f, 0.5f)); // Left
+        layer.addTile(new Tile("res/tests/img/weeds.png", 0.0f, 0.0f, 10.0f,
+                10.0f), // Center
+                new Tile("res/tests/img/grid.png", -5f, -5f, 0.5f, 0.5f)); // Left
         Camera camera = new Camera();
         Shader shader = new Shader("res/tests/glsl/basic.vert",
                 "res/tests/glsl/basic.frag");

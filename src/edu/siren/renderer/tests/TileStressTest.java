@@ -27,7 +27,8 @@ public class TileStressTest {
         Layer layer = new Layer();
         for (float i = -100.0f; i < 100f; i++) {
             for (float j = -10.0f; j < 10f; j++) {
-                layer.addTile(new Tile(i, j, 1.0f, 1.0f));
+                layer.addTile(new Tile("res/tests/img/weeds.png", i + 10.0f,
+                        j + 10.0f, 10.0f, 10.0f));
             }
         }
 
