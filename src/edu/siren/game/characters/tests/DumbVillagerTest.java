@@ -19,7 +19,7 @@ public class DumbVillagerTest {
 
         World world = new World(1024, 1024);
         world.addEntity(new Villager(
-                "res/scripts/entities/justin-villager.json"));
+                "res/tests/scripts/entities/villager-justin.json"));
 
         Keyboard.create();
         while (screen.isOpened()) {

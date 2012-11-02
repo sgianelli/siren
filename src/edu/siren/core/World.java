@@ -44,7 +44,8 @@ public class World {
         return layers.add(layer);
     }
 
-    public void addEntity(Entity entitiy) {
+    public void addEntity(Entity entity) {
+        entities.add(entity);
     }
 
 }

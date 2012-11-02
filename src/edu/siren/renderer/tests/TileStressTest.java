@@ -29,17 +29,25 @@ public class TileStressTest {
         Layer layer = new Layer();
         layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             Tile tile = new Tile("res/tests/img/weeds.png",
                     random.nextInt(10000), random.nextInt(10000) + 10.0f,
                     13.0f, 7.0f, 1, 1);
             layer.addTile(tile);
         }
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 500; i++) {
             Tile tile = new Tile("res/tests/img/tree.png", random.nextInt(9000)
                     - random.nextInt(50), random.nextInt(9000)
                     + random.nextInt(50), 72.0f, 88.0f, 1, 1);
+            layer.addTile(tile);
+        }
+
+        for (int i = 0; i < 500; i++) {
+            Tile tile = new Tile("res/tests/img/characters/justin.png",
+                    random.nextInt(9000) - random.nextInt(50),
+                    random.nextInt(9000) + random.nextInt(50), 16.0f, 25.0f, 1,
+                    1);
             layer.addTile(tile);
         }
 
@@ -55,17 +63,17 @@ public class TileStressTest {
             float y = Mouse.getY();
 
             if (x < 50.0f && x > 0.0f) {
-                x = -15f;
+                x = -50f;
             } else if (x > 590.0f && x < 640.0f) {
-                x = 15f;
+                x = 50f;
             } else {
                 x = 0;
             }
 
             if (y < 50.0f && y > 0.0f) {
-                y = -15f;
+                y = -50f;
             } else if (y > 430.0f && y < 480.0f) {
-                y = 15f;
+                y = 50f;
             } else {
                 y = 0;
             }
@@ -79,7 +87,8 @@ public class TileStressTest {
             }
 
             if (camera.move(x, y))
-                layer.draw();
+                ;
+            layer.draw();
 
             shader.release();
             screen.update();

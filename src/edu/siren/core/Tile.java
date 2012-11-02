@@ -7,15 +7,14 @@ import org.lwjgl.opengl.GL13;
 
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.IndexVertexBuffer;
-import edu.siren.renderer.Texture;
 import edu.siren.renderer.TexturePNG;
 import edu.siren.renderer.Vertex;
 
 public class Tile {
-    public Texture texture;
+    public TexturePNG texture;
     public Rectangle bounds;
     public IndexVertexBuffer ivb;
-    public static final HashMap<String, Texture> cache = new HashMap<String, Texture>();
+    public static final HashMap<String, TexturePNG> cache = new HashMap<String, TexturePNG>();
 
     public Tile() {
     }
@@ -25,9 +24,22 @@ public class Tile {
         createIndexVertexBuffer(width, height);
     }
 
+    public Tile(String filename, float x, float y) throws IOException {
+        TexturePNG cached = cache.get(filename);
+        if (cached == null) {
+            cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
+            cache.put(filename, cached);
+        }
+        this.texture = cached;
+        int width = this.texture.width;
+        int height = this.texture.height;
+        bounds = new Rectangle(x, y, width, height);
+        createIndexVertexBuffer(width, height);
+    }
+
     public Tile(String filename, float x, float y, float width, float height)
             throws IOException {
-        Texture cached = cache.get(filename);
+        TexturePNG cached = cache.get(filename);
         if (cached == null) {
             cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
             cache.put(filename, cached);
@@ -39,7 +51,7 @@ public class Tile {
 
     public Tile(String filename, float x, float y, float width, float height,
             float s, float t) throws IOException {
-        Texture cached = cache.get(filename);
+        TexturePNG cached = cache.get(filename);
         if (cached == null) {
             cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
             cache.put(filename, cached);
@@ -49,7 +61,7 @@ public class Tile {
         createIndexVertexBuffer(s, t);
     }
 
-    public Tile(Texture texture, float x, float y, float width, float height) {
+    public Tile(TexturePNG texture, float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
         this.texture = texture;
         createIndexVertexBuffer(width, height);
@@ -59,7 +71,7 @@ public class Tile {
         ivb.draw();
     }
 
-    private void createIndexVertexBuffer(float s, float t) {
+    protected void createIndexVertexBuffer(float s, float t) {
         float x, y;
 
         // Corner 1
