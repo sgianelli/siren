@@ -62,7 +62,7 @@ public class Shader {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         mat.store(buffer);
         buffer.flip();
-        int uniform = GL20.glGetUniformLocation(program, "world");
+        int uniform = GL20.glGetUniformLocation(program, string);
         GL20.glUniformMatrix4(uniform, false, buffer);
     }
 

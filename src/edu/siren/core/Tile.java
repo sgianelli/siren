@@ -12,14 +12,14 @@ import edu.siren.renderer.TexturePNG;
 import edu.siren.renderer.Vertex;
 
 public class Tile {
-    Texture texture;
-    Rectangle bounds;
-    IndexVertexBuffer ivb;
-    private static final HashMap<String, Texture> cache = new HashMap<String, Texture>();
+    public Texture texture;
+    public Rectangle bounds;
+    public IndexVertexBuffer ivb;
+    public static final HashMap<String, Texture> cache = new HashMap<String, Texture>();
 
     public Tile(float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
-        createIndexVertexBuffer();
+        createIndexVertexBuffer(width, height);
     }
 
     public Tile(String filename, float x, float y, float width, float height)
@@ -31,20 +31,32 @@ public class Tile {
         }
         this.texture = cached;
         bounds = new Rectangle(x, y, width, height);
-        createIndexVertexBuffer();
+        createIndexVertexBuffer(width, height);
+    }
+
+    public Tile(String filename, float x, float y, float width, float height,
+            float s, float t) throws IOException {
+        Texture cached = cache.get(filename);
+        if (cached == null) {
+            cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
+            cache.put(filename, cached);
+        }
+        this.texture = cached;
+        bounds = new Rectangle(x, y, width, height);
+        createIndexVertexBuffer(s, t);
     }
 
     public Tile(Texture texture, float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
         this.texture = texture;
-        createIndexVertexBuffer();
+        createIndexVertexBuffer(width, height);
     }
 
     public void draw() {
         ivb.draw();
     }
 
-    private void createIndexVertexBuffer() {
+    private void createIndexVertexBuffer(float s, float t) {
         float x, y;
 
         // Corner 1
@@ -61,7 +73,7 @@ public class Tile {
         x = bounds.left();
         v1.xyz(x, y, 0);
         v1.rgb(0, 1, 0);
-        v1.st(0, bounds.height);
+        v1.st(0, t);
 
         // Corner 3
         Vertex v2 = new Vertex();
@@ -69,7 +81,7 @@ public class Tile {
         x = bounds.right();
         v2.xyz(x, y, 0);
         v2.rgb(0, 0, 1);
-        v2.st(bounds.width, bounds.height);
+        v2.st(s, t);
 
         // Corner 4
         Vertex v3 = new Vertex();
@@ -77,7 +89,7 @@ public class Tile {
         x = bounds.right();
         v3.xyz(x, y, 0);
         v3.rgb(1, 1, 1);
-        v3.st(bounds.width, 0);
+        v3.st(s, 0);
 
         // Fill the index vertex buffer
         ivb = new IndexVertexBuffer(BufferType.STATIC);

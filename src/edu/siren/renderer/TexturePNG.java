@@ -59,8 +59,8 @@ public class TexturePNG implements Texture {
         GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
 
         // Upload the texture data and generate mip maps (for scaling)
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, width, height, 0,
-                GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height,
+                0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
         GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 
         // Setup the ST coordinate system
