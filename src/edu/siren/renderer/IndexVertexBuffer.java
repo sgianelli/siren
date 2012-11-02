@@ -36,12 +36,11 @@ public class IndexVertexBuffer {
         valid = hasVertices && hasIndicies;
     }
 
-    public void put(int... is) {
-        indices = BufferUtils.createByteBuffer(is.length);
-        for (int i : is)
-            indices.put((byte) i);
+    public void put(byte[] bytes) {
+        indices = BufferUtils.createByteBuffer(bytes.length);
+        indices.put(bytes);
         indices.flip();
-        indexCount = is.length;
+        indexCount = bytes.length;
         hasIndicies = true;
         valid = hasVertices && hasIndicies;
     }
@@ -62,14 +61,14 @@ public class IndexVertexBuffer {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboid);
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
 
-        GL20.glVertexAttribPointer(0, Vertex.Size.position, GL11.GL_FLOAT,
-                false, Vertex.Byte.stride, Vertex.Byte.position);
+        GL20.glVertexAttribPointer(2, Vertex.Size.position, GL11.GL_FLOAT,
+                false, Vertex.Byte.stride, Vertex.Offsets.position);
 
         GL20.glVertexAttribPointer(1, Vertex.Size.color, GL11.GL_FLOAT, false,
-                Vertex.Byte.stride, Vertex.Offsets.position);
+                Vertex.Byte.stride, Vertex.Offsets.color);
 
-        GL20.glVertexAttribPointer(2, Vertex.Size.texture, GL11.GL_FLOAT,
-                false, Vertex.Byte.stride, Vertex.Byte.texture);
+        GL20.glVertexAttribPointer(0, Vertex.Size.texture, GL11.GL_FLOAT,
+                false, Vertex.Byte.stride, Vertex.Offsets.texture);
 
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 

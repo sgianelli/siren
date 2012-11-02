@@ -20,9 +20,9 @@ public class Shader {
         GL20.glAttachShader(program, vid);
         GL20.glAttachShader(program, fid);
         GL20.glLinkProgram(program);
-        GL20.glBindAttribLocation(program, 0, "position");
+        GL20.glBindAttribLocation(program, 2, "position");
         GL20.glBindAttribLocation(program, 1, "color");
-        GL20.glBindAttribLocation(program, 2, "tex");
+        GL20.glBindAttribLocation(program, 0, "tex");
         GL20.glValidateProgram(program);
     }
 

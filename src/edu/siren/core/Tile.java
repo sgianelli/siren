@@ -57,7 +57,8 @@ public class Tile {
         // Fill the index vertex buffer
         ivb = new IndexVertexBuffer(BufferType.STATIC);
         ivb.put(v0, v1, v2, v3);
-        ivb.put(0, 1, 2, 2, 3, 0);
+        byte[] indices = { 0, 1, 2, 2, 3, 0 };
+        ivb.put(indices);
 
         if (texture != null)
             ivb.put(texture);

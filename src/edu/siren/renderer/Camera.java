@@ -10,12 +10,30 @@ public class Camera {
         position.setIdentity();
     }
 
+    public void zoomIn() {
+        if (position.m33 <= 1)
+            return;
+        position.m33 -= 0.5;
+        updateShaders();
+    }
+
+    public void zoomOut() {
+        if (position.m33 >= 100.0)
+            return;
+        position.m33 += 0.5f;
+        updateShaders();
+    }
+
     public void move(float dx, float dy) {
         if (dx == 0 && dy == 0)
             return;
 
         position.m30 -= dx;
         position.m31 -= dy;
+        updateShaders();
+    }
+
+    public void updateShaders() {
         for (Shader shader : shaders) {
             shader.update("world", position);
         }

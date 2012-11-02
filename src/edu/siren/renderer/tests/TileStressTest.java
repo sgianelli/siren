@@ -12,11 +12,11 @@ import edu.siren.renderer.Camera;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
 
-public class TileTest {
+public class TileStressTest {
     Screen screen;
 
     private void initializeScreen() throws LWJGLException {
-        screen = new Screen("Texture Test", 640, 480);
+        screen = new Screen("Texture Test", 1280, 1024);
     }
 
     private void setTileTest() throws LWJGLException, IOException {
@@ -25,15 +25,18 @@ public class TileTest {
         screen.sync = 60;
 
         Layer layer = new Layer();
-        layer.addTile(new Tile(0.0f, 0.0f, 10.0f, 10.0f), // Center
-                new Tile(-5f, -5f, 0.5f, 0.5f)); // Left
+        for (float i = -100.0f; i < 100f; i++) {
+            for (float j = -10.0f; j < 10f; j++) {
+                layer.addTile(new Tile(i, j, 1.0f, 1.0f));
+            }
+        }
+
         Camera camera = new Camera();
         Shader shader = new Shader("res/tests/glsl/basic.vert",
                 "res/tests/glsl/basic.frag");
 
-        Keyboard.create();
-
         camera.bindToShader(shader);
+        Keyboard.create();
 
         while (screen.isOpened()) {
             float x = Mouse.getX();
@@ -57,7 +60,6 @@ public class TileTest {
 
             screen.clear();
             shader.use();
-            camera.move(x, y);
             if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
                 System.out.println("Down Z");
                 camera.zoomIn();
@@ -65,6 +67,7 @@ public class TileTest {
                 System.out.println("Down X");
                 camera.zoomOut();
             }
+            camera.move(x, y);
             layer.draw();
             shader.release();
             screen.update();
@@ -73,6 +76,6 @@ public class TileTest {
     }
 
     public static void main(String[] args) throws LWJGLException, IOException {
-        new TileTest().setTileTest();
+        new TileStressTest().setTileTest();
     }
 }
