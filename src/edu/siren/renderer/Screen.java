@@ -38,8 +38,7 @@ public class Screen {
 
         // Do our basic GL setup
         GL11.glViewport(0, 0, width, height);
-        GL11.glClearColor(0.4f, 0.0f, 0.0f, 0f);
-        GL11.glViewport(0, 0, width, height);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0f);
     }
 
     public boolean isOpened() {

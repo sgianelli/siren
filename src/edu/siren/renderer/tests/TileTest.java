@@ -3,6 +3,7 @@ package edu.siren.renderer.tests;
 import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 
 import edu.siren.core.Layer;
 import edu.siren.core.Tile;
@@ -20,7 +21,7 @@ public class TileTest {
         initializeScreen();
 
         Layer layer = new Layer();
-        layer.addTile(new Tile(-0.5f, -0.5f, 1.0f, 1.0f), // Center
+        layer.addTile(new Tile(0.0f, 0.0f, 1.0f, 1.0f), // Center
                 new Tile(-2.5f, -2.5f, 1.0f, 1.0f)); // Left
         Shader shader = new Shader("res/tests/glsl/basic.vert",
                 "res/tests/glsl/basic.frag");
@@ -31,6 +32,14 @@ public class TileTest {
             layer.draw();
             shader.release();
             screen.update();
+
+            if (Mouse.isButtonDown(0)) {
+                float x = Mouse.getX() / 640.0f;
+                float y = Mouse.getY() / 480.0f;
+
+                System.out.println("" + x + ", " + y);
+                layer.addTile(new Tile(x, y, 1.0f, 1.0f));
+            }
         }
         screen.cleanup();
     }
