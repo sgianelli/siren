@@ -15,6 +15,12 @@ public class Tile {
         createIndexVertexBuffer();
     }
 
+    public Tile(Texture texture, float x, float y, float width, float height) {
+        bounds = new Rectangle(x, y, width, height);
+        this.texture = texture;
+        createIndexVertexBuffer();
+    }
+
     public void draw() {
         ivb.draw();
     }
@@ -36,7 +42,7 @@ public class Tile {
         x = bounds.left();
         v1.xyz(x, y, 0);
         v1.rgb(0, 1, 0);
-        v1.st(0, 1);
+        v1.st(0, bounds.height);
 
         // Corner 3
         Vertex v2 = new Vertex();
@@ -44,7 +50,7 @@ public class Tile {
         x = bounds.right();
         v2.xyz(x, y, 0);
         v2.rgb(0, 0, 1);
-        v2.st(1, 1);
+        v2.st(bounds.width, bounds.height);
 
         // Corner 4
         Vertex v3 = new Vertex();
@@ -52,7 +58,7 @@ public class Tile {
         x = bounds.right();
         v3.xyz(x, y, 0);
         v3.rgb(1, 1, 1);
-        v3.st(1, 0);
+        v3.st(bounds.width, 0);
 
         // Fill the index vertex buffer
         ivb = new IndexVertexBuffer(BufferType.STATIC);
