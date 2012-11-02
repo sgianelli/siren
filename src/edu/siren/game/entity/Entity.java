@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import edu.siren.core.Sprite;
 import edu.siren.game.ai.AI;
 
-public class Entity {
+public abstract class Entity {
     protected AI ai;
     protected String name;
     protected JSONObject json;
@@ -25,7 +25,7 @@ public class Entity {
         int health;
     }
 
-    protected Entity(String config, AI ai) {
+    public Entity(String config, AI ai) {
         FileInputStream stream = null;
         try {
             String content = "";
@@ -35,7 +35,6 @@ public class Entity {
                     fc.size());
             stream.close();
             content = Charset.defaultCharset().decode(bb).toString();
-            System.out.println(content);
             json = new JSONObject(content);
             this.ai = ai;
             this.name = json.getString("name");
@@ -50,7 +49,12 @@ public class Entity {
         }
     }
 
-    public void draw() {
-        sprite.draw();
+    public void setAI(AI ai) {
+        this.ai = ai;
+        this.ai.attach(this);
     }
+
+    abstract public void draw();
+
+    abstract public void moveTo(int x, int y);
 }

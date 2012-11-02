@@ -1,18 +1,32 @@
 package edu.siren.game.ai;
 
+import java.util.Random;
+
+import org.lwjgl.Sys;
+
 import edu.siren.game.entity.Entity;
 
 public class RandomWalker implements AI {
+    private double dt = getTime();
+    private Entity entity;
+
+    private Random random = new Random();
+
+    private double getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
 
     @Override
     public void attach(Entity entity) {
-        // TODO Auto-generated method stub
-
+        this.entity = entity;
     }
 
     @Override
     public void think() {
-        // TODO Auto-generated method stub
-
+        if ((getTime() - dt) > 5000) {
+            entity.moveTo(random.nextInt(1024), random.nextInt(1024));
+            dt = getTime();
+        }
     }
+
 }
