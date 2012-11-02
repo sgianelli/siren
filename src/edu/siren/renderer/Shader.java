@@ -3,9 +3,12 @@ package edu.siren.renderer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.vector.Matrix4f;
 
 public class Shader {
     int vid, fid, program;
@@ -54,4 +57,13 @@ public class Shader {
         }
         return id;
     }
+
+    public void update(String string, Matrix4f mat) {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+        mat.store(buffer);
+        buffer.flip();
+        int uniform = GL20.glGetUniformLocation(program, "world");
+        GL20.glUniformMatrix4(uniform, false, buffer);
+    }
+
 }
