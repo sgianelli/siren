@@ -36,13 +36,14 @@ public class Camera {
         updateShaders();
     }
 
-    public void move(float dx, float dy) {
+    public boolean move(float dx, float dy) {
         if (dx == 0 && dy == 0)
-            return;
+            return false;
 
         position.m30 -= dx;
         position.m31 -= dy;
         updateShaders();
+        return true;
     }
 
     public void updateShaders() {

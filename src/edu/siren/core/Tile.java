@@ -17,6 +17,9 @@ public class Tile {
     public IndexVertexBuffer ivb;
     public static final HashMap<String, Texture> cache = new HashMap<String, Texture>();
 
+    public Tile() {
+    }
+
     public Tile(float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
         createIndexVertexBuffer(width, height);

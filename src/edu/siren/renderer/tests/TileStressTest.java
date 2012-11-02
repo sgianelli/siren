@@ -77,8 +77,10 @@ public class TileStressTest {
             } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
                 camera.zoomOut();
             }
-            camera.move(x, y);
-            layer.draw();
+
+            if (camera.move(x, y))
+                layer.draw();
+
             shader.release();
             screen.update();
         }
