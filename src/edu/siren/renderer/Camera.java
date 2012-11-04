@@ -59,7 +59,6 @@ public class Camera {
         shader.update("world", position);
         shader.update("projection", projection);
         shader.release();
-        System.out.println("\n" + position);
     }
 
     public Matrix4f position = new Matrix4f();

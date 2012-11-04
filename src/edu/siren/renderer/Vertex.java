@@ -74,11 +74,6 @@ public class Vertex {
         for (int p = 0; i < s; i++, p++)
             elements[i] = this.vst[p];
 
-        for (i = 0; i < Size.total; i++) {
-            System.out.print(elements[i] + " ");
-        }
-        System.out.println();
-
         return elements;
     }
 }
