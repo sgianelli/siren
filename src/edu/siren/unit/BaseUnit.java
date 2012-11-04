@@ -42,6 +42,11 @@ public abstract class BaseUnit implements Serializable {
 	 */
 	public abstract boolean canCommunicate();
 	
+	/**
+	 * Is the Base Unit Magical
+	 * 
+	 * @return
+	 */
 	public abstract boolean isMagical();
 	
 }
