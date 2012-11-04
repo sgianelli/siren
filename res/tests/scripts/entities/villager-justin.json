@@ -1,0 +1,10 @@
+{
+    "health": 100, 
+    "name": "Villager Justin", 
+    "animations": {
+        "idle": [
+            "res/tests/img/characters/justin.png", 
+            0
+        ]
+    }
+}

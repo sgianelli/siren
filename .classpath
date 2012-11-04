@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="ext/png/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="ext/lwjgl/jar/lwjgl_util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
