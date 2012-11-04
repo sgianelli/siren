@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.siren.core.Sprite;
+import edu.siren.core.World;
 import edu.siren.game.ai.AI;
 
 public abstract class Entity {
@@ -20,6 +21,7 @@ public abstract class Entity {
     protected JSONObject json;
     protected EntityStats entityStats = new EntityStats();
     protected Sprite sprite = new Sprite();
+    protected World world = null;
 
     public class EntityStats {
         int health;
@@ -52,6 +54,10 @@ public abstract class Entity {
     public void setAI(AI ai) {
         this.ai = ai;
         this.ai.attach(this);
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     abstract public void draw();

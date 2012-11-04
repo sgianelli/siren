@@ -45,6 +45,7 @@ public class World {
     }
 
     public void addEntity(Entity entity) {
+        entity.setWorld(this);
         entities.add(entity);
     }
 

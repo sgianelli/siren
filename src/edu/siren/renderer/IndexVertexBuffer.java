@@ -114,4 +114,15 @@ public class IndexVertexBuffer {
         GL30.glBindVertexArray(0);
     }
 
+    public void put(Byte[] bytes) {
+        indices = BufferUtils.createByteBuffer(bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            indices.put((byte) (bytes[i]));
+        }
+        indices.flip();
+        indexCount = bytes.length;
+        hasIndicies = true;
+        valid = hasVertices && hasIndicies;
+    }
+
 }
