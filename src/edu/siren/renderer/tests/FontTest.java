@@ -25,7 +25,7 @@ public class FontTest {
         Mouse.create();
         while (screen.isOpened()) {
             int x = Mouse.getX();
-            int y = Mouse.getY() - 480;
+            int y = Mouse.getY();
             screen.clear();
             shader.use();
             font.print(

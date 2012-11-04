@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Layer implements Comparable<Layer> {
+import edu.siren.renderer.Drawable;
+
+public class Layer implements Comparable<Layer>, Drawable {
     protected int priority;
     protected int depth;
     protected Layer parent;
     protected Rectangle bounds;
-    protected ArrayList<Tile> tiles;
+    protected ArrayList<Drawable> tiles;
     protected Set<Layer> children;
 
     public Layer() {
@@ -18,7 +20,7 @@ public class Layer implements Comparable<Layer> {
         parent = null;
         depth = 0;
         priority = 0;
-        this.tiles = new ArrayList<Tile>();
+        this.tiles = new ArrayList<Drawable>();
     }
 
     public void addTile(Tile... tiles) {
@@ -30,7 +32,7 @@ public class Layer implements Comparable<Layer> {
 
     // TODO(vanhornejb): Optimize it into a single pass
     public void draw() {
-        for (Tile tile : tiles) {
+        for (Drawable tile : tiles) {
             tile.draw();
         }
     }
@@ -55,6 +57,12 @@ public class Layer implements Comparable<Layer> {
             } else {
                 return 0;
             }
+        }
+    }
+
+    public void addIndexVertexBuffer(Drawable[] drawables) {
+        for (Drawable drawable : drawables) {
+            tiles.add(drawable);
         }
     }
 }

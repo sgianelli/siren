@@ -1,8 +1,25 @@
 package edu.siren.renderer;
 
+/**
+ * Defines various static utility methods.
+ *
+ * @author Justin Van Horne <justinvh@gmail.com>
+ */
 public class Util {
 
+    /**
+     * Shape tests.
+     *
+     * @author Justin Van Horne <justinvh@gmail.com>
+     */
     public static class Shape {
+
+        /**
+         * Constructs a new quad tile object for testing.
+         *
+         * @param texture The texture to bind.
+         * @return An IndexVertexBuffer to draw
+         */
         public static IndexVertexBuffer createQuad(Texture texture) {
             // Corner 1
             Vertex v0 = new Vertex();

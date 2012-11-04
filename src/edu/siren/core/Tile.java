@@ -6,11 +6,12 @@ import java.util.HashMap;
 import org.lwjgl.opengl.GL13;
 
 import edu.siren.renderer.BufferType;
+import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;
 import edu.siren.renderer.TexturePNG;
 import edu.siren.renderer.Vertex;
 
-public class Tile {
+public class Tile implements Drawable {
     public TexturePNG texture;
     public Rectangle bounds;
     public IndexVertexBuffer ivb;

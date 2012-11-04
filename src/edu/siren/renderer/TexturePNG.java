@@ -12,37 +12,66 @@ import org.lwjgl.opengl.GL30;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
+/**
+ * Uses the de.matthiasmann.twl.utils.PNGDecoder object for loading a PNG.
+ * This class wraps functionality and interfaces with the Texture.
+ *
+ * @author Justin Van Horne <justinvh@gmail.com>
+ */
 public class TexturePNG implements Texture {
     public int textureID;
     public int width, height;
     private int unit;
 
+    /**
+     * Trivial constructor.
+     */
     public TexturePNG() {
     }
+    
 
-    public int getTextureID() {
-        return textureID;
-    }
-
-    public int getTextureBinding() {
-        return unit;
-    }
-
+    /**
+     * Loads a 32-bit RGBA PNG texture.
+     *
+     * @param filename The PNG to load
+     * @param unit The GL unit to define (GLTEXTURE0)
+     * @throws IOException Thrown if the file does not exist.
+     */
     public TexturePNG(String filename, int unit) throws IOException {
         loadTexture(filename, unit);
     }
 
+
+    /* (non-Javadoc)
+     * @see edu.siren.renderer.Texture#getTextureID()
+     */
+    public int getTextureID() {
+        return textureID;
+    }
+
+    /* (non-Javadoc)
+     * @see edu.siren.renderer.Texture#getTextureBinding()
+     */
+    public int getTextureBinding() {
+        return unit;
+    }
+
+    /* (non-Javadoc)
+     * @see edu.siren.renderer.Texture#loadTexture(java.lang.String, int)
+     */
     public int loadTexture(String filename, int unit) throws IOException {
         this.unit = unit;
 
         ByteBuffer buf = null;
 
+        // Load the PNG
         InputStream in = new FileInputStream(filename);
         PNGDecoder decoder = new PNGDecoder(in);
 
         width = decoder.getWidth();
         height = decoder.getHeight();
 
+        // Allocate the byte buffer
         buf = ByteBuffer.allocateDirect(4 * decoder.getWidth()
                 * decoder.getHeight());
         decoder.decode(buf, decoder.getWidth() * 4, Format.RGBA);
