@@ -6,6 +6,12 @@ import java.util.TreeSet;
 
 import edu.siren.renderer.Drawable;
 
+/**
+ * Abstracts away a priority drawing by defining the concept of a Layer.
+ * Layers can be stacked and added as children.
+ *
+ * @author Justin Van Horne <justinvh@gmail.com>
+ */
 public class Layer implements Comparable<Layer>, Drawable {
     protected int priority;
     protected int depth;
@@ -14,6 +20,9 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected ArrayList<Drawable> tiles;
     protected Set<Layer> children;
 
+    /**
+     * Construct a new basic layer.
+     */
     public Layer() {
         children = new TreeSet<Layer>();
         bounds = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
@@ -23,6 +32,10 @@ public class Layer implements Comparable<Layer>, Drawable {
         this.tiles = new ArrayList<Drawable>();
     }
 
+    /**
+     * Add a collection of tiles to the layer.
+     * @param tiles Adds an array of Tiles to the layer.
+     */
     public void addTile(Tile... tiles) {
         for (Tile tile : tiles) {
             bounds.extend(tile.bounds);
@@ -31,12 +44,21 @@ public class Layer implements Comparable<Layer>, Drawable {
     }
 
     // TODO(vanhornejb): Optimize it into a single pass
+    /* (non-Javadoc)
+     * @see edu.siren.renderer.Drawable#draw()
+     */
     public void draw() {
         for (Drawable tile : tiles) {
             tile.draw();
         }
     }
 
+    /**
+     * Adds a new Layer as a child-layer. Drawn after drawables.
+     *
+     * @param layer The layer to add
+     * @return Whether this children was added or exists in the Layer set.
+     */
     public boolean addLayer(Layer layer) {
         bounds.extend(layer.bounds);
         layer.parent = this;
@@ -44,6 +66,9 @@ public class Layer implements Comparable<Layer>, Drawable {
         return children.add(layer);
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     public int compareTo(Layer layer) {
         if (depth > layer.depth) {
             return 1;
@@ -60,6 +85,11 @@ public class Layer implements Comparable<Layer>, Drawable {
         }
     }
 
+    /**
+     * Adds a Drawable surface to the Layer.
+     *
+     * @param drawables Any drawable surface.
+     */
     public void addIndexVertexBuffer(Drawable[] drawables) {
         for (Drawable drawable : drawables) {
             tiles.add(drawable);
