@@ -10,7 +10,7 @@ import org.lwjgl.Sys;
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class Animation implements Drawable {
+public class Animation {
     public String name;
     public ArrayList<AnimationFrame> frames = new ArrayList<AnimationFrame>();
     private double dt = 0;
