@@ -15,6 +15,7 @@ import org.lwjgl.util.vector.Matrix4f;
  *
  */
 public class Camera {
+    public boolean enable = true;
 
     /**
      * Constructs a new Camera with a given aspect ratio.

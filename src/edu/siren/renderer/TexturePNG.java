@@ -22,6 +22,7 @@ public class TexturePNG implements Texture {
     public int textureID;
     public int width, height;
     private int unit;
+    public ByteBuffer buf = null;
 
     /**
      * Trivial constructor.
@@ -61,8 +62,6 @@ public class TexturePNG implements Texture {
      */
     public int loadTexture(String filename, int unit) throws IOException {
         this.unit = unit;
-
-        ByteBuffer buf = null;
 
         // Load the PNG
         InputStream in = new FileInputStream(filename);

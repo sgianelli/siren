@@ -115,7 +115,7 @@ public class Tile implements Drawable {
         y = bounds.bottom();
         x = bounds.left();
         v0.xyz(x, y, 0);
-        v0.rgb(1, 0, 0);
+        v0.rgb(0, 0, 0);
         v0.st(0, 0);
 
         // Corner 2
@@ -123,7 +123,7 @@ public class Tile implements Drawable {
         y = bounds.top();
         x = bounds.left();
         v1.xyz(x, y, 0);
-        v1.rgb(0, 1, 0);
+        v1.rgb(0, 0, 0);
         v1.st(0, t);
 
         // Corner 3
@@ -131,7 +131,7 @@ public class Tile implements Drawable {
         y = bounds.top();
         x = bounds.right();
         v2.xyz(x, y, 0);
-        v2.rgb(0, 0, 1);
+        v2.rgb(0, 0, 0);
         v2.st(s, t);
 
         // Corner 4
@@ -139,7 +139,7 @@ public class Tile implements Drawable {
         y = bounds.bottom();
         x = bounds.right();
         v3.xyz(x, y, 0);
-        v3.rgb(1, 1, 1);
+        v3.rgb(0, 0, 0);
         v3.st(s, 0);
 
         // Fill the index vertex buffer

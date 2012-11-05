@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse;
 
 import edu.siren.core.Layer;
 import edu.siren.core.Tile;
+import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Gui;
@@ -27,7 +28,7 @@ public class TileStressTest {
         screen.sync = 60;
 
         Random random = new Random();
-        Layer layer = new Layer();
+        Layer layer = new Layer(BufferType.STATIC);
         layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
         Gui gui = new Gui();
         Shader shader = new Shader("res/tests/glsl/gui.vert",

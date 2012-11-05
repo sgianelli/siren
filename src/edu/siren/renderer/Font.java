@@ -97,8 +97,8 @@ public class Font {
         if (lines.length > 1) {
             float offset = 0;
             ivbs = new IndexVertexBuffer[lines.length];
-            for (int i = lines.length - 1; i >= 0; i--) {
-                ivbs = print(lines[i], size, x1, y1 + offset, ivbs, i);
+            for (int i = 0; i < lines.length; i++) {
+                ivbs = print(lines[i], size, x1, y1 - offset , ivbs, i);
                 offset += rect;
             }
             return ivbs;
@@ -182,5 +182,9 @@ public class Font {
         // And return the newly generated IVB
         ivbs[ivbi] = ivb;
         return ivbs;
+    }
+
+    public FontSequence printFrames(boolean successive, FontFrame... frames) {
+        return new FontSequence(this, successive, frames);
     }
 }

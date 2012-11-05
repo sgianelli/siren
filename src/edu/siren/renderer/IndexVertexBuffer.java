@@ -115,7 +115,7 @@ public class IndexVertexBuffer implements Drawable {
         // Generate the VBO
         vboid = GL15.glGenBuffers();
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboid);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
 
         // Define the position, color, and texture offsets
         GL20.glVertexAttribPointer(2, Vertex.Size.position, GL11.GL_FLOAT,

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
+import edu.siren.renderer.IndexVertexBuffer;
 
 /**
  * Abstracts away a priority drawing by defining the concept of a Layer.
@@ -15,20 +17,23 @@ import edu.siren.renderer.Drawable;
 public class Layer implements Comparable<Layer>, Drawable {
     protected int priority;
     protected int depth;
+    protected BufferType type;
     protected Layer parent;
     protected Rectangle bounds;
     protected ArrayList<Drawable> tiles;
     protected Set<Layer> children;
+    protected boolean valid = false;
 
     /**
      * Construct a new basic layer.
      */
-    public Layer() {
+    public Layer(BufferType type) {
         children = new TreeSet<Layer>();
         bounds = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
         parent = null;
         depth = 0;
         priority = 0;
+        this.type = type;
         this.tiles = new ArrayList<Drawable>();
     }
 
@@ -40,7 +45,7 @@ public class Layer implements Comparable<Layer>, Drawable {
         for (Tile tile : tiles) {
             bounds.extend(tile.bounds);
             this.tiles.add(tile);
-        }
+        }        
     }
 
     // TODO(vanhornejb): Optimize it into a single pass
@@ -84,7 +89,7 @@ public class Layer implements Comparable<Layer>, Drawable {
             }
         }
     }
-
+    
     /**
      * Adds a Drawable surface to the Layer.
      *
