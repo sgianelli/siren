@@ -71,7 +71,7 @@ public class FontSequence {
             if ((getTime() - dtFrame) > currentFrame.msecFrame) {   
                 frameIndex++;
                 dtFrame = getTime();
-                if (currentFrame.wav != null && frameIndex % 2 == 0) {
+                if (currentFrame.wav != null) {
                     try {
                         AudioUtil.playWav(currentFrame.wav);
                     } catch (LineUnavailableException e) {

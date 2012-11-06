@@ -21,8 +21,8 @@ public class DumbVillagerTest {
         World world = new World(1024, 1024);
         Random random = new Random();
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
                 Villager v = new Villager(
                         "res/tests/scripts/entities/villager-justin.json");
                 v.setPosition(random.nextInt(1024), random.nextInt(1024));

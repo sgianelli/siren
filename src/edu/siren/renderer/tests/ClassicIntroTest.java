@@ -46,7 +46,7 @@ public class ClassicIntroTest {
         try { Thread.sleep(5000); } catch (Exception e) { }
 
         
-        AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
+        // AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
         
         final String beep = "res/tests/sounds/beep.wav";
         
