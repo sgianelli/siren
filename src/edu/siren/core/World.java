@@ -56,7 +56,7 @@ public class World {
                 int x = random.nextInt(width) - random.nextInt(width*2);
                 int y = random.nextInt(height) - random.nextInt(height*2);
                 Tile tile = new Tile("res/tests/img/tree.png", x, y,
-                        32.0f, 50.0f, 1, 1);
+                        64.0f, 100.0f, 1, 1);
                 layer.addTile(tile);
             }
 

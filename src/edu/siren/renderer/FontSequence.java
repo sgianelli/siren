@@ -1,8 +1,14 @@
 package edu.siren.renderer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import org.lwjgl.Sys;
+
+import edu.siren.audio.AudioUtil;
 
 
 public class FontSequence {
@@ -40,7 +46,7 @@ public class FontSequence {
                     dtWait = getTime();
                 }
                 if ((getTime() - dtWait) > currentFrame.msecWait) {
-                    if (frame + 2 == frames.length) {
+                    if (frame + 1 == frames.length) {
                         done = true;
                         return;
                     }
@@ -65,6 +71,20 @@ public class FontSequence {
             if ((getTime() - dtFrame) > currentFrame.msecFrame) {   
                 frameIndex++;
                 dtFrame = getTime();
+                if (currentFrame.wav != null && frameIndex % 2 == 0) {
+                    try {
+                        AudioUtil.playWav(currentFrame.wav);
+                    } catch (LineUnavailableException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (UnsupportedAudioFileException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
             
             font.print(currentFrame.message.substring(0, frameIndex), size, x, y);

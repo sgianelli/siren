@@ -8,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import edu.siren.audio.AudioUtil;
 import edu.siren.core.Tile;
 import edu.siren.core.World;
 import edu.siren.game.characters.Villager;
@@ -42,21 +43,29 @@ public class ClassicIntroTest {
                 "res/tests/glsl/gui.frag");
         gui.bindToShader(shader);
         
+        try { Thread.sleep(5000); } catch (Exception e) { }
+
+        
+        AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
+        
+        final String beep = "res/tests/sounds/beep.wav";
+        
         FontSequence sequence = font.printFrames(
                 false,
-                new FontFrame("Long ago, in the beautiful\nkingdom of Siren surrounded\nby mountains and forests...", 2500, 1000),
-                new FontFrame("Legends told of an omnipotent\nand omniscent Golden Power\nthat resided in a hidden land.", 2500, 1000),
-                new FontFrame("Many creatures sought this\nGolden Power and failed.", 2500, 1000),
-                new FontFrame("The Gods, aware of their\nmistake separated the world\ninto pieces.", 2500, 1000),
-                new FontFrame("As generations carried through\nthe years the creatures forgot\nof their original kingdom of Siren.", 2500, 1000),
-                new FontFrame("As the years grew, so did\na darkening and evil force.", 2500, 1000),
-                new FontFrame("The Gods weakened by this force\nopened up a world for help.", 2500, 1000),
-                new FontFrame("\"Help us!\", they cried.", 2000, 500),
-                new FontFrame("\"Help us and fufill your destiny.\"", 1000, 1000),
-                new FontFrame("         SIREN", 500, 5000));
+                new FontFrame("Long ago, in the beautiful\nkingdom of Siren surrounded\nby mountains and forests...", 2500, 1000, beep),
+                new FontFrame("Legends told of an omnipotent\nand omniscent Golden Power\nthat resided in a hidden land.", 2500, 1000, beep),
+                new FontFrame("Many creatures sought this\nGolden Power and failed.", 2000, 1000, beep),
+                new FontFrame("The Gods, aware of their\nmistake separated the world\ninto pieces.", 2300, 1000, beep),
+                new FontFrame("As generations carried through\nthe years the creatures forgot\nof their original kingdom of Siren.", 2800, 1000, beep),
+                new FontFrame("As the years grew, so did\na darkening and evil force.", 2000, 1000, beep),
+                new FontFrame("The Gods weakened by this force\nopened up a world for help.", 2100, 1000, beep),
+                new FontFrame("\"Help us!\", they cried.", 1500, 500, beep),
+                new FontFrame("\"Help us and fulfill your destiny.\"", 1700, 1000, beep),
+                new FontFrame("          SIREN", 500, 5000));
         
         Tile white = new Tile("res/tests/img/bg.png", 0, 0, 640.0f, 480.0f, 1, 1);
         boolean intro = true;
+        
 
         world.camera.enable = false;
         
