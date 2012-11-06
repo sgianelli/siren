@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import org.lwjgl.Sys;
 
+/**
+ * An Animation is a collection of AnimationFrames that provides the
+ * necessary interpolation between frames for animation sequences.
+ *
+ * @author Justin Van Horne <justinvh@gmail.com>
+ */
 public class Animation {
     public String name;
     public ArrayList<AnimationFrame> frames = new ArrayList<AnimationFrame>();
@@ -11,20 +17,36 @@ public class Animation {
     private int frame = 0;
     private AnimationFrame currentFrame;
 
-    public Animation(String n) {
-        name = n;
+    /**
+     * Constructs an Animation object
+     *
+     * @param name The name of the animation, i.e. "idle"
+     */
+    public Animation(String name) {
+        this.name = name;
     }
 
+    /**
+     * Adds a new frame to the animation.
+     *
+     * @param animationFrame The frame to add to the end of the sequence.
+     */
     public void addFrame(AnimationFrame animationFrame) {
         frames.add(animationFrame);
         frame = 0;
         currentFrame = frames.get(frame);
     }
 
+    /**
+     * @return Current resolution timer.
+     */
     private double getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 
+    /**
+     * Draws the underlying sprite at a given X,Y in the world.
+     */
     public void draw(float x, float y) {
         if (dt == 0) {
             dt = getTime();

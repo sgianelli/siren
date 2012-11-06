@@ -23,7 +23,7 @@ public class RandomWalker implements AI {
 
     @Override
     public void think() {
-        if ((getTime() - dt) > 5000) {
+        if ((getTime() - dt) > 10000) {
             entity.moveTo(random.nextInt(1024), random.nextInt(1024));
             dt = getTime();
         }

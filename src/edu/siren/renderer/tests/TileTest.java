@@ -8,6 +8,7 @@ import org.lwjgl.input.Mouse;
 
 import edu.siren.core.Layer;
 import edu.siren.core.Tile;
+import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
@@ -24,7 +25,7 @@ public class TileTest {
 
         screen.sync = 60;
 
-        Layer layer = new Layer();
+        Layer layer = new Layer(BufferType.STATIC);
         layer.addTile(new Tile("res/tests/img/weeds.png", 0.0f, 0.0f, 10.0f,
                 10.0f), // Center
                 new Tile("res/tests/img/grid.png", -5f, -5f, 0.5f, 0.5f)); // Left
