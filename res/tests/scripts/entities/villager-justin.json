@@ -1,6 +1,6 @@
 {
     "health": 100, 
-    "speed": 1,
+    "speed": 10,
     "name": "Villager Justin", 
     "animations": {
         "idle": [

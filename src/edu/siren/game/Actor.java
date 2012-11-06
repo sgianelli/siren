@@ -13,14 +13,14 @@ import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
 
-public class NPC extends Entity implements Interactable {
+public class Actor extends Entity implements Interactable {
     public int desiredX = 0;
     public int desiredY = 0;
     public int x = 0;
     public int y = 0;
     public int speed = 0;
 
-    protected NPC(String config, AI ai) {
+    protected Actor(String config, AI ai) {
         super(config, ai);
         initializeAnimations();
     }
@@ -36,6 +36,7 @@ public class NPC extends Entity implements Interactable {
     private boolean initializeAnimations() {
         try {
             speed = json.getInt("speed");
+            System.out.println("Player speed: " + speed);
             JSONObject jsonAnims = json.getJSONObject("animations");
             for (String n : (Set<String>) jsonAnims.keySet()) {
                 System.out.println(n);

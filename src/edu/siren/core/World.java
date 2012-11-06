@@ -81,36 +81,6 @@ public class World {
         for (Entity entity : entities) {
             entity.draw();
         }
-        
-        if (!camera.enable)
-            return;
-        
-        float x = Mouse.getX();
-        float y = Mouse.getY();
-
-        if (x < 50.0f && x > 0.0f) {
-            x = -15f;
-        } else if (x > 590.0f && x < 640.0f) {
-            x = 15f;
-        } else {
-            x = 0;
-        }
-
-        if (y < 50.0f && y > 0.0f) {
-            y = -15f;
-        } else if (y > 430.0f && y < 480.0f) {
-            y = 15f;
-        } else {
-            y = 0;
-        }
-        
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-            camera.zoomIn();
-        } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-            camera.zoomOut();
-        }
-        
-        camera.move(x, y);     
     }
 
     /**

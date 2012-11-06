@@ -38,10 +38,12 @@ public abstract class Entity {
             stream.close();
             content = Charset.defaultCharset().decode(bb).toString();
             json = new JSONObject(content);
-            this.ai = ai;
             this.name = json.getString("name");
             entityStats.health = json.getInt("health");
-            this.ai.attach(this);
+            if (ai != null) {
+                this.ai = ai;
+                this.ai.attach(this);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
