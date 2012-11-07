@@ -2,8 +2,10 @@ package edu.siren.game;
 
 import org.lwjgl.input.Keyboard;
 
+import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
+    Camera camera = null;
 
     public Player(String config) {
         super(config, null);
@@ -29,7 +31,10 @@ public class Player extends Actor {
         
         sprite.spriteX = this.x;
         sprite.spriteY = this.y;
-
+        
+        // Basic setup
+        camera.setPosition(-this.x, -this.y);
+        
         sprite.draw();
     }
 
@@ -47,5 +52,9 @@ public class Player extends Actor {
 
     public void moveUp() {
         this.y += 0.1f * speed;        
+    }
+
+    public void bindCamera(Camera camera) {
+        this.camera = camera;
     }
 }

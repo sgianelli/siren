@@ -3,6 +3,8 @@ package edu.siren.renderer;
 import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 /**
  * The Camera object defines a world viewport. It must be bound to a shader
@@ -26,6 +28,7 @@ public class Camera {
         position.setIdentity();
         ortho(-2 * aspectRatio, 2 * aspectRatio, -2, 2, -1, 1);
         setZoom(100.0f);
+        //hsv.setIdentity();
     }
 
     /**
@@ -78,7 +81,7 @@ public class Camera {
      * Zooms in one-factor.
      */
     public void zoomIn() {
-        if (position.m33 <= 1)
+        if (position.m33 <= 20)
             return;
         position.m33 -= 5.0;
         updateShaders();
@@ -141,7 +144,12 @@ public class Camera {
         shader.release();
     }
 
+    public Vector3f hsv = new Vector3f();
     public Matrix4f position = new Matrix4f();
     public Matrix4f projection = new Matrix4f();
     public ArrayList<Shader> shaders = new ArrayList<Shader>();
+
+    public int getX() {
+        return (int) position.m30;
+    }
 }

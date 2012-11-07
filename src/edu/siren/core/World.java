@@ -10,6 +10,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import edu.siren.game.Player;
 import edu.siren.game.entity.Entity;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
@@ -24,7 +25,7 @@ import edu.siren.renderer.Shader;
  */
 public class World {
     private Set<Layer> layers;
-    public Camera camera = new Camera(640.0f / 480.0f);
+    public Camera camera = new Camera(512.0f / 448.0f);
     public Shader shader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -63,6 +64,7 @@ public class World {
             shader = new Shader("res/tests/glsl/basic.vert",
                     "res/tests/glsl/basic.frag");
             camera.position.m33 = 100.0f;
+            camera.position.m30 = 0.0f;
             camera.bindToShader(shader);
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,6 +100,16 @@ public class World {
     public void addEntity(Entity entity) {
         entity.setWorld(this);
         entities.add(entity);
+    }
+    
+    /**
+     * Adds an explicit player and binds the camera
+     * so the player can control the camera interactions.
+     */
+    public void addEntity(Player player) {
+        player.bindCamera(this.camera);
+        player.setWorld(this);
+        entities.add(player);
     }
 
 }

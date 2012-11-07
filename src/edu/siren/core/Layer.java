@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
-import edu.siren.renderer.IndexVertexBuffer;
 
 /**
  * Abstracts away a priority drawing by defining the concept of a Layer.

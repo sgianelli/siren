@@ -4,7 +4,8 @@
     "name": "Villager Justin", 
     "animations": {
         "idle": [
-            ["res/tests/img/characters/justin.png", 0]
+            ["res/tests/img/characters/justin-1.png", 500],
+            ["res/tests/img/characters/justin-2.png", 500]
         ]
     }
 }
