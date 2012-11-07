@@ -50,13 +50,10 @@ public class Animation {
     public void draw(float x, float y) {
         if (dt == 0) {
             dt = getTime();
-        } else {
-            dt -= getTime();
-            if (dt > currentFrame.frameTime) {
-                frame = (frame + 1) % frames.size();
-                currentFrame = frames.get(frame);
-                dt = getTime();
-            }
+        } else if ((getTime() - dt) > currentFrame.frameTime) {
+            frame = (frame + 1) % frames.size();
+            currentFrame = frames.get(frame);
+            dt = getTime();
         }
         currentFrame.draw(x, y);
     }

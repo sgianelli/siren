@@ -5,22 +5,19 @@ import java.util.Random;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import edu.siren.core.World;
 import edu.siren.game.Player;
-import edu.siren.game.characters.Villager;
 import edu.siren.renderer.Screen;
 
 public class ControllableCharacterTest {
     Screen screen;
 
     ControllableCharacterTest() throws LWJGLException {
-        screen = new Screen("Controllable Character Test", 640, 480);
+        screen = new Screen("Controllable Character Test", 512, 448);
         screen.sync = 60;
 
         World world = new World(1024, 1024);
-        Random random = new Random();
 
         Player player = new Player("res/tests/scripts/entities/villager-justin.json");
         player.setPosition(0, 0);
