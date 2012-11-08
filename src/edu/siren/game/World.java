@@ -1,4 +1,4 @@
-package edu.siren.core;
+package edu.siren.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,9 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import edu.siren.game.Player;
+import edu.siren.core.tile.Layer;
+import edu.siren.core.tile.Tile;
+import edu.siren.core.tile.TriggerTile;
 import edu.siren.game.entity.Entity;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
@@ -55,8 +57,7 @@ public class World {
             for (int i = 0; i < 500; i++) {
                 int x = random.nextInt(width) - random.nextInt(width*2);
                 int y = random.nextInt(height) - random.nextInt(height*2);
-                Tile tile = new Tile("res/tests/img/weeds.png", x, y,
-                        13.0f, 7.0f, 1, 1);
+                Tile tile = new TriggerTile(x, y, 64, 64, null);
                 layer.addTile(tile);
             }
 

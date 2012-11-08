@@ -1,4 +1,4 @@
-package edu.siren.core;
+package edu.siren.core.geom;
 
 import java.io.Serializable;
 

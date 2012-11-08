@@ -11,8 +11,9 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.siren.core.Sprite;
-import edu.siren.core.World;
+import edu.siren.core.geom.Rectangle;
+import edu.siren.core.sprite.Sprite;
+import edu.siren.game.World;
 import edu.siren.game.ai.AI;
 
 public abstract class Entity {
@@ -22,7 +23,7 @@ public abstract class Entity {
     protected EntityStats entityStats = new EntityStats();
     protected Sprite sprite = new Sprite();
     protected World world = null;
-
+    
     public class EntityStats {
         int health;
     }
@@ -51,6 +52,14 @@ public abstract class Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public Rectangle getRect() {
+        return sprite.getRect();
+    }
+    
+    public boolean touching(float x, float y) {
+        return false;
     }
 
     public void setAI(AI ai) {

@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.siren.core.Animation;
-import edu.siren.core.AnimationFrame;
+import edu.siren.core.sprite.Animation;
+import edu.siren.core.sprite.AnimationFrame;
 import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
@@ -97,5 +97,9 @@ public class Actor extends Entity implements Interactable {
         sprite.spriteY = this.y;
 
         sprite.draw();
+    }
+
+    @Override
+    public void interact(Entity other) {
     }
 }

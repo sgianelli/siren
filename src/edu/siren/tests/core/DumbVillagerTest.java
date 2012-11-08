@@ -1,4 +1,4 @@
-package edu.siren.game.characters.tests;
+package edu.siren.tests.core;
 
 import java.io.IOException;
 import java.util.Random;
@@ -7,7 +7,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import edu.siren.core.World;
+import edu.siren.game.World;
 import edu.siren.game.characters.Villager;
 import edu.siren.renderer.Screen;
 

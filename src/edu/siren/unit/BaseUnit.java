@@ -2,7 +2,7 @@ package edu.siren.unit;
 
 import java.io.Serializable;
 
-import edu.siren.core.Point;
+import edu.siren.core.geom.Point;
 
 /**
  * The Base Unit Class

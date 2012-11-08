@@ -1,10 +1,11 @@
-package edu.siren.core;
+package edu.siren.core.tile;
 
 import java.io.IOException;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.GL13;
 
+import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;
@@ -68,7 +69,7 @@ public class Tile implements Drawable {
         }
         this.texture = cached;
         bounds = new Rectangle(x, y, width, height);
-        createIndexVertexBuffer(width, height);
+        createIndexVertexBuffer(1, 1);
     }
 
     /**

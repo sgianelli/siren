@@ -1,4 +1,4 @@
-package edu.siren.renderer.tests;
+package edu.siren.tests.renderer;
 
 import java.io.IOException;
 

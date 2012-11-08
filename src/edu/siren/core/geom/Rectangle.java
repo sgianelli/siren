@@ -1,4 +1,4 @@
-package edu.siren.core;
+package edu.siren.core.geom;
 
 /**
  * Defines a simple Rectangle object for tiling, bounds-checking, etc.
@@ -6,7 +6,8 @@ package edu.siren.core;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Rectangle {
-    float x, y, width, height;
+    public float x, y;
+    public float width, height;
 
     /**
      * Creates a new rectangle
@@ -51,7 +52,7 @@ public class Rectangle {
      *
      * @param other The other rectangle to merge with this rectangle.
      */
-    void extend(Rectangle other) {
+    public void extend(Rectangle other) {
         x = x > other.x ? other.x : x;
         y = y > other.y ? other.y : y;
         width = width < other.width ? other.width : width;

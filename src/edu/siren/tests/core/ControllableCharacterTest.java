@@ -1,4 +1,4 @@
-package edu.siren.game.characters.tests;
+package edu.siren.tests.core;
 
 import java.io.IOException;
 import java.util.Random;
@@ -6,8 +6,8 @@ import java.util.Random;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
-import edu.siren.core.World;
 import edu.siren.game.Player;
+import edu.siren.game.World;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Gui;
 import edu.siren.renderer.Screen;
@@ -19,7 +19,7 @@ public class ControllableCharacterTest {
     ControllableCharacterTest() throws LWJGLException, IOException {
         screen = new Screen("Controllable Character Test", 512, 448);
 
-        World world = new World(1024, 1024);
+        World world = new World(8096, 8096);
         
         Gui gui = new Gui();
         Shader shader = new Shader("res/tests/glsl/gui.vert",

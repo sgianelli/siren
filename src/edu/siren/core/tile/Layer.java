@@ -1,9 +1,10 @@
-package edu.siren.core;
+package edu.siren.core.tile;
 
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 
