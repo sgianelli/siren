@@ -28,6 +28,8 @@ public class ClassicIntroTest {
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
         Random random = new Random();
         
+        screen.sync = 60;
+        
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 Villager v = new Villager(
@@ -46,7 +48,7 @@ public class ClassicIntroTest {
         try { Thread.sleep(5000); } catch (Exception e) { }
 
         
-        // AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
+        AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
         
         final String beep = "res/tests/sounds/beep.wav";
         

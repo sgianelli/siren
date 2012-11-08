@@ -109,7 +109,7 @@ public class Tile implements Drawable {
      */
     protected void createIndexVertexBuffer(float s, float t) {
         float x, y;
-
+        
         // Corner 1
         Vertex v0 = new Vertex();
         y = bounds.bottom();

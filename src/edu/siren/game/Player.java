@@ -28,12 +28,13 @@ public class Player extends Actor {
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
             moveRight();
         }
-        
-        sprite.spriteX = this.x;
-        sprite.spriteY = this.y;
-        
-        // Basic setup
-        camera.setPosition(-this.x, -this.y);
+
+        // Only update the camera if necessary
+        if (sprite.spriteX != this.x || sprite.spriteY != this.y) {
+            sprite.spriteX = this.x;
+            sprite.spriteY = this.y;
+            camera.setPosition(-this.x, -this.y);
+        }
         
         sprite.draw();
     }

@@ -9,6 +9,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 /**
  * Constructs a GLSL shader suitable for loading into the Siren engine.
@@ -113,4 +114,16 @@ public class Shader {
         int uniform = GL20.glGetUniformLocation(program, string);
         GL20.glUniformMatrix4(uniform, false, buffer);
     }
+
+    /**
+     * Update a uniform in the fragment shader.
+     *
+     * @param string The uniform name in the fragment shader
+     * @param vec Replace the uniform value with this vec
+     */
+    public void update(String string, Vector3f vec) {
+        int uniform = GL20.glGetUniformLocation(program, string);
+        GL20.glUniform3f(uniform, vec.x, vec.y, vec.z);
+    }
+
 }
