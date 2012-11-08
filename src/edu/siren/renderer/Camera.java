@@ -2,6 +2,7 @@ package edu.siren.renderer;
 
 import java.util.ArrayList;
 
+import org.lwjgl.Sys;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
@@ -18,7 +19,17 @@ import org.lwjgl.util.vector.Vector4f;
  */
 public class Camera {
     public boolean enable = true;
-
+    public Vector3f hsv = new Vector3f(1.0f, 1.0f, 1.0f);
+    public Matrix4f position = new Matrix4f();
+    public Matrix4f projection = new Matrix4f();
+    public ArrayList<Shader> shaders = new ArrayList<Shader>();
+    
+    private double hsvTransitionTime = 0.0f;
+    class Vector3d { public double x, y, z; }
+    private Vector3d hsvdv = new Vector3d();
+    private double hsvdt = 0.0f;
+    private double lastFrame = 0.0f;
+    
     /**
      * Constructs a new Camera with a given aspect ratio.
      *
@@ -28,9 +39,8 @@ public class Camera {
         position.setIdentity();
         ortho(-2 * aspectRatio, 2 * aspectRatio, -2, 2, -1, 1);
         setZoom(100.0f);
-        //hsv.setIdentity();
     }
-
+    
     /**
      * Constructs a new Camera with a given aspect ratio at an (x, y) with
      * a zoom of z.
@@ -94,6 +104,13 @@ public class Camera {
         position.m33 += 5.0f;
         updateShaders();
     }
+    
+    /**
+     * @return Current resolution timer.
+     */
+    private double getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
 
     /**
      * Moves the camera dx, dy. NOT to dx, dy.
@@ -124,11 +141,48 @@ public class Camera {
     /**
      * Updates all the shaders this camera is bound to.
      */
-    public void updateShaders() {
+    public void updateShaders() {        
         for (Shader shader : shaders) {
             shader.update("world", position);
             shader.update("projection", projection);
+            shader.update("hsv", hsv);            
         }
+    }
+    
+    /**
+     * A think method?
+     */
+    public void think() {
+        boolean needShaderUpdate = false;
+        
+        needShaderUpdate |= handleHSVTransition();
+        
+        if (needShaderUpdate) {
+            updateShaders();
+        }
+    }
+    
+    private boolean handleHSVTransition() {
+        // Handle any hue transitions in the camera space
+        if (hsvTransitionTime == 0.0f) {
+            return false;
+        }
+        
+        // Figure out how many msec its been since last transition
+        double dt = getTime() - lastFrame;
+        lastFrame = getTime();
+        
+        // Modifiers to HSV values
+        hsv.x += hsvdv.x * dt;
+        hsv.y += hsvdv.y * dt;
+        hsv.z += hsvdv.z * dt;
+
+        // Set the timing
+        if ((getTime() - hsvdt) >= hsvTransitionTime) {
+            hsvTransitionTime = 0.0f;
+        }
+        
+        return true;            
     }
 
     /**
@@ -139,17 +193,42 @@ public class Camera {
     public void bindToShader(Shader shader) {
         shaders.add(shader);
         shader.use();
-        shader.update("world", position);
-        shader.update("projection", projection);
+        updateShaders();
         shader.release();
     }
-
-    public Vector3f hsv = new Vector3f();
-    public Matrix4f position = new Matrix4f();
-    public Matrix4f projection = new Matrix4f();
-    public ArrayList<Shader> shaders = new ArrayList<Shader>();
-
+    
+    /**
+     * Retrieves the X position from the matrix.
+     */
     public int getX() {
         return (int) position.m30;
+    }
+
+    /**
+     * Apply an HSV transition to the scene.
+     */
+    public void hsvTransition(float h, float s, float v, double msec) {                      
+        hsvTransitionTime = msec;
+                                
+        // How we're going to get there
+        hsvdv.x = (Math.abs(hsv.x - h) / msec);
+        hsvdv.y = (Math.abs(hsv.y - s) / msec);
+        hsvdv.z = (Math.abs(hsv.z - v) / msec);
+                
+        // Fix the increments
+        if (hsv.x > h)
+            hsvdv.x *= -1;
+        
+        // Fix the increments        
+        if (hsv.y > s)
+            hsvdv.y *= -1;
+        
+        // Fix the increments
+        if (hsv.z > v)
+            hsvdv.z *= -1;
+
+        // The time we will check
+        hsvdt = getTime();
+        lastFrame = getTime();
     }
 }

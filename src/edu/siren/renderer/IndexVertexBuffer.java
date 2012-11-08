@@ -170,6 +170,7 @@ public class IndexVertexBuffer implements Drawable {
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboid);
 
         // Draw the triangles
+        //GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK,GL11.GL_LINE);
         GL11.glDrawElements(GL11.GL_TRIANGLES, indexCount,
                 GL11.GL_UNSIGNED_BYTE, 0);
 

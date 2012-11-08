@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -29,6 +30,12 @@ public class World {
     public Shader shader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
 
+    public enum Environment {
+        MORNING, AFTERNOON, DUSK, NIGHT
+    };
+
+    private Environment currentEnvironment = Environment.AFTERNOON;
+    
     /**
      * Constructs a new world of a given width and height. Note that this
      * does not limit the size of the world, just defines an initial size.
@@ -72,6 +79,29 @@ public class World {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Environment transitions. These HSV values correspond to an environment.
+     * Additional effects can be created by simply setting a new state.
+     */
+    public void changeEnvironment(Environment environment, double msec) {
+        currentEnvironment = environment;
+        switch (environment) {
+        case MORNING:
+            camera.hsvTransition(0.75f, 0.75f, 0.75f, msec);
+            break;
+        case AFTERNOON:
+            camera.hsvTransition(1.0f, 1.0f, 1.0f, msec);
+            break;
+        case DUSK:
+            camera.hsvTransition(0.50f, 0.50f, 0.75f, msec);
+            break;
+        case NIGHT:
+            camera.hsvTransition(0.5f, 0.15f, 0.5f, msec);
+            break;
+        }
+    }
+    
 
     /**
      * Draws the layers, followed by the entities, and then the Hud
@@ -80,9 +110,12 @@ public class World {
         for (Layer layer : layers) {
             layer.draw();
         }
+        
         for (Entity entity : entities) {
             entity.draw();
         }
+        
+        camera.think();
     }
 
     /**
@@ -110,6 +143,10 @@ public class World {
         player.bindCamera(this.camera);
         player.setWorld(this);
         entities.add(player);
+    }
+
+    public Environment getCurrentEnvironment() {
+        return currentEnvironment;
     }
 
 }
