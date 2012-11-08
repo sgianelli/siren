@@ -1,4 +1,4 @@
-package edu.siren.renderer.tests;
+package edu.siren.tests.renderer;
 
 import java.io.IOException;
 import java.util.Random;
@@ -9,8 +9,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import edu.siren.audio.AudioUtil;
-import edu.siren.core.Tile;
-import edu.siren.core.World;
+import edu.siren.core.tile.Tile;
+import edu.siren.game.World;
 import edu.siren.game.characters.Villager;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.FontFrame;

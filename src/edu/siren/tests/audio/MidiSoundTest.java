@@ -1,4 +1,4 @@
-package edu.siren.audio.tests;
+package edu.siren.tests.audio;
 
 import java.io.IOException;
 

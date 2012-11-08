@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL13;
 
-import edu.siren.core.Rectangle;
+import edu.siren.core.geom.Rectangle;
 
 /**
  * A Font is a 32-bit RGBA PNG font-sprite sheet. Any sprite sheet can be

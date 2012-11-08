@@ -1,4 +1,4 @@
-package edu.siren.renderer.tests;
+package edu.siren.tests.renderer;
 
 import java.io.IOException;
 import java.util.Random;
@@ -7,8 +7,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import edu.siren.core.Layer;
-import edu.siren.core.Tile;
+import edu.siren.core.tile.Layer;
+import edu.siren.core.tile.Tile;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;

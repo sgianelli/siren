@@ -1,8 +1,10 @@
-package edu.siren.core;
+package edu.siren.core.sprite;
 
 import java.util.ArrayList;
 
 import org.lwjgl.Sys;
+
+import edu.siren.core.geom.Rectangle;
 
 /**
  * An Animation is a collection of AnimationFrames that provides the
@@ -56,5 +58,13 @@ public class Animation {
             dt = getTime();
         }
         currentFrame.draw(x, y);
+    }
+
+    public Rectangle getRect() {
+        if (currentFrame == null) {
+            return new Rectangle(0, 0, 0, 0);
+        }
+        
+        return currentFrame.bounds;
     }
 }

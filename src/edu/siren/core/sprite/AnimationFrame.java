@@ -1,6 +1,9 @@
-package edu.siren.core;
+package edu.siren.core.sprite;
 
 import java.io.IOException;
+
+import edu.siren.core.geom.Rectangle;
+import edu.siren.core.tile.Tile;
 
 /**
  * An AnimationFrame is a single frame with an associated sprite and time.
