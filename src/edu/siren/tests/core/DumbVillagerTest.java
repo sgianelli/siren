@@ -14,7 +14,7 @@ import edu.siren.renderer.Screen;
 public class DumbVillagerTest {
     Screen screen;
 
-    DumbVillagerTest() throws LWJGLException {
+    DumbVillagerTest() throws LWJGLException, IOException {
         screen = new Screen("Dumb Villager Test", 1280, 1024);
         screen.sync = 60;
 

@@ -12,7 +12,7 @@ import edu.siren.core.tile.Tile;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
-import edu.siren.renderer.Gui;
+import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
 
@@ -30,7 +30,7 @@ public class TileStressTest {
         Random random = new Random();
         Layer layer = new Layer(BufferType.STATIC);
         layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
-        Gui gui = new Gui();
+        Perspective2D gui = new Perspective2D();
         Shader shader = new Shader("res/tests/glsl/gui.vert",
                 "res/tests/glsl/gui.frag");
         gui.bindToShader(shader);
