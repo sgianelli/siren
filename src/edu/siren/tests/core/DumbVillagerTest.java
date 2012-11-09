@@ -14,7 +14,7 @@ import edu.siren.renderer.Screen;
 public class DumbVillagerTest {
     Screen screen;
 
-    DumbVillagerTest() throws LWJGLException {
+    DumbVillagerTest() throws LWJGLException, IOException {
         screen = new Screen("Dumb Villager Test", 1280, 1024);
         screen.sync = 60;
 
@@ -51,7 +51,6 @@ public class DumbVillagerTest {
                 y = 0;
             }
 
-            world.shader.use();
             if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
                 world.camera.zoomIn();
             } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
@@ -61,7 +60,6 @@ public class DumbVillagerTest {
             screen.clear();
             world.camera.move(x, y);
             world.draw();
-            world.shader.release();
             screen.update();
         }
         screen.cleanup();

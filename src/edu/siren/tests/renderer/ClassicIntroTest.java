@@ -15,7 +15,7 @@ import edu.siren.game.characters.Villager;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.FontFrame;
 import edu.siren.renderer.FontSequence;
-import edu.siren.renderer.Gui;
+import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
 import edu.siren.renderer.Util;
@@ -40,7 +40,7 @@ public class ClassicIntroTest {
         }
         
         // Bind Gui and its shader
-        Gui gui = new Gui();
+        Perspective2D gui = new Perspective2D();
         Shader shader = new Shader("res/tests/glsl/gui.vert",
                 "res/tests/glsl/gui.frag");
         gui.bindToShader(shader);
@@ -74,9 +74,7 @@ public class ClassicIntroTest {
         while (screen.isOpened()) {
             screen.clear();
             
-            world.shader.use();
             world.draw();
-            world.shader.release();
 
             if (intro) {
                 shader.use();

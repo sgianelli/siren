@@ -21,6 +21,7 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected Layer parent;
     protected Rectangle bounds;
     protected ArrayList<Drawable> tiles;
+    protected ArrayList<TriggerTile> triggerTiles;
     protected Set<Layer> children;
     protected boolean valid = false;
 
@@ -35,6 +36,7 @@ public class Layer implements Comparable<Layer>, Drawable {
         priority = 0;
         this.type = type;
         this.tiles = new ArrayList<Drawable>();
+        this.triggerTiles = new ArrayList<TriggerTile>();
     }
 
     /**
@@ -43,8 +45,18 @@ public class Layer implements Comparable<Layer>, Drawable {
      */
     public void addTile(Tile... tiles) {
         for (Tile tile : tiles) {
+            TriggerTile triggerable = null;
+            if (tile instanceof TriggerTile) {
+                triggerable = (TriggerTile) tile;
+            }
+            
             bounds.extend(tile.bounds);
-            this.tiles.add(tile);
+            
+            if (triggerable != null) {
+                this.triggerTiles.add(triggerable);
+            } else {
+                this.tiles.add(tile);
+            }
         }        
     }
 
@@ -54,6 +66,10 @@ public class Layer implements Comparable<Layer>, Drawable {
      */
     public void draw() {
         for (Drawable tile : tiles) {
+            tile.draw();
+        }
+        
+        for (TriggerTile tile : triggerTiles) {
             tile.draw();
         }
     }

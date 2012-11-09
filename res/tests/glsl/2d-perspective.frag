@@ -1,9 +1,9 @@
-#version 150
+#version 330
 
 uniform sampler2D diffuse;
 in vec4 Color;
 in vec2 Tex;
-out vec4 outColor;
+layout(location = 0) out vec4 outColor;
 
 void main()
 {

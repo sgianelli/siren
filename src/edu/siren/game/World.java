@@ -1,6 +1,9 @@
 package edu.siren.game;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -10,6 +13,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL30;
 
 import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
@@ -17,6 +23,7 @@ import edu.siren.core.tile.TriggerTile;
 import edu.siren.game.entity.Entity;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
+import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
 
 /**
@@ -29,8 +36,15 @@ import edu.siren.renderer.Shader;
 public class World {
     private Set<Layer> layers;
     public Camera camera = new Camera(512.0f / 448.0f);
-    public Shader shader;
+    public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
+    
+    // FBO specific entries
+    // TODO (justinvh): This shouldn't be here.
+    private int fboid = -1, fbotid = -1;
+    private Perspective2D fboPerspective = new Perspective2D();
+    private Shader fboShader = null;
+    private Tile fboTile = new Tile(0.0f, 0.0f, 640.0f, 480.0f);
 
     public enum Environment {
         MORNING, AFTERNOON, DUSK, NIGHT
@@ -41,44 +55,32 @@ public class World {
     /**
      * Constructs a new world of a given width and height. Note that this
      * does not limit the size of the world, just defines an initial size.
+     * @throws IOException 
+     * @throws LWJGLException 
      */
-    public World(int width, int height) {
-        try {
-            layers = new TreeSet<Layer>();
-            Layer layer = new Layer(BufferType.STATIC);
-            layer.addTile(new Tile("res/tests/img/grass.png", -width/2, -height/2, width,
-                    height));
-            layers.add(layer);
-            Random random = new Random();
-            
-            Keyboard.create();
-            Mouse.create();
-            
-            for (int i = 0; i < 500; i++) {
-                int x = random.nextInt(width) - random.nextInt(width*2);
-                int y = random.nextInt(height) - random.nextInt(height*2);
-                Tile tile = new TriggerTile(x, y, 64, 64, null);
-                layer.addTile(tile);
-            }
+    public World(int width, int height) throws IOException, LWJGLException {
+        // First bind the keyboard and mouse via LWJGL
+        Keyboard.create();
+        Mouse.create();
 
-            for (int i = 0; i < 100; i++) {
-                int x = random.nextInt(width) - random.nextInt(width*2);
-                int y = random.nextInt(height) - random.nextInt(height*2);
-                Tile tile = new Tile("res/tests/img/tree.png", x, y,
-                        64.0f, 100.0f, 1, 1);
-                layer.addTile(tile);
-            }
+        // Create a default layer with some grass on it
+        layers = new TreeSet<Layer>();        
+        Layer layer = new Layer(BufferType.STATIC);
+        layer.addTile(new Tile("res/tests/img/grass.png", 
+                      -width/2, -height/2, width, height));
+        layers.add(layer);               
 
-            shader = new Shader("res/tests/glsl/basic.vert",
-                    "res/tests/glsl/basic.frag");
-            camera.position.m33 = 100.0f;
-            camera.position.m30 = 0.0f;
-            camera.bindToShader(shader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
+        // Create a default world shader for normal camera transforms.
+        worldShader = new Shader("res/tests/glsl/basic.vert",
+                                 "res/tests/glsl/basic.frag");        
+        camera.bindToShader(worldShader);
+
+        // Create a default 2D perspective for drawing the FBO
+        fboShader = new Shader("res/tests/glsl/2d-perspective.vert",
+                               "res/tests/glsl/2d-perspective.frag");
+        fboPerspective.bindToShader(fboShader);
+        fboTile.createInvertIndexVertexBuffer(1, 1);       
+        generateFBO();
     }
     
     /**
@@ -103,20 +105,73 @@ public class World {
         }
     }
     
+    /**
+     * It probably doesn't seem reasonable to generate an FBO here, but it
+     * is actually a necessary evil since our IVB are individual and we want
+     * to draw the entire scene (including entities) to the FBO
+     */
+    private void generateFBO() {
+        // Allocate an actual frame buffer (wtf lines)
+        IntBuffer buffer = ByteBuffer.allocateDirect(1 * 4).order(ByteOrder.nativeOrder()).asIntBuffer();
+        GL30.glGenFramebuffers(buffer);
+        fboid = buffer.get();
+        
+        // Generate a new texture to render to
+        fbotid = GL11.glGenTextures();
+        GL13.glActiveTexture(fbotid);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbotid);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);        
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, 640, 480,
+                0, GL11.GL_RGBA, GL11.GL_INT, (ByteBuffer) null);
+
+        // Bind the FBO
+        GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
+        GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER, GL30.GL_COLOR_ATTACHMENT0,
+                GL11.GL_TEXTURE_2D, fbotid, 0);      
+        
+        fboTile.ivb.textureIDs = new int[2];
+        fboTile.ivb.textureIDs[0] = GL13.GL_TEXTURE0;
+        fboTile.ivb.textureIDs[1] = fbotid;
+        
+        GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
+    }
+
+    
 
     /**
      * Draws the layers, followed by the entities, and then the Hud
      */
     public void draw() {
-        for (Layer layer : layers) {
-            layer.draw();
-        }
+        // Initial pass for the content
+        worldShader.use();
+        {            
+            // If the FBO is enabled, then we want to render to it
+            if (fboid != -1) {
+                GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
+                GL11.glViewport(0, 0, 640, 480);
+            } 
+            
+            for (Layer layer : layers) {
+                layer.draw();
+            }
+            
+            for (Entity entity : entities) {
+                entity.draw();
+            }
+            
+            camera.think();
+        }                
+        worldShader.release();
         
-        for (Entity entity : entities) {
-            entity.draw();
+        // The FBO pass. Take our FBO texture and draw it
+        if (fboid != -1) {
+            fboShader.use();              
+            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
+            GL11.glViewport(0, 0, 640, 480);
+            fboTile.draw();
+            fboShader.release();
         }
-        
-        camera.think();
     }
 
     /**

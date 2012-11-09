@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import org.lwjgl.util.vector.Matrix4f;
 
 /**
- * A Gui object is similiar to a Camera in that it defines an othrographic
- * perspective, except for the Gui it defines a fixed 640x480 projection
+ * A Perspective2D object is similar to a Camera in that it defines an 
+ * othrographic perspective, except for the Perspective2D it defines a fixed 
+ * 640x480 projection
  * suitable for drawing HUD-like components to the screen.
  *
  * @see edu.siren.renderer.Camera
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class Gui {
+public class Perspective2D {
 
     /**
      * Constructs a new Gui object with a othographic perspective of
      * 640x480.
      */
-    public Gui() {
+    public Perspective2D() {
         ortho(0, 640, 0, 480, -1, 1);
     }
 
@@ -26,10 +27,10 @@ public class Gui {
      * Constructs a new Gui object with a defined othographic perspective
      * outside of 640x480
      */
-    public Gui(float width, float height) {
+    public Perspective2D(float width, float height) {
         ortho(0, width, 0, height, -1, 1);
     }
-
+    
     /**
      * Sets the orthographic projection of the camera.
      *
@@ -74,5 +75,5 @@ public class Gui {
     }
 
     public Matrix4f projection = new Matrix4f();
-    public ArrayList<Shader> shaders = new ArrayList<Shader>();
+    public ArrayList<Shader> shaders = new ArrayList<Shader>();    
 }
