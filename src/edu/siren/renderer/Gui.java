@@ -74,5 +74,5 @@ public class Gui {
     }
 
     public Matrix4f projection = new Matrix4f();
-    public ArrayList<Shader> shaders = new ArrayList<Shader>();
+    public ArrayList<Shader> shaders = new ArrayList<Shader>();    
 }

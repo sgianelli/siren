@@ -108,7 +108,7 @@ public class Tile implements Drawable {
     /**
      * Create the index vertex buffer object with (s, t) tile texture mapping.
      */
-    protected void createIndexVertexBuffer(float s, float t) {
+    public void createIndexVertexBuffer(float s, float t) {
         float x, y;
         
         // Corner 1
