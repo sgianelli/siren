@@ -51,7 +51,6 @@ public class DumbVillagerTest {
                 y = 0;
             }
 
-            world.shader.use();
             if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
                 world.camera.zoomIn();
             } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
@@ -61,7 +60,6 @@ public class DumbVillagerTest {
             screen.clear();
             world.camera.move(x, y);
             world.draw();
-            world.shader.release();
             screen.update();
         }
         screen.cleanup();

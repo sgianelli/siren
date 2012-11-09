@@ -74,9 +74,7 @@ public class ClassicIntroTest {
         while (screen.isOpened()) {
             screen.clear();
             
-            world.shader.use();
             world.draw();
-            world.shader.release();
 
             if (intro) {
                 shader.use();

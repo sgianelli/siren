@@ -1,7 +1,9 @@
 package edu.siren.renderer;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -31,6 +33,8 @@ public class IndexVertexBuffer implements Drawable {
     public int type = -1;
     public int vaoid = -1;
     public int vboid = -1;
+    public int fboid = -1;
+    public int fbotid = -1;
     public int textureIDs[] = null;
 
     /**
@@ -101,7 +105,7 @@ public class IndexVertexBuffer implements Drawable {
             textureIDs[j++] = texture.getTextureID();
         }
     }
-
+       
     /**
      * Generates the vertex-array and vertex-buffer objects. This function
      * expects that the vertex objects are in a stride that is defined in
@@ -141,6 +145,9 @@ public class IndexVertexBuffer implements Drawable {
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indices,
                 GL15.GL_STATIC_DRAW);
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+        
+        // Try to generate FBO
+        // generateFBO();
 
         // Buffer is now ready to draw
         bound = true;
@@ -151,13 +158,14 @@ public class IndexVertexBuffer implements Drawable {
      */
     public void draw() {
         // Try to load and bind the textures
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0); 
         if (textureIDs != null) {
             for (int i = 0; i < textureIDs.length;) {
                 GL13.glActiveTexture(textureIDs[i++]);
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureIDs[i++]);
             }
-        }
-
+        }   
+        
         // Active the VAO
         GL30.glBindVertexArray(vaoid);
 
@@ -179,6 +187,6 @@ public class IndexVertexBuffer implements Drawable {
         GL20.glDisableVertexAttribArray(0);
         GL20.glDisableVertexAttribArray(1);
         GL20.glDisableVertexAttribArray(2);
-        GL30.glBindVertexArray(0);
+        GL30.glBindVertexArray(0);        
     }
 }

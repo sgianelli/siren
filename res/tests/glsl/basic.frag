@@ -1,10 +1,10 @@
-#version 150
+#version 330
 
 uniform sampler2D diffuse;
 uniform vec3 hsv;
 in vec4 Color;
 in vec2 Tex;
-out vec4 outColor;
+layout(location = 0) out vec4 outColor;
 
 vec4 rgb2hsv(vec4 rgba)
 {

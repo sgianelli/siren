@@ -18,7 +18,7 @@ import org.lwjgl.util.vector.Vector4f;
  *
  */
 public class Camera {
-    public boolean enable = true;
+    public boolean enable = true, forceUpdate = false;
     public Vector3f hsv = new Vector3f(1.0f, 1.0f, 1.0f);
     public Matrix4f position = new Matrix4f();
     public Matrix4f projection = new Matrix4f();
@@ -141,7 +141,8 @@ public class Camera {
     /**
      * Updates all the shaders this camera is bound to.
      */
-    public void updateShaders() {        
+    public void updateShaders() {   
+        forceUpdate = true;
         for (Shader shader : shaders) {
             shader.update("world", position);
             shader.update("projection", projection);
@@ -157,8 +158,9 @@ public class Camera {
         
         needShaderUpdate |= handleHSVTransition();
         
-        if (needShaderUpdate) {
+        if (needShaderUpdate || forceUpdate) {
             updateShaders();
+            forceUpdate = false;
         }
     }
     

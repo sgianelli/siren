@@ -41,9 +41,7 @@ public class ControllableCharacterTest {
         Keyboard.create();
         while (screen.isOpened()) {
             screen.clear();   
-            {
-    
-                world.shader.use();    
+            {    
                 if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
                     world.camera.zoomIn();
                 } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
@@ -63,7 +61,6 @@ public class ControllableCharacterTest {
                 }
                                     
                 world.draw();
-                world.shader.release();
             }
             {
                 shader.use();   
