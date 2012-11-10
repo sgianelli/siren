@@ -456,18 +456,18 @@ public abstract class Element implements Comparable<Element> {
                 }
             }            
         }
-        
-        state.lastClickState = click;
-        
+                
         // Now, all of our base cases are covered. If we were originally
         // not in bounds, then ditch out.
         if (!inBounds) {
+            state.lastClickState = click;
             return false;
         }
 
         // Ensure state propagates
         boolean mouseDown = click && !state.lastClickState;
         boolean mouseUp = !click && state.lastClickState;
+        state.lastClickState = click;
         
         // Check state for mouse down
         if (mouseDown) {             
