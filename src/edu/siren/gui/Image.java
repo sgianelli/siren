@@ -30,6 +30,7 @@ public class Image extends Element {
      */
     public Image(String pngFile, String title) throws IOException {
         this.imageState = new ImageState();
+        this.state.name = "Image";
         this.imageState.font = new Font("res/tests/fonts/nostalgia.png", 24);
         titleText(title);
         this.background(pngFile);

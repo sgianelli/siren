@@ -2,6 +2,10 @@ package edu.siren.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.lwjgl.input.Mouse;
 
@@ -9,12 +13,12 @@ import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
 
-public class Gui {
+public class Gui extends Element {
     public Font font;
     public Perspective2D perspective;
     public Shader shader;
     
-    public ArrayList<Element> elements;
+    public List <Element> elements;
     
     public Gui() throws IOException {
         perspective = new Perspective2D();
@@ -25,8 +29,17 @@ public class Gui {
         elements = new ArrayList<Element>();
     }
     
-    public void add(Element element) {
+    public Element add(Element element, int priority) {
+        element.priority(priority);
+        element.parent = this;
         elements.add(element);
+        Collections.sort(elements);
+        return element;
+    }
+    
+    public Element add(Element element) {
+        add(element, 0);
+        return element;
     }
     
     public void checkEvents() {

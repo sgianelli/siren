@@ -2,13 +2,13 @@ package edu.siren.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import org.lwjgl.Sys;
+import java.util.Collections;
+import java.util.List;
 
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
 
-public abstract class Element {
+public abstract class Element implements Comparable<Element> {
     public enum Position { ABSOLUTE, RELATIVE };
     
     class Events {
@@ -27,25 +27,51 @@ public abstract class Element {
         public Position positioning = Position.ABSOLUTE;
         public float x, y, w, h;
         public Animation background;
-        private boolean lastClickState = false;
-        private boolean lastEntered = false;
+        public boolean lastClickState = false;
+        public boolean lastEntered = false;
+        public boolean display = true;
+        public boolean active = true;
         public String name = "Unknown";
+        public int priority = 0;
     };
     
     public Events events = new Events();
     public State state = new State();
     public Element parent = null;
-    public ArrayList<Element> children = new ArrayList<Element>();
+    public List<Element> children = new ArrayList<Element>();
+    
+    /**
+     * Comparator
+     */
+    public int compareTo(Element other) {
+        if (other.priority() > priority()) {
+            return -1;
+        } else if (other.priority() < priority()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     
     /**
      * Add support for adding children to this element.
      */
-    public Element add(Element child) {
+    public Element add(Element child, int priority) {
         if (this.equals(child)) {
             throw new IllegalArgumentException("Circular dependency.");
         }
         child.parent = this;
+        child.state.priority = priority;
         this.children.add(child);
+        reprioritize();
+        return child;
+    }
+    
+    /**
+     * Add an element with the default priority
+     */
+    public Element add(Element child) {
+        add(child, child.state.priority);
         return child;
     }
     
@@ -91,7 +117,57 @@ public abstract class Element {
     public String name() {
         return this.state.name;
     }
+    
+    /**
+     * Hide the element.
+     * A hidden element will not draw, but the events may fire.
+     * This cascades to its children.
+     */
+    public void hide() {
+        this.state.display = false;
+    }
+    
+    public boolean hidden() {
+        return !this.state.display;
+    }
+    
+    /**
+     * Show the element
+     * A shown element will draw
+     */
+    public void show() {
+        this.state.display = true;
+    }
+    
+    public boolean shown() {
+        return this.state.display;
+    }
+    
+    /**
+     * Disable the element
+     * A disabled element will still draw, but the events will not fire.
+     * This cascades to its children.
+     */
+    public void disable() {
+        this.state.active = false;
+    }
+    
+    public boolean disabled() {
+        return !this.state.active;
+    }
+    
+    /**
+     * Enable the element
+     * An enabled element will fire all its events
+     */
+    public void enable() {
+        this.state.active = true;
+    }
         
+    public boolean enabled() {
+        return this.state.active;
+    }
+
     /**
      * Set the positioning of the element.
      */
@@ -161,6 +237,7 @@ public abstract class Element {
 
     public void w(float w) {
         this.state.w = w;
+        this.state.background.width(w);
     }
     
     public float w() {
@@ -169,6 +246,7 @@ public abstract class Element {
     
     public void h(float h) {
         this.state.h = h;
+        this.state.background.height(h);
     }
     
     public float h() {
@@ -181,13 +259,19 @@ public abstract class Element {
     }
     
     public void wh(float w, float h) {
-        this.w(w);
-        this.h(h);
+        this.state.w = w;
+        this.state.h = h;
+        if (this.state.background != null)
+            this.state.background.dimensions(w, h);
     }    
     
     public void xywh(float x, float y, float w, float h) {
-        xy(x, y);
-        wh(w, h);
+        this.state.x = x;
+        this.state.y = y;
+        this.state.w = w;
+        this.state.h = h;
+        if (this.state.background != null)
+            this.state.background.dimensions(w, h);
     }
     
     /**
@@ -197,7 +281,30 @@ public abstract class Element {
         this.state.background = new Animation("Background");
         
         for (AnimationFrame frame : frames) {
+            if (this.state.w != 0 && this.state.h != 0) {
+                frame.bounds.width = this.state.w;
+                frame.bounds.height = this.state.h;
+            }
             this.state.background.addFrame(frame);
+        }
+    }
+    
+    public void priority(int treePriority) {
+        this.state.priority = treePriority;
+        if (this.parent != null) {
+            this.parent.reprioritize();
+        }
+    }
+    
+    public int priority() {
+        return this.state.priority;
+    }
+
+    private void reprioritize() {
+        System.out.println(this.state.name + ": Reprioritizing children");
+        Collections.sort(this.children);
+        for (Element element : this.children) {
+            System.out.println(element);
         }
     }
 
@@ -206,8 +313,7 @@ public abstract class Element {
      * @throws IOException 
      */
     public void background(String pngFile) throws IOException {
-        this.state.background = new Animation("Background");
-        this.state.background.addFrame(new AnimationFrame(pngFile, 999999));
+        this.background(new AnimationFrame(pngFile, 999999));
     }
     
     /**
@@ -220,6 +326,9 @@ public abstract class Element {
      * Handle the drawing of the base element.
      */
     public void draw() {
+        if (hidden())
+            return;
+        
         float x = this.realX();
         float y = this.realY();
         
@@ -235,6 +344,8 @@ public abstract class Element {
     }
 
     public boolean checkEvents(float mx, float my, boolean click) {
+        if (disabled())
+            return false;
         
         // Check the children first
         for (Element child : children) {
@@ -244,14 +355,10 @@ public abstract class Element {
                 return true;
             }
         }
-
-        // Check the current node
-        float x = realX(), y = realY();
-        float t = y + h(), b = y;
-        float l = x, r = x + w();
         
-        // If we're not in the bounding box, then just fail
-        if (mx <= l || mx >= r || my <= b || my >= t) {
+        boolean inBounds = boundsCheck(realX(), realY());
+
+        if (!inBounds) {
             if (!state.lastEntered)
                 return false;
             
@@ -302,5 +409,21 @@ public abstract class Element {
         
         return false;
     }
+
+    public boolean boundsCheck(float mx, float my) {
+        // Check the current node
+        float x = realX(), y = realY();
+        float t = y + h(), b = y;
+        float l = x, r = x + w();
+        
+        // If we're not in the bounding box, then just fail
+        return mx > l && mx < r && my > b && my < t;
+    }
+    
+    public String toString() {
+        return "<" + this.state.name + ": (" + this.x() + "|" 
+                   + this.realX() + ", " + this.y() + "|" + this.realY()
+                   + "), Priority: " + this.priority() + ">";
+    }                  
     
 }

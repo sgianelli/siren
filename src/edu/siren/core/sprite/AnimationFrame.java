@@ -29,11 +29,31 @@ public class AnimationFrame extends Tile {
      */
     public void draw(float x, float y) {
         if (lastX != x || lastY != y) {
-            bounds = new Rectangle(x, y, bounds.width, bounds.height);
-            createIndexVertexBuffer(1, 1);
+            invalidateCache(x, y);
             lastX = x;
             lastY = y;
         }
         draw();
+    }
+    
+    public void invalidateCache(float x, float y) {
+        bounds = new Rectangle(x, y, bounds.width, bounds.height);
+        createIndexVertexBuffer(1, 1);
+    }
+
+    public void dimensions(float w, float h) {
+        bounds.width = w;
+        bounds.height = h;
+        invalidateCache(bounds.x, bounds.y);
+    }
+
+    public void height(float h) {
+        bounds.height = h;
+        invalidateCache(bounds.x, bounds.y);
+    }
+
+    public void width(float w) {
+        bounds.height = w;
+        invalidateCache(bounds.x, bounds.y);
     }
 }

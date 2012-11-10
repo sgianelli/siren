@@ -7,6 +7,7 @@ import org.lwjgl.LWJGLException;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
 import edu.siren.gui.Image;
+import edu.siren.gui.Text;
 import edu.siren.gui.Window;
 import edu.siren.gui.Element;
 import edu.siren.renderer.Screen;
@@ -89,19 +90,44 @@ public class WindowTest {
             Image logo = new Image("res/tests/gui/picture.png", "A Picture");
             {
                 logo.positioning(Element.Position.RELATIVE);
-                logo.position(100, 100);
+                logo.position(100, 200);
+                logo.priority(1);
                 basic.add(logo);
             }
 
-            /*
             Text text = new Text("Hello, world!");
             {
-                text.positioning(Element.RELATIVE);
+                text.positioning(Element.Position.RELATIVE);
                 text.position(25, 25);
-                text.fontScaling(1);                
-                window.add(text);
+                text.fontScaling(1);  
+                text.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        System.out.println("Entered text area");
+                        return false;
+                    }
+                });
+                basic.add(text);
             }
-            
+
+            Text textBg = new Text("Click me to increase\nmy rendering priority.\nCurrently: 0");
+            {
+                textBg.positioning(Element.Position.ABSOLUTE);
+                textBg.position(40, 400);
+                textBg.background("res/tests/gui/black.png");
+                textBg.fontScaling(1);  
+                textBg.padding(20.0f, 20.0f);
+                textBg.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        element.priority(element.priority() + 1);
+                        Text t = (Text) element;
+                        t.text("Click me to increase\nmy rendering priority.\nCurrently: " + element.priority());
+                        return false;
+                    }
+                });
+                basic.add(textBg);
+            }
+
+            /*
             Input input = new TextInput();
             {
                 input.positioning(Element.RELATIVE);
