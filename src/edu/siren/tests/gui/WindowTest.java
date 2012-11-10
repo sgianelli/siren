@@ -6,6 +6,7 @@ import org.lwjgl.LWJGLException;
 
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
+import edu.siren.gui.Image;
 import edu.siren.gui.Window;
 import edu.siren.gui.Element;
 import edu.siren.renderer.Screen;
@@ -85,15 +86,14 @@ public class WindowTest {
                 basic.add(child);
             }
             
-            /*
-            Image logo = new Image();
+            Image logo = new Image("res/tests/gui/picture.png", "A Picture");
             {
-                logo.positioning(Element.RELATIVE);
+                logo.positioning(Element.Position.RELATIVE);
                 logo.position(100, 100);
-                logo.dimensions(50, 50);
-                window.add(logo);
+                basic.add(logo);
             }
-            
+
+            /*
             Text text = new Text("Hello, world!");
             {
                 text.positioning(Element.RELATIVE);

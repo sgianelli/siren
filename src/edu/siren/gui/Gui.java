@@ -46,12 +46,14 @@ public class Gui {
     }
     
     public void draw() {
-        checkEvents();
-        
         shader.use();
+        
         for (Element element : elements) {
             element.draw();
         }
+        
+        checkEvents();
+        
         shader.release();
     }
 }

@@ -3,6 +3,8 @@ package edu.siren.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.Sys;
+
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
 
@@ -10,13 +12,14 @@ public abstract class Element {
     public enum Position { ABSOLUTE, RELATIVE };
     
     class Events {
-        public ArrayList<ElementEvent> mouseHover;
-        public ArrayList<ElementEvent> mouseDown;        
-        public ArrayList<ElementEvent> mouseUp;
+        public ArrayList<ElementEvent> mouseHover, mouseDown, mouseUp;
+        public ArrayList<ElementEvent> mouseEnter, mouseExit;
         public Events() {
             mouseHover = new ArrayList<ElementEvent>();
             mouseDown = new ArrayList<ElementEvent>();
             mouseUp = new ArrayList<ElementEvent>();
+            mouseEnter = new ArrayList<ElementEvent>();
+            mouseExit = new ArrayList<ElementEvent>();
         }
     };
     
@@ -25,6 +28,7 @@ public abstract class Element {
         public float x, y, w, h;
         public Animation background;
         private boolean lastClickState = false;
+        private boolean lastEntered = false;
         public String name = "Unknown";
     };
     
@@ -37,6 +41,9 @@ public abstract class Element {
      * Add support for adding children to this element.
      */
     public Element add(Element child) {
+        if (this.equals(child)) {
+            throw new IllegalArgumentException("Circular dependency.");
+        }
         child.parent = this;
         this.children.add(child);
         return child;
@@ -61,6 +68,21 @@ public abstract class Element {
      */
     public void onMouseUp(ElementEvent event) {
         events.mouseUp.add(event);
+    }
+
+    /**
+     * Create an event to handle when the mouse clicks this element.
+     */
+    public void onMouseEnter(ElementEvent event) {
+        events.mouseEnter.add(event);
+    }
+
+    
+    /**
+     * Create an event to handle when the mouse clicks this element.
+     */
+    public void onMouseExit(ElementEvent event) {
+        events.mouseExit.add(event);
     }
 
     /**
@@ -229,13 +251,33 @@ public abstract class Element {
         float l = x, r = x + w();
         
         // If we're not in the bounding box, then just fail
-        if (mx <= l || mx >= r || my <= b || my >= t)
-            return false;
+        if (mx <= l || mx >= r || my <= b || my >= t) {
+            if (!state.lastEntered)
+                return false;
             
+            state.lastEntered = false;
+            for (ElementEvent event : this.events.mouseExit) {
+                if (event.event(this))
+                    break;
+            }
+                
+            return false;
+        }
+                
+        // Handle mouse entered
+        if (!state.lastEntered) {
+            for (ElementEvent event : this.events.mouseEnter) {
+                if (event.event(this))
+                    break;
+            }
+        }
+        
+        state.lastEntered = true;
+                    
         // Handle mouse hover
         for (ElementEvent event : this.events.mouseHover) {
             if (event.event(this))
-                return true;
+                break;
         }
 
         // Ensure state propagates
@@ -247,17 +289,18 @@ public abstract class Element {
         if (mouseDown) {             
             for (ElementEvent event : this.events.mouseDown) {
                 if (event.event(this))
-                    return true;
+                    break;
             }
             
         // Handle state for mouse release
         } else if (mouseUp) {
             for (ElementEvent event : this.events.mouseUp) {
                 if (event.event(this))
-                    return true;
+                    break;
             }
         }
         
         return false;
     }
+    
 }
