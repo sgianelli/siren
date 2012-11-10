@@ -14,12 +14,16 @@ public abstract class Element implements Comparable<Element> {
     class Events {
         public ArrayList<ElementEvent> mouseHover, mouseDown, mouseUp;
         public ArrayList<ElementEvent> mouseEnter, mouseExit;
+        public ArrayList<ElementEvent> dragStart, dragging, dragEnd;
         public Events() {
             mouseHover = new ArrayList<ElementEvent>();
             mouseDown = new ArrayList<ElementEvent>();
             mouseUp = new ArrayList<ElementEvent>();
             mouseEnter = new ArrayList<ElementEvent>();
             mouseExit = new ArrayList<ElementEvent>();
+            dragStart = new ArrayList<ElementEvent>();
+            dragging = new ArrayList<ElementEvent>();
+            dragEnd = new ArrayList<ElementEvent>();
         }
     };
     
@@ -33,6 +37,8 @@ public abstract class Element implements Comparable<Element> {
         public boolean active = true;
         public String name = "Unknown";
         public int priority = 0;
+        public boolean draggable = false;
+        public boolean dragging = false;
     };
     
     public Events events = new Events();
@@ -75,6 +81,27 @@ public abstract class Element implements Comparable<Element> {
         return child;
     }
     
+    /**
+     * Handles when the element starts to be drag
+     */
+    public void onDragStart(ElementEvent event) {
+        events.dragStart.add(event);
+    }
+
+    /**
+     * Handles when the element is dragging
+     */
+    public void onDragging(ElementEvent event) {
+        events.dragging.add(event);
+    }
+
+    /**
+     * Handles when the element stops being dragged
+     */
+    public void onDragEnd(ElementEvent event) {
+        events.dragEnd.add(event);
+    }
+
     /**
      * Create a new event to handle when the mouse hovers this element.
      */
@@ -321,6 +348,21 @@ public abstract class Element implements Comparable<Element> {
      */
     public void backgroundColor(float r, float g, float b) {
     }
+
+    /**
+     * A draggable element will move with the mouse on drag
+     */
+    public void draggable(boolean drag) {
+        this.state.draggable = drag;
+    }
+    
+    /**
+     * Get draggable state.
+     */
+    public boolean draggable() {
+        return this.state.draggable;
+    }
+
     
     /**
      * Handle the drawing of the base element.
@@ -343,54 +385,89 @@ public abstract class Element implements Comparable<Element> {
         }
     }
 
-    public boolean checkEvents(float mx, float my, boolean click) {
+    public boolean checkEvents(float mx, float my, float mdx, float mdy, 
+                               boolean click) {
         if (disabled())
             return false;
         
         // Check the children first
         for (Element child : children) {
-            if (child.checkEvents(mx, my, click)) {
+            if (child.checkEvents(mx, my, mdx, mdy, click)) {
                 state.lastClickState = click;
                 System.out.println("Preventing propagation of events");
                 return true;
             }
         }
         
-        boolean inBounds = boundsCheck(realX(), realY());
+        boolean inBounds = boundsCheck(mx, my);
 
-        if (!inBounds) {
-            if (!state.lastEntered)
-                return false;
-            
+        // Dragging causes a bit of oddities.
+        // So, we check if we are in bounds of the current element, if not
+        // Then handle this stuff.
+        if (!inBounds && state.lastEntered) {            
             state.lastEntered = false;
             for (ElementEvent event : this.events.mouseExit) {
                 if (event.event(this))
                     break;
+            }            
+        // If we are in bounds then handle the base cases.
+        // These events always fire
+        } else if (inBounds) {      
+            // Handle mouse entered
+            if (!state.lastEntered) {
+                for (ElementEvent event : this.events.mouseEnter) {
+                    if (event.event(this))
+                        break;
+                }
             }
-                
-            return false;
-        }
-                
-        // Handle mouse entered
-        if (!state.lastEntered) {
-            for (ElementEvent event : this.events.mouseEnter) {
+            
+            state.lastEntered = true;
+                        
+            // Handle mouse hover
+            for (ElementEvent event : this.events.mouseHover) {
                 if (event.event(this))
                     break;
             }
         }
+                
+        // Check drag states
+        // We want to run these even if our mouse goes out of bounds
+        // because the refresh on the mouse will likely be hire then the
+        // sync rate of the game.
+        if (draggable()) {
+            if (inBounds && !state.dragging && click && !state.lastClickState) {
+                state.dragging = true;
+                for (ElementEvent event : this.events.dragStart) {
+                    if (event.event(this))
+                        break;
+                }
+            } else if (click && state.dragging) {
+                state.x += mdx;
+                state.y += mdy;                
+                for (ElementEvent event : this.events.dragging) {
+                    if (event.event(this))
+                        break;
+                }
+            } else if (state.dragging && !click && state.lastClickState) {
+                state.dragging = false;
+                for (ElementEvent event : this.events.dragEnd) {
+                    if (event.event(this))
+                        break;
+                }
+            }            
+        }
         
-        state.lastEntered = true;
-                    
-        // Handle mouse hover
-        for (ElementEvent event : this.events.mouseHover) {
-            if (event.event(this))
-                break;
+        state.lastClickState = click;
+        
+        // Now, all of our base cases are covered. If we were originally
+        // not in bounds, then ditch out.
+        if (!inBounds) {
+            return false;
         }
 
         // Ensure state propagates
         boolean mouseDown = click && !state.lastClickState;
         boolean mouseUp = !click && state.lastClickState;
-        state.lastClickState = click;
         
         // Check state for mouse down
         if (mouseDown) {             
@@ -424,6 +501,83 @@ public abstract class Element implements Comparable<Element> {
         return "<" + this.state.name + ": (" + this.x() + "|" 
                    + this.realX() + ", " + this.y() + "|" + this.realY()
                    + "), Priority: " + this.priority() + ">";
+    }
+
+    public boolean touching(Element other) {
+        float x1 = realX(), y1 = realY();
+        float w1 = w(), h1 = h();
+
+        float x2 = other.realX(), y2 = other.realY();
+        float w2 = other.w(), h2 = other.h();
+        
+        // Create bounding box
+        float xtl1 = x1, ytl1 = y1 + h1;
+        float xbl1 = x1, ybl1 = y1;
+        float xtr1 = x1 + w1, ytr1 = y1 + h1;
+        float xbr1 = x1 + w1, ybr1 = y1;
+
+        // Create bounding box
+        float xtl2 = x2, ytl2 = y2 + h2;
+        float xbl2 = x2, ybl2 = y2;
+        float xtr2 = x2 + w2, ytr2 = y2 + h2;
+        float xbr2 = x2 + w2, ybr2 = y2;
+
+        // Check if TL is touching
+        if (xtl1 >= xtl2 && xtl1 <= xtr2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching
+        if (xtr1 <= xtr2 && xtr1 >= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching
+        if (xbl1 >= xbl2 && xbl1 <= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;
+        
+        // Check if BR is touching
+        if (xbr1 <= xbr2 && xbr1 >= xbl2 &&
+            ybr1 <= ybr2 && ybr1 >= ytr2)
+            return true;
+
+        // Check if TL is touching
+        if (xtl1 >= xtl2 && xtl1 <= xtr2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching
+        if (xtr1 <= xtr2 && xtr1 >= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching
+        if (xbl1 >= xbl2 && xbl1 <= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;
+        
+        // Check if BR is touching (width bounds)
+        if (xbr1 >= xbl2 && xbl1 <= xbl2 &&
+            ybr1 <= ybr2 && ybr1 >= ytr2)
+            return true;
+
+        // Check if TL is touching (width bounds)
+        if (xtr1 >= xtl2 && xtl1 <= xtl2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching (width bounds)
+        if (xtr1 >= xtr2 && xtl1 <= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching (width bounds)
+        if (xbl1 <= xbl2 && xbr1 >= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;        
+        
+        return false;
     }                  
     
 }

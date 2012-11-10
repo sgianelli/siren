@@ -87,14 +87,6 @@ public class WindowTest {
                 basic.add(child);
             }
             
-            Image logo = new Image("res/tests/gui/picture.png", "A Picture");
-            {
-                logo.positioning(Element.Position.RELATIVE);
-                logo.position(100, 200);
-                logo.priority(1);
-                basic.add(logo);
-            }
-
             Text text = new Text("Hello, world!");
             {
                 text.positioning(Element.Position.RELATIVE);
@@ -108,7 +100,6 @@ public class WindowTest {
                 });
                 basic.add(text);
             }
-
             Text textBg = new Text("Click me to increase\nmy rendering priority.\nCurrently: 0");
             {
                 textBg.positioning(Element.Position.ABSOLUTE);
@@ -124,7 +115,38 @@ public class WindowTest {
                         return false;
                     }
                 });
-                basic.add(textBg);
+               basic.add(textBg);
+            }
+            
+            final Image logo = new Image("res/tests/gui/picture.png", "A Picture");
+            {
+                logo.positioning(Element.Position.RELATIVE);
+                logo.position(100, 200);
+                logo.priority(1);
+                logo.draggable(true);
+                basic.add(logo);
+            }
+
+
+            Text dragme = new Text("Drag me (300, 25) !");
+            {
+                dragme.positioning(Element.Position.RELATIVE);
+                dragme.position(300, 25);
+                dragme.fontScaling(1);  
+                dragme.draggable(true);
+                dragme.onDragging(new ElementEvent() {
+                    public boolean event(Element element) {
+                        Text t = (Text) element;
+                        if (element.touching(logo)) {
+                            t.text("I don't like this spot.");
+                        } else {
+                            t.text("Drag me (" + element.x() + ", " + element.y() + ") !");
+                        }                            
+                            
+                        return false;
+                    }
+                });
+                basic.add(dragme);
             }
 
             /*

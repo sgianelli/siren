@@ -45,6 +45,8 @@ public class Gui extends Element {
     public void checkEvents() {
         float x = Mouse.getX();
         float y = Mouse.getY();
+        float dx = Mouse.getDX();
+        float dy = Mouse.getDY();
         boolean click = Mouse.isButtonDown(0);
 
         // Go through the elements
@@ -52,7 +54,7 @@ public class Gui extends Element {
             
             // At any time an event can cause the other events to stop
             // propagating, this means that an event will stop altogether
-            if (element.checkEvents(x, y, click)) {
+            if (element.checkEvents(x, y, dx, dy, click)) {
                 return;
             }
         }

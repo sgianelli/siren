@@ -11,13 +11,15 @@ import edu.siren.renderer.IndexVertexBuffer;
 
 public class Image extends Element {
     class ImageState {
-        String titleText = "";
-        double hoverDt = 0.0;
-        double titleTime = 2000.0;
-        double hoverTime = 0.0;
-        float titleX = 0.0f, titleY = 0.0f;
-        IndexVertexBuffer titleBuffer;
-        Font font;
+        public String titleText = "";
+        public double hoverDt = 0.0;
+        public double titleTime = 2000.0;
+        public double hoverTime = 0.0;
+        public float titleX = 0.0f, titleY = 0.0f;
+        public IndexVertexBuffer titleBuffer;
+        public Font font;
+        public int lastX = 0;
+        public int lastY = 0;
     };
  
     
@@ -44,8 +46,13 @@ public class Image extends Element {
                 if (imageState.titleText == null)
                     return false;
                 
-                if (imageState.hoverDt == 0) {
+                if (imageState.hoverDt == 0 ||
+                    imageState.lastX != Mouse.getX() ||
+                    imageState.lastY != Mouse.getY())
+                {
                     imageState.hoverDt = getTime();
+                    imageState.lastX = Mouse.getX();
+                    imageState.lastY = Mouse.getY();
                 }
                                 
                 double dt = getTime() - imageState.hoverDt;
