@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.lwjgl.Sys;
+
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
 
@@ -15,6 +17,7 @@ public abstract class Element implements Comparable<Element> {
         public ArrayList<ElementEvent> mouseHover, mouseDown, mouseUp;
         public ArrayList<ElementEvent> mouseEnter, mouseExit;
         public ArrayList<ElementEvent> dragStart, dragging, dragEnd;
+        public ArrayList<ElementEvent> draw;
         public Events() {
             mouseHover = new ArrayList<ElementEvent>();
             mouseDown = new ArrayList<ElementEvent>();
@@ -24,6 +27,7 @@ public abstract class Element implements Comparable<Element> {
             dragStart = new ArrayList<ElementEvent>();
             dragging = new ArrayList<ElementEvent>();
             dragEnd = new ArrayList<ElementEvent>();
+            draw = new ArrayList<ElementEvent>();
         }
     };
     
@@ -39,6 +43,7 @@ public abstract class Element implements Comparable<Element> {
         public int priority = 0;
         public boolean draggable = false;
         public boolean dragging = false;
+        public boolean clearChildren;
     };
     
     public Events events = new Events();
@@ -79,6 +84,13 @@ public abstract class Element implements Comparable<Element> {
     public Element add(Element child) {
         add(child, child.state.priority);
         return child;
+    }
+    
+    /**
+     * Handles when the element starts to be drag
+     */
+    public void onDraw(ElementEvent event) {
+        events.draw.add(event);
     }
     
     /**
@@ -368,6 +380,11 @@ public abstract class Element implements Comparable<Element> {
      * Handle the drawing of the base element.
      */
     public void draw() {
+        if (state.clearChildren) {
+            this.children.clear();
+            return;
+        }
+        
         if (hidden())
             return;
         
@@ -381,6 +398,17 @@ public abstract class Element implements Comparable<Element> {
         
         // Draw the children
         for (Element child : children) {
+            boolean noDraw = false;
+            
+            for (ElementEvent event : child.events.draw) {
+                noDraw |= event.event(child);
+                if (noDraw)
+                    break;
+            }
+            
+            if (noDraw)
+                continue;
+            
             child.draw();
         }
     }
@@ -578,6 +606,17 @@ public abstract class Element implements Comparable<Element> {
             return true;        
         
         return false;
-    }                  
+    }       
     
+    public static double getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
+
+    public void toggle() {
+        if (hidden()) {
+            show();
+        } else {
+            hide();
+        }
+    }  
 }

@@ -25,6 +25,10 @@ public class Image extends Element {
     
     ImageState imageState;
     
+    public Image(String pngFile) throws IOException {
+        this(pngFile, null);
+    }        
+    
     /**
      * Creates a new image from `png` that uses `titleText` as the
      * hover text when the image has been hovered for 2 seconds.
@@ -94,12 +98,5 @@ public class Image extends Element {
     
     public String titleText() {
         return this.imageState.titleText;
-    }
-
-    /**
-     * @return Current resolution timer.
-     */
-    public double getTime() {
-        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 }
