@@ -112,5 +112,6 @@ public class Screen {
      */
     public void cleanup() {
         Display.destroy();
+        System.exit(0);
     }
 }

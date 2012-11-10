@@ -145,6 +145,8 @@ public class WindowTest {
             gui.draw();
             screen.update();
         }
+        
+        screen.cleanup();
     }
 
 }
