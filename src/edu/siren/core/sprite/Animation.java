@@ -28,6 +28,13 @@ public class Animation {
         this.name = name;
     }
 
+    public Animation(String name, AnimationFrame... frames) {
+        this.name = name;
+        for (AnimationFrame frame : frames) {
+            this.frames.add(frame);
+        }
+    }
+
     /**
      * Adds a new frame to the animation.
      *
