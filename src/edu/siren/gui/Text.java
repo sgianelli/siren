@@ -62,15 +62,8 @@ public class Text extends Element {
         // If we're not in the bounding box, then just fail
         return mx > l && mx < r && my > b && my < t;
     }
-
     
-    public void draw() {
-        if (hidden())
-            return;
-        
-        float x = this.realX();
-        float y = this.realY();
-        
+    public void drawBackground(float x, float y) {
         // Only draw the background if it is specified
         if (this.state.background != null) {
             float lineHeight = textState.font.lineHeight();
@@ -78,12 +71,15 @@ public class Text extends Element {
             this.state.background.draw(x - textState.padding.width / 2.0f, 
                                        y - offsetY + textState.padding.height / 2.0f);
         }
-        
-        // Draw the children
-        for (Element child : children) {
-            child.draw();
-        }
+    }
 
+    
+    public void draw() {
+        super.draw();
+
+        if (hidden())
+            return;
+        
         textState.font.print(textState.text, textState.fontScaling, 
                              realX(), realY());
         

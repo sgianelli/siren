@@ -1,25 +1,26 @@
-package edu.siren.tests.gui;
+package edu.siren.game.gui;
 
 import java.io.IOException;
 
-import org.lwjgl.LWJGLException;
-
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
+import edu.siren.gui.Gui;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
 import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 
-public class StartMenuTest {
+public class Title implements Gui {
+    final GuiContainer gui = new GuiContainer();
+    Screen screen;
     
-    public static void main(String[] args) throws LWJGLException, IOException {
-        Screen screen = new Screen("Gui Standalone Test", 640, 480);
-        
-        final GuiContainer gui = new GuiContainer();
+    public Title(Screen screen) throws IOException {    
+        this.screen = screen;
         final Window title = new Window("Title");
-        final Image background = new Image("res/tests/gui/black.png");
+        Image background;
+        background = new Image("res/tests/gui/black.png");
+        
         {
             background.xywh(0, 0, 640, 480);
             background.onMouseUp(new ElementEvent() {
@@ -28,7 +29,7 @@ public class StartMenuTest {
                     return false;
                 }
             });
-            title.add(background, -1);
+            title.add(background);
         }
         
         final Text logo = new Text("SIREN", 1);
@@ -49,23 +50,32 @@ public class StartMenuTest {
                         return false;
                     }
                 });
-                logo.add(prompt); 
+                logo.add(prompt, 10); 
                 
             }
             
-            title.add(logo);
+            title.add(logo, 10);
 
         }
         
         gui.add(title);
-        
-        while (screen.isOpened()) {
-            screen.clear();
+    }
+    
+    public boolean running() {
+        return gui.enabled();
+    }
+
+    // Intro is a special case Gui that asks for a screen instance
+    public void run() {
+        if (screen.nextFrame()) {
             gui.draw();
-            screen.update();
+        } else {
+            screen.cleanup();
         }
-        
-        screen.cleanup();        
+    }
+    
+    public GuiContainer getContainer() {
+        return gui;
     }
 
 }

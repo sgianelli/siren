@@ -374,6 +374,15 @@ public abstract class Element implements Comparable<Element> {
     public boolean draggable() {
         return this.state.draggable;
     }
+    
+    /**
+     * Draw the background of the element.
+     */
+    public void drawBackground(float x, float y) {
+        if (this.state.background != null) {
+            this.state.background.draw(x, y);
+        }
+    }
 
     
     /**
@@ -392,9 +401,7 @@ public abstract class Element implements Comparable<Element> {
         float y = this.realY();
         
         // Only draw the background if it is specified
-        if (this.state.background != null) {
-            this.state.background.draw(x, y);
-        }
+        drawBackground(x, y);
         
         // Draw the children
         for (Element child : children) {

@@ -1,4 +1,4 @@
-package edu.siren.game;
+package edu.siren.core.tile;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -16,13 +16,13 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.XRandR.Screen;
 
-import edu.siren.core.tile.Layer;
-import edu.siren.core.tile.Tile;
-import edu.siren.core.tile.TriggerTile;
+import edu.siren.game.Player;
 import edu.siren.game.entity.Entity;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Camera;
+import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
 
@@ -33,8 +33,8 @@ import edu.siren.renderer.Shader;
  *
  * @author Justin Van Horne
  */
-public class World {
-    private Set<Layer> layers;
+public abstract class World {
+    protected Set<Layer> layers;
     public Camera camera = new Camera(512.0f / 448.0f);
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -42,7 +42,8 @@ public class World {
     // FBO specific entries
     // TODO (justinvh): This shouldn't be here.
     private int fboid = -1, fbotid = -1;
-    private Perspective2D fboPerspective = new Perspective2D();
+    protected Perspective2D fboPerspective = new Perspective2D();
+    protected Font font;
     private Shader fboShader = null;
     private Tile fboTile = new Tile(0.0f, 0.0f, 640.0f, 480.0f);
 
@@ -62,13 +63,10 @@ public class World {
         // First bind the keyboard and mouse via LWJGL
         Keyboard.create();
         Mouse.create();
-
-        // Create a default layer with some grass on it
         layers = new TreeSet<Layer>();        
-        Layer layer = new Layer(BufferType.STATIC);
-        layer.addTile(new Tile("res/tests/img/grass.png", 
-                      -width/2, -height/2, width, height));
-        layers.add(layer);               
+        font = new Font("res/tests/fonts/nostalgia.png", 24);
+
+        create();
 
         // Create a default world shader for normal camera transforms.
         worldShader = new Shader("res/tests/glsl/basic.vert",
@@ -81,6 +79,14 @@ public class World {
         fboPerspective.bindToShader(fboShader);
         fboTile.createInvertIndexVertexBuffer(1, 1);       
         generateFBO();
+    }
+    
+    public void create() throws IOException {
+        // Create a default layer with some grass on it
+        Layer layer = new Layer(BufferType.STATIC);
+        layer.addTile(new Tile("res/tests/img/grass.png", 
+                      -1024/2, -1024/2, 1024, 1024));        
+        layers.add(layer);               
     }
     
     /**
@@ -150,6 +156,7 @@ public class World {
             if (fboid != -1) {
                 GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
                 GL11.glViewport(0, 0, 640, 480);
+                GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             } 
             
             for (Layer layer : layers) {
@@ -159,8 +166,13 @@ public class World {
             for (Entity entity : entities) {
                 entity.draw();
             }
-            
+                        
             camera.think();
+            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+                camera.zoomIn();
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+                camera.zoomOut();
+            }
         }                
         worldShader.release();
         
@@ -169,6 +181,7 @@ public class World {
             fboShader.use();              
             GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
             GL11.glViewport(0, 0, 640, 480);
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             fboTile.draw();
             fboShader.release();
         }

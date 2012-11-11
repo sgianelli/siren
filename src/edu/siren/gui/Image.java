@@ -99,4 +99,15 @@ public class Image extends Element {
     public String titleText() {
         return this.imageState.titleText;
     }
+
+    public static Image CreateNoException(String string) {
+        try {
+            Image image = new Image(string);
+            return image;
+        } catch (Exception e) {
+            System.err.println("Failed to create image with: " + string);
+        }
+        
+        return null;
+    }
 }

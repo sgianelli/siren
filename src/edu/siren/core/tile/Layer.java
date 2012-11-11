@@ -39,6 +39,10 @@ public class Layer implements Comparable<Layer>, Drawable {
         this.triggerTiles = new ArrayList<TriggerTile>();
     }
 
+    public Layer() {
+        this(BufferType.STATIC);
+    }
+
     /**
      * Add a collection of tiles to the layer.
      * @param tiles Adds an array of Tiles to the layer.

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 
 import edu.siren.gui.ElementEvent;
-import edu.siren.gui.Gui;
+import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
 import edu.siren.gui.Window;
@@ -17,7 +17,7 @@ public class WindowTest {
     public static void main(String[] args) throws IOException, LWJGLException {
         Screen screen = new Screen("Gui Standalone Test", 640, 480);
 
-        Gui gui = new Gui();
+        GuiContainer gui = new GuiContainer();
         Window basic = new Window("My Window #1");
         {
             basic.positioning(Element.Position.ABSOLUTE);

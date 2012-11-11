@@ -222,7 +222,7 @@ public class OggClip {
 	/**
 	 * Play the clip once
 	 */
-	public void play() {
+	public Thread play() {
 		stop();
 		
 		try {
@@ -248,6 +248,7 @@ public class OggClip {
 		};
 		player.setDaemon(true);
 		player.start();
+		return player;
 	}
 
 	/**
@@ -386,7 +387,7 @@ public class OggClip {
 
 		initJOrbis();
 
-		while (true) {
+		while (!me.isInterrupted()) {
 			if (checkState()) {
 				return;
 			}
@@ -434,8 +435,8 @@ public class OggClip {
 
 			int i = 0;
 
-			while (i < 2) {
-				while (i < 2) {
+			while (i < 2 && !me.isInterrupted()) {
+				while (i < 2 && !me.isInterrupted()) {
 					if (checkState()) {
 						return;
 					}
@@ -445,7 +446,7 @@ public class OggClip {
 						break; // Need more data
 					if (result == 1) {
 						os.pagein(og);
-						while (i < 2) {
+						while (i < 2 && !me.isInterrupted()) {
 							result = os.packetout(op);
 							if (result == 0)
 								break;
@@ -481,9 +482,9 @@ public class OggClip {
 
 			getOutputLine(vi.channels, vi.rate);
 
-			while (eos == 0) {
+			while (eos == 0 && !me.isInterrupted()) {
 				while (eos == 0) {
-					if (player != me) {
+					if (player != me || me.isInterrupted()) {
 						return;
 					}
 
@@ -527,7 +528,7 @@ public class OggClip {
 									vd.synthesis_blockin(vb);
 								}
 								while ((samples = vd.synthesis_pcmout(_pcmf,
-										_index)) > 0) {
+										_index)) > 0 && !me.isInterrupted()) {
 									if (checkState()) {
 										return;
 									}
@@ -562,12 +563,28 @@ public class OggClip {
 											* vi.channels * bout);
 									vd.synthesis_read(bout);
 								}
+								
+								if (me.isInterrupted())
+								    break;
 							}
+							
+							if (me.isInterrupted())
+							    break;
 						}
+						
+						if (me.isInterrupted())
+						    break;
+						
 						if (og.eos() != 0)
 							eos = 1;
 					}
+					
+					if (me.isInterrupted())
+					    break;
 				}
+				
+				if (me.isInterrupted())
+				    break;
 
 				if (eos == 0) {
 					index = oy.buffer(BUFSIZE);

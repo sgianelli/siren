@@ -7,8 +7,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import edu.siren.game.World;
+import edu.siren.core.tile.World;
 import edu.siren.game.characters.Villager;
+import edu.siren.game.worlds.TestBox;
 import edu.siren.renderer.Screen;
 
 public class DumbVillagerTest {
@@ -18,7 +19,7 @@ public class DumbVillagerTest {
         screen = new Screen("Dumb Villager Test", 1280, 1024);
         screen.sync = 60;
 
-        World world = new World(1024, 1024);
+        World world = new TestBox(1024, 1024);
         Random random = new Random();
 
         for (int i = 0; i < 100; i++) {

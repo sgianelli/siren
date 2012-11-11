@@ -233,4 +233,12 @@ public class Camera {
         hsvdt = getTime();
         lastFrame = getTime();
     }
+
+    public void enable() {
+        this.enable = true;        
+    }
+    
+    public void disable() {
+        this.enable = false;
+    }
 }

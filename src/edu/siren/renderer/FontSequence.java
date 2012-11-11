@@ -87,6 +87,8 @@ public class FontSequence {
                 }
             }
             
+            // Invalidate the cache to prevent the string from not drawing
+            font.invalidate();
             font.print(currentFrame.message.substring(0, frameIndex), size, x, y);
         }
     }
