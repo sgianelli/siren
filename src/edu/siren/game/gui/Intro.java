@@ -2,6 +2,9 @@ package edu.siren.game.gui;
 
 import java.io.IOException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import edu.siren.audio.AudioUtil;
 import edu.siren.gui.*;
 import edu.siren.renderer.*;
@@ -13,7 +16,7 @@ public class Intro implements Gui{
     public Intro(Screen screen) throws IOException {
         this.screen = screen;
         
-        final String beep = "res/tests/sounds/beep.wav";
+        final String beep = "res/game/sound/text-blip.wav";
         Font font = gui.font;
         
         final FontSequence sequence = font.printFrames(
@@ -31,7 +34,7 @@ public class Intro implements Gui{
         
         Window window = new Window("Intro");
         
-        Image background = new Image("res/tests/img/bg.png");
+        Image background = new Image("res/game/gui/intro.png");
         {
             window.add(background, -1);
         }
@@ -39,18 +42,18 @@ public class Intro implements Gui{
         // This is a subwindow for drawing the overlays
         Window introTextWindow = new Window("Intro Text");
         {
-            final Thread audioThread = AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg", false);
+            //final Thread audioThread = AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg", false);
             introTextWindow.onDraw(new ElementEvent() {
                 public boolean firstDraw = true;
                 public boolean event(Element e) {
                     if (firstDraw) {
-                        audioThread.start(); 
+                        //audioThread.start(); 
                         firstDraw = false;
                     }
                     sequence.draw(150, 260, 2);
                     if (sequence.end()) {
                         gui.disable();
-                        audioThread.interrupt();
+                        //audioThread.interrupt();
                     }
                     return false;
                 }
@@ -59,7 +62,9 @@ public class Intro implements Gui{
             introTextWindow.onMouseUp(new ElementEvent() {
                 public boolean event(Element e) {
                     gui.disable();
-                    audioThread.interrupt();
+                    AudioUtil.playWav("res/game/sound/click.wav");
+                    
+                    //audioThread.interrupt();
                     return false;
                 }
             });

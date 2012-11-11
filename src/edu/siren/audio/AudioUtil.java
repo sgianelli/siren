@@ -46,20 +46,21 @@ public class AudioUtil {
         t.start();
     }
     
-    static public void playWav(String filename) 
-            throws LineUnavailableException, IOException, 
-            UnsupportedAudioFileException 
-    {
-        Clip clip = clips.get(filename);
-        if (clip == null) {
-            AudioInputStream stream;
-            stream = AudioSystem.getAudioInputStream(new File(filename));
-            clip = AudioSystem.getClip();
-            clip.open(stream);
-            clips.put(filename, clip);
+    static public void playWav(String filename) {
+        try {
+            Clip clip = clips.get(filename);
+            if (clip == null) {
+                AudioInputStream stream;
+                stream = AudioSystem.getAudioInputStream(new File(filename));
+                clip = AudioSystem.getClip();
+                clip.open(stream);
+                clips.put(filename, clip);
+            }
+            clip.setFramePosition(0);
+            clip.start();
+        } catch (Exception e) {
+            System.err.println(e);
         }
-        clip.setFramePosition(0);
-        clip.start();
     }
     
     static public void playMusic(final String filename) throws IOException {

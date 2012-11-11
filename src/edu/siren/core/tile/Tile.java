@@ -53,7 +53,7 @@ public class Tile implements Drawable {
         int width = this.texture.width;
         int height = this.texture.height;
         bounds = new Rectangle(x, y, width, height);
-        createIndexVertexBuffer(width, height);
+        createIndexVertexBuffer(1.0f, 1.0f);
     }
 
     /**

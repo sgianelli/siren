@@ -26,6 +26,7 @@ public class Screen {
     public String title;
     public int width, height;
     public int sync = 0;
+    public boolean fullscreen = false;
 
     /**
      * Constructs a new GL drawable screen.
@@ -36,6 +37,13 @@ public class Screen {
      * @throws LWJGLException An exception that is thrown if LWJGL bails
      */
     public Screen(String title, int width, int height) throws LWJGLException {
+        this(title, width, height, false);
+    }
+
+    public Screen(String string, int width, int height, boolean fullscreen) 
+            throws LWJGLException
+    {
+        this.fullscreen = fullscreen;
         this.title = title;
         this.width = width;
         this.height = height;
@@ -57,6 +65,9 @@ public class Screen {
         // Execution Context
         Display.setDisplayMode(new DisplayMode(width, height));
         Display.setTitle(title);
+        Display.setVSyncEnabled(true);
+        Display.sync(60);
+        Display.setFullscreen(fullscreen);
         Display.create(pixelFormat, cntxt);
 
         // Do our basic GL setup

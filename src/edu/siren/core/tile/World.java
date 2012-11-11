@@ -13,6 +13,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
@@ -65,7 +66,7 @@ public abstract class World {
         Mouse.create();
         layers = new TreeSet<Layer>();        
         font = new Font("res/tests/fonts/nostalgia.png", 24);
-
+        
         create();
 
         // Create a default world shader for normal camera transforms.
@@ -128,7 +129,7 @@ public abstract class World {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbotid);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);        
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, 640, 480,
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, Display.getWidth(), Display.getHeight(),
                 0, GL11.GL_RGBA, GL11.GL_INT, (ByteBuffer) null);
 
         // Bind the FBO
@@ -155,7 +156,7 @@ public abstract class World {
             // If the FBO is enabled, then we want to render to it
             if (fboid != -1) {
                 GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
-                GL11.glViewport(0, 0, 640, 480);
+                GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             } 
             
@@ -180,7 +181,7 @@ public abstract class World {
         if (fboid != -1) {
             fboShader.use();              
             GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-            GL11.glViewport(0, 0, 640, 480);
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
             fboTile.draw();
             fboShader.release();

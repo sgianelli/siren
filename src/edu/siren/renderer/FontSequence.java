@@ -72,18 +72,7 @@ public class FontSequence {
                 frameIndex++;
                 dtFrame = getTime();
                 if (currentFrame.wav != null) {
-                    try {
-                        AudioUtil.playWav(currentFrame.wav);
-                    } catch (LineUnavailableException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (UnsupportedAudioFileException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+                    AudioUtil.playWav(currentFrame.wav);                
                 }
             }
             
