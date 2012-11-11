@@ -1,10 +1,14 @@
 package edu.siren.tests.core;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Vector;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
+import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
 import edu.siren.game.World;
@@ -17,8 +21,12 @@ public class ControllableCharacterTest {
     Screen screen;
 
     ControllableCharacterTest() throws LWJGLException, IOException {
+    	
+    	
         screen = new Screen("Controllable Character Test", 512, 448);
         World world = new World(8096, 8096);
+        
+        Set<Layer> layers = new TreeSet<Layer>();  
                
         // Create a GUI using the Perspective2D camera
         Perspective2D gui = new Perspective2D();
