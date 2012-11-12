@@ -19,7 +19,7 @@ import edu.siren.renderer.TexturePNG;
 public class SpriteSheet {
     public Map<String, SheetEntry> entries;
     public TexturePNG texture;
-    public static final Pattern pattern = Pattern.compile("(^\\.\\w+-([\\w-]+)-\\w+\\s\\{\\s+[\\w:]+\\s(\\d+)[;\\s\\w]+[\\w:]+\\s(\\d+)[;\\s\\w-]+:\\s-(\\d+)[\\w\\s]+-(\\d+)[\\w;]+\\s+\\})+", Pattern.MULTILINE | Pattern.DOTALL);
+    public static final Pattern pattern = Pattern.compile("([a-z-]+ *:[^:;]+;)|(\\.[\\w-]+([\\w-]+)[\\w-]+)", Pattern.MULTILINE | Pattern.DOTALL);
 
     
     public SpriteSheet() { }
