@@ -1,0 +1,33 @@
+.sprite { background: url(download.png) no-repeat; }
+
+.sprite-bubble-png { width: 71px; height: 46px; background-position: -0px -87px; }
+
+.sprite-button-png {
+    width: 79px;
+    height: 39px;
+    background-position: -82px -87px;
+}
+
+.sprite-empty-heart-png {
+    width: 22px;
+    height: 18px;
+    background-position: -148px -137px;
+}
+
+.sprite-full-heart-png {
+    width: 22px;
+    height: 18px;
+    background-position: -115px -137px;
+}
+
+.sprite-half-heart-png {
+    width: 22px;
+    height: 18px;
+    background-position: -82px -137px;
+}
+
+.sprite-large-bubble-png {
+    width: 172px;
+    height: 76px;
+    background-position: -0px -0px;
+}

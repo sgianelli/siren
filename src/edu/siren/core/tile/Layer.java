@@ -22,14 +22,14 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected Rectangle bounds;
     protected ArrayList<Drawable> tiles;
     protected ArrayList<TriggerTile> triggerTiles;
-    protected Set<Layer> children;
+    protected ArrayList<Layer> children;
     protected boolean valid = false;
 
     /**
      * Construct a new basic layer.
      */
     public Layer(BufferType type) {
-        children = new TreeSet<Layer>();
+        children = new ArrayList<Layer>();
         bounds = new Rectangle(0.0f, 0.0f, 0.0f, 0.0f);
         parent = null;
         depth = 0;
@@ -37,6 +37,10 @@ public class Layer implements Comparable<Layer>, Drawable {
         this.type = type;
         this.tiles = new ArrayList<Drawable>();
         this.triggerTiles = new ArrayList<TriggerTile>();
+    }
+
+    public Layer() {
+        this(BufferType.STATIC);
     }
 
     /**

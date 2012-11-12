@@ -31,8 +31,8 @@ public class TileStressTest {
         Layer layer = new Layer(BufferType.STATIC);
         layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
         Perspective2D gui = new Perspective2D();
-        Shader shader = new Shader("res/tests/glsl/gui.vert",
-                "res/tests/glsl/gui.frag");
+        Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 

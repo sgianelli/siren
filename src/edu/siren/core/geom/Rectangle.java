@@ -58,4 +58,8 @@ public class Rectangle {
         width = width < other.width ? other.width : width;
         height = height < other.height ? other.height : height;
     }
+    
+    public String toString() {
+        return "Rect: (" + x + ", " + y + "), (" + width + ", " + height + ")";
+    }
 }

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Sprite;
-import edu.siren.game.World;
+import edu.siren.core.tile.World;
 import edu.siren.game.ai.AI;
 
 public abstract class Entity {
@@ -54,6 +54,9 @@ public abstract class Entity {
         }
     }
     
+    public Entity() {
+    }
+
     public Rectangle getRect() {
         return sprite.getRect();
     }

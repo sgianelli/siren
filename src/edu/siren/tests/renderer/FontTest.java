@@ -1,7 +1,6 @@
 package edu.siren.tests.renderer;
 
 import java.io.IOException;
-import java.util.Random;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -17,10 +16,9 @@ public class FontTest {
         Screen screen = new Screen("Screen Test", 640, 480);
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
         Perspective2D gui = new Perspective2D();
-        Shader shader = new Shader("res/tests/glsl/gui.vert",
-                "res/tests/glsl/gui.frag");
+        Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
-        Random random = new Random();
         Keyboard.create();
         Mouse.create();
         while (screen.isOpened()) {
