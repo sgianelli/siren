@@ -179,7 +179,7 @@ public class World {
      * 
      * @return Returns false if the layer already exists.
      */
-    boolean addLayer(Layer layer) {
+    public boolean addLayer(Layer layer) {
         return layers.add(layer);
     }
 
