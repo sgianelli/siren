@@ -25,6 +25,10 @@ public class SpriteSheetTest {
         Shader shader = new Shader("res/tests/glsl/2d-perspective.vert", 
                                    "res/tests/glsl/2d-perspective.frag");
         perspective.bindToShader(shader);
+        
+        SpriteSheet csssheet = SpriteSheet.fromCSS
+                ("res/game/gui/sprite-sheet.png",
+                "res/game/gui/sprite-sheet.css");
 
         // Load a new sprite sheet (1st argument)
         SpriteSheet sheet = new SpriteSheet(
@@ -57,7 +61,7 @@ public class SpriteSheetTest {
         // Alternatively we can just extract a sprite-texture. A default
         // animation is created and it is given an infinite length time for
         // the animation (a single texture)
-        Sprite bubble = sheet.createSprite("bubble");
+        Sprite bubble = csssheet.createSprite("bubble");
         
         // Heart location on the orthographic projection
         // Which in our case is a 2D 640x480
