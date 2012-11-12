@@ -10,4 +10,8 @@ public class SheetEntry {
         this.x = x;
         this.y = y;
     }
+    
+    public String toString() {
+        return "Sprite: <" + identifier + ", " + width + ", " + height + ", " + x + ", " + y + ">";
+    }
 }

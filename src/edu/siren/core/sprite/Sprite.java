@@ -32,4 +32,10 @@ public class Sprite implements Drawable {
             return active.getRect();
         }
     }
+
+    public void animation(String animationName) {
+        if (active == null || !active.name.equals(animationName)) {
+            active = animations.get(animationName);
+        }
+    }
 }

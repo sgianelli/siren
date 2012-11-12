@@ -1,5 +1,6 @@
 package edu.siren.core.sprite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.Sys;
@@ -33,6 +34,19 @@ public class Animation {
         for (AnimationFrame frame : frames) {
             this.frames.add(frame);
         }
+    }
+
+    public Animation(String name, AnimationSequence animationSequence) {
+        this.name = name;
+        for (AnimationFrame frame : animationSequence.frames) {
+            this.frames.add(frame);
+        }
+    }
+
+    public Animation(String name, String prefix, int from, int to, int msec) 
+            throws IOException 
+    {
+        this(name, new AnimationSequence(prefix, from, to, msec));
     }
 
     /**

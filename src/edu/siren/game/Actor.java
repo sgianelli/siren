@@ -19,6 +19,10 @@ public class Actor extends Entity implements Interactable {
     public int x = 0;
     public int y = 0;
     public int speed = 0;
+    
+    protected Actor() {
+        super();
+    }
 
     protected Actor(String config, AI ai) {
         super(config, ai);

@@ -19,6 +19,7 @@ public class Font {
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;
+    private String lastPrinted = null;
 
     /**
      * Constructs a new Font object from a given 
@@ -65,10 +66,11 @@ public class Font {
      * @param y1 The y-position on the screen
      */
     public void print(String what, float size, float x1, float y1) {
-        if (bounds.x != x1 || bounds.y != y1 || ivbsCache == null) {
+        if (what != lastPrinted || bounds.x != x1 || bounds.y != y1 || ivbsCache == null) {
             ivbsCache = print(what, size, x1, y1, null, 0);
             bounds.x = x1;
             bounds.y = y1;
+            lastPrinted = what;
         }
         
         for (IndexVertexBuffer ivb : ivbsCache) {

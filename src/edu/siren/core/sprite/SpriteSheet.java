@@ -9,8 +9,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.lwjgl.opengl.GL13;
 
@@ -19,7 +22,7 @@ import edu.siren.renderer.TexturePNG;
 public class SpriteSheet {
     public Map<String, SheetEntry> entries;
     public TexturePNG texture;
-    public static final Pattern pattern = Pattern.compile("([a-z-]+ *:[^:;]+;)|(\\.[\\w-]+([\\w-]+)[\\w-]+)", Pattern.MULTILINE | Pattern.DOTALL);
+    public static final Pattern pattern = Pattern.compile("(^\\.\\w+-([\\w-]+)-\\w+\\s\\{\\s+[\\w:]+\\s(\\d+)[;\\s\\w]+[\\w:]+\\s(\\d+)[;\\s\\w-]+:\\s-(\\d+)[\\w\\s]+-(\\d+)[\\w;]+\\s+\\})+", Pattern.MULTILINE | Pattern.DOTALL);
 
     
     public SpriteSheet() { }
@@ -68,8 +71,13 @@ public class SpriteSheet {
             for (AnimationFrame frame : animation.frames) {
                 SheetEntry entry = entries.get(frame.frameName);
                 if (entry == null) {
-                    System.err.println("Bad sprite reference");
-                    return null;
+                    System.err.println("Bad sprite reference for: " + frame.frameName);
+                    java.util.Iterator<Entry<String, SheetEntry>> it = entries.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Entry<String, SheetEntry> pairs = it.next();
+                        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+                        it.remove(); // avoids a ConcurrentModificationException
+                    }                    return null;
                 }
                 constructedAnim.addFrame(new AnimationFrame(
                         frame.frameName, texture, entry.width,
@@ -123,6 +131,7 @@ public class SpriteSheet {
         
         for (SheetEntry entry : sprites) {
             entries.put(entry.identifier, entry);
+            System.out.println("Sprite: <" + entry.identifier + ", " + entry.width + ", " + entry.height + ", " + entry.x + ", " + entry.y + ">");
         }
     }
 }
