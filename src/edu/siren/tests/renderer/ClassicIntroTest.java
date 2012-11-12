@@ -4,27 +4,24 @@ import java.io.IOException;
 import java.util.Random;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import edu.siren.audio.AudioUtil;
 import edu.siren.core.tile.Tile;
-import edu.siren.game.World;
+import edu.siren.core.tile.World;
 import edu.siren.game.characters.Villager;
+import edu.siren.game.worlds.TestBox;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.FontFrame;
 import edu.siren.renderer.FontSequence;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
-import edu.siren.renderer.Util;
 
 public class ClassicIntroTest {
     
     public static void main(String[] args) throws IOException, LWJGLException {
         Screen screen = new Screen("Screen", 640, 480);
-        World world = new World(1024, 1024);
+        World world = new TestBox(1024, 1024);
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
         Random random = new Random();
         
@@ -41,12 +38,9 @@ public class ClassicIntroTest {
         
         // Bind Gui and its shader
         Perspective2D gui = new Perspective2D();
-        Shader shader = new Shader("res/tests/glsl/gui.vert",
-                "res/tests/glsl/gui.frag");
+        Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
-        
-        try { Thread.sleep(5000); } catch (Exception e) { }
-
         
         AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
         

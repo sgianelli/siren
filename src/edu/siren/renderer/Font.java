@@ -16,6 +16,8 @@ import edu.siren.core.geom.Rectangle;
  */
 public class Font {
     private int square;
+    public Rectangle bounds = new Rectangle(0, 0, 0, 0);
+    private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;
 
     /**
@@ -63,8 +65,13 @@ public class Font {
      * @param y1 The y-position on the screen
      */
     public void print(String what, float size, float x1, float y1) {
-        IndexVertexBuffer[] ivbs = print(what, size, x1, y1, null, 0);
-        for (IndexVertexBuffer ivb : ivbs) {
+        if (bounds.x != x1 || bounds.y != y1 || ivbsCache == null) {
+            ivbsCache = print(what, size, x1, y1, null, 0);
+            bounds.x = x1;
+            bounds.y = y1;
+        }
+        
+        for (IndexVertexBuffer ivb : ivbsCache) {
             ivb.draw();
         }
     }
@@ -118,9 +125,11 @@ public class Font {
 
         // Go over the characters and generate square vertices for each
         // character. The k-offset allows us to build a large index array
+        float width = 0.0f, height = 0;
         for (int i = 0, j = 0, l = 0, k = 0; i < what.length(); i++, k += 4) {
-            Rectangle bounds = new Rectangle(x1 + i * rect, y1, rect, rect);
-
+            Rectangle charrect = new Rectangle(x1 + i * rect, y1, rect, rect);
+            width += charrect.width;
+            height = charrect.height;
             // Figure out what column and row we are drawing from
             // the sprite sheet.
             int h = (int) (what.charAt(i));
@@ -130,8 +139,8 @@ public class Font {
             // Corner 1
             float x, y;
             Vertex v0 = new Vertex();
-            y = bounds.bottom();
-            x = bounds.left();
+            y = charrect.bottom();
+            x = charrect.left();
             v0.xyz(x, y, 0);
             v0.rgb(1, 0, 0);
             v0.st(s(r), t(c));
@@ -139,8 +148,8 @@ public class Font {
 
             // Corner 2
             Vertex v1 = new Vertex();
-            y = bounds.top();
-            x = bounds.left();
+            y = charrect.top();
+            x = charrect.left();
             v1.xyz(x, y, 0);
             v1.rgb(0, 1, 0);
             v1.st(s(r), t(c + 1));
@@ -148,8 +157,8 @@ public class Font {
 
             // Corner 3
             Vertex v2 = new Vertex();
-            y = bounds.top();
-            x = bounds.right();
+            y = charrect.top();
+            x = charrect.right();
             v2.xyz(x, y, 0);
             v2.rgb(0, 0, 1);
             v2.st(s(r + 1), t(c + 1));
@@ -157,8 +166,8 @@ public class Font {
 
             // Corner 4
             Vertex v3 = new Vertex();
-            y = bounds.bottom();
-            x = bounds.right();
+            y = charrect.bottom();
+            x = charrect.right();
             v3.xyz(x, y, 0);
             v3.rgb(1, 1, 1);
             v3.st(s(r + 1), t(c));
@@ -172,7 +181,14 @@ public class Font {
             indices[l++] = ((byte) (3 + k));
             indices[l++] = ((byte) (0 + k));
         }
-
+        
+        if (width > bounds.width) {
+            bounds.width = width;
+        }
+        
+        bounds.height += height;
+        bounds.y -= height;
+        
         // Construct the IndexVertexBuffer values
         ivb.put(vertices);
         ivb.put(indices);
@@ -183,8 +199,25 @@ public class Font {
         ivbs[ivbi] = ivb;
         return ivbs;
     }
+    
+    public void invalidate() {
+        ivbsCache = null;
+        bounds = new Rectangle(0, 0, 0, 0);
+    }
 
     public FontSequence printFrames(boolean successive, FontFrame... frames) {
         return new FontSequence(this, successive, frames);
+    }
+
+    public float width() {
+        return bounds.width;
+    }
+
+    public float lineHeight() {
+        if (ivbsCache != null) {
+            return bounds.height / (float)(ivbsCache.length);
+        }
+        
+        return 0.0f;
     }
 }

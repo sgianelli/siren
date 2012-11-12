@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
 import static org.lwjgl.opengl.GL11.glHint;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -24,6 +26,7 @@ public class Screen {
     public String title;
     public int width, height;
     public int sync = 0;
+    public boolean fullscreen = false;
 
     /**
      * Constructs a new GL drawable screen.
@@ -34,6 +37,13 @@ public class Screen {
      * @throws LWJGLException An exception that is thrown if LWJGL bails
      */
     public Screen(String title, int width, int height) throws LWJGLException {
+        this(title, width, height, false);
+    }
+
+    public Screen(String string, int width, int height, boolean fullscreen) 
+            throws LWJGLException
+    {
+        this.fullscreen = fullscreen;
         this.title = title;
         this.width = width;
         this.height = height;
@@ -55,16 +65,22 @@ public class Screen {
         // Execution Context
         Display.setDisplayMode(new DisplayMode(width, height));
         Display.setTitle(title);
+        Display.setVSyncEnabled(true);
+        Display.sync(60);
+        Display.setFullscreen(fullscreen);
         Display.create(pixelFormat, cntxt);
 
         // Do our basic GL setup
         GL11.glViewport(0, 0, width, height);
-        GL11.glClearColor(168.0f / 255.0f, 184.0f / 255.0f, 112.0f / 255.0f, 1.0f);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_BLEND);
         glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        
+        Keyboard.create();
+        Mouse.create();
     }
 
     /**
@@ -107,5 +123,16 @@ public class Screen {
      */
     public void cleanup() {
         Display.destroy();
+        System.exit(0);
+    }
+
+    public boolean nextFrame() {
+        update();
+        clear();
+        return isOpened();
+    }
+    
+    public void endFrame() {
+        update();
     }
 }

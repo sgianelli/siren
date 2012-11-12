@@ -44,6 +44,10 @@ public class Tile implements Drawable {
      * specified PNG which acts as the texture.
      */
     public Tile(String filename, float x, float y) throws IOException {
+        load(filename, x, y);
+    }
+    
+    public void load(String filename, float x, float y) throws IOException {
         TexturePNG cached = cache.get(filename);
         if (cached == null) {
             cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
@@ -53,7 +57,7 @@ public class Tile implements Drawable {
         int width = this.texture.width;
         int height = this.texture.height;
         bounds = new Rectangle(x, y, width, height);
-        createIndexVertexBuffer(width, height);
+        createIndexVertexBuffer(1.0f, 1.0f);
     }
 
     /**
@@ -103,6 +107,55 @@ public class Tile implements Drawable {
      */
     public void draw() {
         ivb.draw();
+    }
+    
+    public void createIndexVertexBuffer(float xbl, float ybl,
+                                        float xtl, float ytl,
+                                        float xtr, float ytr,
+                                        float xbr, float ybr)
+    {
+        float x, y;
+        
+        // Corner 1
+        Vertex v0 = new Vertex();
+        y = bounds.bottom();
+        x = bounds.left();
+        v0.xyz(x, y, 0);
+        v0.rgb(0, 0, 0);
+        v0.st(xbl, ybl);
+        
+        // Corner 2
+        Vertex v1 = new Vertex();
+        y = bounds.top();
+        x = bounds.left();
+        v1.xyz(x, y, 0);
+        v1.rgb(0, 0, 0);
+        v1.st(xtl, ytl);
+
+        // Corner 3
+        Vertex v2 = new Vertex();
+        y = bounds.top();
+        x = bounds.right();
+        v2.xyz(x, y, 0);
+        v2.rgb(0, 0, 0);
+        v2.st(xtr, ytr);
+
+        // Corner 4
+        Vertex v3 = new Vertex();
+        y = bounds.bottom();
+        x = bounds.right();
+        v3.xyz(x, y, 0);
+        v3.rgb(0, 0, 0);
+        v3.st(xbr, ybr);
+
+        // Fill the index vertex buffer
+        ivb = new IndexVertexBuffer(BufferType.STATIC);
+        ivb.put(v0, v1, v2, v3);
+        byte[] indices = { 0, 1, 2, 2, 3, 0 };
+        ivb.put(indices);
+
+        if (texture != null)
+            ivb.put(texture);
     }
 
     /**

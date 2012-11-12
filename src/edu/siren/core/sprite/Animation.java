@@ -28,6 +28,13 @@ public class Animation {
         this.name = name;
     }
 
+    public Animation(String name, AnimationFrame... frames) {
+        this.name = name;
+        for (AnimationFrame frame : frames) {
+            this.frames.add(frame);
+        }
+    }
+
     /**
      * Adds a new frame to the animation.
      *
@@ -67,4 +74,23 @@ public class Animation {
         
         return currentFrame.bounds;
     }
+
+    public void dimensions(float w, float h) {
+        for (AnimationFrame frame : frames) {
+            frame.dimensions(w, h);
+        }
+    }
+
+    public void width(float w) {
+        for (AnimationFrame frame : frames) {
+            frame.width(w);
+        }
+    }
+
+    public void height(float h) {
+        for (AnimationFrame frame : frames) {
+            frame.height(h);
+        }
+    }
+
 }

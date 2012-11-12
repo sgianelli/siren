@@ -6,8 +6,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.tile.Tile;
+import edu.siren.core.tile.World;
 import edu.siren.game.Player;
-import edu.siren.game.World;
+import edu.siren.game.worlds.TestBox;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
@@ -18,7 +19,7 @@ public class ControllableCharacterTest {
 
     ControllableCharacterTest() throws LWJGLException, IOException {
         screen = new Screen("Controllable Character Test", 512, 448);
-        World world = new World(8096, 8096);
+        World world = new TestBox(8096, 8096);
                
         // Create a GUI using the Perspective2D camera
         Perspective2D gui = new Perspective2D();
