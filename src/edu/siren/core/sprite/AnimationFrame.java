@@ -36,6 +36,18 @@ public class AnimationFrame extends Tile {
         this.frameTime = time;
     }
 
+    /**
+     * Creates a new AnimationFrame given by a frame name, texture, and so on.
+     * This allows you to generate the lookup in the sprite-sheet as well.
+     * 
+     * @param frameName What to call this frame
+     * @param texture The PNG reference to set for this frame
+     * @param width The width of the frame
+     * @param height The height of the frame
+     * @param x The x-offset into the sprite sheet
+     * @param y The y-offset into the sprite sheet
+     * @param msec The time to play this frame
+     */
     public AnimationFrame(String frameName, TexturePNG texture, int width, 
                           int height, int x, int y, double msec) 
     {
@@ -63,6 +75,15 @@ public class AnimationFrame extends Tile {
     }
 
     /**
+     * Create a single animation frame with a default "indefinite" lifespan.
+     * @param animationName The animation name (sprite-sheet reference)
+     */
+    public AnimationFrame(String animationName) {
+        this.frameName = animationName;
+        this.frameTime = 999999;
+    }
+
+    /**
      * Draw the sprite at a given X, Y
      */
     public void draw(float x, float y) {
@@ -74,22 +95,42 @@ public class AnimationFrame extends Tile {
         draw();
     }
     
+    /**
+     * Invaoidate the cache and create a new IVB at (x, y)
+     * @param x The x-coordinate to draw
+     * @param y The y-coordinate to draw
+     */
     public void invalidateCache(float x, float y) {
         bounds = new Rectangle(x, y, bounds.width, bounds.height);
         createIndexVertexBuffer(xbl, ybl, xtl, ytl, xtr, ytr, xbr, ybr);                
     }
 
+    /**
+     * Set the bounding box.
+     * 
+     * @param w Width of the BBOX
+     * @param h Height of the BBOX
+     */
     public void dimensions(float w, float h) {
         bounds.width = w;
         bounds.height = h;
         invalidateCache(bounds.x, bounds.y);
     }
 
+    /**
+     * Sets the height of the BBOX.
+     * 
+     * @param h
+     */
     public void height(float h) {
         bounds.height = h;
         invalidateCache(bounds.x, bounds.y);
     }
 
+    /**
+     * Sets the width of the BBOX
+     * @param w
+     */
     public void width(float w) {
         bounds.height = w;
         invalidateCache(bounds.x, bounds.y);
