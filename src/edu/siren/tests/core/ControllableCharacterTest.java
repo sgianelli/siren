@@ -8,6 +8,7 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.players.Link;
 import edu.siren.game.worlds.TestBox;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
@@ -28,7 +29,7 @@ public class ControllableCharacterTest {
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 
         // Create a new player and put them somewhere in the world
-        Player player = new Player("res/tests/scripts/entities/villager-justin.json");
+        Player player = new Link();
         player.setPosition(0, 0);
         world.addEntity(player);
         
@@ -41,52 +42,38 @@ public class ControllableCharacterTest {
         Tile activeOverlay = slightlyCloudy;
        
         // The close event can take a bit to propagate
-        while (screen.isOpened()) {
-            screen.clear();   
-            
-            // Check for any debug actions (zoom, environment switches)
-            {    
-                if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-                    world.camera.zoomIn();
-                } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-                    world.camera.zoomOut();
-                } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
-                    world.changeEnvironment(World.Environment.NIGHT, 5000);
-                    activeOverlay = veryCloudy;
-                } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
-                    world.changeEnvironment(World.Environment.MORNING, 5000);
-                    activeOverlay = pixelCloudy;
-                } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
-                    world.changeEnvironment(World.Environment.AFTERNOON, 5000);
-                    activeOverlay = slightlyCloudy;
-                } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
-                    world.changeEnvironment(World.Environment.DUSK, 5000);
-                    activeOverlay = plasma;
-                }                                    
-            }
+        while (screen.nextFrame()) {            
+            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+                world.camera.zoomIn();
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+                world.camera.zoomOut();
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+                world.changeEnvironment(World.Environment.NIGHT, 5000);
+                //activeOverlay = veryCloudy;
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+                world.changeEnvironment(World.Environment.MORNING, 5000);
+                //activeOverlay = pixelCloudy;
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+                world.changeEnvironment(World.Environment.AFTERNOON, 5000);
+                //activeOverlay = slightlyCloudy;
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+                world.changeEnvironment(World.Environment.DUSK, 5000);
+                //activeOverlay = plasma;
+            }                                    
             
             // Draw the world in its entirety
-            {
-                world.draw();
-            }
+            world.draw();
             
             // Active the GUI shader and draw the overlays
-            {
-                shader.use();   
-                activeOverlay.bounds.x -= 0.5f;
-                activeOverlay.bounds.y -= 0.75f;
-                activeOverlay.bounds.x %= 4096;
-                activeOverlay.bounds.y %= 4096;
-                activeOverlay.createIndexVertexBuffer(10, 10);
-                activeOverlay.draw();
-                font.print(world.getCurrentEnvironment().toString(), 2, 10, 10);    
-                shader.release();
-            }
-            
-            // Force the screen to update
-            {            
-                screen.update();
-            }
+            shader.use();   
+            activeOverlay.bounds.x -= 0.5f;
+            activeOverlay.bounds.y -= 0.75f;
+            activeOverlay.bounds.x %= 4096;
+            activeOverlay.bounds.y %= 4096;
+            activeOverlay.createIndexVertexBuffer(10, 10);
+            activeOverlay.draw();
+            font.print(world.getCurrentEnvironment().toString(), 2, 10, 10);    
+            shader.release();            
         }
         
         // Do any sort of LWJGL cleanups

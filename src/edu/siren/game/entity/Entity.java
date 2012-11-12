@@ -54,6 +54,9 @@ public abstract class Entity {
         }
     }
     
+    public Entity() {
+    }
+
     public Rectangle getRect() {
         return sprite.getRect();
     }

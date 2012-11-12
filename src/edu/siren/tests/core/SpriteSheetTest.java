@@ -6,6 +6,7 @@ import org.lwjgl.LWJGLException;
 
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
+import edu.siren.core.sprite.AnimationSequence;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SheetEntry;
 import edu.siren.core.sprite.SpriteSheet;
@@ -29,6 +30,11 @@ public class SpriteSheetTest {
         SpriteSheet csssheet = SpriteSheet.fromCSS
                 ("res/game/gui/sprite-sheet.png",
                 "res/game/gui/sprite-sheet.css");
+
+        SpriteSheet linksheet = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/link.png",
+                "res/game/sprites/characters/link.css");
+        
 
         // Load a new sprite sheet (1st argument)
         SpriteSheet sheet = new SpriteSheet(
@@ -58,6 +64,21 @@ public class SpriteSheetTest {
                         new AnimationFrame("half-heart", 1000),
                         new AnimationFrame("full-heart", 1000)));
         
+        // This demonstrates using contiguous animation sequences by using
+        // a conventional naming to generate animations
+        Sprite link = linksheet.createSprite(
+                // Creates a new Animation using the AnimationSequence class
+                // Basically wraps AnimationSequence to generate a series of
+                // sprite references using a prefix and a counter.
+                // So, "link-right-" -> "link-right-1", ... "link-right-7"
+                // with 100msec frames
+                //
+                //            FRAME NAME    SPRITE-PREFIX  START  END  MSEC
+                new Animation("move-right", "link-right-", 1, 7, 100),
+                new Animation("move-left", "link-left-", 1, 7, 100),
+                new Animation("move-forward", "link-forward-", 1, 7, 100),
+                new Animation("move-backward", "link-backward-", 1, 7, 100));
+        
         // Alternatively we can just extract a sprite-texture. A default
         // animation is created and it is given an infinite length time for
         // the animation (a single texture)
@@ -72,6 +93,9 @@ public class SpriteSheetTest {
         bubble.spriteX = 200;
         bubble.spriteY = 200;
         
+        link.spriteX = 50;
+        link.spriteY = 50;
+        
         // Continue until the screen dies
         // Shader is explicitly used since we are detached from the engine's
         // game state which would control all of this.
@@ -81,6 +105,7 @@ public class SpriteSheetTest {
             // Draw each sprite
             heart.draw();
             bubble.draw();
+            link.draw();
             
             shader.release();
         }

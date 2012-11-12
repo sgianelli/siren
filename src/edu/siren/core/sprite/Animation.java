@@ -1,5 +1,6 @@
 package edu.siren.core.sprite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.Sys;
@@ -28,11 +29,55 @@ public class Animation {
         this.name = name;
     }
 
+    /**
+     * Constructs a new animation from a collection of AnimationFrames.
+     * This allows you to individualize each animation with specific frames.
+     */
     public Animation(String name, AnimationFrame... frames) {
         this.name = name;
         for (AnimationFrame frame : frames) {
             this.frames.add(frame);
         }
+    }
+
+    /**
+     * Construct a new animation from a linear-sequence of frames as
+     * defined by an AnimationSequence. This allows you to create animations
+     * that fit a model "name-n" where n is an integer frame number.
+     */
+    public Animation(String name, AnimationSequence animationSequence) {
+        this.name = name;
+        for (AnimationFrame frame : animationSequence.frames) {
+            this.frames.add(frame);
+        }
+    }
+
+    /**
+     * Wraps the AnimationSequence to create an inline animation expression.
+     * 
+     * @param name The name of the animation
+     * @param prefix The prefix in the sprite-sheet to use.
+     * @param from The frame number to start from
+     * @param to The frame number to end on (includes the frame)
+     * @param msec The time to run the frame
+     * @throws IOException Tends to happen.
+     */
+    public Animation(String name, String prefix, int from, int to, int msec) 
+            throws IOException 
+    {
+        this(name, new AnimationSequence(prefix, from, to, msec));
+    }
+
+    /**
+     * Creates an inline animation with a single frame.
+     * Useful for "idle" like animations.
+     * 
+     * @param name The name of the animation
+     * @param animation The animation itself in the sprite sheet.
+     */
+    public Animation(String name, String animation) {
+        this.name = name;
+        this.frames.add(new AnimationFrame(animation));
     }
 
     /**

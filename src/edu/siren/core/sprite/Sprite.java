@@ -6,7 +6,8 @@ import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.Drawable;
 
 /**
- * A sprite is a simple drawable surface.
+ * A sprite is a simple drawable surface that is composed of a collection
+ * of animations.
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
@@ -30,6 +31,12 @@ public class Sprite implements Drawable {
             return rectangleZero;
         } else {
             return active.getRect();
+        }
+    }
+
+    public void animation(String animationName) {
+        if (active == null || !active.name.equals(animationName)) {
+            active = animations.get(animationName);
         }
     }
 }
