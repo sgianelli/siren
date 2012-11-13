@@ -1,14 +1,12 @@
 # Siren #
 
-Siren is a [University of Arizona CS335-FALL12](https://sites.google.com/site/csc335fall12/) 
-final project that satisfies the [Tactical Role Playing Game](http://goo.gl/bMWA3) assignment.
+Siren is a [University of Arizona CS335-FALL12]
+final project that satisfies the [Tactical Role Playing Game] assignment.
 
 ## Requirements ##
 
-Siren is packaged with [LWJGL](http://www.lwjgl.org/), 
-[EasyOGG](http://www.cokeandcode.com/index.html?page=libs), and 
-[JSON](http://www.json.org/java/). The minimum runtime and hardware 
-configurations require:
+Siren is packaged with [LWJGL], [EasyOGG], and [JSON]. The minimum runtime and 
+hardware configurations require:
 
 - Java 1.6
 - OpenGL 3.2
@@ -23,7 +21,7 @@ CONTRIBUTORS.md for both direct and indirect contributors to this project.
 
 This section provides a high-level overview of each of the sub-packages within 
 Siren. Click any of the [jump]() links to read more details about the 
-implementation as well as any other notes. [Doxygen](http://www.doxygen.org) 
+implementation as well as any other notes. [Doxygen] 
 is supported on this project and may be generated with your favorite 
 documentation generation tool.
 
@@ -73,7 +71,58 @@ should be able to quickly kill a playing audio thread.
 *Example:* TODO
 
 ## Core ##
+
+The core of the engine describe the mechanics necessary to run any game 
+powered by the engine.
+
+### `geom` ###
+The `geom` package contains geometry-specific classes used throughout the 
+engine to provide geospatial functionality in a 2D-fashion. This package is 
+composed of `Point` and `Rectangle`.
+
+The `Point` class is a simple abstraction of XYZ coordinate system. The 
+`Rectangle` class provides functionality outside the typical rectangle object; 
+these functionalities include bounding-box tests, overlap, and intersection.
+
+### `sprite` ###
+The sprite package describes the core functionality in drawing any 
+animation-like. This package includes classes like `Animation`, `Sprite`, and 
+`SpriteSheet`. The `Animation` class, and its dependencies (`AnimationFrame`, 
+`AnimationSequence`, and `AnimationFrame`) all provide intuitive interfaces to 
+describing a sequence of animation from a `SpriteSheet` or individual 
+textures.
+
+The `SpriteSheet` class acts as a utility method for integrating sprite-sheets 
+in both a manual, or automatic fashion via the HTML5 web-app [Stitches]. Each 
+sprite-sheet provides functionality for extracting individual sprites or 
+animations.
+
+All sprites have a bounding box associated with them. Each bounding box will 
+re-align themselves per animation. This allows you to have fine control over 
+the bound box intersections without sacrificing animation sequences due to 
+variable animation sizes.
+
+### `tile` ###
+The `sprite` package derives its base functionality from the `tile` package 
+which provides basic drawing of 2D-rectangular objects to the screen. The 
+basics of the `Tile` class use the `IndexVertexBuffer` object to generate 
+stride-friendly arrays suitable for VBO/VAO access. Each tile mandates an 
+`XYRGBAST` dataset.
+
+The `World` class is also within the `tile` package, which acts like a manager 
+class--as well as provides additional 'usability' aide in rendering the world, 
+defining boundary drawings, and so on. The `game.worlds` package will subclass 
+the `World` class and overload the `create` method for drawing new worlds.
+
 ## Game ##
 ## Gui ##
 ## Renderer ##
 ## Tests ##
+
+[LWJGL]: http://www.lwjgl.org/
+[EasyOGG]: http://www.cokeandcode.com/index.html?page=libs
+[JSON]: http://www.json.org/java/
+[Tactical Role Playing Game]: http://goo.gl/bMWA3
+[University of Arizona CS335-FALL12]: https://sites.google.com/site/csc335fall12/
+[Doxygen]: http://www.doxygen.org
+[Stitches]: http://draeton.github.com/stitches/
