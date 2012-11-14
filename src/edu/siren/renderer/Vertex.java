@@ -9,6 +9,18 @@ public class Vertex {
     public float[] vxyzw = new float[] { 0f, 0f, 0f, 1f };
     public float[] vrgba = new float[] { 1f, 1f, 1f, 1f };
     public float[] vst = new float[] { 0f, 0f };
+    
+    /**
+     * Sets everything.
+     */
+    public void xyzrgbst(float x, float y, float z,
+                         float r, float g, float b,
+                         float s, float t)
+    {
+        xyzw(x, y, z, 1.0f);
+        rgba(r, g, b, 1.0f);
+        st(s, t);
+    }
 
     /**
      * Set the XYZW position of this vertex

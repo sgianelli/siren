@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -27,9 +28,12 @@ public class IndexVertexBuffer implements Drawable {
     private boolean valid = false;
     private boolean bound = false;
     private int indexCount = 0;
+    private byte elementOffset = 0;
     
     public FloatBuffer vertices = null;
     public ByteBuffer indices = null;
+    public ArrayList<Vertex> vertexCache = new ArrayList<Vertex>();
+    public ArrayList<Byte> indexCache = new ArrayList<Byte>();
     public int type = -1;
     public int vaoid = -1;
     public int vboid = -1;
@@ -64,9 +68,14 @@ public class IndexVertexBuffer implements Drawable {
      * @param vs A variable argument (or array) of Vertex objects.
      */
     public void put(Vertex... vs) {
-        vertices = BufferUtils.createFloatBuffer(vs.length * Vertex.Size.total);
         for (Vertex v : vs)
+            vertexCache.add(v);
+        
+        vertices = BufferUtils.createFloatBuffer(vertexCache.size() * Vertex.Size.total);
+        for (Vertex v : vertexCache) {
             vertices.put(v.elements());
+        }
+        
         vertices.flip();
         hasVertices = true;
         valid = hasVertices && hasIndicies;
@@ -81,10 +90,20 @@ public class IndexVertexBuffer implements Drawable {
      * @param bytes A variable argument (or byte[]) of indices.
      */
     public void put(byte[] bytes) {
-        indices = BufferUtils.createByteBuffer(bytes.length);
-        indices.put(bytes);
+        for (byte b : bytes) {
+            indexCache.add((byte) (elementOffset + b));
+        }
+        
+        elementOffset += bytes.length;
+            
+        indices = BufferUtils.createByteBuffer(indexCache.size());
+        
+        for (byte b : indexCache) {
+            indices.put(b);
+        }
+        
         indices.flip();
-        indexCount = bytes.length;
+        indexCount = indexCache.size();
         hasIndicies = true;
         valid = hasVertices && hasIndicies;
         if (valid && !bound) generateVAOVBO();
@@ -178,7 +197,6 @@ public class IndexVertexBuffer implements Drawable {
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboid);
 
         // Draw the triangles
-        //GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK,GL11.GL_LINE);
         GL11.glDrawElements(GL11.GL_TRIANGLES, indexCount,
                 GL11.GL_UNSIGNED_BYTE, 0);
 

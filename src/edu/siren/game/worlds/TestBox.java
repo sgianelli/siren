@@ -21,9 +21,11 @@ public class TestBox extends World {
         
         // Create a new layer
         Layer layer = new Layer();
+        Layer layer2 = new Layer();
         
         // Add some grass
         layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
+        layer2.addTile(new Tile("res/tests/img/grass.png", -10000, 0, 10000, 10000));
 
         // Create some catch phrases
         String phrases[] = { "Whoa!", "Hi!", "What are you up to?" };
@@ -73,6 +75,7 @@ public class TestBox extends World {
 
         // Add the layer to all the layers
         layers.add(layer);
+        layers.add(layer2);
     }
 
 }
