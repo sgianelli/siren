@@ -24,7 +24,8 @@ public class Title implements Gui {
         {
             background.xywh(0, 0, 640, 480);
             background.onMouseUp(new ElementEvent() {
-                public boolean event(Element element) {
+                @Override
+				public boolean event(Element element) {
                     gui.disable();
                     return false;
                 }
@@ -39,7 +40,8 @@ public class Title implements Gui {
             prompt.positioning(Element.Position.ABSOLUTE);
             prompt.onDraw(new ElementEvent() {
                 public double dt = Element.getTime();
-                public boolean event(Element element) {                   
+                @Override
+				public boolean event(Element element) {                   
                     if ((Element.getTime() - dt) > 500.0f) {
                         element.toggle();
                         dt = Element.getTime();
@@ -54,12 +56,14 @@ public class Title implements Gui {
         gui.add(title);
     }
     
-    public boolean running() {
+    @Override
+	public boolean running() {
         return gui.enabled();
     }
 
     // Intro is a special case Gui that asks for a screen instance
-    public void run() {
+    @Override
+	public void run() {
         if (screen.nextFrame()) {
             gui.draw();
         } else {
@@ -67,7 +71,8 @@ public class Title implements Gui {
         }
     }
     
-    public GuiContainer getContainer() {
+    @Override
+	public GuiContainer getContainer() {
         return gui;
     }
 

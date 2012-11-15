@@ -16,7 +16,8 @@ public class TestBox extends World {
         super(width, height);
     }
     
-    public void create() throws IOException {
+    @Override
+	public void create() throws IOException {
         Random random = new Random();
         
         // Create a new layer
@@ -42,6 +43,7 @@ public class TestBox extends World {
         
         // Add random characters
         for (int i = 0; i < 100; i++) {
+        	
             int x = random.nextInt(9000) - random.nextInt(50);
             int y = random.nextInt(9000) - random.nextInt(50);
             
@@ -72,7 +74,7 @@ public class TestBox extends World {
         
 
         // Add the layer to all the layers
-        layers.add(layer);
+        System.out.println(addLayer(layer));
     }
 
 }

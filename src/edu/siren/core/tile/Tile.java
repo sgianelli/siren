@@ -105,7 +105,8 @@ public class Tile implements Drawable {
     /* (non-Javadoc)
      * @see edu.siren.renderer.Drawable#draw()
      */
-    public void draw() {
+    @Override
+	public void draw() {
         ivb.draw();
     }
     

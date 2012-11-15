@@ -1,11 +1,5 @@
 package edu.siren.renderer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import org.lwjgl.Sys;
 
 import edu.siren.audio.AudioUtil;

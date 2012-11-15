@@ -47,7 +47,8 @@ public class Text extends Element {
              h() + textState.padding.height);
     }
     
-    public boolean boundsCheck(float mx, float my) {
+    @Override
+	public boolean boundsCheck(float mx, float my) {
         float lineHeight = textState.font.lineHeight();
         float offsetY = h() - lineHeight;
 
@@ -63,7 +64,8 @@ public class Text extends Element {
         return mx > l && mx < r && my > b && my < t;
     }
     
-    public void drawBackground(float x, float y) {
+    @Override
+	public void drawBackground(float x, float y) {
         // Only draw the background if it is specified
         if (this.state.background != null) {
             float lineHeight = textState.font.lineHeight();
@@ -74,7 +76,8 @@ public class Text extends Element {
     }
 
     
-    public void draw() {
+    @Override
+	public void draw() {
         super.draw();
 
         if (hidden())

@@ -23,7 +23,8 @@ public class SheetEntry {
         this.y = y;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "Sprite: <" + identifier + ", " + width + ", " + height + ", " + x + ", " + y + ">";
     }
 }

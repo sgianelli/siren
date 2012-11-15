@@ -54,7 +54,8 @@ public abstract class Element implements Comparable<Element> {
     /**
      * Comparator
      */
-    public int compareTo(Element other) {
+    @Override
+	public int compareTo(Element other) {
         if (other.priority() > priority()) {
             return -1;
         } else if (other.priority() < priority()) {
@@ -532,7 +533,8 @@ public abstract class Element implements Comparable<Element> {
         return mx > l && mx < r && my > b && my < t;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "<" + this.state.name + ": (" + this.x() + "|" 
                    + this.realX() + ", " + this.y() + "|" + this.realY()
                    + "), Priority: " + this.priority() + ">";

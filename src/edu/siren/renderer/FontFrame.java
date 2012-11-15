@@ -7,7 +7,7 @@ public class FontFrame {
     public FontFrame(String message, double msec, double msecWait) {
         this.message = message;
         this.msecTotal = msec;
-        this.msecFrame = msec / (double)message.length();
+        this.msecFrame = msec / message.length();
         this.msecWait = msecWait;
     }
     

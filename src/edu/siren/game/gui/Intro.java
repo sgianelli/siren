@@ -2,9 +2,6 @@ package edu.siren.game.gui;
 
 import java.io.IOException;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import edu.siren.audio.AudioUtil;
 import edu.siren.gui.*;
 import edu.siren.renderer.*;
@@ -45,7 +42,8 @@ public class Intro implements Gui{
             //final Thread audioThread = AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg", false);
             introTextWindow.onDraw(new ElementEvent() {
                 public boolean firstDraw = true;
-                public boolean event(Element e) {
+                @Override
+				public boolean event(Element e) {
                     if (firstDraw) {
                         //audioThread.start(); 
                         firstDraw = false;
@@ -60,7 +58,8 @@ public class Intro implements Gui{
             });
             
             introTextWindow.onMouseUp(new ElementEvent() {
-                public boolean event(Element e) {
+                @Override
+				public boolean event(Element e) {
                     gui.disable();
                     AudioUtil.playWav("res/game/sound/click.wav");
                     
@@ -76,7 +75,8 @@ public class Intro implements Gui{
     }
 
     // Intro is a special case Gui that asks for a screen instance
-    public void run() {
+    @Override
+	public void run() {
         if (screen.nextFrame()) {
             gui.draw();
         } else {
@@ -84,11 +84,13 @@ public class Intro implements Gui{
         }
     }
     
-    public boolean running() {
+    @Override
+	public boolean running() {
         return gui.enabled();
     }
     
-    public GuiContainer getContainer() {
+    @Override
+	public GuiContainer getContainer() {
         return gui;
     }
 }

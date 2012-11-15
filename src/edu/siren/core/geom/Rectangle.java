@@ -59,7 +59,8 @@ public class Rectangle {
         height = height < other.height ? other.height : height;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "Rect: (" + x + ", " + y + "), (" + width + ", " + height + ")";
     }
 }

@@ -25,21 +25,24 @@ public class TextureGL implements Texture {
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#getTextureID()
      */
-    public int getTextureID() {
+    @Override
+	public int getTextureID() {
         return textureID;
     }
 
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#loadTexture(java.lang.String, int)
      */
-    public int loadTexture(String filename, int unit) throws IOException {
+    @Override
+	public int loadTexture(String filename, int unit) throws IOException {
         return 0;
     }
 
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#getTextureBinding()
      */
-    public int getTextureBinding() {
+    @Override
+	public int getTextureBinding() {
         return textureBinding;
     }
 

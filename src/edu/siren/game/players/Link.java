@@ -3,7 +3,6 @@ package edu.siren.game.players;
 import java.io.IOException;
 
 import edu.siren.core.sprite.Animation;
-import edu.siren.core.sprite.AnimationFrame;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 
