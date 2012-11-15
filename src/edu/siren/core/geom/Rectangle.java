@@ -1,5 +1,7 @@
 package edu.siren.core.geom;
 
+import edu.siren.gui.Element;
+
 /**
  * Defines a simple Rectangle object for tiling, bounds-checking, etc.
  *
@@ -62,4 +64,90 @@ public class Rectangle {
     public String toString() {
         return "Rect: (" + x + ", " + y + "), (" + width + ", " + height + ")";
     }
+
+    public boolean contains(float mx, float my) {        
+        // If we're not in the bounding box, then just fail
+        return mx > left() && mx < right() && my > bottom() && my < top();
+    }
+
+    public boolean contains(Rectangle rect) {
+        return contains(rect.x, rect.y);
+    }
+    
+    public boolean touching(Rectangle other) {
+        float x1 = x, y1 = y;
+        float w1 = width, h1 = height;
+
+        float x2 = other.x, y2 = other.y;
+        float w2 = other.width, h2 = other.height;
+        
+        // Create bounding box
+        float xtl1 = x1, ytl1 = y1 + h1;
+        float xbl1 = x1, ybl1 = y1;
+        float xtr1 = x1 + w1, ytr1 = y1 + h1;
+        float xbr1 = x1 + w1, ybr1 = y1;
+
+        // Create bounding box
+        float xtl2 = x2, ytl2 = y2 + h2;
+        float xbl2 = x2, ybl2 = y2;
+        float xtr2 = x2 + w2, ytr2 = y2 + h2;
+        float xbr2 = x2 + w2, ybr2 = y2;
+
+        // Check if TL is touching
+        if (xtl1 >= xtl2 && xtl1 <= xtr2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching
+        if (xtr1 <= xtr2 && xtr1 >= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching
+        if (xbl1 >= xbl2 && xbl1 <= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;
+        
+        // Check if BR is touching
+        if (xbr1 <= xbr2 && xbr1 >= xbl2 &&
+            ybr1 <= ybr2 && ybr1 >= ytr2)
+            return true;
+
+        // Check if TL is touching
+        if (xtl1 >= xtl2 && xtl1 <= xtr2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching
+        if (xtr1 <= xtr2 && xtr1 >= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching
+        if (xbl1 >= xbl2 && xbl1 <= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;
+        
+        // Check if BR is touching (width bounds)
+        if (xbr1 >= xbl2 && xbl1 <= xbl2 &&
+            ybr1 <= ybr2 && ybr1 >= ytr2)
+            return true;
+
+        // Check if TL is touching (width bounds)
+        if (xtr1 >= xtl2 && xtl1 <= xtl2 &&
+            ytl1 >= ybl2 && ytl1 <= ytl2)
+            return true;
+        
+        // Check if TR is touching (width bounds)
+        if (xtr1 >= xtr2 && xtl1 <= xtl2 &&
+            ytr1 <= ytr2 && ytr1 >= ybr2)
+            return true;
+
+        // Check if BL is touching (width bounds)
+        if (xbl1 <= xbl2 && xbr1 >= xbr2 &&
+            ybl1 >= ybl2 && ybl1 <= ytl2)
+            return true;        
+        
+        return false;
+    }    
 }

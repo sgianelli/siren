@@ -40,6 +40,10 @@ public class IndexVertexBuffer implements Drawable {
     public int fboid = -1;
     public int fbotid = -1;
     public int textureIDs[] = null;
+    
+    public String getID() {
+        return null;
+    }
 
     /**
      * Each IndexVertexBuffer is either defined as a STATIC DRAW surface

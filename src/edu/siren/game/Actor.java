@@ -19,6 +19,7 @@ public class Actor extends Entity implements Interactable {
     public int x = 0;
     public int y = 0;
     public int speed = 0;
+    public int health = 100;
     
     protected Actor() {
         super();

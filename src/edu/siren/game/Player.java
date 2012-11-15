@@ -16,8 +16,14 @@ public class Player extends Actor {
     public Player() {
     }
     
+    public void think() {
+        System.out.println("Health: " + health);
+    }
+    
     @Override
     public void draw() {
+        think();
+        
         boolean movement = false;
         
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
