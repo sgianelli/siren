@@ -1,7 +1,6 @@
 package org.newdawn.easyogg;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -232,6 +231,7 @@ public class OggClip {
 		}
 		
 		player = new Thread() {
+			@Override
 			public void run() {
 				try {
 					playStream(Thread.currentThread());
@@ -264,6 +264,7 @@ public class OggClip {
 		}
 		
 		player = new Thread() {
+			@Override
 			public void run() {
 				while (player == Thread.currentThread()) {
 					try {

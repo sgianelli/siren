@@ -28,7 +28,8 @@ public class WindowTest {
             
             // Handle mouse hover
             basic.onMouseHover(new ElementEvent() {
-                public boolean event(Element window) {
+                @Override
+				public boolean event(Element window) {
                     window.x(window.x() + 0.05f);
                     window.y(window.y() + 0.05f);
                     return false;
@@ -37,7 +38,8 @@ public class WindowTest {
 
             // Handle mouse click
             basic.onMouseDown(new ElementEvent() {
-                public boolean event(Element window) {
+                @Override
+				public boolean event(Element window) {
                     System.out.println(window.name() + ": Down");
                     // Return true if you want the events to stop propagating
                     return false;
@@ -46,7 +48,8 @@ public class WindowTest {
 
             // Handle mouse click
             basic.onMouseUp(new ElementEvent() {
-                public boolean event(Element window) {
+                @Override
+				public boolean event(Element window) {
                     System.out.println(window.name() + ": Up");
                     // Return true if you want the events to stop propagating
                     return false;
@@ -62,7 +65,8 @@ public class WindowTest {
                 child.background("res/tests/gui/green-window.png");
                 
                 child.onMouseDown(new ElementEvent() {
-                    public boolean event(Element element) {
+                    @Override
+					public boolean event(Element element) {
                         System.out.println(element.name() + ": Down.");
                         return false;
                     }
@@ -75,7 +79,8 @@ public class WindowTest {
                     subchild.dimensions(25, 25);
                     subchild.background("res/tests/gui/purple-window.png");
                     subchild.onMouseDown(new ElementEvent() {
-                        public boolean event(Element element) {
+                        @Override
+						public boolean event(Element element) {
                             System.out.println(element.name() + ": Down.");
                             System.out.println(element.name() + ": No propagation.");
                             return true;
@@ -93,7 +98,8 @@ public class WindowTest {
                 text.position(25, 25);
                 text.fontScaling(1);  
                 text.onMouseEnter(new ElementEvent() {
-                    public boolean event(Element element) {
+                    @Override
+					public boolean event(Element element) {
                         System.out.println("Entered text area");
                         return false;
                     }
@@ -108,7 +114,8 @@ public class WindowTest {
                 textBg.fontScaling(1);  
                 textBg.padding(20.0f, 20.0f);
                 textBg.onMouseUp(new ElementEvent() {
-                    public boolean event(Element element) {
+                    @Override
+					public boolean event(Element element) {
                         element.priority(element.priority() + 1);
                         Text t = (Text) element;
                         t.text("Click me to increase\nmy rendering priority.\nCurrently: " + element.priority());
@@ -135,7 +142,8 @@ public class WindowTest {
                 dragme.fontScaling(1);  
                 dragme.draggable(true);
                 dragme.onDragging(new ElementEvent() {
-                    public boolean event(Element element) {
+                    @Override
+					public boolean event(Element element) {
                         Text t = (Text) element;
                         if (element.touching(logo)) {
                             t.text("I don't like this spot.");

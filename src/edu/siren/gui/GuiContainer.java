@@ -4,12 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.lwjgl.input.Mouse;
 
-import edu.siren.renderer.Drawable;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
@@ -30,7 +26,8 @@ public class GuiContainer extends Element {
         elements = new ArrayList<Element>();
     }
     
-    public Element add(Element element, int priority) {
+    @Override
+	public Element add(Element element, int priority) {
         element.priority(priority);
         element.parent = this;
         elements.add(element);
@@ -38,7 +35,8 @@ public class GuiContainer extends Element {
         return element;
     }
     
-    public Element add(Element element) {
+    @Override
+	public Element add(Element element) {
         add(element, 0);
         return element;
     }
@@ -61,7 +59,8 @@ public class GuiContainer extends Element {
         }
     }
     
-    public void draw() {
+    @Override
+	public void draw() {
         if (disabled())
             return;
         

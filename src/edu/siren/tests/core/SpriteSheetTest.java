@@ -6,7 +6,6 @@ import org.lwjgl.LWJGLException;
 
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
-import edu.siren.core.sprite.AnimationSequence;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SheetEntry;
 import edu.siren.core.sprite.SpriteSheet;

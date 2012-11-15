@@ -12,8 +12,6 @@ import javax.sound.midi.*;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioUtil { 
     static public Map<String, Clip> clips = new ConcurrentHashMap<String, Clip>();
@@ -35,7 +33,8 @@ public class AudioUtil {
     static public void playBackgroundMidi(final String midiFile) 
     {
         class Inplace extends Thread {
-            public void run() {
+            @Override
+			public void run() {
                 try {
                     playMidi(midiFile);
                 } catch (Exception e) {
@@ -71,7 +70,8 @@ public class AudioUtil {
     static public Thread playBackgroundMusic(final String ogg, boolean play) 
     {
         class Inplace extends Thread {
-            public void run() {
+            @Override
+			public void run() {
                 try {
                     OggClip clip = new OggClip(ogg);
                     Thread clipThread = clip.play();
@@ -95,7 +95,8 @@ public class AudioUtil {
     static public void playBackgroundWav(final String wavFile) 
     {
         class Inplace extends Thread {
-            public void run() {
+            @Override
+			public void run() {
                 try {
                     playWav(wavFile);
                 } catch (Exception e) {

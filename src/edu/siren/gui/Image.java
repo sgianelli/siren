@@ -2,7 +2,6 @@ package edu.siren.gui;
 
 import java.io.IOException;
 
-import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 
 import edu.siren.core.geom.Rectangle;
@@ -46,7 +45,8 @@ public class Image extends Element {
         this.dimensions(bbox.width, bbox.height);
         
         this.onMouseHover(new ElementEvent() {
-            public boolean event(Element element) {
+            @Override
+			public boolean event(Element element) {
                 if (imageState.titleText == null)
                     return false;
                 
@@ -82,7 +82,8 @@ public class Image extends Element {
         });
         
         this.onMouseExit(new ElementEvent() {
-            public boolean event(Element element) {
+            @Override
+			public boolean event(Element element) {
                 imageState.hoverDt = 0.0f;
                 imageState.titleX = 0.0f;
                 imageState.titleY = 0.0f;

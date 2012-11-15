@@ -46,21 +46,24 @@ public class TexturePNG implements Texture {
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#getTextureID()
      */
-    public int getTextureID() {
+    @Override
+	public int getTextureID() {
         return textureID;
     }
 
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#getTextureBinding()
      */
-    public int getTextureBinding() {
+    @Override
+	public int getTextureBinding() {
         return unit;
     }
 
     /* (non-Javadoc)
      * @see edu.siren.renderer.Texture#loadTexture(java.lang.String, int)
      */
-    public int loadTexture(String filename, int unit) throws IOException {
+    @Override
+	public int loadTexture(String filename, int unit) throws IOException {
         this.unit = unit;
 
         // Load the PNG
