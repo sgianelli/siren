@@ -1,11 +1,14 @@
 package edu.siren.core.tile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.GL13;
 
 import edu.siren.core.geom.Rectangle;
+import edu.siren.game.entity.Entity;
+import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;
@@ -20,11 +23,52 @@ import edu.siren.renderer.Vertex;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Tile implements Drawable {
+    public String id = null;
     public TexturePNG texture;
     public Rectangle bounds;
     public IndexVertexBuffer ivb;
     public static final HashMap<String, TexturePNG> cache = new HashMap<String, TexturePNG>();
-
+    public Events events = null;
+    public Layer layer = null;
+    
+    class Events {
+        public ArrayList<TileEvent> touch, visible, interact;
+        public Events(Tile e) {
+            touch = new ArrayList<TileEvent>();
+            visible = new ArrayList<TileEvent>();
+            interact = new ArrayList<TileEvent>();
+            layer.triggerTiles.add(e);
+        }
+    };
+    
+    public void touch(TileEvent event) {
+        if (events == null) {
+            events = new Events(this);
+        }
+        System.out.println("Creating touch event");
+        events.touch.add(event);
+    }
+    
+    public void touch(Entity entity) {
+        for (TileEvent event : events.touch) {
+            event.event(entity);
+        }
+    }
+    
+    public void visible(TileEvent event) {
+        if (events == null) {
+            events = new Events(this);
+        }
+        events.visible.add(event);
+    }
+    
+    public void interact(TileEvent event) {
+        if (events == null) {
+            events = new Events(this);
+        }
+        events.interact.add(event);
+    }    
+    
     /**
      * Trivial constructor.
      */
@@ -180,4 +224,10 @@ public class Tile implements Drawable {
                                 s, t); // br
     }
 
+    public void checkEvents(World world) {
+        for (Entity entity : world.entities) {
+            if (bounds.touching(entity.getRect()))
+                touch(entity);
+        }
+    }
 }

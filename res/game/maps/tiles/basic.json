@@ -1,0 +1,6 @@
+{
+    "layer1": [
+        {"tile": "res/tests/img/grass.png", "x": 0, "y": 0, "w": 512, "h": 512},
+        {"tile": "res/tests/img/trigger-tile.png", "x": 0, "y": 0, "w": 56, "h": 56, "id": "trigger1"}
+        ]
+}

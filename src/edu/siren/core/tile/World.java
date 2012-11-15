@@ -5,6 +5,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -35,6 +37,7 @@ public abstract class World {
     public Camera camera = new Camera(512.0f / 448.0f);
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
+    public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
     
     // FBO specific entries
     // TODO (justinvh): This shouldn't be here.
@@ -56,15 +59,13 @@ public abstract class World {
      * @throws IOException 
      * @throws LWJGLException 
      */
-    public World(int width, int height) throws IOException, LWJGLException {
-        // First bind the keyboard and mouse via LWJGL
-        Keyboard.create();
-        Mouse.create();
-        layers = new TreeSet<Layer>();        
-        font = new Font("res/tests/fonts/nostalgia.png", 24);
-        
+    public World() throws IOException, LWJGLException {
+        init();        
         create();
-
+        setupShaders();
+    }
+    
+    public void setupShaders() throws IOException {
         // Create a default world shader for normal camera transforms.
         worldShader = new Shader("res/tests/glsl/basic.vert",
                                  "res/tests/glsl/basic.frag");        
@@ -77,15 +78,16 @@ public abstract class World {
         fboTile.createInvertIndexVertexBuffer(1, 1);       
         generateFBO();
     }
-    
-    public void create() throws IOException {
-        // Create a default layer with some grass on it
-        Layer layer = new Layer(BufferType.STATIC);
-        layer.addTile(new Tile("res/tests/img/grass.png", 
-                      -1024/2, -1024/2, 1024, 1024));        
-        layers.add(layer);               
+
+    public void init() throws LWJGLException, IOException {
+        // First bind the keyboard and mouse via LWJGL
+        Keyboard.create();
+        Mouse.create();
+        layers = new TreeSet<Layer>();        
+        font = new Font("res/tests/fonts/nostalgia.png", 24);
     }
-    
+
+    public abstract void create() throws IOException;    
     /**
      * Environment transitions. These HSV values correspond to an environment.
      * Additional effects can be created by simply setting a new state.
@@ -190,6 +192,8 @@ public abstract class World {
      * @return Returns false if the layer already exists.
      */
     public boolean addLayer(Layer layer) {
+        layer.world = this;
+        layer.extendHash(tiles);
         return layers.add(layer);
     }
 

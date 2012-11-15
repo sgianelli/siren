@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.tile.World;
+import edu.siren.game.Player;
 import edu.siren.game.ai.AI;
 
 public abstract class Entity {
@@ -52,6 +53,14 @@ public abstract class Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public boolean is(String what) {
+        if (what.equals(":player")) {
+            return this instanceof Player;
+        }
+        
+        return false;
     }
     
     public Entity() {

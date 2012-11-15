@@ -1,9 +1,14 @@
 package edu.siren.core.tile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
+import edu.siren.renderer.IndexVertexBuffer;
 
 /**
  * Abstracts away a priority drawing by defining the concept of a Layer.
@@ -17,10 +22,14 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected BufferType type;
     protected Layer parent;
     protected Rectangle bounds;
-    protected ArrayList<Drawable> tiles;
-    protected ArrayList<TriggerTile> triggerTiles;
+    protected ArrayList<Tile> tiles;
+    protected ArrayList<Tile> triggerTiles;
     protected ArrayList<Layer> children;
+    protected HashMap<String, Tile> tileHashMap = null;
     protected boolean valid = false;
+    private List<IndexVertexBuffer> rawivb = new ArrayList<IndexVertexBuffer>();
+    private String name = null;
+    public World world = null;
 
     /**
      * Construct a new basic layer.
@@ -32,12 +41,17 @@ public class Layer implements Comparable<Layer>, Drawable {
         depth = 0;
         priority = 0;
         this.type = type;
-        this.tiles = new ArrayList<Drawable>();
-        this.triggerTiles = new ArrayList<TriggerTile>();
+        this.tiles = new ArrayList<Tile>();
+        this.triggerTiles = new ArrayList<Tile>();
     }
 
     public Layer() {
         this(BufferType.STATIC);
+    }
+
+    public Layer(String name) {
+        this(BufferType.STATIC);
+        this.name = name;        
     }
 
     /**
@@ -58,6 +72,8 @@ public class Layer implements Comparable<Layer>, Drawable {
             } else {
                 this.tiles.add(tile);
             }
+            
+            tile.layer = this;
         }        
     }
 
@@ -70,9 +86,13 @@ public class Layer implements Comparable<Layer>, Drawable {
         for (Drawable tile : tiles) {
             tile.draw();
         }
+                
+        for (IndexVertexBuffer ivb : rawivb) {
+            ivb.draw();
+        }
         
-        for (TriggerTile tile : triggerTiles) {
-            tile.draw();
+        for (Tile tile : triggerTiles) {
+            tile.checkEvents(world);
         }
     }
 
@@ -112,11 +132,19 @@ public class Layer implements Comparable<Layer>, Drawable {
     /**
      * Adds a Drawable surface to the Layer.
      *
-     * @param drawables Any drawable surface.
+     * @param indexVertexBuffers Any drawable surface.
      */
-    public void addIndexVertexBuffer(Drawable[] drawables) {
-        for (Drawable drawable : drawables) {
-            tiles.add(drawable);
+    public void addIndexVertexBuffer(IndexVertexBuffer[] indexVertexBuffers) {
+        for (IndexVertexBuffer drawable : indexVertexBuffers) {
+            rawivb.add(drawable);
+        }
+    }
+
+    public void extendHash(HashMap<String, Tile> tileHashMap) {   
+        for (Tile tile : tiles) {
+            if (tile.id != null) {
+                tileHashMap.put(tile.id, tile);
+            }
         }
     }
 }
