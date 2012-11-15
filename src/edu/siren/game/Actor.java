@@ -72,12 +72,14 @@ public class Actor extends Entity implements Interactable {
         }
     }
 
-    public void moveTo(int x, int y) {
+    @Override
+	public void moveTo(int x, int y) {
         this.desiredX = x;
         this.desiredY = y;
     }
 
-    public void draw() {
+    @Override
+	public void draw() {
         ai.think();
 
         // Go twards X

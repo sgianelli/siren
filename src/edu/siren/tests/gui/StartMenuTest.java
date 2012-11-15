@@ -23,7 +23,8 @@ public class StartMenuTest {
         {
             background.xywh(0, 0, 640, 480);
             background.onMouseUp(new ElementEvent() {
-                public boolean event(Element element) {
+                @Override
+				public boolean event(Element element) {
                     gui.disable();
                     return false;
                 }
@@ -41,7 +42,8 @@ public class StartMenuTest {
                 prompt.positioning(Element.Position.RELATIVE);
                 prompt.onDraw(new ElementEvent() {
                     public double dt = Element.getTime();
-                    public boolean event(Element element) {                   
+                    @Override
+					public boolean event(Element element) {                   
                         if ((Element.getTime() - dt) > 500.0f) {
                             element.toggle();
                             dt = Element.getTime();

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
@@ -82,7 +81,8 @@ public class Layer implements Comparable<Layer>, Drawable {
     /* (non-Javadoc)
      * @see edu.siren.renderer.Drawable#draw()
      */
-    public void draw() {
+    @Override
+	public void draw() {
         for (Drawable tile : tiles) {
             tile.draw();
         }
@@ -112,7 +112,8 @@ public class Layer implements Comparable<Layer>, Drawable {
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Layer layer) {
+    @Override
+	public int compareTo(Layer layer) {
         if (depth > layer.depth) {
             return 1;
         } else if (depth < layer.depth) {

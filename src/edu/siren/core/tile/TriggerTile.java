@@ -16,7 +16,8 @@ public class TriggerTile extends Tile {
         super(TRIGGER_TEXTURE, x, y, w, h, 4, 4);
     }
 
-    public void draw() {
+    @Override
+	public void draw() {
         if (drawTrigger) {
             super.draw();
         }

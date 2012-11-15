@@ -1,11 +1,13 @@
 package edu.siren.renderer;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+<<<<<<< HEAD
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 
+=======
+>>>>>>> 8cc497ca4e3055ecba75438ff1fdb72e95d73645
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -179,7 +181,8 @@ public class IndexVertexBuffer implements Drawable {
     /* (non-Javadoc)
      * @see edu.siren.renderer.Drawable#draw()
      */
-    public void draw() {
+    @Override
+	public void draw() {
         // Try to load and bind the textures
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0); 
         if (textureIDs != null) {

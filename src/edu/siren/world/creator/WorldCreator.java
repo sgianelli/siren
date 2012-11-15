@@ -13,8 +13,10 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
-import edu.siren.game.World;
+import edu.siren.core.tile.World;
 import edu.siren.game.characters.Villager;
+import edu.siren.game.players.Link;
+import edu.siren.game.worlds.BasicWorld;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
@@ -25,16 +27,45 @@ import org.lwjgl.input.Mouse;
 
 public class WorldCreator {
 
+     public static int WORLD_WIDTH = 5000;
+     public static int WORLD_HEIGHT = 5000;
+
 	 Screen screen;
 	 
 
 	 WorldCreator() throws LWJGLException, IOException {
-		 
+	        Random random = new Random();
 		 
 	        screen = new Screen("World Creator", 512, 448);
-	        World world = new World(8096, 8096);
 	        
-	        Set<Layer> layers = new TreeSet<Layer>();  
+	        World world = new BasicWorld(WORLD_WIDTH, WORLD_HEIGHT);
+	        
+	        // Create a new layer
+	        Layer layer = new Layer();
+	        
+	        
+	        
+	        
+	        // Add some grass
+	        layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, WORLD_WIDTH, WORLD_HEIGHT));
+	        
+            // Add random trees
+            for (int i = 0; i < 100; i++) {
+                int x = random.nextInt(9000) - random.nextInt(50);
+                int y = random.nextInt(9000) - random.nextInt(50);
+                
+                // Place the tree somewhere in the world
+                Tile tile = new Tile("res/tests/img/tree.png", x, y);
+                
+                // Add the tile to the current layer
+                layer.addTile(tile);
+            }
+	        
+	        
+
+
+	        System.out.println(layer);
+	        System.out.println(world.addLayer(layer));
 	               
 	        // Create a GUI using the Perspective2D camera
 	        Perspective2D gui = new Perspective2D();
@@ -43,16 +74,15 @@ public class WorldCreator {
 	        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 
 	        // Create a new player and put them somewhere in the world
-	        Player player = new Player("res/tests/scripts/entities/villager-justin.json");
+	        Player player = new Link();
 	        player.setPosition(0, 0);
 	        world.addEntity(player);// Create a new player and put them somewhere in the world
 	        
-	        Random random = new Random();
 	
 	            for (int j = 0; j < 30; j++) {
 	                Villager v = new Villager(
 	                        "res/tests/scripts/entities/villager-justin.json");
-	                v.setPosition(random.nextInt(1024), random.nextInt(1024));
+	                v.setPosition(random.nextInt(WORLD_WIDTH), random.nextInt(WORLD_HEIGHT));
 	                world.addEntity(v);
 	        }
 
@@ -60,9 +90,6 @@ public class WorldCreator {
 	        // These are some overlays that we will draw over the Gui to give
 	        // the illusion of environment changes
 
-	        
-	        Tile edit = new Tile();
-	        Layer layer = new Layer(BufferType.STATIC);
 	        System.out.println(layer);
 	        System.out.println(world.addLayer(layer));
 	       
@@ -91,7 +118,13 @@ public class WorldCreator {
 	            	    int y = Mouse.getY();
 	             
 	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
-	            	    layer.addTile(new Tile("res/tests/img/tree.png",x,y));
+	                    // Place the tree somewhere in the world
+	                    Tile tile = new Tile("res/tests/img/tree.png", x, y);
+	                    
+	                    // Add the tile to the current layer
+	                    layer.addTile(tile);
+	                    
+	                    
 	                }
 	            }
 	            

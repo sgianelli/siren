@@ -41,7 +41,7 @@ public class Font {
      */
     private float s(float x) {
         float rect = texture.width / square;
-        return (x / rect) + (1.5f / (float) (square)) / rect;
+        return (x / rect) + (1.5f / (square)) / rect;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Font {
             height = charrect.height;
             // Figure out what column and row we are drawing from
             // the sprite sheet.
-            int h = (int) (what.charAt(i));
+            int h = (what.charAt(i));
             int c = h / (texture.width / square);
             int r = h % (texture.width / square);
 
@@ -217,7 +217,7 @@ public class Font {
 
     public float lineHeight() {
         if (ivbsCache != null) {
-            return bounds.height / (float)(ivbsCache.length);
+            return bounds.height / (ivbsCache.length);
         }
         
         return 0.0f;

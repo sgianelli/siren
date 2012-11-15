@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.lwjgl.Sys;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 /**
  * The Camera object defines a world viewport. It must be bound to a shader
