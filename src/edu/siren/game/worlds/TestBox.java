@@ -76,12 +76,9 @@ public class TestBox extends World {
         
 
         // Add the layer to all the layers
-<<<<<<< HEAD
         layers.add(layer);
         layers.add(layer2);
-=======
-        System.out.println(addLayer(layer));
->>>>>>> 8cc497ca4e3055ecba75438ff1fdb72e95d73645
+
     }
 
 }
