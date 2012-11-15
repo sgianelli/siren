@@ -2,12 +2,8 @@ package edu.siren.renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-<<<<<<< HEAD
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 
-=======
->>>>>>> 8cc497ca4e3055ecba75438ff1fdb72e95d73645
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
