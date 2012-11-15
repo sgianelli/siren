@@ -1,0 +1,51 @@
+.sprite {
+    background: url(download.png) no-repeat;
+}
+
+.sprite-pikachu-backward-1-png {
+    width: 16px;
+    height: 18px;
+    background-position: -56px -0px;
+}
+
+.sprite-pikachu-backward-2-png {
+    width: 16px;
+    height: 18px;
+    background-position: -28px -28px;
+}
+
+.sprite-pikachu-forward-1-png {
+    width: 15px;
+    height: 16px;
+    background-position: -26px -57px;
+}
+
+.sprite-pikachu-forward-2-png {
+    width: 15px;
+    height: 16px;
+    background-position: -0px -57px;
+}
+
+.sprite-pikachu-left-1-png {
+    width: 16px;
+    height: 17px;
+    background-position: -55px -29px;
+}
+
+.sprite-pikachu-left-2-png {
+    width: 17px;
+    height: 17px;
+    background-position: -0px -28px;
+}
+
+.sprite-pikachu-right-1-png {
+    width: 17px;
+    height: 17px;
+    background-position: -28px -0px;
+}
+
+.sprite-pikachu-right-2-png {
+    width: 17px;
+    height: 17px;
+    background-position: -0px -0px;
+}

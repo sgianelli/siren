@@ -8,7 +8,9 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.players.Diglett;
 import edu.siren.game.players.Link;
+import edu.siren.game.players.Pikachu;
 import edu.siren.game.worlds.TestBox;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
@@ -29,9 +31,17 @@ public class ControllableCharacterTest {
         Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 
         // Create a new player and put them somewhere in the world
-        Player player = new Link();
+        Player player = new Pikachu();
+        player.follow = true;
+        
+        Player player2 = new Link();
+        Player player3 = new Diglett();
         player.setPosition(0, 0);
+        player2.setPosition(0, 25);
+        player3.setPosition(0, 50);
         world.addEntity(player);
+        world.addEntity(player2);
+        world.addEntity(player3);
         
         // These are some overlays that we will draw over the Gui to give
         // the illusion of environment changes

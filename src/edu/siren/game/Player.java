@@ -7,6 +7,7 @@ import edu.siren.renderer.Camera;
 public class Player extends Actor {
     public Camera camera = null;
     public int lastMovement = 0;
+    public boolean follow = false;
 
     public Player(String config) {
         super(config, null);
@@ -24,9 +25,7 @@ public class Player extends Actor {
             sprite.animation("move-forward");
             lastMovement = 1;
             movement = true;
-        }
-        
-        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        } else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
             moveDown();
             sprite.animation("move-backward");
             lastMovement = 2;
@@ -39,9 +38,7 @@ public class Player extends Actor {
             sprite.animation("move-left");
             lastMovement = 3;
             movement = true;
-        }
-        
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+        } else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
             moveRight();
             sprite.animation("move-right");
             lastMovement = 4;
@@ -64,13 +61,14 @@ public class Player extends Actor {
                 break;
             }
         }
-
+        
         // Only update the camera if necessary
-        if (sprite.spriteX != this.x || sprite.spriteY != this.y) {
-            sprite.spriteX = this.x;
-            sprite.spriteY = this.y;
+        if (follow && (sprite.spriteX != this.x || sprite.spriteY != this.y)) {
             camera.setPosition(-this.x, -this.y);
         } 
+        
+        sprite.spriteX = this.x;
+        sprite.spriteY = this.y;
         
         sprite.draw();
     }

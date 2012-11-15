@@ -162,93 +162,21 @@ public class Tile implements Drawable {
      * Create the index vertex buffer object with (s, t) tile texture mapping.
      */
     public void createIndexVertexBuffer(float s, float t) {
-        float x, y;
-        
-        // Corner 1
-        Vertex v0 = new Vertex();
-        y = bounds.bottom();
-        x = bounds.left();
-        v0.xyz(x, y, 0);
-        v0.rgb(0, 0, 0);
-        v0.st(0, 0);
-
-        // Corner 2
-        Vertex v1 = new Vertex();
-        y = bounds.top();
-        x = bounds.left();
-        v1.xyz(x, y, 0);
-        v1.rgb(0, 0, 0);
-        v1.st(0, t);
-
-        // Corner 3
-        Vertex v2 = new Vertex();
-        y = bounds.top();
-        x = bounds.right();
-        v2.xyz(x, y, 0);
-        v2.rgb(0, 0, 0);
-        v2.st(s, t);
-
-        // Corner 4
-        Vertex v3 = new Vertex();
-        y = bounds.bottom();
-        x = bounds.right();
-        v3.xyz(x, y, 0);
-        v3.rgb(0, 0, 0);
-        v3.st(s, 0);
-
-        // Fill the index vertex buffer
-        ivb = new IndexVertexBuffer(BufferType.STATIC);
-        ivb.put(v0, v1, v2, v3);
-        byte[] indices = { 0, 1, 2, 2, 3, 0 };
-        ivb.put(indices);
-
-        if (texture != null)
-            ivb.put(texture);
+        createIndexVertexBuffer(0, 0,   // bl
+                                0, t,   // tl
+                                s, t,   // tr
+                                s, 0);  // bl
     }
 
+    /**
+     * Creates an inverted IVB suitable for textures that are
+     * inverted and you want them corrected.
+     */
     public void createInvertIndexVertexBuffer(float s, float t) {
-        float x, y;
-        
-        // Corner 1
-        Vertex v0 = new Vertex();
-        y = bounds.bottom();
-        x = bounds.left();
-        v0.xyz(x, y, 0);
-        v0.rgb(0, 0, 0);
-        v0.st(0, t);
-
-        // Corner 2
-        Vertex v1 = new Vertex();
-        y = bounds.top();
-        x = bounds.left();
-        v1.xyz(x, y, 0);
-        v1.rgb(0, 0, 0);
-        v1.st(0, 0);
-
-        // Corner 3
-        Vertex v2 = new Vertex();
-        y = bounds.top();
-        x = bounds.right();
-        v2.xyz(x, y, 0);
-        v2.rgb(0, 0, 0);
-        v2.st(s, 0);
-
-        // Corner 4
-        Vertex v3 = new Vertex();
-        y = bounds.bottom();
-        x = bounds.right();
-        v3.xyz(x, y, 0);
-        v3.rgb(0, 0, 0);
-        v3.st(s, t);
-
-        // Fill the index vertex buffer
-        ivb = new IndexVertexBuffer(BufferType.STATIC);
-        ivb.put(v0, v1, v2, v3);
-        byte[] indices = { 0, 1, 2, 2, 3, 0 };
-        ivb.put(indices);
-
-        if (texture != null)
-            ivb.put(texture);        
+        createIndexVertexBuffer(0, t,  // bl
+                                0, 0,  // tl
+                                s, 0,  // tr
+                                s, t); // br
     }
 
 }
