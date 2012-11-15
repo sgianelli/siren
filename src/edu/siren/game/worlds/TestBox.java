@@ -13,7 +13,7 @@ import edu.siren.core.tile.World;
 public class TestBox extends World {
 
     public TestBox(int width, int height) throws IOException, LWJGLException {
-        super(width, height);
+        super();
     }
     
     @Override
