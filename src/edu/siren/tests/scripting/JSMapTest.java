@@ -2,6 +2,7 @@ package edu.siren.tests.scripting;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -15,6 +16,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.scripting.JSWorld;
 import edu.siren.core.tile.World;
@@ -24,11 +26,8 @@ import edu.siren.renderer.Screen;
 
 public class JSMapTest {
     
-    public static void main(String[] args) 
-            throws IOException, ScriptException, LWJGLException 
-    {    
+    public static World reload() throws ScriptException, LWJGLException, IOException {
         // Invoke a screen and a new JavaScript engine
-        Screen screen = new Screen("JSMapTest", 640, 480);
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
 
         // Read in all the data
@@ -49,17 +48,36 @@ public class JSMapTest {
         // Compile the engine
         Compilable compEngine = (Compilable)engine;
         CompiledScript cs = compEngine.compile(content);
-        cs.eval(bindings);   
+        cs.eval(bindings); 
         
-        // Create a player and it to the generated world
         World world = jsworld.world;
+        
+        return world;
+    }
+    
+    public static void main(String[] args) 
+            throws IOException, ScriptException, LWJGLException 
+    {    
+        Screen screen = new Screen("JSMapTest", 640, 480);
+        World world = reload();
         Player player = new Link();
         player.follow = true;        
         world.addEntity(player);
         
         // Draw as usual
+        boolean down = false;
         while (screen.nextFrame()) {
             world.draw();
+            
+            if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
+                if (down)
+                    continue;
+                world = reload();
+                world.addEntity(player);
+                down = true;
+            } else {
+                down = false;
+            }
         }
         
         screen.cleanup();

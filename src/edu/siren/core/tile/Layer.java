@@ -1,6 +1,7 @@
 package edu.siren.core.tile;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,7 @@ public class Layer implements Comparable<Layer>, Drawable {
     private List<IndexVertexBuffer> rawivb = new ArrayList<IndexVertexBuffer>();
     private String name = null;
     public World world = null;
+    public ArrayList<Tile> solids = new ArrayList<Tile>();
 
     /**
      * Construct a new basic layer.
@@ -73,7 +75,12 @@ public class Layer implements Comparable<Layer>, Drawable {
                 this.tiles.add(tile);
             }
             
+            // Bind the tile to a layer
+            // And cache solid tiles for BBOX tests
             tile.layer = this;
+            if (tile.solid) {
+                solids.add(tile);
+            }
         }        
     }
 
@@ -83,17 +90,17 @@ public class Layer implements Comparable<Layer>, Drawable {
      */
     @Override
 	public void draw() {
+        for (Tile tile : triggerTiles) {
+            tile.checkEvents(world);
+        }
+
         for (Drawable tile : tiles) {
             tile.draw();
         }
                 
         for (IndexVertexBuffer ivb : rawivb) {
             ivb.draw();
-        }
-        
-        for (Tile tile : triggerTiles) {
-            tile.checkEvents(world);
-        }
+        }        
     }
 
     /**

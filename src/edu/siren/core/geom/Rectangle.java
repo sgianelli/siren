@@ -75,7 +75,16 @@ public class Rectangle {
         return contains(rect.x, rect.y);
     }
     
-    public boolean touching(Rectangle other) {
+    public boolean touching(Rectangle other) {                
+        boolean ibottom = bottom() < other.top();
+        boolean itop = top() > other.bottom();
+        boolean ileft = left() > other.right();
+        boolean iright = right() < other.left();
+        
+        return !(ibottom || itop || ileft || iright);
+    }
+    
+    public boolean touchingAny(Rectangle other) {
         float x1 = x, y1 = y;
         float w1 = width, h1 = height;
 
@@ -150,5 +159,18 @@ public class Rectangle {
             return true;        
         
         return false;
+    }
+    
+    public Rectangle clone() {
+        return new Rectangle(x, y, width, height);
+    }
+
+    public Rectangle scaled(int scalar) {
+        Rectangle scaledRect = this.clone();
+        scaledRect.width += scalar;
+        scaledRect.height += scalar;
+        scaledRect.x -= scalar;
+        scaledRect.y -= scalar;
+        return scaledRect;        
     }    
 }

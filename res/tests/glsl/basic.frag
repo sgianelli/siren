@@ -113,5 +113,9 @@ vec4 hsv2rgb(vec4 hsva)
 
 void main()
 {
-    outColor = hsv2rgb(vec4(hsv, 1.0) * rgb2hsv(texture(diffuse, Tex)));
+    if ((Tex.x < 0.02 || Tex.x > 0.98 || Tex.y < 0.02 || Tex.y > 0.98)) {
+        outColor = vec4(1.0, 0.0, 0.0, 1.0);
+    } else {
+        outColor = hsv2rgb(vec4(hsv, 1.0) * rgb2hsv(texture(diffuse, Tex)));
+    }
 }

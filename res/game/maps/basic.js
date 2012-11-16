@@ -13,8 +13,9 @@ var $ = function (x) {
     }
 
     $trigger1.touch(function (e) {
+        /*
         if (e.is(':player')) {
-            e.health--;
-        }
+        } 
+        */
     });
 })();

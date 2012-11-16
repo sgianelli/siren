@@ -30,16 +30,39 @@ public class Tile implements Drawable {
     public static final HashMap<String, TexturePNG> cache = new HashMap<String, TexturePNG>();
     public Events events = null;
     public Layer layer = null;
+    public boolean solid = false;
     
     class Events {
-        public ArrayList<TileEvent> touch, visible, interact;
+        public ArrayList<TileEvent> touch, aboutToTouch, visible, interact;
         public Events(Tile e) {
             touch = new ArrayList<TileEvent>();
             visible = new ArrayList<TileEvent>();
             interact = new ArrayList<TileEvent>();
+            aboutToTouch = new ArrayList<TileEvent>();
             layer.triggerTiles.add(e);
         }
     };
+    
+    public class AboutToTouchEvent implements TileEvent {
+        public Rectangle bounds;
+        public TileEvent stored;
+        AboutToTouchEvent(Rectangle bounds, TileEvent event) {
+            this.bounds = bounds;
+            this.stored = event;
+        }
+        
+        public void event(Entity e) {
+            stored.event(e);
+        }
+    };
+    
+    public void aboutToTouch(int scalar, TileEvent event) {
+        if (events == null) {
+            events = new Events(this);
+        }
+        System.out.println("Creating aboutToTouch event");
+        events.aboutToTouch.add(new AboutToTouchEvent(bounds.scaled(scalar), event));
+    }
     
     public void touch(TileEvent event) {
         if (events == null) {
@@ -116,6 +139,10 @@ public class Tile implements Drawable {
             cache.put(filename, cached);
         }
         this.texture = cached;
+        if (width == 0 || height == 0) {
+            width = this.texture.width;
+            height = this.texture.height;
+        }
         bounds = new Rectangle(x, y, width, height);
         createIndexVertexBuffer(1, 1);
     }
@@ -228,6 +255,12 @@ public class Tile implements Drawable {
         for (Entity entity : world.entities) {
             if (bounds.touching(entity.getRect()))
                 touch(entity);
+            
+            for (TileEvent event : events.aboutToTouch) {
+                AboutToTouchEvent att = (AboutToTouchEvent) event;
+                att.bounds.touching(entity.getRect());
+                att.event(entity);
+            }
         }
     }
 }

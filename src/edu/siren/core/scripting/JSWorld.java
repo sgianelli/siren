@@ -70,20 +70,15 @@ public class JSWorld {
                             String tilename = tileEntry.getString("tile");
                             int x = tileEntry.getInt("x");
                             int y = tileEntry.getInt("y");
-                            int w = tileEntry.getInt("w");
-                            int h = tileEntry.getInt("h");
-                            String id = null;
+                            int w = tileEntry.optInt("w");
+                            int h = tileEntry.optInt("h");
+                            String id = tileEntry.optString("id");
+                            boolean solid = tileEntry.optBoolean("solid");
                             
-                            // Optionally create an id for reference.
-                            try {
-                                id = (String) tileEntry.get("id");
-                            } catch (JSONException e) {
-                                id = null;
-                            }
-                                
                             // Create the new tile and add it to the layer.
                             Tile tile = new Tile(tilename, x, y, w, h);                    
                             tile.id = id;
+                            tile.solid = solid;
                             layer.addTile(tile);
                         }
                         

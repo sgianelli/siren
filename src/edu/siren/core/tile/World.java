@@ -6,6 +6,7 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -38,6 +39,9 @@ public abstract class World {
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
+    
+    // We're going to treat this as a MRU cache
+    public LinkedList<Tile> solids = new LinkedList<Tile>();
     
     // FBO specific entries
     // TODO (justinvh): This shouldn't be here.
@@ -194,6 +198,7 @@ public abstract class World {
     public boolean addLayer(Layer layer) {
         layer.world = this;
         layer.extendHash(tiles);
+        solids.addAll(layer.solids);
         return layers.add(layer);
     }
 
