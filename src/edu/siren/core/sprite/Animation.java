@@ -19,6 +19,7 @@ public class Animation {
     private double dt = 0;
     private int frame = 0;
     private AnimationFrame currentFrame;
+    private Sprite sprite = null;
 
     /**
      * Constructs an Animation object
@@ -97,11 +98,17 @@ public class Animation {
     private double getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
+    
+    public void draw(float x, float y) {
+        draw(null, x, y);
+    }
 
     /**
      * Draws the underlying sprite at a given X,Y in the world.
+     * @param sprite 
      */
-    public void draw(float x, float y) {
+    public void draw(Sprite sprite, float x, float y) {
+        this.sprite = sprite;
         if (dt == 0) {
             dt = getTime();
         } else if ((getTime() - dt) > currentFrame.frameTime) {
@@ -109,6 +116,14 @@ public class Animation {
             currentFrame = frames.get(frame);
             dt = getTime();
         }
+        
+        if (sprite != null) {
+            sprite.bounds.x = currentFrame.bounds.x;
+            sprite.bounds.y = currentFrame.bounds.y;
+            sprite.bounds.width = currentFrame.bounds.width;
+            sprite.bounds.height = currentFrame.bounds.height;
+        }
+
         currentFrame.draw(x, y);
     }
 

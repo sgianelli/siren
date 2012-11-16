@@ -31,7 +31,7 @@ public class Layer implements Comparable<Layer>, Drawable {
     private List<IndexVertexBuffer> rawivb = new ArrayList<IndexVertexBuffer>();
     private String name = null;
     public World world = null;
-    public ArrayList<Tile> solids = new ArrayList<Tile>();
+    public ArrayList<Rectangle> solids = new ArrayList<Rectangle>();
 
     /**
      * Construct a new basic layer.
@@ -79,7 +79,7 @@ public class Layer implements Comparable<Layer>, Drawable {
             // And cache solid tiles for BBOX tests
             tile.layer = this;
             if (tile.solid) {
-                solids.add(tile);
+                solids.add(tile.bounds);
             }
         }        
     }

@@ -7,8 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
+import edu.siren.core.tile.Tile;
 import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
@@ -81,25 +83,107 @@ public class Actor extends Entity implements Interactable {
     @Override
 	public void draw() {
         ai.think();
+        
+        boolean movement = false;
+        int lastX = this.x;
+        int lastY = this.y;
+        int lastMovement = 1;
 
         // Go twards X
         if (Math.abs(x - desiredX) > speed) {
             if (x < desiredX) {
                 this.x += speed;
+                lastMovement = 3;
             } else if (x >= desiredX) {
                 this.x -= speed;
+                lastMovement = 4;
             }
+        }
+        
+        int lastMovementX = lastMovement;
+        if (lastMovementX != 1) {
+            movement = true;
         }
 
         // Go towards Y
         if (Math.abs(y - desiredY) > speed) {
             if (y < desiredY) {
                 y += speed;
+                lastMovement = 1;
             } else if (y >= desiredY) {
                 y -= speed;
+                lastMovement = 2;
             }
         }
+        
+        int lastMovementY = lastMovement;
+        if (lastMovementY == 1 || lastMovementY == 2) {
+            movement = true;
+        }
+        
+        Rectangle o = this.getRect(); o.x = this.x; o.y = this.y;
+        Rectangle l = o.clone(); l.x -= 2;
+        Rectangle r = o.clone(); r.x += 2;
+        Rectangle t = o.clone(); t.y -= 2;
+        Rectangle b = o.clone(); b.y += 2;
 
+        for (Rectangle bounds : world.solids) {
+            boolean touched = false;
+            if (l.touching(bounds)) {
+                touched = true;
+                if (lastMovementX == 3) {
+                    this.x = lastX;
+                    this.desiredX = lastX;
+                }
+            } else if (r.touching(bounds)) {
+                touched = true;
+                if (lastMovementX == 4) {
+                    this.x = lastX;
+                    this.desiredX = lastX;
+                }
+            }
+            
+            if (t.touching(bounds)) {
+                touched = true;
+                if (lastMovementY == 2) {
+                    this.y = lastY;
+                    this.desiredY = lastY;
+                }
+            } else if (b.touching(bounds)) {
+                touched = true;
+                if (lastMovementY == 1) {
+                    this.y = lastY;
+                    this.desiredY = lastY;
+                }
+            } 
+            
+            if (touched) {
+                world.solids.remove(bounds);
+                world.solids.add(0, bounds);
+                break;
+            }
+        }
+        
+            
+        if (!movement) {
+            switch (lastMovement) {
+            case 1:
+                sprite.animation("idle-forward");
+                break;
+            case 2:
+                sprite.animation("idle-backward");
+                break;
+            case 3:
+                sprite.animation("idle-left");
+                break;
+            case 4:
+                sprite.animation("idle-right");
+                break;
+            }
+        } else {
+            preventCollision.clear();
+        }
+    
         sprite.spriteX = this.x;
         sprite.spriteY = this.y;
 

@@ -21,7 +21,11 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.scripting.JSWorld;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.ai.RandomWalker;
+import edu.siren.game.characters.Villager;
+import edu.siren.game.players.Diglett;
 import edu.siren.game.players.Link;
+import edu.siren.game.players.Pikachu;
 import edu.siren.renderer.Screen;
 
 public class JSMapTest {
@@ -61,8 +65,27 @@ public class JSMapTest {
         Screen screen = new Screen("JSMapTest", 640, 480);
         World world = reload();
         Player player = new Link();
-        player.follow = true;        
+        Player pikachu = new Pikachu();
+        player.x = 190;
+        player.y = 64;
+        pikachu.x = 190;
+        pikachu.y = 32;
+        player.follow = true;   
+        
+        Player diglett = new Diglett();
+        diglett.x = 180;
+        diglett.y = 375;
+        diglett.lastMovement = 2;
+        diglett.controllable = false;
+        
+        Villager v = new Villager("res/tests/scripts/entities/villager-justin.json");
+        v.setPosition(180, 400);
+        v.setAI(new RandomWalker());
+        world.addEntity(v);
+        
         world.addEntity(player);
+        world.addEntity(pikachu);
+        world.addEntity(diglett);
         
         // Draw as usual
         boolean down = false;

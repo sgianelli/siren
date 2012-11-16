@@ -18,6 +18,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
+
+import edu.siren.core.geom.Rectangle;
 import edu.siren.game.Player;
 import edu.siren.game.entity.Entity;
 import edu.siren.renderer.BufferType;
@@ -41,7 +43,7 @@ public abstract class World {
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
     
     // We're going to treat this as a MRU cache
-    public LinkedList<Tile> solids = new LinkedList<Tile>();
+    public LinkedList<Rectangle> solids = new LinkedList<Rectangle>();
     
     // FBO specific entries
     // TODO (justinvh): This shouldn't be here.
@@ -207,6 +209,7 @@ public abstract class World {
      */
     public void addEntity(Entity entity) {
         entity.setWorld(this);
+        solids.add(entity.getRect());
         entities.add(entity);
     }
     
