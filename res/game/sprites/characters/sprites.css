@@ -2,338 +2,458 @@
     background: url(download.png) no-repeat;
 }
 
+.sprite-batman-jump-1-png {
+    width: 23px;
+    height: 46px;
+    background-position: -139px -0px;
+}
+
+.sprite-batman-jump-2-png {
+    width: 23px;
+    height: 60px;
+    background-position: -0px -0px;
+}
+
+.sprite-batman-jump-3-png {
+    width: 24px;
+    height: 57px;
+    background-position: -34px -0px;
+}
+
+.sprite-batman-jump-4-png {
+    width: 24px;
+    height: 56px;
+    background-position: -104px -0px;
+}
+
+.sprite-batman-jump-5-png {
+    width: 24px;
+    height: 56px;
+    background-position: -69px -0px;
+}
+
 .sprite-diglett-backward-1-png {
     width: 15px;
     height: 12px;
-    background-position: -216px -161px;
+    background-position: -277px -77px;
 }
 
 .sprite-diglett-backward-2-png {
     width: 15px;
     height: 11px;
-    background-position: -0px -229px;
+    background-position: -295px -122px;
 }
 
 .sprite-diglett-forward-1-png {
     width: 15px;
     height: 12px;
-    background-position: -216px -138px;
+    background-position: -277px -54px;
 }
 
 .sprite-diglett-forward-2-png {
     width: 15px;
     height: 11px;
-    background-position: -216px -207px;
+    background-position: -302px -100px;
 }
 
 .sprite-diglett-left-1-png {
     width: 14px;
     height: 12px;
-    background-position: -216px -184px;
+    background-position: -272px -276px;
 }
 
 .sprite-diglett-left-2-png {
     width: 14px;
     height: 11px;
-    background-position: -51px -229px;
+    background-position: -303px -22px;
 }
 
 .sprite-diglett-right-1-png {
     width: 14px;
     height: 12px;
-    background-position: -81px -84px;
+    background-position: -277px -100px;
 }
 
 .sprite-diglett-right-2-png {
     width: 14px;
     height: 11px;
-    background-position: -26px -229px;
+    background-position: -303px -0px;
+}
+
+.sprite-fire-1-png {
+    width: 17px;
+    height: 27px;
+    background-position: -209px -141px;
+}
+
+.sprite-fire-2-png {
+    width: 17px;
+    height: 27px;
+    background-position: -181px -141px;
+}
+
+.sprite-fire-3-png {
+    width: 17px;
+    height: 27px;
+    background-position: -153px -141px;
 }
 
 .sprite-link-backward-1-png {
     width: 16px;
     height: 24px;
-    background-position: -27px -152px;
+    background-position: -108px -238px;
 }
 
 .sprite-link-backward-2-png {
     width: 16px;
     height: 23px;
-    background-position: -27px -186px;
+    background-position: -270px -209px;
 }
 
 .sprite-link-backward-3-png {
     width: 16px;
     height: 22px;
-    background-position: -189px -186px;
+    background-position: -108px -276px;
 }
 
 .sprite-link-backward-4-png {
     width: 16px;
     height: 22px;
-    background-position: -162px -186px;
+    background-position: -81px -276px;
 }
 
 .sprite-link-backward-5-png {
     width: 16px;
     height: 22px;
-    background-position: -135px -186px;
+    background-position: -54px -276px;
 }
 
 .sprite-link-backward-6-png {
     width: 16px;
     height: 23px;
-    background-position: -0px -186px;
+    background-position: -268px -175px;
 }
 
 .sprite-link-backward-7-png {
     width: 16px;
     height: 24px;
-    background-position: -0px -152px;
+    background-position: -81px -238px;
 }
 
 .sprite-link-forward-1-png {
     width: 16px;
     height: 24px;
-    background-position: -189px -117px;
+    background-position: -54px -238px;
 }
 
 .sprite-link-forward-2-png {
     width: 16px;
     height: 23px;
-    background-position: -189px -152px;
+    background-position: -268px -141px;
 }
 
 .sprite-link-forward-3-png {
     width: 16px;
     height: 22px;
-    background-position: -108px -186px;
+    background-position: -27px -276px;
 }
 
 .sprite-link-forward-4-png {
     width: 16px;
     height: 22px;
-    background-position: -81px -186px;
+    background-position: -0px -276px;
 }
 
 .sprite-link-forward-5-png {
     width: 16px;
     height: 22px;
-    background-position: -54px -186px;
+    background-position: -270px -243px;
 }
 
 .sprite-link-forward-6-png {
     width: 16px;
     height: 23px;
-    background-position: -162px -152px;
+    background-position: -243px -238px;
 }
 
 .sprite-link-forward-7-png {
     width: 16px;
     height: 24px;
-    background-position: -162px -117px;
+    background-position: -27px -238px;
 }
 
 .sprite-link-left-1-png {
     width: 16px;
     height: 23px;
-    background-position: -135px -152px;
+    background-position: -216px -238px;
 }
 
 .sprite-link-left-2-png {
     width: 16px;
     height: 24px;
-    background-position: -135px -117px;
+    background-position: -0px -238px;
 }
 
 .sprite-link-left-3-png {
     width: 16px;
     height: 24px;
-    background-position: -108px -117px;
+    background-position: -233px -203px;
 }
 
 .sprite-link-left-4-png {
     width: 16px;
     height: 23px;
-    background-position: -108px -152px;
+    background-position: -189px -238px;
 }
 
 .sprite-link-left-5-png {
     width: 16px;
     height: 24px;
-    background-position: -81px -117px;
+    background-position: -206px -203px;
 }
 
 .sprite-link-left-6-png {
     width: 16px;
     height: 24px;
-    background-position: -54px -117px;
+    background-position: -179px -203px;
 }
 
 .sprite-link-left-7-png {
     width: 17px;
     height: 23px;
-    background-position: -133px -82px;
+    background-position: -0px -203px;
 }
 
 .sprite-link-right-1-png {
     width: 16px;
     height: 23px;
-    background-position: -81px -152px;
+    background-position: -162px -238px;
 }
 
 .sprite-link-right-2-png {
     width: 16px;
     height: 24px;
-    background-position: -27px -117px;
+    background-position: -152px -203px;
 }
 
 .sprite-link-right-3-png {
     width: 16px;
     height: 24px;
-    background-position: -0px -117px;
+    background-position: -82px -203px;
 }
 
 .sprite-link-right-4-png {
     width: 16px;
     height: 23px;
-    background-position: -54px -152px;
+    background-position: -135px -238px;
 }
 
 .sprite-link-right-5-png {
     width: 16px;
     height: 24px;
-    background-position: -188px -82px;
+    background-position: -55px -203px;
 }
 
 .sprite-link-right-6-png {
     width: 16px;
     height: 24px;
-    background-position: -161px -82px;
+    background-position: -28px -203px;
 }
 
 .sprite-link-right-7-png {
     width: 17px;
     height: 23px;
-    background-position: -105px -82px;
+    background-position: -124px -172px;
 }
 
 .sprite-peach-car-backward-1-png {
     width: 24px;
     height: 31px;
-    background-position: -70px -42px;
+    background-position: -140px -85px;
 }
 
 .sprite-peach-car-backward-2-png {
     width: 24px;
     height: 31px;
-    background-position: -35px -42px;
+    background-position: -105px -85px;
 }
 
 .sprite-peach-car-backward-3-png {
     width: 24px;
     height: 31px;
-    background-position: -0px -42px;
+    background-position: -70px -85px;
 }
 
 .sprite-peach-car-forward-1-png {
     width: 23px;
     height: 29px;
-    background-position: -173px -42px;
+    background-position: -243px -80px;
 }
 
 .sprite-peach-car-forward-2-png {
     width: 23px;
     height: 29px;
-    background-position: -139px -42px;
+    background-position: -243px -40px;
 }
 
 .sprite-peach-car-forward-3-png {
     width: 23px;
     height: 29px;
-    background-position: -105px -42px;
+    background-position: -243px -0px;
 }
 
 .sprite-peach-car-left-1-png {
     width: 24px;
     height: 31px;
-    background-position: -175px -0px;
+    background-position: -35px -85px;
 }
 
 .sprite-peach-car-left-2-png {
     width: 24px;
     height: 32px;
-    background-position: -35px -0px;
+    background-position: -208px -0px;
 }
 
 .sprite-peach-car-left-3-png {
     width: 24px;
     height: 31px;
-    background-position: -140px -0px;
+    background-position: -0px -85px;
 }
 
 .sprite-peach-car-right-1-png {
     width: 24px;
     height: 31px;
-    background-position: -105px -0px;
+    background-position: -208px -43px;
 }
 
 .sprite-peach-car-right-2-png {
     width: 24px;
     height: 32px;
-    background-position: -0px -0px;
+    background-position: -173px -0px;
 }
 
 .sprite-peach-car-right-3-png {
     width: 24px;
     height: 31px;
-    background-position: -70px -0px;
+    background-position: -173px -43px;
 }
 
 .sprite-pikachu-backward-1-png {
     width: 16px;
     height: 18px;
-    background-position: -27px -84px;
+    background-position: -218px -276px;
 }
 
 .sprite-pikachu-backward-2-png {
     width: 16px;
     height: 18px;
-    background-position: -0px -84px;
+    background-position: -191px -276px;
 }
 
 .sprite-pikachu-forward-1-png {
     width: 15px;
     height: 16px;
-    background-position: -216px -111px;
+    background-position: -277px -27px;
 }
 
 .sprite-pikachu-forward-2-png {
     width: 15px;
     height: 16px;
-    background-position: -215px -84px;
+    background-position: -277px -0px;
 }
 
 .sprite-pikachu-left-1-png {
     width: 16px;
     height: 17px;
-    background-position: -54px -84px;
+    background-position: -245px -276px;
 }
 
 .sprite-pikachu-left-2-png {
     width: 17px;
     height: 17px;
-    background-position: -215px -56px;
+    background-position: -163px -276px;
 }
 
 .sprite-pikachu-right-1-png {
     width: 17px;
     height: 17px;
-    background-position: -210px -28px;
+    background-position: -135px -276px;
 }
 
 .sprite-pikachu-right-2-png {
     width: 17px;
     height: 17px;
-    background-position: -210px -0px;
+    background-position: -109px -209px;
+}
+
+.sprite-tetris-black-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -102px -141px;
+}
+
+.sprite-tetris-black-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -237px -172px;
+}
+
+.sprite-tetris-blue-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -51px -141px;
+}
+
+.sprite-tetris-blue-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -93px -172px;
+}
+
+.sprite-tetris-dark-blue-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -0px -141px;
+}
+
+.sprite-tetris-dark-blue-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -62px -172px;
+}
+
+.sprite-tetris-orange-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -226px -120px;
+}
+
+.sprite-tetris-orange-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -31px -172px;
+}
+
+.sprite-tetris-red-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -175px -120px;
+}
+
+.sprite-tetris-red-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -0px -172px;
+}
+
+.sprite-tetris-white-horizontal-png {
+    width: 40px;
+    height: 10px;
+    background-position: -175px -85px;
+}
+
+.sprite-tetris-white-square-png {
+    width: 20px;
+    height: 20px;
+    background-position: -237px -141px;
 }

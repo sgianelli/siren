@@ -12,6 +12,9 @@ import edu.siren.renderer.Drawable;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Sprite implements Drawable {
+    public String id;
+    public String klass;
+
     public HashMap<String, Animation> animations = new HashMap<String, Animation>();
     public Animation active = null;
     public int spriteX = 0, spriteY = 0;

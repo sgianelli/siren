@@ -87,6 +87,11 @@ public class JSMapTest {
         world.addEntity(pikachu);
         world.addEntity(diglett);
         
+        Player d = world.spawn("Diglett");
+        d.x = 180;
+        d.y = 500;
+        d.lastMovement = 2;
+        
         // Draw as usual
         boolean down = false;
         while (screen.nextFrame()) {

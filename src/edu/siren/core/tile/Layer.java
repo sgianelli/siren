@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import edu.siren.core.geom.Rectangle;
+import edu.siren.core.sprite.Sprite;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;
@@ -23,8 +24,8 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected BufferType type;
     protected Layer parent;
     protected Rectangle bounds;
-    protected ArrayList<Tile> tiles;
-    protected ArrayList<Tile> triggerTiles;
+    protected ArrayList<Drawable> tiles;
+    public ArrayList<Tile> triggerTiles;
     protected ArrayList<Layer> children;
     protected HashMap<String, Tile> tileHashMap = null;
     protected boolean valid = false;
@@ -43,7 +44,7 @@ public class Layer implements Comparable<Layer>, Drawable {
         depth = 0;
         priority = 0;
         this.type = type;
-        this.tiles = new ArrayList<Tile>();
+        this.tiles = new ArrayList<Drawable>();
         this.triggerTiles = new ArrayList<Tile>();
     }
 
@@ -148,10 +149,17 @@ public class Layer implements Comparable<Layer>, Drawable {
     }
 
     public void extendHash(HashMap<String, Tile> tileHashMap) {   
-        for (Tile tile : tiles) {
-            if (tile.id != null) {
-                tileHashMap.put(tile.id, tile);
+        for (Drawable tile : tiles) {
+            if (tile instanceof Tile) {
+                Tile t = (Tile) tile;
+                if (t.id != null) {
+                    tileHashMap.put(t.id, t);
+                }
             }
         }
+    }
+
+    public void addDrawable(Drawable drawable) {
+        tiles.add(drawable);
     }
 }

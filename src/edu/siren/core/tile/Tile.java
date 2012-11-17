@@ -24,6 +24,7 @@ import edu.siren.renderer.Vertex;
  */
 public class Tile implements Drawable {
     public String id = null;
+    public String klass = null;
     public TexturePNG texture;
     public Rectangle bounds;
     public IndexVertexBuffer ivb;
@@ -127,6 +128,36 @@ public class Tile implements Drawable {
         createIndexVertexBuffer(1.0f, 1.0f);
     }
 
+    /**
+     * Constructs a new tile object at (x, y) with (w, h) dimensions using
+     * the PNG as the texture.
+     */
+    public Tile(String filename, float x, float y, float width, float height,
+            boolean tileable)
+            throws IOException {
+        TexturePNG cached = cache.get(filename);
+        if (cached == null) {
+            cached = new TexturePNG(filename, GL13.GL_TEXTURE0);
+            cache.put(filename, cached);
+        }
+        this.texture = cached;
+        if (width == 0 || height == 0) {
+            width = this.texture.width;
+            height = this.texture.height;
+        }
+        
+        float s = 1.0f;
+        float t = 1.0f;
+        
+        if (tileable) {
+            s = width / this.texture.width;
+            t = height / this.texture.height;
+        }
+            
+        bounds = new Rectangle(x, y, width, height);
+        createIndexVertexBuffer(s, t);
+    }
+    
     /**
      * Constructs a new tile object at (x, y) with (w, h) dimensions using
      * the PNG as the texture.

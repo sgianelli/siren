@@ -7,7 +7,6 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,9 +19,11 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
 import edu.siren.core.geom.Rectangle;
+import edu.siren.core.sprite.Sprite;
+import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 import edu.siren.game.entity.Entity;
-import edu.siren.renderer.BufferType;
+import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
@@ -41,6 +42,7 @@ public abstract class World {
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
+    public SpriteSheet sprites;
     
     // We're going to treat this as a MRU cache
     public LinkedList<Rectangle> solids = new LinkedList<Rectangle>();
@@ -91,6 +93,12 @@ public abstract class World {
         Mouse.create();
         layers = new TreeSet<Layer>();        
         font = new Font("res/tests/fonts/nostalgia.png", 24);
+        sprites = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/sprites.png",
+                "res/game/sprites/characters/sprites.css");
+        if (sprites == null) {
+            System.err.println("Bad sprite sheet");
+        }
     }
 
     public abstract void create() throws IOException;    
@@ -226,5 +234,21 @@ public abstract class World {
     public Environment getCurrentEnvironment() {
         return currentEnvironment;
     }
-
+    
+    public void fightable(int x, int y, int w, int h,
+                          Player[] units, ElementEvent onsuccess)
+    {
+    }
+    
+    public Player spawn(String name) {
+        try {
+            Player player =  (Player) Class.forName("edu.siren.game.players." + name).newInstance();
+            player.controllable = false;
+            this.addEntity(player);
+            return player;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

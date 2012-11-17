@@ -19,3 +19,9 @@ var $ = function (x) {
         */
     });
 })();
+
+// Enemy handling
+(function () {
+    // var $diglett = World.spawn("diglett", 180, 375);
+    // World.fightable(180, 375, 64, 64, [$diglett], function (e) { $diglett.remove(); });
+})();

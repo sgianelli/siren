@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.lwjgl.LWJGLException;
 
+import edu.siren.core.sprite.Animation;
+import edu.siren.core.sprite.Sprite;
 import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
@@ -65,19 +67,42 @@ public class JSWorld {
                         for (int i = 0; i < jsonTiles.length(); i++) {
                             JSONObject tileEntry;
                             tileEntry = jsonTiles.getJSONObject(i);
+                            String comment = tileEntry.optString("comment");
+                            if (comment.length() > 0) continue;
                             
-                            // These are all required
-                            String tilename = tileEntry.getString("tile");
                             int x = tileEntry.getInt("x");
                             int y = tileEntry.getInt("y");
+                            
+                            // For a sprite
+                            String spritename = tileEntry.optString("sprite");
+                            String klass = tileEntry.optString("class");
+                            String id = tileEntry.optString("id");
+                            
+                            if (spritename.length() > 0) {
+                                int msec = tileEntry.getInt("time");
+                                int frames = tileEntry.getInt("frames");
+                                Sprite sprite = this.sprites.createSprite(
+                                        new Animation("idle", spritename + "-", 1, frames, msec));
+                                sprite.active = sprite.animations.get("idle");
+                                sprite.spriteX = x;
+                                sprite.spriteY = y;
+                                sprite.klass = klass;
+                                sprite.id = id;
+                                layer.addDrawable(sprite);
+                                continue;
+                            }
+                            
+                            // These are all required for a tile
+                            String tilename = tileEntry.getString("tile");
                             int w = tileEntry.optInt("w");
                             int h = tileEntry.optInt("h");
-                            String id = tileEntry.optString("id");
                             boolean solid = tileEntry.optBoolean("solid");
+                            boolean tileable = tileEntry.optBoolean("tileable");
                             
                             // Create the new tile and add it to the layer.
-                            Tile tile = new Tile(tilename, x, y, w, h);                    
+                            Tile tile = new Tile(tilename, x, y, w, h, tileable);                    
                             tile.id = id;
+                            tile.klass = klass;
                             tile.solid = solid;
                             layer.addTile(tile);
                         }
