@@ -3,17 +3,16 @@ package edu.siren.game.ai;
 import edu.siren.game.entity.Entity;
 
 public class Follower implements AI {
-
-    @Override
+    public Entity other;
+    
+    public Follower(Entity other) {
+        this.other = other;
+    }
+    
     public void attach(Entity entity) {
-        // TODO Auto-generated method stub
-
     }
 
-    @Override
     public void think() {
-        // TODO Auto-generated method stub
-
     }
 
 }
