@@ -38,11 +38,15 @@ import edu.siren.renderer.Shader;
  */
 public abstract class World {
     protected Set<Layer> layers;
-    public Camera camera = new Camera(512.0f / 448.0f);
+    private Camera camera = new Camera(512.0f / 448.0f);
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
     public SpriteSheet sprites;
+    
+    
+    // Determines if a game should be playing or not
+    private boolean pause = false;
     
     // We're going to treat this as a MRU cache
     public LinkedList<Rectangle> solids = new LinkedList<Rectangle>();
@@ -107,6 +111,10 @@ public abstract class World {
      * Additional effects can be created by simply setting a new state.
      */
     public void changeEnvironment(Environment environment, double msec) {
+    	
+    	if (isPaused())
+    		return;
+    	
         currentEnvironment = environment;
         switch (environment) {
         case MORNING:
@@ -162,6 +170,7 @@ public abstract class World {
      * Draws the layers, followed by the entities, and then the Hud
      */
     public void draw() {
+    	
         // Initial pass for the content
         worldShader.use();
         {            
@@ -177,14 +186,19 @@ public abstract class World {
             }
             
             for (Entity entity : entities) {
-                entity.draw();
+                
+            	entity.canMove(!isPaused());
+            	entity.draw();
+                
             }
                         
-            camera.think();
-            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-                camera.zoomIn();
-            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-                camera.zoomOut();
+            if (!isPaused()) {
+	            camera.think();
+	            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+	                camera.zoomIn();
+	            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+	                camera.zoomOut();
+	            }
             }
         }                
         worldShader.release();
@@ -200,6 +214,34 @@ public abstract class World {
         }
     }
 
+    public void pause() {
+    	this.pause = true;
+    }
+    
+    public void play() {
+    	this.pause = false;
+    }
+    
+    public boolean isPaused() {
+    	return this.pause;
+    }
+    
+    public void zoomIn() {
+    	if (isPaused())
+    		return;
+    	camera.zoomIn();
+    }
+    
+    public void zoomOut() {
+    	if (isPaused())
+    		return;
+    	camera.zoomOut();
+    }
+    
+    public void move(float x, float y) {
+    	camera.move(x, y);
+    }
+    
     /**
      * Adds a new layer to the world.
      * 
@@ -250,5 +292,9 @@ public abstract class World {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public Camera getCamera() {
+    	return this.camera;
     }
 }

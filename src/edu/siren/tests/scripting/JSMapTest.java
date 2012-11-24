@@ -102,8 +102,8 @@ public class JSMapTest {
                     continue;
                 world = reload();
                 world.addEntity(player);
-                world.camera.setPosition(-player.x, -player.y);
-                world.camera.forceUpdate = true;
+                world.getCamera().setPosition(-player.x, -player.y);
+                world.getCamera().forceUpdate = true;
                 down = true;
             } else {
                 down = false;

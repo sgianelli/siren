@@ -52,11 +52,12 @@ public class ControllableCharacterTest {
         Tile activeOverlay = slightlyCloudy;
        
         // The close event can take a bit to propagate
-        while (screen.nextFrame()) {            
+        while (screen.nextFrame()) {      
+        	
             if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-                world.camera.zoomIn();
+                world.zoomIn();
             } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-                world.camera.zoomOut();
+                world.zoomOut();
             } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
                 world.changeEnvironment(World.Environment.NIGHT, 5000);
                 //activeOverlay = veryCloudy;
@@ -69,7 +70,11 @@ public class ControllableCharacterTest {
             } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
                 world.changeEnvironment(World.Environment.DUSK, 5000);
                 //activeOverlay = plasma;
-            }                                    
+            } else if(Keyboard.isKeyDown(Keyboard.KEY_P)) {
+            	world.pause();
+            } else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
+            	world.play();
+            }
             
             // Draw the world in its entirety
             world.draw();

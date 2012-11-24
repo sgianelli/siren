@@ -53,13 +53,13 @@ public class DumbVillagerTest {
             }
 
             if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-                world.camera.zoomIn();
+                world.zoomIn();
             } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-                world.camera.zoomOut();
+                world.zoomOut();
             }
 
             screen.clear();
-            world.camera.move(x, y);
+            world.move(x, y);
             world.draw();
             screen.update();
         }

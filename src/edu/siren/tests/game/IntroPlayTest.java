@@ -26,7 +26,7 @@ public class IntroPlayTest {
         world.addEntity(player);
 
         // Disable the camera
-        world.camera.disable();
+        world.getCamera().disable();
 
         // Start the intro
         Gui intro = new Intro(screen);
@@ -41,7 +41,7 @@ public class IntroPlayTest {
         }
         
         // Enable the camera
-        world.camera.enable();
+        world.getCamera().enable();
         
         // Start the game, run the world
         double lastFPS = Element.getTime();

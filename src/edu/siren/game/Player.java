@@ -24,13 +24,15 @@ public class Player extends Actor {
     
     @Override
     public void draw() {
+    	
+    	
         think();
         boolean movement = false;
         
         int lastX = this.x;
         int lastY = this.y;
         
-        if (controllable) {        
+        if (controllable && !world.isPaused()) {        
             if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
                 moveUp();
                 sprite.animation("move-forward");

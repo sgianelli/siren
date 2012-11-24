@@ -100,9 +100,9 @@ public class WorldCreator {
 	            // Check for any debug actions (zoom, environment switches)
 	            {    
 	                if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-	                    world.camera.zoomIn();
+	                    world.zoomIn();
 	                } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-	                    world.camera.zoomOut();
+	                    world.zoomOut();
 	                } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
 	        	        System.out.println(world.addLayer(layer));
 	                    world.changeEnvironment(World.Environment.NIGHT, 5000);

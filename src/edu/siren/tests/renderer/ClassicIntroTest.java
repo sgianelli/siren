@@ -63,7 +63,7 @@ public class ClassicIntroTest {
         boolean intro = true;
         
 
-        world.camera.enable = false;
+        world.getCamera().enable = false;
         
         while (screen.isOpened()) {
             screen.clear();
@@ -76,7 +76,7 @@ public class ClassicIntroTest {
                 sequence.draw(150, 260, 2);
                 if (sequence.end()) {
                     intro = false;
-                    world.camera.enable = true;
+                    world.getCamera().enable = true;
                 }
                 shader.release();
             }
