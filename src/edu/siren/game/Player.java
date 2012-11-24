@@ -4,9 +4,11 @@ import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.tile.Tile;
+import edu.siren.game.ai.AI;
 import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
+    public AI ai = null;
     public Camera camera = null;
     public int lastMovement = 1;
     public boolean follow = false;
@@ -20,6 +22,9 @@ public class Player extends Actor {
     }
     
     public void think() {
+        if (ai != null) {
+            ai.think();
+        }
     }
     
     @Override

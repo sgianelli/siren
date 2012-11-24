@@ -43,6 +43,7 @@ public abstract class World {
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
     public SpriteSheet sprites;
+    public boolean collisionGrid[] = new boolean[800 * 800];
     
     // We're going to treat this as a MRU cache
     public LinkedList<Rectangle> solids = new LinkedList<Rectangle>();
@@ -209,6 +210,7 @@ public abstract class World {
         layer.world = this;
         layer.extendHash(tiles);
         solids.addAll(layer.solids);
+        System.out.println("Layer size: " + layer.bounds);
         return layers.add(layer);
     }
 
@@ -250,5 +252,17 @@ public abstract class World {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void zoomIn() {
+        camera.zoomIn();
+    }
+
+    public void zoomOut() {
+        camera.zoomOut();
     }
 }
