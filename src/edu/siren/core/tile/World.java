@@ -43,6 +43,7 @@ public abstract class World {
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
     public SpriteSheet sprites;
+    public boolean collisionGrid[] = new boolean[800 * 800];
     
     
     // Determines if a game should be playing or not
@@ -251,6 +252,7 @@ public abstract class World {
         layer.world = this;
         layer.extendHash(tiles);
         solids.addAll(layer.solids);
+        System.out.println("Layer size: " + layer.bounds);
         return layers.add(layer);
     }
 

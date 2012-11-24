@@ -21,6 +21,7 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.scripting.JSWorld;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.ai.Follower;
 import edu.siren.game.ai.RandomWalker;
 import edu.siren.game.characters.Villager;
 import edu.siren.game.players.Diglett;
@@ -71,6 +72,8 @@ public class JSMapTest {
         pikachu.x = 190;
         pikachu.y = 32;
         player.follow = true;   
+        pikachu.controllable = false;
+        pikachu.setAI(new Follower(player));
         
         Player diglett = new Diglett();
         diglett.x = 180;
