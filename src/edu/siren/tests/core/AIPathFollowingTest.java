@@ -345,7 +345,7 @@ public class AIPathFollowingTest {
     }
 
     public static void main(String[] args) {
-        World world = new World(1000, 1000);
+        World world = new World(100, 100);
         
         // Add a bunch of objects to the world
         
@@ -354,11 +354,15 @@ public class AIPathFollowingTest {
         world.addObject(6, 1, 2, 2); // C
         world.addObject(50, 50, 30, 20); // D
         world.addObject(20, 30, 30, 18); // E
-        world.addObject(69, 70, 30, 25); // F
         world.addObject(15, 30, 20, 10); // G
         
-        world.addCharacter('H', 50, 80);
+        world.addObject(80, 80, 1, 10);
+        world.addObject(90, 80, 1, 10);
+        world.addObject(80, 80, 10, 1);
         
-        world.bfs(0, 999, 50, 30);
+        world.addCharacter('H', 85, 85);
+        
+        world.bfs(0, 99, 85, 15);
+        System.out.println(world);
     }
 }

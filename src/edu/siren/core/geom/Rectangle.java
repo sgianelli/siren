@@ -172,5 +172,9 @@ public class Rectangle {
         scaledRect.x -= scalar;
         scaledRect.y -= scalar;
         return scaledRect;        
+    }
+
+    public Point asPoint() {
+        return new Point((int)x, (int)y);
     }    
 }

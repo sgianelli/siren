@@ -14,8 +14,8 @@ public class Point implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Point Location
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 	
 	public Point(int x, int y) {
 		
@@ -24,7 +24,7 @@ public class Point implements Serializable {
 		
 	}
 	
-	/**
+    /**
 	 * Get the X Location 
 	 * 
 	 * @return int

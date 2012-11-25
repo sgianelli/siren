@@ -8,7 +8,6 @@ import edu.siren.game.ai.AI;
 import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
-    public AI ai = null;
     public Camera camera = null;
     public int lastMovement = 1;
     public boolean follow = false;
@@ -29,15 +28,19 @@ public class Player extends Actor {
     
     @Override
     public void draw() {
-    	
-    	
         think();
+        
+        if (!controllable) {
+            super.draw();
+            return;
+        }
+        
         boolean movement = false;
         
         int lastX = this.x;
         int lastY = this.y;
         
-        if (controllable && !world.isPaused()) {        
+        if (controllable) {        
             if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
                 moveUp();
                 sprite.animation("move-forward");

@@ -15,7 +15,7 @@ import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
 
-public class Actor extends Entity implements Interactable {
+public abstract class Actor extends Entity implements Interactable {
     public int desiredX = 0;
     public int desiredY = 0;
     public int x = 0;
@@ -82,8 +82,6 @@ public class Actor extends Entity implements Interactable {
 
     @Override
 	public void draw() {
-        ai.think();
-        
         boolean movement = false;
         int lastX = this.x;
         int lastY = this.y;

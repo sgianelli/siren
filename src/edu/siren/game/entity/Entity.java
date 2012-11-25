@@ -109,8 +109,18 @@ public abstract class Entity {
     public void setWorld(World world) {
         this.world = world;
     }
+    
+    public World getWorld() {
+        return this.world;
+    }
 
     abstract public void draw();
+    
+    abstract public void think();
 
     abstract public void moveTo(int x, int y);
+
+    public boolean stopped() {
+        return !move;
+    }
 }
