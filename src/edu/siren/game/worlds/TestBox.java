@@ -13,7 +13,7 @@ import edu.siren.core.tile.World;
 public class TestBox extends World {
 
     public TestBox(int width, int height) throws IOException, LWJGLException {
-        super();
+        super(width, height);
     }
     
     @Override
@@ -78,7 +78,7 @@ public class TestBox extends World {
         // Add the layer to all the layers
         layers.add(layer);
         layers.add(layer2);
-        System.out.println(addLayer(layer));
+
     }
 
 }
