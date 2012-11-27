@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
-import edu.siren.game.gui.Menu;
+import edu.siren.game.menu.Menu;
 import edu.siren.game.players.Pikachu;
 import edu.siren.game.worlds.TestBox;
 import edu.siren.gui.Element;
