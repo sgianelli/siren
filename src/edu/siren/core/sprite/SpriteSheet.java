@@ -125,7 +125,7 @@ public class SpriteSheet {
                     return null;
                 }
                 
-                // Add a real frame to the constructed animation seqquence
+                // Add a real frame to the constructed animation sequence
                 constructedAnim.addFrame(new AnimationFrame(
                         frame.frameName, texture, entry.width,
                         entry.height, entry.x, entry.y, frame.frameTime));                

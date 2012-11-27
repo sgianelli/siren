@@ -12,10 +12,14 @@ import edu.siren.renderer.Drawable;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Sprite implements Drawable {
+    public String id;
+    public String klass;
+
     public HashMap<String, Animation> animations = new HashMap<String, Animation>();
     public Animation active = null;
     public int spriteX = 0, spriteY = 0;
     public final Rectangle rectangleZero = new Rectangle(0, 0, 0, 0);
+    public Rectangle bounds = new Rectangle(0, 0, 0, 0);
 
     /* (non-Javadoc)
      * @see edu.siren.renderer.Drawable#draw()
@@ -23,7 +27,7 @@ public class Sprite implements Drawable {
     @Override
 	public void draw() {
         if (active != null) {
-            active.draw(spriteX, spriteY);
+            active.draw(this, spriteX, spriteY);
         }
     }
 
@@ -31,7 +35,7 @@ public class Sprite implements Drawable {
         if (active == null) {
             return rectangleZero;
         } else {
-            return active.getRect();
+            return bounds;
         }
     }
 

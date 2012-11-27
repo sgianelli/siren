@@ -37,7 +37,7 @@ public class Camera {
     public Camera(float aspectRatio) {
         position.setIdentity();
         ortho(-2 * aspectRatio, 2 * aspectRatio, -2, 2, -1, 1);
-        setZoom(100.0f);
+        setZoom(75.0f);
     }
     
     /**

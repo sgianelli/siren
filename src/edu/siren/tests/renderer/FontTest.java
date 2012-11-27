@@ -14,21 +14,26 @@ import edu.siren.renderer.Shader;
 public class FontTest {
     public static void main(String[] args) throws IOException, LWJGLException {
         Screen screen = new Screen("Screen Test", 640, 480);
-        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
+        Font font = new Font("res/tests/fonts/proggy.png");
         Perspective2D gui = new Perspective2D();
         Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
                 "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
         Keyboard.create();
         Mouse.create();
+        String s = "";
+        for (int i = 1; i <= 256; i++) {
+            if (i % 16 == 0) {
+                s += "\n";
+            }
+            s += (char)(i - 1);
+        }
         while (screen.isOpened()) {
             int x = Mouse.getX();
             int y = Mouse.getY();
             screen.clear();
             shader.use();
-            font.print(
-                    "#include <stdio.h>\n#include <stdlib.h>\nvoid main()\n{\n\tint x = 0;\n}",
-                    1, x, y);
+            font.print(s, 1, x, y);
             shader.release();
             screen.update();
         }

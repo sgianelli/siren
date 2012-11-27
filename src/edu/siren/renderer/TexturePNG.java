@@ -63,7 +63,11 @@ public class TexturePNG implements Texture {
      * @see edu.siren.renderer.Texture#loadTexture(java.lang.String, int)
      */
     @Override
-	public int loadTexture(String filename, int unit) throws IOException {
+    public int loadTexture(String filename, int unit) throws IOException {
+        return loadTexture(filename, unit, GL11.GL_REPEAT);
+    }
+        
+	public int loadTexture(String filename, int unit, int st_type) throws IOException {
         this.unit = unit;
 
         // Load the PNG
@@ -92,19 +96,20 @@ public class TexturePNG implements Texture {
         // Upload the texture data and generate mip maps (for scaling)
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height,
                 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
+        
         GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
-
-        // Setup the ST coordinate system
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S,
-                GL11.GL_REPEAT);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T,
-                GL11.GL_REPEAT);
 
         // Setup what to do when the texture has to be scaled
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER,
                 GL11.GL_NEAREST);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
                 GL11.GL_LINEAR_MIPMAP_LINEAR);
+        
+        // Setup the ST coordinate system
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S,
+                st_type);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T,
+                st_type);
 
         return textureID;
     }

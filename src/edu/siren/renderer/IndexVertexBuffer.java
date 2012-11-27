@@ -2,12 +2,8 @@ package edu.siren.renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-<<<<<<< HEAD
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 
-=======
->>>>>>> 8cc497ca4e3055ecba75438ff1fdb72e95d73645
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -42,6 +38,10 @@ public class IndexVertexBuffer implements Drawable {
     public int fboid = -1;
     public int fbotid = -1;
     public int textureIDs[] = null;
+    
+    public String getID() {
+        return null;
+    }
 
     /**
      * Each IndexVertexBuffer is either defined as a STATIC DRAW surface
@@ -202,7 +202,7 @@ public class IndexVertexBuffer implements Drawable {
         // Draw the triangles
         GL11.glDrawElements(GL11.GL_TRIANGLES, indexCount,
                 GL11.GL_UNSIGNED_BYTE, 0);
-
+        
         // Unbind everything
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
         GL20.glDisableVertexAttribArray(0);

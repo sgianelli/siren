@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Sprite;
+import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
+import edu.siren.game.Player;
 import edu.siren.game.ai.AI;
 
 public abstract class Entity {
@@ -23,6 +26,10 @@ public abstract class Entity {
     protected EntityStats entityStats = new EntityStats();
     protected Sprite sprite = new Sprite();
     protected World world = null;
+    protected boolean move = true;
+    protected int preventMovement = -1;
+    protected int lastMovement = 0;
+    public ArrayList<Rectangle> preventCollision = new ArrayList<Rectangle>();
     
     public class EntityStats {
         int health;
@@ -54,11 +61,40 @@ public abstract class Entity {
         }
     }
     
+    public boolean is(String what) {
+        if (what.equals(":player")) {
+            return this instanceof Player;
+        }
+        
+        return false;
+    }
+    
+    public void canMove(boolean move) {
+        this.move = move;
+    }
+    
+    public boolean canMove() {
+        return this.move;
+    }
+    
+    public void stop() {
+        canMove(false);
+        System.out.println("Stopping");
+    }
+    
     public Entity() {
+    }
+    
+    public void stopCurrentMove() {
+        preventMovement = lastMovement;
     }
 
     public Rectangle getRect() {
         return sprite.getRect();
+    }
+    
+    public void preventTouching(Tile tile) {
+        preventCollision.add(tile.bounds);
     }
     
     public boolean touching(float x, float y) {
@@ -73,8 +109,18 @@ public abstract class Entity {
     public void setWorld(World world) {
         this.world = world;
     }
+    
+    public World getWorld() {
+        return this.world;
+    }
 
     abstract public void draw();
+    
+    abstract public void think();
 
     abstract public void moveTo(int x, int y);
+
+    public boolean stopped() {
+        return !move;
+    }
 }

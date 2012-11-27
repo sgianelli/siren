@@ -36,7 +36,7 @@ public class Image extends Element {
     public Image(String pngFile, String title) throws IOException {
         this.imageState = new ImageState();
         this.state.name = "Image";
-        this.imageState.font = new Font("res/tests/fonts/nostalgia.png", 24);
+        this.imageState.font = new Font("res/tests/fonts/proggy.png");
         titleText(title);
         this.background(pngFile);
         this.imageState.hoverDt = 0.0f;

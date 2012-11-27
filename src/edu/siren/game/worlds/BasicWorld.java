@@ -13,10 +13,11 @@ import edu.siren.core.tile.World;
 public class BasicWorld extends World {
 
 	public BasicWorld(int width, int height) throws IOException, LWJGLException {
-		super(width, height);
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
-
+    @Override
+    public void create() throws IOException {
+    }
 
 }

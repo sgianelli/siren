@@ -5,6 +5,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -15,9 +17,13 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
+
+import edu.siren.core.geom.Rectangle;
+import edu.siren.core.sprite.Sprite;
+import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 import edu.siren.game.entity.Entity;
-import edu.siren.renderer.BufferType;
+import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Perspective2D;
@@ -32,9 +38,20 @@ import edu.siren.renderer.Shader;
  */
 public abstract class World {
     protected Set<Layer> layers;
-    public Camera camera = new Camera(512.0f / 448.0f);
+    private Camera camera = new Camera(512.0f / 448.0f);
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
+    public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
+    public SpriteSheet sprites;
+    public boolean collisionGrid[];
+    public Rectangle bounds = new Rectangle(0, 0, 0, 0);
+    
+    
+    // Determines if a game should be playing or not
+    private boolean pause = false;
+    
+    // We're going to treat this as a MRU cache
+    public LinkedList<Rectangle> solids = new LinkedList<Rectangle>();
     
     // FBO specific entries
     // TODO (justinvh): This shouldn't be here.
@@ -56,15 +73,13 @@ public abstract class World {
      * @throws IOException 
      * @throws LWJGLException 
      */
-    public World(int width, int height) throws IOException, LWJGLException {
-        // First bind the keyboard and mouse via LWJGL
-        Keyboard.create();
-        Mouse.create();
-        layers = new TreeSet<Layer>();        
-        font = new Font("res/tests/fonts/nostalgia.png", 24);
-        
+    public World() throws IOException, LWJGLException {
+        init();        
         create();
-
+        setupShaders();
+    }
+    
+    public void setupShaders() throws IOException {
         // Create a default world shader for normal camera transforms.
         worldShader = new Shader("res/tests/glsl/basic.vert",
                                  "res/tests/glsl/basic.frag");        
@@ -77,20 +92,31 @@ public abstract class World {
         fboTile.createInvertIndexVertexBuffer(1, 1);       
         generateFBO();
     }
-    
-    public void create() throws IOException {
-        // Create a default layer with some grass on it
-        Layer layer = new Layer(BufferType.STATIC);
-        layer.addTile(new Tile("res/tests/img/grass.png", 
-                      -1024/2, -1024/2, 1024, 1024));        
-        layers.add(layer);               
+
+    public void init() throws LWJGLException, IOException {
+        // First bind the keyboard and mouse via LWJGL
+        Keyboard.create();
+        Mouse.create();
+        layers = new TreeSet<Layer>();        
+        font = new Font("res/tests/fonts/proggy.png");
+        sprites = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/sprites.png",
+                "res/game/sprites/characters/sprites.css");
+        if (sprites == null) {
+            System.err.println("Bad sprite sheet");
+        }
     }
-    
+
+    public abstract void create() throws IOException;    
     /**
      * Environment transitions. These HSV values correspond to an environment.
      * Additional effects can be created by simply setting a new state.
      */
     public void changeEnvironment(Environment environment, double msec) {
+    	
+    	if (isPaused())
+    		return;
+    	
         currentEnvironment = environment;
         switch (environment) {
         case MORNING:
@@ -146,6 +172,7 @@ public abstract class World {
      * Draws the layers, followed by the entities, and then the Hud
      */
     public void draw() {
+    	
         // Initial pass for the content
         worldShader.use();
         {            
@@ -161,14 +188,18 @@ public abstract class World {
             }
             
             for (Entity entity : entities) {
-                entity.draw();
+            	entity.canMove(!isPaused());
+            	entity.draw();
+                entity.think();
             }
                         
-            camera.think();
-            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-                camera.zoomIn();
-            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-                camera.zoomOut();
+            if (!isPaused()) {
+	            camera.think();
+	            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+	                camera.zoomIn();
+	            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+	                camera.zoomOut();
+	            }
             }
         }                
         worldShader.release();
@@ -184,12 +215,45 @@ public abstract class World {
         }
     }
 
+    public void pause() {
+    	this.pause = true;
+    }
+    
+    public void play() {
+    	this.pause = false;
+    }
+    
+    public boolean isPaused() {
+    	return this.pause;
+    }
+    
+    public void zoomIn() {
+    	if (isPaused())
+    		return;
+    	camera.zoomIn();
+    }
+    
+    public void zoomOut() {
+    	if (isPaused())
+    		return;
+    	camera.zoomOut();
+    }
+    
+    public void move(float x, float y) {
+    	camera.move(x, y);
+    }
+    
     /**
      * Adds a new layer to the world.
      * 
      * @return Returns false if the layer already exists.
      */
     public boolean addLayer(Layer layer) {
+        layer.world = this;
+        layer.extendHash(tiles);
+        solids.addAll(layer.solids);
+        bounds.extend(layer.bounds);
+        System.out.println("World size: " + bounds);
         return layers.add(layer);
     }
 
@@ -198,6 +262,7 @@ public abstract class World {
      */
     public void addEntity(Entity entity) {
         entity.setWorld(this);
+        solids.add(entity.getRect());
         entities.add(entity);
     }
     
@@ -214,5 +279,25 @@ public abstract class World {
     public Environment getCurrentEnvironment() {
         return currentEnvironment;
     }
-
+    
+    public void fightable(int x, int y, int w, int h,
+                          Player[] units, ElementEvent onsuccess)
+    {
+    }
+    
+    public Player spawn(String name) {
+        try {
+            Player player =  (Player) Class.forName("edu.siren.game.players." + name).newInstance();
+            player.controllable = false;
+            this.addEntity(player);
+            return player;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Camera getCamera() {
+    	return this.camera;
+    }
 }
