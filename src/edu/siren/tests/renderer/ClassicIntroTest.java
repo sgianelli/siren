@@ -72,7 +72,7 @@ public class ClassicIntroTest {
 
             if (intro) {
                 shader.use();
-                white.draw();
+                // white.draw();
                 sequence.draw(150, 260, 2);
                 if (sequence.end()) {
                     intro = false;

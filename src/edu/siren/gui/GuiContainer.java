@@ -19,7 +19,7 @@ public class GuiContainer extends Element {
     
     public GuiContainer() throws IOException {
         perspective = new Perspective2D();
-        font = new Font("res/tests/fonts/nostalgia.png", 24);
+        font = new Font("res/tests/fonts/proggy.png");
         shader = new Shader("res/tests/glsl/2d-perspective.vert", 
                             "res/tests/glsl/2d-perspective.frag");
         perspective.bindToShader(shader);

@@ -75,9 +75,8 @@ public class Screen {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_CULL_FACE);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_BLEND);
-        glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         
         Keyboard.create();
         Mouse.create();

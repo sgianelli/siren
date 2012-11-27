@@ -17,18 +17,18 @@ public class Text extends Element {
     
     public Text(String text, int scaling, String font) throws IOException {
         textState = new TextState();
-        textState.font = new Font(font, 24);
+        textState.font = new Font(font);
         textState.fontScaling = scaling;
         textState.text = text;
         state.name = "Text";
     }
 
     public Text(String text, int scaling) throws IOException {
-        this(text, scaling, "res/tests/fonts/nostalgia.png");
+        this(text, scaling, "res/tests/fonts/proggy.png");
     }
     
     public Text(String text) throws IOException {
-        this(text, 2);
+        this(text, 1);
     }
     
     

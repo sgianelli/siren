@@ -2,6 +2,8 @@ package edu.siren.renderer;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
 import edu.siren.core.geom.Rectangle;
@@ -15,11 +17,12 @@ import edu.siren.core.geom.Rectangle;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Font {
-    private int square;
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;
     private String lastPrinted = null;
+    private int squareW = 0;
+    private int squareH = 0;
 
     /**
      * Constructs a new Font object from a given 
@@ -29,8 +32,23 @@ public class Font {
      * @throws IOException Throws if pngFile is not found
      */
     public Font(String pngFile, int square) throws IOException {
+        this(pngFile, square, square);
+    }
+
+    public Font(String pngFile, int sw, int sh) throws IOException {
         texture = new TexturePNG(pngFile, GL13.GL_TEXTURE0);
-        this.square = square;
+        if (sw == -1 || sh == -1) {
+            squareW = texture.width / 16;
+            squareH = texture.height / 16;
+        } else {
+            squareW = sw;
+            squareH = sh;
+        }
+        System.out.println("Width: " + squareW + ", Height: " + squareH);
+    }
+
+    public Font(String pngFile) throws IOException {
+        this(pngFile, -1, -1);
     }
 
     /**
@@ -40,8 +58,8 @@ public class Font {
      * @return The S component of ST for the texture sprite sheet.
      */
     private float s(float x) {
-        float rect = texture.width / square;
-        return (x / rect) + (1.5f / (square)) / rect;
+        float rect = texture.width / squareW;
+        return (x / rect);
     }
 
     /**
@@ -51,8 +69,8 @@ public class Font {
      * @return The T component of ST for the texture sprite sheet.
      */
     private float t(float y) {
-        float rect = texture.height / square;
-        return (y / rect) - (1.0f / square) / rect;
+        float rect = texture.height / squareH;
+        return (y / rect);
     }
 
     /**
@@ -95,7 +113,8 @@ public class Font {
             float y1, IndexVertexBuffer[] ivbs, int ivbi) 
     {
         // This will define the scaling size of the character.
-        float rect = square / size;
+        float rectH = squareH / size;
+        float rectW  = squareW / size;
 
         // Quick regex replacements for common escape sequences.
         what = what.replaceAll("\t", "    ");
@@ -108,7 +127,7 @@ public class Font {
             ivbs = new IndexVertexBuffer[lines.length];
             for (int i = 0; i < lines.length; i++) {
                 ivbs = print(lines[i], size, x1, y1 - offset , ivbs, i);
-                offset += rect;
+                offset += rectH;
             }
             return ivbs;
         }
@@ -129,15 +148,15 @@ public class Font {
         // character. The k-offset allows us to build a large index array
         float width = 0.0f, height = 0;
         for (int i = 0, j = 0, l = 0, k = 0; i < what.length(); i++, k += 4) {
-            Rectangle charrect = new Rectangle(x1 + i * rect, y1, rect, rect);
+            Rectangle charrect = new Rectangle(x1 + i * rectW, y1, rectW, rectH);
             width += charrect.width;
             height = charrect.height;
             // Figure out what column and row we are drawing from
             // the sprite sheet.
             int h = (what.charAt(i));
-            int c = h / (texture.width / square);
-            int r = h % (texture.width / square);
-
+            int c = h / 16;
+            int r = h % 16;
+            
             // Corner 1
             float x, y;
             Vertex v0 = new Vertex();
@@ -147,7 +166,7 @@ public class Font {
             v0.rgb(1, 0, 0);
             v0.st(s(r), t(c));
             vertices[j++] = v0;
-
+            
             // Corner 2
             Vertex v1 = new Vertex();
             y = charrect.top();
@@ -174,6 +193,7 @@ public class Font {
             v3.rgb(1, 1, 1);
             v3.st(s(r + 1), t(c));
             vertices[j++] = v3;
+            System.out.println(what.charAt(i) + ": " + v0 + ", " + v1 + ", " + v2 + ", " + v3);
 
             // Also note that our Y-indices are flipped.
             indices[l++] = ((byte) (0 + k));

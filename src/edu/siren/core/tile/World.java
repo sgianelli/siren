@@ -98,7 +98,7 @@ public abstract class World {
         Keyboard.create();
         Mouse.create();
         layers = new TreeSet<Layer>();        
-        font = new Font("res/tests/fonts/nostalgia.png", 24);
+        font = new Font("res/tests/fonts/proggy.png");
         sprites = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/sprites.png",
                 "res/game/sprites/characters/sprites.css");

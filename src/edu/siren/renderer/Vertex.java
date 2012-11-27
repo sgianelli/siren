@@ -121,4 +121,9 @@ public class Vertex {
 
         return elements;
     }
+    
+    public String toString() {
+        return "(" + this.vst[0] + ", " + this.vst[1] + ")";
+    }
+        
 }

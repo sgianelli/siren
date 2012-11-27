@@ -40,7 +40,7 @@ public class MenuTest {
 	        Perspective2D gui = new Perspective2D();
 	        Shader shader = new Shader("res/tests/glsl/2d-perspective.vert", "res/tests/glsl/2d-perspective.frag");
 	        gui.bindToShader(shader);
-	        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
+	        Font font = new Font("res/tests/fonts/proggy.png");
 	        
 	        // Add the player
 	        Player player = new Pikachu();

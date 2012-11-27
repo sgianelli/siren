@@ -14,7 +14,7 @@ import edu.siren.renderer.Shader;
 public class FontTest {
     public static void main(String[] args) throws IOException, LWJGLException {
         Screen screen = new Screen("Screen Test", 640, 480);
-        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
+        Font font = new Font("res/tests/fonts/proggy.png");
         Perspective2D gui = new Perspective2D();
         Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
                 "res/tests/glsl/2d-perspective.frag");
@@ -27,7 +27,7 @@ public class FontTest {
             screen.clear();
             shader.use();
             font.print(
-                    "#include <stdio.h>\n#include <stdlib.h>\nvoid main()\n{\n\tint x = 0;\n}",
+                    "@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
                     1, x, y);
             shader.release();
             screen.update();
