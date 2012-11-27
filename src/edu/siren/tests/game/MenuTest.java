@@ -56,7 +56,7 @@ public class MenuTest {
 			Image leftInfo = new Image("res/game/menu/left-info.png", "");
 			leftInfo.position(5,  7);			
 			
-			Text life = new Text("TIME OF DAY");
+			Text life = new Text("TIME OF DAY", 2);
 			life.xy(20, 35);
 			life.priority(100);
 			overlay.add(life);

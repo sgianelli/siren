@@ -21,14 +21,19 @@ public class FontTest {
         gui.bindToShader(shader);
         Keyboard.create();
         Mouse.create();
+        String s = "";
+        for (int i = 1; i <= 256; i++) {
+            if (i % 16 == 0) {
+                s += "\n";
+            }
+            s += (char)(i - 1);
+        }
         while (screen.isOpened()) {
             int x = Mouse.getX();
             int y = Mouse.getY();
             screen.clear();
             shader.use();
-            font.print(
-                    "@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-                    1, x, y);
+            font.print(s, 1, x, y);
             shader.release();
             screen.update();
         }

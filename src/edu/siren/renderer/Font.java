@@ -44,7 +44,6 @@ public class Font {
             squareW = sw;
             squareH = sh;
         }
-        System.out.println("Width: " + squareW + ", Height: " + squareH);
     }
 
     public Font(String pngFile) throws IOException {
@@ -193,7 +192,6 @@ public class Font {
             v3.rgb(1, 1, 1);
             v3.st(s(r + 1), t(c));
             vertices[j++] = v3;
-            System.out.println(what.charAt(i) + ": " + v0 + ", " + v1 + ", " + v2 + ", " + v3);
 
             // Also note that our Y-indices are flipped.
             indices[l++] = ((byte) (0 + k));
@@ -237,7 +235,7 @@ public class Font {
 
     public float lineHeight() {
         if (ivbsCache != null) {
-            return bounds.height / (ivbsCache.length);
+            return bounds.height / (float) (ivbsCache.length);
         }
         
         return 0.0f;
