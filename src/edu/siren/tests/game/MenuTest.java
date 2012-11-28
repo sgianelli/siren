@@ -58,45 +58,48 @@ public class MenuTest {
 			
 			
 	        // The close event can take a bit to propagate
+		
 	        while (screen.nextFrame()) {     
+
+	        	if (Keyboard.isKeyDown(Keyboard.KEY_Z))
+            		world.zoomIn();
+	        	if (Keyboard.isKeyDown(Keyboard.KEY_X)) 
+	        		world.zoomOut();
+	        	
 	        	
 	        	while(Keyboard.next()) {
-		        	if (Keyboard.getEventKeyState()) {
-			            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-			                world.zoomIn();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			                world.zoomOut();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+	        		if (Keyboard.getEventKeyState()) {
+			            if (Keyboard.getEventKey() == Keyboard.KEY_1) {
 			                world.changeEnvironment(World.Environment.NIGHT, 5000);
-			                //activeOverlay = veryCloudy;
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+	
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_2) {
 			                world.changeEnvironment(World.Environment.MORNING, 5000);
-			                //activeOverlay = pixelCloudy;
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+	
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_3) {
 			                world.changeEnvironment(World.Environment.AFTERNOON, 5000);
-			                //activeOverlay = slightlyCloudy;
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+	
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_4) {
 			                world.changeEnvironment(World.Environment.DUSK, 5000);
-			                //activeOverlay = plasma;
-			            } else if(Keyboard.isKeyDown(Keyboard.KEY_P)) {
+	
+			            } else if(Keyboard.getEventKey() == Keyboard.KEY_P) {
 			            	world.pause();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_C) {
 			            	world.play();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_H) {
 			            	world.pause();
 			            	helpMenu.show();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 			            	world.play();
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_K) ) {
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_K ) {
 			            	
 			            	gameStatus.setHealth(gameStatus.getHealth() - 1);
 			            	
 			            	
-			            } else if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+			            } else if (Keyboard.getEventKey() == Keyboard.KEY_L) {
 			            	
 			            	gameStatus.setHealth(gameStatus.getHealth()+1);
 			            }
-		        	}
+	        		}
 	        	}
 	            
 	            

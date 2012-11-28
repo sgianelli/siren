@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.gui.Gui;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.KeyEvent;
+import edu.siren.gui.Text;
 import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 
@@ -61,6 +62,9 @@ public abstract class Menu implements Gui {
 			Window window = new Window(this.name);
 			window.dimensions(screen.width, screen.height);
 			
+			// Set Background Color
+			screen.backgroundColor(0.26f, 0.26f, 0.26f, 1.0f);
+						
 			// Build the Menu
 			build(window);
 			
@@ -127,7 +131,9 @@ public abstract class Menu implements Gui {
 	private void checkKeys(int keypressed) {
 			
 			KeyEvent event = this.keyEvents.get(keypressed);
-			event.event(keypressed);
+			if (event != null) {
+				event.event(keypressed);
+			}
 		
 	}
 	
@@ -144,5 +150,28 @@ public abstract class Menu implements Gui {
 	public void addKeyEvent(int key, KeyEvent event) {
 		this.keyEvents.put(new Integer(key), event);
 	}
+
+	/**
+	 * @return the screen
+	 */
+	public Screen getScreen() {
+		return screen;
+	}
+
+	/**
+	 * @param screen the screen to set
+	 */
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 	
 }

@@ -71,7 +71,8 @@ public class Screen {
         Display.create(pixelFormat, cntxt);
 
         // Do our basic GL setup
-        GL11.glClearColor(0.25f, 0.5f, 0.25f, 1.0f);
+        //GL11.glClearColor(0.25f, 0.5f, 0.25f, 1.0f);
+        backgroundColor(0.25f, 0.5f, 0.25f, 1.0f);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glEnable(GL11.GL_BLEND);
@@ -102,6 +103,10 @@ public class Screen {
         }
     }
 
+    public void backgroundColor(float r, float g, float b, float a) {
+    	GL11.glClearColor(r, g, b, a);	
+    }
+    
     /**
      * Issues a glClear call for various buffer bits. 
      */
