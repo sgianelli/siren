@@ -1,43 +1,53 @@
 package edu.siren.game.menu;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.input.Keyboard;
 
-import edu.siren.gui.Element;
-import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
 import edu.siren.gui.GuiContainer;
-import edu.siren.gui.Image;
-import edu.siren.gui.Text;
+import edu.siren.gui.KeyEvent;
 import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 
-public class Menu implements Gui {
+public abstract class Menu implements Gui {
 
 	// Game Components
 	private GuiContainer gui;
 	private Screen screen;
+	
+	// Menu Info
+	private String name;
+	
+	// Key Events
+	private Map<Integer,KeyEvent> keyEvents;
 	
 	/**
 	 * Constructor to initialize the Menu
 	 * 
 	 * @param screen
 	 */
-	public Menu(Screen screen) {
+	public Menu(String name, Screen screen) {
 
 		// Save the Screen
 		this.screen = screen;
 		
+		// Set Menu Name
+		this.name = name;
+		
+		// Create Key Event Hash Map
+		keyEvents = new HashMap<Integer, KeyEvent>();
+		
 		// Initialize the Menu Screen
-		if ( initialize() ) {
-			
-
+		if ( !initialize() ) {
+			System.err.println("Could Not Initialize the Menu");
 		}
 		
 	}
 	
-	public boolean initialize() {
+	private boolean initialize() {
 		
 		// Build Success
 		boolean success = true;
@@ -48,33 +58,14 @@ public class Menu implements Gui {
 			this.gui = new GuiContainer();
 		
 			// Create the Window
-			Window window = new Window("Menu");
+			Window window = new Window(this.name);
 			window.dimensions(screen.width, screen.height);
 			
-			// Create some test
-			Text blah = new Text("Blah", 3);
-			blah.position(300, 100);
-			window.add(blah);
-			
-			// Add Image of Some Kind
-			Image grass = new Image("res/tests/img/grass.png");
-			Image grass1 = new Image("res/tests/img/grass.png");
-			Image grass2 = new Image("res/tests/img/grass.png");
-			Image grass3 = new Image("res/tests/img/grass.png");
-			grass.xy(0, 0);
-			grass1.xy(100, 100);
-			grass2.xy(200, 200);
-			grass3.xy(500, 440);
-			window.add(grass);
-			window.add(grass1);
-			window.add(grass2);
-			window.add(grass3);
-			
+			// Build the Menu
+			build(window);
 			
 			// Add Window to GUI
 			gui.add(window);
-			
-
 			
 			
 		} catch (IOException e) {
@@ -91,16 +82,29 @@ public class Menu implements Gui {
 		
 		
 	}
+	
+	public abstract void build(Window window) throws IOException;
 
+	public void show() {
+		this.run();
+	}
+	
 	@Override
 	public void run() {
 		
 		// Show the GUI while the Screen is Opened.
         while (screen.isOpened()) {
         	
-        	// Stop Displaying the Menu
+        	// Escape Key Ends The Menu
         	if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
         		break;
+        	}
+        	
+        	// Check Other Keys
+        	while(Keyboard.next()) {
+	        	if (Keyboard.getEventKeyState()) {
+	        		checkKeys(Keyboard.getEventKey());
+	        	}
         	}
         	
         	// Clear the Screen
@@ -115,7 +119,18 @@ public class Menu implements Gui {
         }
 
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 
+	private void checkKeys(int keypressed) {
+			
+			KeyEvent event = this.keyEvents.get(keypressed);
+			event.event(keypressed);
+		
+	}
+	
 	@Override
 	public boolean running() {
 		return gui.enabled();
@@ -124,6 +139,10 @@ public class Menu implements Gui {
 	@Override
 	public GuiContainer getContainer() {
 		return gui;
+	}
+	
+	public void addKeyEvent(int key, KeyEvent event) {
+		this.keyEvents.put(new Integer(key), event);
 	}
 	
 }
