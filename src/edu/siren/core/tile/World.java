@@ -66,6 +66,7 @@ public abstract class World {
     };
 
     private Environment currentEnvironment = Environment.AFTERNOON;
+    private boolean zoomPressed;
     
     /**
      * Constructs a new world of a given width and height. Note that this
@@ -195,10 +196,17 @@ public abstract class World {
                         
             if (!isPaused()) {
 	            camera.think();
-	            if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+	            if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_Z)) {
 	                camera.zoomIn();
-	            } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+	            } else if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_X)) {
 	                camera.zoomOut();
+	            } else if (zoomPressed) {
+	                zoomPressed = false;
+	            }
+	            
+	            if (Keyboard.isKeyDown(Keyboard.KEY_Z) ||
+	                Keyboard.isKeyDown(Keyboard.KEY_X)) {
+	                zoomPressed = true;
 	            }
             }
         }                

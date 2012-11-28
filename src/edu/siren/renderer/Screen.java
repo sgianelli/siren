@@ -72,7 +72,7 @@ public class Screen {
 
         // Do our basic GL setup
         GL11.glViewport(0, 0, width, height);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glClearColor(0.25f, 0.5f, 0.25f, 1.0f);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glEnable(GL11.GL_BLEND);

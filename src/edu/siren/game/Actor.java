@@ -6,6 +6,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Animation;
@@ -16,12 +17,15 @@ import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
 
 public abstract class Actor extends Entity implements Interactable {
-    public int desiredX = 0;
-    public int desiredY = 0;
-    public int x = 0;
-    public int y = 0;
+    public float desiredX = 0;
+    public float desiredY = 0;
+    public float x = 0;
+    public float y = 0;
     public int speed = 0;
     public int health = 100;
+    public boolean snap;
+    public float gridWidth;
+    public float gridHeight;
     
     protected Actor() {
         super();
@@ -83,8 +87,8 @@ public abstract class Actor extends Entity implements Interactable {
     @Override
 	public void draw() {
         boolean movement = false;
-        int lastX = this.x;
-        int lastY = this.y;
+        float lastX = this.x;
+        float lastY = this.y;
         int lastMovement = 1;
 
         // Go twards X
@@ -190,5 +194,12 @@ public abstract class Actor extends Entity implements Interactable {
 
     @Override
     public void interact(Entity other) {
+    }
+    
+    public void snapToGrid(float gridWidth, float gridHeight) {
+        this.snap = true;
+        float pixelRatio = 1.14f;
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
     }
 }

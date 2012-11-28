@@ -8,6 +8,7 @@ import edu.siren.gui.ElementEvent;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
+import edu.siren.gui.TextInput;
 import edu.siren.gui.Window;
 import edu.siren.gui.Element;
 import edu.siren.renderer.Screen;
@@ -157,42 +158,49 @@ public class WindowTest {
                 basic.add(dragme);
             }
 
-            /*
-            Input input = new TextInput();
+            TextInput input = new TextInput();
             {
-                input.positioning(Element.RELATIVE);
-                input.position(10, 10);
-                input.dimensions(100, 10);
+                input.positioning(Element.Position.ABSOLUTE);
+                input.position(10, 40);
                 input.fontScaling(3);
-                input.backgroundColor(0.50, 0.50, 0.50);
+                input.maxLength(10);
+                input.background("res/tests/img/text-input.png");
+                input.fontColor(0.0f, 0.0f, 0.0f);
+                input.padding(20.0f, 20.0f);
                 
                 // Handle a focused element
-                input.onFocus(new ElementEvent {
-                    public void event(Element input) {
+                input.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element input) {
+                        return false;
                     }
                 });                
                 
                 // Handle the element losing focus
-                input.onBlur(new ElementEvent {
-                    public void event(Element input) {
+                input.onMouseExit(new ElementEvent() {
+                    public boolean event(Element input) {
+                        return false;
                     }
                 });
                 
                 // Handle an input submitted
-                input.onSubmit(new ElementEvent {
-                    public void event(Element input) {
+                input.onSubmit(new ElementEvent() {
+                    public boolean event(Element e) {
+                        TextInput input = (TextInput) e;
+                        System.out.println(input.text());
+                        return false;
                     }
                 });
                 
                 // Handle a key being pressed
-                input.onKeyPress(new ElementEvent {
-                    public void event(Element input) {
+                input.onKeyPress(new ElementEvent() {
+                    public boolean event(Element input) {
+                        return false;
                     }
                 });
                 
                 basic.add(input);
             }
-            */
+            
             gui.add(basic);
         }
         

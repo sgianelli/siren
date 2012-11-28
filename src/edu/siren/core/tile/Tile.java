@@ -224,7 +224,7 @@ public class Tile implements Drawable {
         y = bounds.bottom();
         x = bounds.left();
         v0.xyz(x, y, 0);
-        v0.rgb(0, 0, 0);
+        v0.rgba(0, 0, 0, 0);
         v0.st(xbl, ybl);
         
         // Corner 2
@@ -232,7 +232,7 @@ public class Tile implements Drawable {
         y = bounds.top();
         x = bounds.left();
         v1.xyz(x, y, 0);
-        v1.rgb(0, 0, 0);
+        v1.rgba(0, 0, 0, 0);
         v1.st(xtl, ytl);
 
         // Corner 3
@@ -240,7 +240,7 @@ public class Tile implements Drawable {
         y = bounds.top();
         x = bounds.right();
         v2.xyz(x, y, 0);
-        v2.rgb(0, 0, 0);
+        v2.rgba(0, 0, 0, 0);
         v2.st(xtr, ytr);
 
         // Corner 4
@@ -248,9 +248,9 @@ public class Tile implements Drawable {
         y = bounds.bottom();
         x = bounds.right();
         v3.xyz(x, y, 0);
-        v3.rgb(0, 0, 0);
+        v3.rgba(0, 0, 0, 0);
         v3.st(xbr, ybr);
-
+        
         // Fill the index vertex buffer
         ivb = new IndexVertexBuffer(BufferType.STATIC);
         ivb.put(v0, v1, v2, v3);

@@ -20,7 +20,7 @@ public class Perspective2D {
      * 640x480.
      */
     public Perspective2D() {
-        ortho(0, 640, 0, 480, -1000, 1000);
+        ortho(0, 512, 0, 448, -1000, 1000);
     }
 
     /**

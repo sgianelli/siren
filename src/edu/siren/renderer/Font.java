@@ -21,8 +21,9 @@ public class Font {
     private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;
     private String lastPrinted = null;
-    private int squareW = 0;
-    private int squareH = 0;
+    public int squareW = 0;
+    public int squareH = 0;
+    private float[] rgba = new float[] {1.0f, 1.0f, 1.0f, 1.0f};
 
     /**
      * Constructs a new Font object from a given 
@@ -162,7 +163,7 @@ public class Font {
             y = charrect.bottom();
             x = charrect.left();
             v0.xyz(x, y, 0);
-            v0.rgb(1, 0, 0);
+            v0.rgb(rgba);
             v0.st(s(r), t(c));
             vertices[j++] = v0;
             
@@ -171,7 +172,7 @@ public class Font {
             y = charrect.top();
             x = charrect.left();
             v1.xyz(x, y, 0);
-            v1.rgb(0, 1, 0);
+            v0.rgb(rgba);
             v1.st(s(r), t(c + 1));
             vertices[j++] = v1;
 
@@ -180,7 +181,7 @@ public class Font {
             y = charrect.top();
             x = charrect.right();
             v2.xyz(x, y, 0);
-            v2.rgb(0, 0, 1);
+            v0.rgb(rgba);
             v2.st(s(r + 1), t(c + 1));
             vertices[j++] = v2;
 
@@ -189,7 +190,7 @@ public class Font {
             y = charrect.bottom();
             x = charrect.right();
             v3.xyz(x, y, 0);
-            v3.rgb(1, 1, 1);
+            v0.rgb(rgba);
             v3.st(s(r + 1), t(c));
             vertices[j++] = v3;
 
@@ -239,5 +240,10 @@ public class Font {
         }
         
         return 0.0f;
+    }
+
+    public void color(float r, float g, float b, float a) {
+        rgba = new float[]{r, g, b, a};
+        invalidate();
     }
 }

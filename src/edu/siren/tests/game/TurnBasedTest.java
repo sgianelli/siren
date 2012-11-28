@@ -28,13 +28,15 @@ public class TurnBasedTest {
         */
 		Screen screen = new Screen("Screen", 512, 448);
         
-        World world = new TestBox(1024, 1024);
+        World world = new TestBox(2024, 2024);
         
         // Add the player
         Player player = new Link();
-        player.setPosition(100, 100);
+        player.setPosition(0, 0);
+        player.snapToGrid(64, 64);
+        
         world.addEntity(player);
-        world.getCamera().setPosition(-200, -200);
+        world.getCamera().setPosition(-256, -224);
 
         // Disable the camera
         world.getCamera().disable();

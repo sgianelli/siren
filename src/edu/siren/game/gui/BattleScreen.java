@@ -33,24 +33,10 @@ public class BattleScreen implements Gui {
         Font font = gui.font;
         Window window = new Window("Battle Screen");
         
-        Image background = new Image("res/game/gui/battle-screen.png");
+        Image grid = new Image("res/game/gui/battle-grid.png");
         {
-            window.add(background, -1);
+            window.add(grid, -1);
         }
-        
-        banner = new Image("res/game/gui/link-banner.png");
-        {
-            banner.xy(83, 26);
-            window.add(banner);
-        }
-        
-        int y = 150;
-        Text health = new Text("health: 100/100", 2);
-        {
-            health.xy(95, y); y -= 16;
-            window.add(health);
-        }
-        
         
         gui.add(window);
 	}

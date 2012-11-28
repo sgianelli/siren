@@ -31,7 +31,6 @@ public class Text extends Element {
         this(text, 1);
     }
     
-    
     public void padding(float tb, float lr) {
         xywh(x() + textState.padding.width / 2.0f,
              y() + textState.padding.height / 2.0f,

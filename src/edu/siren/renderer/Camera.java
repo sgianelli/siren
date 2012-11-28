@@ -3,6 +3,7 @@ package edu.siren.renderer;
 import java.util.ArrayList;
 
 import org.lwjgl.Sys;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -28,6 +29,8 @@ public class Camera {
     private Vector3d hsvdv = new Vector3d();
     private double hsvdt = 0.0f;
     private double lastFrame = 0.0f;
+    private float width, height;
+    private float zoomLevel = 1.0f;
     
     /**
      * Constructs a new Camera with a given aspect ratio.
@@ -36,10 +39,16 @@ public class Camera {
      */
     public Camera(float aspectRatio) {
         position.setIdentity();
-        ortho(-2 * aspectRatio, 2 * aspectRatio, -2, 2, -1, 1);
-        setZoom(75.0f);
+        ortho(Display.getWidth(), Display.getHeight(), 1.0f);
+        setZoom(1.0f);
     }
     
+    public void ortho(float w, float h, float z) {
+        width = w;
+        height = h;
+        ortho(-w/2.0f * z, w/2.0f * z, -h/2.0f * z, h/2.0f * z, -1.0f, 1.0f);
+    }
+
     /**
      * Constructs a new Camera with a given aspect ratio at an (x, y) with
      * a zoom of z.
@@ -52,7 +61,6 @@ public class Camera {
     public Camera(float aspectRatio, float x, float y, float z) {
         this(aspectRatio);
         setPosition(x, y);
-        setZoom(z);
     }
 
     /**
@@ -61,7 +69,7 @@ public class Camera {
      * @param zoom The zoom value to zoom into.
      */
     void setZoom(float zoom) {
-        position.m33 = zoom;
+        ortho(width, height, zoom);
     }
 
     /**
@@ -90,9 +98,11 @@ public class Camera {
      * Zooms in one-factor.
      */
     public void zoomIn() {
-        if (position.m33 <= 20)
+        if (zoomLevel <= 0.0f)
             return;
-        position.m33 -= 5.0;
+        zoomLevel -= 0.01f;
+        ortho(width, height, zoomLevel);
+        System.out.println(position.m33);
         updateShaders();
     }
 
@@ -100,7 +110,9 @@ public class Camera {
      * Zooms out one-factor.
      */
     public void zoomOut() {
-        position.m33 += 5.0f;
+        zoomLevel += 0.01f;
+        ortho(width, height, zoomLevel);
+        System.out.println(position.m33);
         updateShaders();
     }
     
@@ -142,6 +154,7 @@ public class Camera {
      */
     public void updateShaders() {   
         forceUpdate = true;
+        System.out.println("projection: " + projection);
         for (Shader shader : shaders) {
             shader.update("world", position);
             shader.update("projection", projection);

@@ -207,6 +207,7 @@ public abstract class Element implements Comparable<Element> {
     public boolean enabled() {
         return this.state.active;
     }
+    
 
     /**
      * Set the positioning of the element.
@@ -277,7 +278,8 @@ public abstract class Element implements Comparable<Element> {
 
     public void w(float w) {
         this.state.w = w;
-        this.state.background.width(w);
+        if (this.state.background != null)
+            this.state.background.width(w);
     }
     
     public float w() {
@@ -286,7 +288,8 @@ public abstract class Element implements Comparable<Element> {
     
     public void h(float h) {
         this.state.h = h;
-        this.state.background.height(h);
+        if (this.state.background != null)
+            this.state.background.height(h);
     }
     
     public float h() {

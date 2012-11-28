@@ -7,7 +7,7 @@ package edu.siren.renderer;
  */
 public class Vertex {
     public float[] vxyzw = new float[] { 0f, 0f, 0f, 1f };
-    public float[] vrgba = new float[] { 1f, 1f, 1f, 1f };
+    public float[] vrgba = new float[] { 0f, 0f, 0f, 0f };
     public float[] vst = new float[] { 0f, 0f };
     
     /**
@@ -118,12 +118,19 @@ public class Vertex {
         s += Size.texture;
         for (int p = 0; i < s; i++, p++)
             elements[i] = this.vst[p];
-
+        
         return elements;
     }
     
     public String toString() {
-        return "(" + this.vst[0] + ", " + this.vst[1] + ")";
+        return "(" + this.vxyzw[0] + ", " + this.vxyzw[1] + ")";
+    }
+
+    public void rgb(float[] rgba) {
+        this.vrgba[0] = rgba[0];
+        this.vrgba[1] = rgba[1];
+        this.vrgba[2] = rgba[2];
+        this.vrgba[3] = rgba[3];
     }
         
 }

@@ -1,10 +1,9 @@
 package edu.siren.game;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
 import edu.siren.core.geom.Rectangle;
-import edu.siren.core.tile.Tile;
-import edu.siren.game.ai.AI;
 import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
@@ -12,6 +11,8 @@ public class Player extends Actor {
     public int lastMovement = 1;
     public boolean follow = false;
     public boolean controllable = true;
+    public boolean hadMovement = false;
+
 
     public Player(String config) {
         super(config, null);
@@ -37,10 +38,10 @@ public class Player extends Actor {
         
         boolean movement = false;
         
-        int lastX = this.x;
-        int lastY = this.y;
+        float lastX = this.x;
+        float lastY = this.y;
         
-        if (controllable) {        
+        if (controllable && (!snap || (snap && !hadMovement))) {        
             if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
                 moveUp();
                 sprite.animation("move-forward");
@@ -108,8 +109,16 @@ public class Player extends Actor {
                 }
             }
         }
-            
-                
+        
+        if (Keyboard.isKeyDown(Keyboard.KEY_A) ||
+            Keyboard.isKeyDown(Keyboard.KEY_W) ||
+            Keyboard.isKeyDown(Keyboard.KEY_S) ||
+            Keyboard.isKeyDown(Keyboard.KEY_D)) {
+            hadMovement = true;
+        } else {
+            hadMovement = false;
+        }
+        
         if (!movement) {
             switch (lastMovement) {
             case 1:
@@ -141,22 +150,40 @@ public class Player extends Actor {
     }
 
     public void moveRight() {
-        this.x += 0.1f * speed;
+        if (snap) {
+            this.x += gridWidth;
+        } else {
+            this.x += 0.1f * speed;
+        }
     }
 
     public void moveLeft() {
-        this.x -= 0.1f * speed;        
+        if (snap) {
+            this.x -= gridWidth;
+        } else {
+            this.x -= 0.1f * speed;        
+        }
     }
 
     public void moveDown() {
-        this.y -= 0.1f * speed;        
+        if (snap) {
+            this.y -= gridHeight;
+        } else {
+            this.y -= 0.1f * speed;        
+        }
     }
 
     public void moveUp() {
-        this.y += 0.1f * speed;        
+        if (snap) {
+            this.y += gridHeight;
+        } else {
+            this.y += 0.1f * speed;        
+        }
     }
 
     public void bindCamera(Camera camera) {
         this.camera = camera;
     }
+
+    
 }

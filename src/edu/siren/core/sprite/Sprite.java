@@ -17,7 +17,8 @@ public class Sprite implements Drawable {
 
     public HashMap<String, Animation> animations = new HashMap<String, Animation>();
     public Animation active = null;
-    public int spriteX = 0, spriteY = 0;
+    public float spriteX = 0;
+    public float spriteY = 0;
     public final Rectangle rectangleZero = new Rectangle(0, 0, 0, 0);
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
 

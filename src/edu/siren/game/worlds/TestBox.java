@@ -25,7 +25,7 @@ public class TestBox extends World {
         Layer layer2 = new Layer();
         
         // Add some grass
-        layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, 10000, 10000));
+        layer.addTile(new Tile("res/tests/img/grass.png", -1000, -1000, 10000, 10000));
         layer2.addTile(new Tile("res/tests/img/grass.png", -10000, 0, 10000, 10000));
 
         // Create some catch phrases
