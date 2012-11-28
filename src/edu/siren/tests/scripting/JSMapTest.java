@@ -63,7 +63,7 @@ public class JSMapTest {
     public static void main(String[] args) 
             throws IOException, ScriptException, LWJGLException 
     {    
-        Screen screen = new Screen("JSMapTest", 640, 480);
+        Screen screen = new Screen("JSMapTest", 512, 448);
         World world = reload();
         Player player = new Link();
         Player pikachu = new Pikachu();

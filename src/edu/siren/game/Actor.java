@@ -36,11 +36,11 @@ public abstract class Actor extends Entity implements Interactable {
         initializeAnimations();
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.desiredX = x;
-        this.desiredY = y;
+    public void setPosition(float xx, float yy) {
+        this.x = xx;
+        this.y = yy;
+        this.desiredX = xx;
+        this.desiredY = yy;
     }
 
     @SuppressWarnings("unchecked")
@@ -96,7 +96,7 @@ public abstract class Actor extends Entity implements Interactable {
             if (x < desiredX) {
                 this.x += speed;
                 lastMovement = 3;
-            } else if (x >= desiredX) {
+            } else if (x > desiredX) {
                 this.x -= speed;
                 lastMovement = 4;
             }
@@ -112,7 +112,7 @@ public abstract class Actor extends Entity implements Interactable {
             if (y < desiredY) {
                 y += speed;
                 lastMovement = 1;
-            } else if (y >= desiredY) {
+            } else if (y > desiredY) {
                 y -= speed;
                 lastMovement = 2;
             }

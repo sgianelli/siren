@@ -32,8 +32,8 @@ public class TurnBasedTest {
         
         // Add the player
         Player player = new Link();
-        player.setPosition(0, 0);
-        player.snapToGrid(64, 64);
+        player.setPositionCenter(8, 8);
+        player.snapToGrid(32, 32);
         
         world.addEntity(player);
         world.getCamera().setPosition(-256, -224);

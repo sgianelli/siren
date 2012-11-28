@@ -9,6 +9,7 @@ out vec2 Tex;
 
 uniform mat4 world;
 uniform mat4 projection;
+uniform mat4 scale;
 
 void main()
 {

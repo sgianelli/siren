@@ -43,23 +43,12 @@ public class TestBox extends World {
             layer.addTile(tile);
         }
         
-        // Add random characters
-        for (int i = 0; i < 100; i++) {
-        	
-            int x = random.nextInt(9000) - random.nextInt(50);
-            int y = random.nextInt(9000) - random.nextInt(50);
-            
-            // Place the character somewhere in the world
-            Tile tile = new Tile("res/tests/img/characters/justin.png", x, y,
-                    16.0f, 25.0f, 1, 1);
+        // Place the character somewhere in the world
+        Tile t = new Tile("res/tests/img/characters/justin.png", 64, 0,
+                24.0f, 24.0f, 1, 1);
 
-            // Put random text with the random characters
-            layer.addIndexVertexBuffer(font.print(phrases[random.nextInt(3)],
-                    3, x, y + 25, null, 0));
-            
-            // Add the tile to the current layer
-            layer.addTile(tile);
-        }
+        // Add the tile to the current layer
+        layer.addTile(t);
 
         // Add random trees
         for (int i = 0; i < 100; i++) {

@@ -71,7 +71,6 @@ public class Screen {
         Display.create(pixelFormat, cntxt);
 
         // Do our basic GL setup
-        GL11.glViewport(0, 0, width, height);
         GL11.glClearColor(0.25f, 0.5f, 0.25f, 1.0f);
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_CULL_FACE);

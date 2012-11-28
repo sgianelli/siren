@@ -22,6 +22,7 @@ public class Camera {
     public Vector3f hsv = new Vector3f(1.0f, 1.0f, 1.0f);
     public Matrix4f position = new Matrix4f();
     public Matrix4f projection = new Matrix4f();
+    public Matrix4f scale = new Matrix4f();
     public ArrayList<Shader> shaders = new ArrayList<Shader>();
     
     private double hsvTransitionTime = 0.0f;
@@ -46,7 +47,7 @@ public class Camera {
     public void ortho(float w, float h, float z) {
         width = w;
         height = h;
-        ortho(-w/2.0f * z, w/2.0f * z, -h/2.0f * z, h/2.0f * z, -1.0f, 1.0f);
+        ortho(-w/2.0f * z, w/2.0f * z, h/2.0f * z, -h/2.0f * z, -1.0f, 1.0f);
     }
 
     /**
@@ -102,7 +103,6 @@ public class Camera {
             return;
         zoomLevel -= 0.01f;
         ortho(width, height, zoomLevel);
-        System.out.println(position.m33);
         updateShaders();
     }
 
@@ -112,7 +112,6 @@ public class Camera {
     public void zoomOut() {
         zoomLevel += 0.01f;
         ortho(width, height, zoomLevel);
-        System.out.println(position.m33);
         updateShaders();
     }
     
@@ -154,7 +153,6 @@ public class Camera {
      */
     public void updateShaders() {   
         forceUpdate = true;
-        System.out.println("projection: " + projection);
         for (Shader shader : shaders) {
             shader.update("world", position);
             shader.update("projection", projection);

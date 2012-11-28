@@ -59,7 +59,7 @@ public abstract class World {
     protected Perspective2D fboPerspective = new Perspective2D();
     protected Font font;
     private Shader fboShader = null;
-    private Tile fboTile = new Tile(0.0f, 0.0f, 640.0f, 480.0f);
+    private Tile fboTile = new Tile(0.0f, 0.0f, 512.0f, 448.0f);
 
     public enum Environment {
         MORNING, AFTERNOON, DUSK, NIGHT
@@ -144,6 +144,7 @@ public abstract class World {
      */
     private void generateFBO() {
         // Allocate an actual frame buffer (wtf lines)
+        fboTile = new Tile(0.0f, 0.0f, Display.getWidth(), Display.getHeight());
         IntBuffer buffer = ByteBuffer.allocateDirect(1 * 4).order(ByteOrder.nativeOrder()).asIntBuffer();
         GL30.glGenFramebuffers(buffer);
         fboid = buffer.get();
@@ -152,8 +153,13 @@ public abstract class World {
         fbotid = GL11.glGenTextures();
         GL13.glActiveTexture(fbotid);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbotid);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);        
+        
+        // Setup what to do when the texture has to be scaled
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER,
+                GL11.GL_NEAREST);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
+                GL11.GL_NEAREST);
+        
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, Display.getWidth(), Display.getHeight(),
                 0, GL11.GL_RGBA, GL11.GL_INT, (ByteBuffer) null);
 

@@ -252,7 +252,7 @@ public class Tile implements Drawable {
         ivb.put(v0, v1, v2, v3);
         byte[] indices = { 0, 1, 2, 2, 3, 0 };
         ivb.put(indices);
-
+        
         if (texture != null)
             ivb.put(texture);
     }

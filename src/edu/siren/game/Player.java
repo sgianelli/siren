@@ -185,5 +185,14 @@ public class Player extends Actor {
         this.camera = camera;
     }
 
+    /**
+     * Centers a player's position about x, y
+     */
+    public void setPositionCenter(int x, int y) {
+        float xx = x - (this.getRect().width / 2.0f);
+        float yy = y + (this.getRect().height / 2.0f);
+        this.setPosition(xx, yy);
+    }
+
     
 }
