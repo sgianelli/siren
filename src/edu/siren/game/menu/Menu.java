@@ -1,4 +1,4 @@
-package edu.siren.game.gui;
+package edu.siren.game.menu;
 
 import java.io.IOException;
 
