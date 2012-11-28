@@ -1,6 +1,7 @@
 package edu.siren.renderer;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class IndexVertexBuffer implements Drawable {
     private boolean bound = false;
     private int indexCount = 0;
     private byte elementOffset = 0;
+    private int position, color, tex;
     
     public FloatBuffer vertices = null;
     public ByteBuffer indices = null;
@@ -143,15 +145,23 @@ public class IndexVertexBuffer implements Drawable {
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
 
         // Define the position, color, and texture offsets
-        GL20.glVertexAttribPointer(2, Vertex.Size.position, GL11.GL_FLOAT,
+        int program = Shader.getActiveShader();
+        
+        position = GL20.glGetAttribLocation(program, "position");
+        GL20.glEnableVertexAttribArray(position);
+        GL20.glVertexAttribPointer(position, Vertex.Size.position, GL11.GL_FLOAT,
                 false, Vertex.Byte.stride, Vertex.Offsets.position);
 
         // Define the position, color, and texture offsets
-        GL20.glVertexAttribPointer(1, Vertex.Size.color, GL11.GL_FLOAT, false,
+        color = GL20.glGetAttribLocation(program, "color");
+        GL20.glEnableVertexAttribArray(color);
+        GL20.glVertexAttribPointer(color, Vertex.Size.color, GL11.GL_FLOAT, false,
                 Vertex.Byte.stride, Vertex.Offsets.color);
 
         // Define the position, color, and texture offsets
-        GL20.glVertexAttribPointer(0, Vertex.Size.texture, GL11.GL_FLOAT,
+        tex = GL20.glGetAttribLocation(program, "tex");
+        GL20.glEnableVertexAttribArray(tex);
+        GL20.glVertexAttribPointer(tex, Vertex.Size.texture, GL11.GL_FLOAT,
                 false, Vertex.Byte.stride, Vertex.Offsets.texture);
 
         // Disable the array buffer
@@ -192,9 +202,9 @@ public class IndexVertexBuffer implements Drawable {
         GL30.glBindVertexArray(vaoid);
 
         // Enable the position, color, and texture attributes
-        GL20.glEnableVertexAttribArray(0);
-        GL20.glEnableVertexAttribArray(1);
-        GL20.glEnableVertexAttribArray(2);
+        GL20.glEnableVertexAttribArray(position);
+        GL20.glEnableVertexAttribArray(color);
+        GL20.glEnableVertexAttribArray(tex);
 
         // Active the VBO
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboid);
@@ -205,9 +215,9 @@ public class IndexVertexBuffer implements Drawable {
         
         // Unbind everything
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
-        GL20.glDisableVertexAttribArray(0);
-        GL20.glDisableVertexAttribArray(1);
-        GL20.glDisableVertexAttribArray(2);
+        GL20.glDisableVertexAttribArray(position);
+        GL20.glDisableVertexAttribArray(color);
+        GL20.glDisableVertexAttribArray(tex);
         GL30.glBindVertexArray(0);        
     }
 }

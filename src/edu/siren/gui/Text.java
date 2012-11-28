@@ -103,4 +103,8 @@ public class Text extends Element {
         textState.text = textual;
         textState.font.invalidate();
     }
+    
+    public void fontColor(float r, float g, float b) {
+        textState.font.color(r, g, b, 1.0f);
+    }
 }

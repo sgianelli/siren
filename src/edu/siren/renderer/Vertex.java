@@ -6,8 +6,8 @@ package edu.siren.renderer;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Vertex {
-    public float[] vxyzw = new float[] { 0f, 0f, 0f, 1f };
-    public float[] vrgba = new float[] { 0f, 0f, 0f, 0f };
+    public float[] vxyzw = new float[] { 0f, 0f };
+    public float[] vrgba = new float[] { 1f, 1f, 1f };
     public float[] vst = new float[] { 0f, 0f };
     
     /**
@@ -28,8 +28,6 @@ public class Vertex {
     public void xyzw(float x, float y, float z, float w) {
         vxyzw[0] = x;
         vxyzw[1] = y;
-        vxyzw[2] = z;
-        vxyzw[3] = 1.0f;
     }
 
     /**
@@ -38,8 +36,6 @@ public class Vertex {
     public void xyz(float x, float y, float z) {
         vxyzw[0] = x;
         vxyzw[1] = y;
-        vxyzw[2] = z;
-        vxyzw[3] = 1.0f;
     }
 
     /**
@@ -49,7 +45,6 @@ public class Vertex {
         vrgba[0] = r;
         vrgba[1] = g;
         vrgba[2] = b;
-        vrgba[3] = a;
     }
 
     /**
@@ -59,7 +54,6 @@ public class Vertex {
         vrgba[0] = r;
         vrgba[1] = g;
         vrgba[2] = b;
-        vrgba[3] = 1.0f;
     }
 
     /**
@@ -73,8 +67,8 @@ public class Vertex {
      * Sizing for each vertex element.
      */
     public final class Size {
-        static final int position = 4;
-        static final int color = 4;
+        static final int position = 2;
+        static final int color = 3;
         static final int texture = 2;
         static final int total = position + color + texture;
     }
@@ -130,7 +124,6 @@ public class Vertex {
         this.vrgba[0] = rgba[0];
         this.vrgba[1] = rgba[1];
         this.vrgba[2] = rgba[2];
-        this.vrgba[3] = rgba[3];
     }
         
 }

@@ -172,7 +172,7 @@ public class Font {
             y = charrect.top();
             x = charrect.left();
             v1.xyz(x, y, 0);
-            v0.rgb(rgba);
+            v1.rgb(rgba);
             v1.st(s(r), t(c + 1));
             vertices[j++] = v1;
 
@@ -181,7 +181,7 @@ public class Font {
             y = charrect.top();
             x = charrect.right();
             v2.xyz(x, y, 0);
-            v0.rgb(rgba);
+            v2.rgb(rgba);
             v2.st(s(r + 1), t(c + 1));
             vertices[j++] = v2;
 
@@ -190,7 +190,7 @@ public class Font {
             y = charrect.bottom();
             x = charrect.right();
             v3.xyz(x, y, 0);
-            v0.rgb(rgba);
+            v3.rgb(rgba);
             v3.st(s(r + 1), t(c));
             vertices[j++] = v3;
 

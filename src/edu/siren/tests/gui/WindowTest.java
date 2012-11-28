@@ -142,6 +142,7 @@ public class WindowTest {
                 dragme.position(300, 25);
                 dragme.fontScaling(1);  
                 dragme.draggable(true);
+                dragme.fontColor(1.0f, 0.0f, 1.0f);
                 dragme.onDragging(new ElementEvent() {
                     @Override
 					public boolean event(Element element) {
@@ -162,10 +163,10 @@ public class WindowTest {
             {
                 input.positioning(Element.Position.ABSOLUTE);
                 input.position(10, 40);
-                input.fontScaling(3);
+                input.fontScaling(1);
                 input.maxLength(10);
                 input.background("res/tests/img/text-input.png");
-                input.fontColor(0.0f, 0.0f, 0.0f);
+                input.fontColor(1.0f, 1.0f, 0.0f);
                 input.padding(20.0f, 20.0f);
                 
                 // Handle a focused element

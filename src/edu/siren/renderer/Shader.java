@@ -3,6 +3,7 @@ package edu.siren.renderer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -18,7 +19,8 @@ import org.lwjgl.util.vector.Vector3f;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Shader {
-    int vid, fid, program;
+    public int vid, fid, program;
+    public static int activeProgram;
 
     /**
      * Constructs a new Shader with a defined vertex and fragment file.
@@ -43,9 +45,9 @@ public class Shader {
         GL20.glLinkProgram(program);
 
         // All vertex shaders must define these attributes
-        GL20.glBindAttribLocation(program, 2, "position");
+        GL20.glBindAttribLocation(program, 0, "position");
         GL20.glBindAttribLocation(program, 1, "color");
-        GL20.glBindAttribLocation(program, 0, "tex");
+        GL20.glBindAttribLocation(program, 2, "tex");
 
         // Validate the linked program
         GL20.glValidateProgram(program);
@@ -56,6 +58,7 @@ public class Shader {
      */
     public void use() {
         GL20.glUseProgram(program);
+        activeProgram = program;
     }
 
     /**
@@ -124,6 +127,10 @@ public class Shader {
     public void update(String string, Vector3f vec) {
         int uniform = GL20.glGetUniformLocation(program, string);
         GL20.glUniform3f(uniform, vec.x, vec.y, vec.z);
+    }
+
+    public static int getActiveShader() {
+        return activeProgram;
     }
 
 }

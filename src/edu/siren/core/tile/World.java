@@ -76,8 +76,10 @@ public abstract class World {
      */
     public World() throws IOException, LWJGLException {
         init();        
-        create();
         setupShaders();
+        worldShader.use();
+        create();
+        worldShader.release();
     }
     
     public void setupShaders() throws IOException {
