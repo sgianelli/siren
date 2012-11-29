@@ -174,30 +174,51 @@ public abstract class World {
         
         GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
     }
-
     
+    void drawFBO() {
+        // The FBO pass. Take our FBO texture and draw it
+        if (fboid != -1) {
+            fboShader.use();              
+            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            fboTile.draw();
+            fboShader.release();
+        }
+    }
+    
+    void renderToFBO() {
+        // If the FBO is enabled, then we want to render to it
+        if (fboid != -1) {
+            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        } 
+    }
+
 
     /**
      * Draws the layers, followed by the entities, and then the Hud
      */
     public void draw() {
+        // If the engine is paused just re-render the FBO tile with the
+        // previous frame
+        if (isPaused()) {
+            drawFBO();
+            return;
+        }
     	
         // Initial pass for the content
         worldShader.use();
         {            
-            // If the FBO is enabled, then we want to render to it
-            if (fboid != -1) {
-                GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
-                GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-                GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-            } 
+            
+            renderToFBO();
             
             for (Layer layer : layers) {
                 layer.draw();
             }
             
             for (Entity entity : entities) {
-            	entity.canMove(!isPaused());
             	entity.draw();
                 entity.think();
             }
@@ -218,17 +239,9 @@ public abstract class World {
 	            }
             }
         }                
-        worldShader.release();
         
-        // The FBO pass. Take our FBO texture and draw it
-        if (fboid != -1) {
-            fboShader.use();              
-            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-            fboTile.draw();
-            fboShader.release();
-        }
+        worldShader.release();
+        drawFBO();
     }
 
     public void pause() {
