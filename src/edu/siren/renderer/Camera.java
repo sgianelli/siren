@@ -215,6 +215,12 @@ public class Camera {
     public int getX() {
         return (int) position.m30;
     }
+    /**
+     * Retrieves the Y position from the matrix.
+     */
+    public int getY() {
+        return (int) position.m31;
+    }
 
     /**
      * Apply an HSV transition to the scene.
