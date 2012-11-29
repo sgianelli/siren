@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -13,12 +14,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
+import edu.siren.game.Player;
+import edu.siren.game.battle.Team;
+import edu.siren.game.battle.TeamMemberDieEvent;
+import edu.siren.game.battle.TeamVictoryEvent;
+import edu.siren.game.entity.Entity;
+import edu.siren.gui.Gui;
+import edu.siren.renderer.Camera;
+import edu.siren.renderer.Perspective2D;
+import edu.siren.renderer.Shader;
 
 /**
  * Wraps the core.tile.World class and provides additional functions
@@ -30,11 +44,129 @@ public class JSWorld {
     /**
      * jQuery-like selector syntax
      */
-    public Tile $(String selector) {
+    public Object $(String selector) {
         if (selector.charAt(0) == '#') {
             return world.tiles.get(selector.substring(1));
+        } else if (selector.charAt(0) == '%') {
+            return world.getEntityById(selector.substring(1));
         }
         return null;
+    }
+    
+    public World save() {
+        return world;
+    }
+    
+    /**
+     * @return Current resolution timer.
+     */
+    private double getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
+    
+    public World fightable(String jsonTiles, Team a, Team b,
+            TeamMemberDieEvent aMemberDieEvent, TeamVictoryEvent aVictoryEvent,
+            TeamMemberDieEvent bMemberDieEvent, TeamVictoryEvent bVictoryEvent) 
+                    throws IOException, LWJGLException
+    {
+        Perspective2D gui = new Perspective2D();
+        Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                "res/tests/glsl/2d-perspective.frag");
+        gui.bindToShader(shader);
+        
+        // Draw the battle sequence
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        for (int i = 0; i < Display.getWidth(); i += 64) {
+            for (int j = 0; j < Display.getHeight(); j+= 64) {
+                Tile tile = new Tile("res/game/gui/black.png", i, j, 64, 64);
+                tiles.add(tile);
+            }
+        }
+        
+        double ftime = getTime();
+        int drawTiles = 0;
+        
+        while (drawTiles < tiles.size()) {
+            double ctime = getTime();
+            if ((ctime - ftime) > 15) {
+                drawTiles++;
+                ftime = ctime;
+            }
+            
+            shader.use();
+            for (int i = 0; i < drawTiles; i++) {
+                tiles.get(i).draw();
+            }
+            shader.release();
+            Display.update();
+        }
+                
+        
+        load("Battle Sequence", jsonTiles);
+        
+        Camera camera = world.getCamera();
+        camera.setPosition(-256, -224);
+        
+        // Add A team
+        int x = 256 - (a.players.size() * 32), y = 32;
+        for (Player player : a.players) {
+            player.setPosition(x, y);
+            player.follow = false;
+            player.controllable = false;
+            player.lastMovement = 1;
+            player.snapToGrid(32, 32);
+            world.addEntity(player);
+            x += 32;
+        }
+        
+        x = 256 - (b.players.size() * 32);
+        y = 416;
+        for (Player player : b.players) {
+            player.setPosition(x, y);
+            player.snapToGrid(32, 32);
+            player.lastMovement = 2;
+            player.follow = false;
+            player.controllable = true;
+            world.addEntity(player);
+        }
+        
+        
+        ftime = getTime();
+        drawTiles = tiles.size() - 1;
+        while (drawTiles >= 0) {
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            world.draw();
+            double ctime = getTime();
+            if ((ctime - ftime) > 15) {
+                drawTiles--;
+                ftime = ctime;
+            }
+            
+            shader.use();
+            for (int i = 0; i < drawTiles; i++) {
+                tiles.get(i).draw();
+            }
+            shader.release();
+            Display.update();
+        }
+        
+        return world;
+    }
+    
+    public Team createTeam(String teamname, Player[] players) {
+        return new Team(teamname, players);
+    }
+    
+    public Entity asEntity(Object object) {
+        return (Entity) object;
+    }
+    
+    public Tile asTile(Object object) {
+        return (Tile) object;
+    }
+    
+    public Player spawn(String name, int x, int y) {
+        return world.spawn(name, x, y);
     }
     
     public JSWorld() { }

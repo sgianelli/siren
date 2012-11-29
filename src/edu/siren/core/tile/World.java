@@ -45,6 +45,7 @@ public abstract class World {
     public SpriteSheet sprites;
     public boolean collisionGrid[];
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
+    public Tile grid;
     
     
     // Determines if a game should be playing or not
@@ -59,7 +60,7 @@ public abstract class World {
     protected Perspective2D fboPerspective = new Perspective2D();
     protected Font font;
     private Shader fboShader = null;
-    private Tile fboTile = new Tile(0.0f, 0.0f, 512.0f, 448.0f);
+    public Tile fboTile = new Tile(0.0f, 0.0f, 512.0f, 448.0f);
 
     public enum Environment {
         MORNING, AFTERNOON, DUSK, NIGHT
@@ -80,6 +81,7 @@ public abstract class World {
         worldShader.use();
         create();
         worldShader.release();
+        grid = new Tile("res/game/gui/grid-corner.png", -4096, -4096, 8096, 8096, true);
     }
     
     public void setupShaders() throws IOException {
@@ -177,26 +179,20 @@ public abstract class World {
     
     void drawFBO() {
         // The FBO pass. Take our FBO texture and draw it
-        if (fboid != -1) {
-            fboShader.use();              
-            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-            fboTile.draw();
-            fboShader.release();
-        }
+        fboShader.use();              
+        GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
+        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        fboTile.draw();
+        fboShader.release();
     }
     
     void renderToFBO() {
         // If the FBO is enabled, then we want to render to it
-        if (fboid != -1) {
-            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-        } 
+        GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fboid);
+        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
-
-
+    
     /**
      * Draws the layers, followed by the entities, and then the Hud
      */
@@ -207,41 +203,46 @@ public abstract class World {
             drawFBO();
             return;
         }
-    	
-        // Initial pass for the content
-        worldShader.use();
-        {            
-            
-            renderToFBO();
-            
-            for (Layer layer : layers) {
-                layer.draw();
-            }
-            
-            for (Entity entity : entities) {
-            	entity.draw();
-                entity.think();
-            }
-                        
-            if (!isPaused()) {
-	            camera.think();
-	            if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-	                camera.zoomIn();
-	            } else if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_X)) {
-	                camera.zoomOut();
-	            } else if (zoomPressed) {
-	                zoomPressed = false;
-	            }
-	            
-	            if (Keyboard.isKeyDown(Keyboard.KEY_Z) ||
-	                Keyboard.isKeyDown(Keyboard.KEY_X)) {
-	                zoomPressed = true;
-	            }
-            }
-        }                
         
+        worldShader.use();
+        renderToFBO();
+        
+        for (Layer layer : layers) {
+            layer.draw();
+        }
+        
+        grid.draw();
+        
+        for (Entity entity : entities) {
+        	entity.draw();
+        }
+        
+        camera.think();
+        if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+            camera.zoomIn();
+        } else if (!zoomPressed && Keyboard.isKeyDown(Keyboard.KEY_X)) {
+            camera.zoomOut();
+        } else if (zoomPressed) {
+            zoomPressed = false;
+        }
+        
+        if (Keyboard.isKeyDown(Keyboard.KEY_Z) ||
+            Keyboard.isKeyDown(Keyboard.KEY_X)) {
+            zoomPressed = true;
+        }
         worldShader.release();
+        
         drawFBO();
+        
+        // Initial pass for the content
+        for (Entity entity : entities) {
+            entity.think();
+        }
+        
+        // Check layer events
+        for (Layer layer : layers) {
+            layer.checkEvents();
+        }
     }
 
     public void pause() {
@@ -302,6 +303,7 @@ public abstract class World {
     public void addEntity(Player player) {
         player.bindCamera(this.camera);
         player.setWorld(this);
+        solids.add(player.getRect());
         entities.add(player);
     }
 
@@ -314,10 +316,11 @@ public abstract class World {
     {
     }
     
-    public Player spawn(String name) {
+    public Player spawn(String name, int x, int y) {
         try {
             Player player =  (Player) Class.forName("edu.siren.game.players." + name).newInstance();
             player.controllable = false;
+            player.setPosition(x, y);
             this.addEntity(player);
             return player;
         } catch (Exception e) {
@@ -328,5 +331,14 @@ public abstract class World {
     
     public Camera getCamera() {
     	return this.camera;
+    }
+
+    public Entity getEntityById(String substring) {
+        for (Entity entity : entities) {
+            if (entity.id.equals(substring)) {
+                return entity;
+            }
+        }
+        return null;
     }
 }

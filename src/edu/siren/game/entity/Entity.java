@@ -24,12 +24,13 @@ public abstract class Entity {
     protected String name;
     protected JSONObject json;
     protected EntityStats entityStats = new EntityStats();
-    protected Sprite sprite = new Sprite();
+    public Sprite sprite = new Sprite();
     protected World world = null;
     protected boolean move = true;
     protected int preventMovement = -1;
-    protected int lastMovement = 0;
+    public int lastMovement = 0;
     public ArrayList<Rectangle> preventCollision = new ArrayList<Rectangle>();
+    public String id = "";
     
     public class EntityStats {
         int health;
@@ -64,6 +65,8 @@ public abstract class Entity {
     public boolean is(String what) {
         if (what.equals(":player")) {
             return this instanceof Player;
+        } else if (what.equals(":controlledPlayer")) {
+           return this instanceof Player && ((Player)this).controllable;
         }
         
         return false;

@@ -2,7 +2,7 @@
 
 uniform sampler2D diffuse;
 uniform vec3 hsv;
-in vec3 Color;
+in vec4 Color;
 in vec2 Tex;
 layout(location = 0) out vec4 outColor;
 

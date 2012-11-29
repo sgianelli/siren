@@ -41,6 +41,8 @@ public abstract class Actor extends Entity implements Interactable {
         this.y = yy;
         this.desiredX = xx;
         this.desiredY = yy;
+        this.sprite.bounds.x = xx;
+        this.sprite.bounds.y = yy;
     }
 
     @SuppressWarnings("unchecked")
@@ -89,21 +91,21 @@ public abstract class Actor extends Entity implements Interactable {
         boolean movement = false;
         float lastX = this.x;
         float lastY = this.y;
-        int lastMovement = 1;
+        int lastMovementX = -1;
+        int lastMovementY = -1;
 
         // Go twards X
         if (Math.abs(x - desiredX) > speed) {
             if (x < desiredX) {
                 this.x += speed;
-                lastMovement = 3;
+                lastMovementX = 3;
             } else if (x > desiredX) {
                 this.x -= speed;
-                lastMovement = 4;
+                lastMovementX = 4;
             }
         }
         
-        int lastMovementX = lastMovement;
-        if (lastMovementX != 1) {
+        if (lastMovementX != -1) {
             movement = true;
         }
 
@@ -111,15 +113,14 @@ public abstract class Actor extends Entity implements Interactable {
         if (Math.abs(y - desiredY) > speed) {
             if (y < desiredY) {
                 y += speed;
-                lastMovement = 1;
+                lastMovementY = 1;
             } else if (y > desiredY) {
                 y -= speed;
-                lastMovement = 2;
+                lastMovementY = 2;
             }
         }
         
-        int lastMovementY = lastMovement;
-        if (lastMovementY == 1 || lastMovementY == 2) {
+        if (lastMovementY != -1) {
             movement = true;
         }
         
@@ -130,6 +131,8 @@ public abstract class Actor extends Entity implements Interactable {
         Rectangle b = o.clone(); b.y += 2;
 
         for (Rectangle bounds : world.solids) {
+            if (bounds.x == this.x && bounds.y == this.y)
+                continue;
             boolean touched = false;
             if (l.touching(bounds)) {
                 touched = true;
@@ -166,6 +169,11 @@ public abstract class Actor extends Entity implements Interactable {
             }
         }
         
+        if (lastMovementX >= 0) {
+            lastMovement = lastMovementX;
+        } else if (lastMovementY >= 0) {
+            lastMovement = lastMovementY;
+        }
             
         if (!movement) {
             switch (lastMovement) {
@@ -198,7 +206,6 @@ public abstract class Actor extends Entity implements Interactable {
     
     public void snapToGrid(float gridWidth, float gridHeight) {
         this.snap = true;
-        float pixelRatio = 1.14f;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
     }

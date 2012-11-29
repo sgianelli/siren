@@ -41,7 +41,6 @@ public class Camera {
     public Camera(float aspectRatio) {
         position.setIdentity();
         ortho(Display.getWidth(), Display.getHeight(), 1.0f);
-        setZoom(1.0f);
     }
     
     public void ortho(float w, float h, float z) {
@@ -99,9 +98,9 @@ public class Camera {
      * Zooms in one-factor.
      */
     public void zoomIn() {
-        if (zoomLevel <= 0.0f)
+        if (zoomLevel <= 0.5f)
             return;
-        zoomLevel -= 0.01f;
+        zoomLevel -= 0.5f;
         ortho(width, height, zoomLevel);
         updateShaders();
     }
@@ -110,7 +109,7 @@ public class Camera {
      * Zooms out one-factor.
      */
     public void zoomOut() {
-        zoomLevel += 0.01f;
+        zoomLevel += 0.5f;
         ortho(width, height, zoomLevel);
         updateShaders();
     }

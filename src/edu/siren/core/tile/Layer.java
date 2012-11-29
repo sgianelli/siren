@@ -33,6 +33,7 @@ public class Layer implements Comparable<Layer>, Drawable {
     private String name = null;
     public World world = null;
     public ArrayList<Rectangle> solids = new ArrayList<Rectangle>();
+    private ArrayList<Tile> removeNext = new ArrayList<Tile>();
 
     /**
      * Construct a new basic layer.
@@ -68,6 +69,8 @@ public class Layer implements Comparable<Layer>, Drawable {
                 triggerable = (TriggerTile) tile;
             }
             
+            tile.parent = this;
+            
             bounds.extend(tile.bounds);
             
             if (triggerable != null) {
@@ -91,10 +94,7 @@ public class Layer implements Comparable<Layer>, Drawable {
      */
     @Override
 	public void draw() {
-        for (Tile tile : triggerTiles) {
-            tile.checkEvents(world);
-        }
-
+        
         for (Drawable tile : tiles) {
             tile.draw();
         }
@@ -102,6 +102,11 @@ public class Layer implements Comparable<Layer>, Drawable {
         for (IndexVertexBuffer ivb : rawivb) {
             ivb.draw();
         }        
+        
+        for (Tile tile : removeNext) {
+            triggerTiles.remove(tile);
+            tiles.remove(tile);
+        }
     }
 
     /**
@@ -161,5 +166,15 @@ public class Layer implements Comparable<Layer>, Drawable {
 
     public void addDrawable(Drawable drawable) {
         tiles.add(drawable);
+    }
+    
+    public void remove(Tile what) {
+        removeNext.add(what);
+    }
+
+    public void checkEvents() {
+        for (Tile tile : triggerTiles) {
+            tile.checkEvents(world);
+        }
     }
 }

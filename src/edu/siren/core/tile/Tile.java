@@ -32,6 +32,7 @@ public class Tile implements Drawable {
     public Events events = null;
     public Layer layer = null;
     public boolean solid = false;
+    public Layer parent;
     
     class Events {
         public ArrayList<TileEvent> touch, aboutToTouch, visible, interact;
@@ -73,6 +74,11 @@ public class Tile implements Drawable {
         events.touch.add(event);
     }
     
+    public void remove() {
+        if (parent != null)
+            parent.remove(this);
+    }
+
     public void touch(Entity entity) {
         for (TileEvent event : events.touch) {
             event.event(entity);

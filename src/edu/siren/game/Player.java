@@ -4,15 +4,14 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import edu.siren.core.geom.Rectangle;
+import edu.siren.core.tile.World;
 import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
     public Camera camera = null;
-    public int lastMovement = 1;
     public boolean follow = false;
     public boolean controllable = true;
     public boolean hadMovement = false;
-
 
     public Player(String config) {
         super(config, null);
@@ -76,7 +75,10 @@ public class Player extends Actor {
             Rectangle t = o.clone(); t.y -= 2;
             Rectangle b = o.clone(); b.y += 2;
     
+            Rectangle selfRect = this.getRect();
             for (Rectangle bounds : world.solids) {
+                if (bounds.equals(selfRect))
+                    continue;
                 boolean touched = false;
                 if (l.touching(bounds)) {
                     touched = true;
@@ -193,6 +195,4 @@ public class Player extends Actor {
         float yy = y + (this.getRect().height / 2.0f);
         this.setPosition(xx, yy);
     }
-
-    
 }

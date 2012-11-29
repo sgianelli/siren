@@ -24,6 +24,7 @@ public class AnimationFrame extends Tile {
      * @throws IOException If the sprite is not found
      */
     public AnimationFrame(String sprite, double time) throws IOException {
+        this.solid = true;
         File file = new File(sprite);
         if (file.exists()) {
             xbl = xtl = 0;
@@ -51,6 +52,8 @@ public class AnimationFrame extends Tile {
     public AnimationFrame(String frameName, TexturePNG texture, int width, 
                           int height, int x, int y, double msec) 
     {
+        this.solid = true;
+        
         // Store the basics
         this.texture = texture;
         this.frameName = frameName;
