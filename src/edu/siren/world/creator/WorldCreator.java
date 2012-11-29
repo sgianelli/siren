@@ -29,8 +29,9 @@ public class WorldCreator {
 
      public static int WORLD_WIDTH = 5000;
      public static int WORLD_HEIGHT = 5000;
-     public static int WINDOW_WIDTH = 500;
-     public static int WINDOW_HEIGHT = 500;
+     public static int WINDOW_WIDTH = 505;
+     public static int WINDOW_HEIGHT = 475;
+     public static int GRID = 32;
 
 	 Screen screen;
 	 
@@ -125,15 +126,32 @@ public class WorldCreator {
 	                }
 	                else if (Mouse.isButtonDown(0)) 
 	                {
+	                	System.out.println(Mouse.getX() + "/" + WINDOW_HEIGHT);
+	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
+	                	
+	                	System.out.println("camera" + -world.getCamera().getX());
+	                	System.out.println(xPercent);
+	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
+	                	
+	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
+	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/3;
+	                	
+	               
 	            	    int x = Mouse.getX();
 	            	    int y = Mouse.getY();
-	            	    
-	            	    
-	            	    System.out.println(world.getCamera().getX());
-	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
+	            	    System.out.println("x="+xPercent + " Start = " + xStart);
+//	            	    
+//	            	    System.out.println(world.getCamera().getX());
+//	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
 	                    // Place the tree somewhere in the world
-	                    Tile tile = new Tile("res/tests/img/tree.png", x - world.getCamera().getX() - 250, y - world.getCamera().getY() - 250);
-	                    System.out.println("Tree at " +  (x + world.getCamera().getX()) + ","+ (y + world.getCamera().getY()));
+	                    Tile tile = new Tile("res/tests/img/weeds.png",
+	                    		
+	                    		((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / GRID * GRID ,  
+	                    		((int)(yStart - (1-yPercent)*world.getCamera().getHeight())) / GRID * GRID);
+                    System.out.println("Tree at " +  ((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / 25 * 25  + ","+ (y + world.getCamera().getY()));
+//	                    
+//	                    System.out.println("Mouse: " + x + ", Camera: " + world.getCamera().getX() + ", Zoom: " + world.getCamera().getZoomLevel());
+	                    
 	                    
 	                    // Add the tile to the current layer
 	                    layer.addTile(tile);
