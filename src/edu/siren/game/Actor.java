@@ -15,17 +15,23 @@ import edu.siren.core.tile.Tile;
 import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
+import edu.siren.renderer.Font;
 
 public abstract class Actor extends Entity implements Interactable {
     public float desiredX = 0;
     public float desiredY = 0;
     public float x = 0;
     public float y = 0;
+    
     public int speed = 0;
     public int health = 100;
+    public int moves = 2;
+    
     public boolean snap;
     public float gridWidth;
     public float gridHeight;
+    public boolean drawStatus = false;
+    public Font statusFont;
     
     protected Actor() {
         super();
@@ -34,6 +40,8 @@ public abstract class Actor extends Entity implements Interactable {
     protected Actor(String config, AI ai) {
         super(config, ai);
         initializeAnimations();
+        try { statusFont = new Font("res/tests/fonts/nostalgia.png", 24); } 
+        catch (IOException e) { }
     }
 
     public void setPosition(float xx, float yy) {
@@ -79,6 +87,8 @@ public abstract class Actor extends Entity implements Interactable {
             return false;
         }
     }
+    
+    abstract public void renderStatus();
 
     @Override
 	public void moveTo(int x, int y) {

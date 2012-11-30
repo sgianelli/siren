@@ -76,9 +76,9 @@ public class JSWorld {
         
         // Draw the battle sequence
         ArrayList<Tile> tiles = new ArrayList<Tile>();
-        for (int i = 0; i < Display.getWidth(); i += 64) {
-            for (int j = 0; j < Display.getHeight(); j+= 64) {
-                Tile tile = new Tile("res/game/gui/black.png", i, j, 64, 64);
+        for (int i = 0; i < Display.getWidth(); i += 96) {
+            for (int j = 0; j < Display.getHeight(); j+= 96) {
+                Tile tile = new Tile("res/game/gui/black.png", i, j, 96, 96);
                 tiles.add(tile);
             }
         }
@@ -114,6 +114,7 @@ public class JSWorld {
             player.follow = false;
             player.controllable = false;
             player.lastMovement = 1;
+            player.drawStatus = true;
             player.snapToGrid(32, 32);
             world.addEntity(player);
             x += 32;
@@ -126,6 +127,7 @@ public class JSWorld {
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.follow = false;
+            player.drawStatus = true;
             player.controllable = true;
             world.addEntity(player);
         }

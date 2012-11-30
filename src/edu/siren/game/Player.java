@@ -6,13 +6,14 @@ import org.lwjgl.opengl.Display;
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.tile.World;
 import edu.siren.renderer.Camera;
+import edu.siren.renderer.Font;
 
 public class Player extends Actor {
     public Camera camera = null;
     public boolean follow = false;
     public boolean controllable = true;
     public boolean hadMovement = false;
-
+    
     public Player(String config) {
         super(config, null);
     }
@@ -194,5 +195,11 @@ public class Player extends Actor {
         float xx = x - (this.getRect().width / 2.0f);
         float yy = y + (this.getRect().height / 2.0f);
         this.setPosition(xx, yy);
+    }
+
+    @Override
+    public void renderStatus() {
+        // TODO Auto-generated method stub
+        
     }
 }

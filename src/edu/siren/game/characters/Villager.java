@@ -13,4 +13,10 @@ public class Villager extends Actor {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void renderStatus() {
+        // TODO Auto-generated method stub
+        
+    }
 }
