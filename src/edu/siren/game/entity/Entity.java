@@ -18,8 +18,9 @@ import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.ai.AI;
+import edu.siren.renderer.Drawable;
 
-public abstract class Entity {
+public abstract class Entity implements Drawable {
     protected AI ai;
     protected String name;
     protected JSONObject json;

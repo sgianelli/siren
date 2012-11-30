@@ -19,6 +19,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
+import edu.siren.audio.AudioUtil;
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.tile.Layer;
@@ -40,6 +41,7 @@ import edu.siren.renderer.Shader;
  */
 public class JSWorld {    
     public World world;
+    public Thread musicThread = null;
         
     /**
      * jQuery-like selector syntax
@@ -51,6 +53,14 @@ public class JSWorld {
             return world.getEntityById(selector.substring(1));
         }
         return null;
+    }
+    
+    public void music(String name) {
+        if (musicThread != null) {
+            musicThread.interrupt();
+        }
+        
+        musicThread = AudioUtil.playBackgroundMusic("res/game/sound/" + name + ".ogg");
     }
     
     public World save() {
@@ -88,7 +98,7 @@ public class JSWorld {
         
         while (drawTiles < tiles.size()) {
             double ctime = getTime();
-            if ((ctime - ftime) > 15) {
+            if ((ctime - ftime) > 5) {
                 drawTiles++;
                 ftime = ctime;
             }
@@ -110,7 +120,7 @@ public class JSWorld {
         // Add A team
         int x = 256 - (a.players.size() * 32), y = 32;
         for (Player player : a.players) {
-            player.setPosition(x, y);
+            player.setPosition(x + 16, y + 16);
             player.follow = false;
             player.controllable = false;
             player.lastMovement = 1;
@@ -123,15 +133,15 @@ public class JSWorld {
         x = 256 - (b.players.size() * 32);
         y = 416;
         for (Player player : b.players) {
-            player.setPosition(x, y);
+            player.setPosition(x + 8, y + 8);
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
+            player.moves = 3;
             player.follow = false;
             player.drawStatus = true;
             player.controllable = true;
             world.addEntity(player);
         }
-        
         
         ftime = getTime();
         drawTiles = tiles.size() - 1;

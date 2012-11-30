@@ -1,0 +1,51 @@
+.sprite {
+    background: url(download.png) no-repeat;
+}
+
+.sprite-dark-rain-1-png {
+    width: 512px;
+    height: 448px;
+    background-position: -1046px -459px;
+}
+
+.sprite-dark-rain-2-png {
+    width: 512px;
+    height: 448px;
+    background-position: -1046px -0px;
+}
+
+.sprite-dark-rain-3-png {
+    width: 512px;
+    height: 448px;
+    background-position: -523px -918px;
+}
+
+.sprite-dark-rain-4-png {
+    width: 512px;
+    height: 448px;
+    background-position: -0px -918px;
+}
+
+.sprite-rain-1-png {
+    width: 512px;
+    height: 448px;
+    background-position: -523px -459px;
+}
+
+.sprite-rain-2-png {
+    width: 512px;
+    height: 448px;
+    background-position: -0px -459px;
+}
+
+.sprite-rain-3-png {
+    width: 512px;
+    height: 448px;
+    background-position: -523px -0px;
+}
+
+.sprite-rain-4-png {
+    width: 512px;
+    height: 448px;
+    background-position: -0px -0px;
+}

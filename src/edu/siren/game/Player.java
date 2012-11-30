@@ -1,9 +1,13 @@
 package edu.siren.game;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import edu.siren.core.geom.Rectangle;
+import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
@@ -13,12 +17,14 @@ public class Player extends Actor {
     public boolean follow = false;
     public boolean controllable = true;
     public boolean hadMovement = false;
+    public ArrayList<Tile> possibleMoveOverlay = new ArrayList<Tile>();
     
     public Player(String config) {
         super(config, null);
     }
     
     public Player() {
+        super();
     }
     
     public void think() {
@@ -30,6 +36,13 @@ public class Player extends Actor {
     @Override
     public void draw() {
         think();
+        
+        
+        
+        // Draw the status of the player, like health and movements
+        if (drawStatus) {
+            renderStatus();
+        }
         
         if (!controllable) {
             super.draw();
@@ -122,6 +135,43 @@ public class Player extends Actor {
             hadMovement = false;
         }
         
+        
+        // Draw the tiles that are available to move to
+        if (snap && hadMovement) {
+            int row = (int) (this.x / this.gridWidth);
+            int col = (int) (this.y / this.gridHeight);
+            possibleMoveOverlay.clear();
+            
+            try {
+                // Go through each row
+                for (int k = 0; k <= moves; k++) {
+                    // Determine the number of columns to print on each side
+                    for (int j = 0; j <= 2*k; j++) {
+                        possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                                ((row - moves) + k) * this.gridHeight,
+                                ((col - k) + j) * this.gridWidth,
+                                32, 32, true));
+                    }
+                    
+                    for (int j = 0; j <= 2*k; j++) {
+                        possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                                ((row + moves) - k) * this.gridHeight,
+                                ((col - k) + j) * this.gridWidth,
+                                32, 32, true));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if (snap) {
+            for (Tile tile : possibleMoveOverlay) {
+                tile.draw();
+            }
+        }
+            
+        
         if (!movement) {
             switch (lastMovement) {
             case 1:
@@ -199,7 +249,10 @@ public class Player extends Actor {
 
     @Override
     public void renderStatus() {
-        // TODO Auto-generated method stub
-        
+        statusFont.color(1.0f, 1.0f, 1.0f, 1.0f);
+        statusFont.print("H:" + health + "/100" + "\nM: " + moves,
+            3, 
+            sprite.spriteX - sprite.getRect().width / 2.0f - 2.0f, 
+            sprite.spriteY + sprite.getRect().height + 8.0f);
     }
 }

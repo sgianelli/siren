@@ -30,13 +30,14 @@ public class IndexVertexBuffer implements Drawable {
     private byte elementOffset = 0;
     private int position, color, tex;
     
-    public FloatBuffer vertices = null;
-    public ByteBuffer indices = null;
+    public FloatBuffer vertices = BufferUtils.createFloatBuffer(4 * Vertex.Size.total);
+    public ByteBuffer indices = BufferUtils.createByteBuffer(6);
     public ArrayList<Vertex> vertexCache = new ArrayList<Vertex>();
     public ArrayList<Byte> indexCache = new ArrayList<Byte>();
     public int type = -1;
     public int vaoid = -1;
     public int vboid = -1;
+    public int eboid = -1;
     public int fboid = -1;
     public int fbotid = -1;
     public int textureIDs[] = null;
@@ -60,8 +61,7 @@ public class IndexVertexBuffer implements Drawable {
     public IndexVertexBuffer(BufferType bufferType) {
         hasVertices = hasIndicies = valid = bound = false;
         vaoid = vboid = -1;
-        type = bufferType == BufferType.STATIC ? GL15.GL_STATIC_DRAW
-                : GL15.GL_DYNAMIC_DRAW;
+        type = GL15.GL_DYNAMIC_DRAW;
     }
 
     /**
@@ -75,7 +75,9 @@ public class IndexVertexBuffer implements Drawable {
         for (Vertex v : vs)
             vertexCache.add(v);
         
-        vertices = BufferUtils.createFloatBuffer(vertexCache.size() * Vertex.Size.total);
+        if (vertexCache.size() > 4)
+            vertices = BufferUtils.createFloatBuffer(vertexCache.size() * Vertex.Size.total);
+        
         for (Vertex v : vertexCache) {
             vertices.put(v.elements());
         }
@@ -100,7 +102,8 @@ public class IndexVertexBuffer implements Drawable {
         
         elementOffset += bytes.length;
             
-        indices = BufferUtils.createByteBuffer(indexCache.size());
+        if (indexCache.size() > 6)
+            indices = BufferUtils.createByteBuffer(indexCache.size());
         
         for (byte b : indexCache) {
             indices.put(b);
@@ -135,6 +138,22 @@ public class IndexVertexBuffer implements Drawable {
      * the Vertex class (@see Vertex).
      */
     private void generateVAOVBO() {
+        // Just reload the vertices and don't do the rest of the nonsense
+        if (vboid != -1) {
+            
+            GL30.glBindVertexArray(vaoid);
+            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboid);
+            GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER, 0, vertices);
+            GL30.glBindVertexArray(0);
+            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+            
+            GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, eboid);
+            GL15.glBufferSubData(GL15.GL_ELEMENT_ARRAY_BUFFER, 0, indices);
+            GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+            bound = true;
+            return;
+        }
+        
         // Generate a VAO
         vaoid = GL30.glGenVertexArrays();
         GL30.glBindVertexArray(vaoid);
@@ -142,7 +161,7 @@ public class IndexVertexBuffer implements Drawable {
         // Generate the VBO
         vboid = GL15.glGenBuffers();
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboid);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_DYNAMIC_DRAW);
 
         // Define the position, color, and texture offsets
         int program = Shader.getActiveShader();
@@ -168,13 +187,11 @@ public class IndexVertexBuffer implements Drawable {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
         GL30.glBindVertexArray(0);
 
-        // Generate a VBO
-        vboid = GL15.glGenBuffers();
-
         // Bind the VBO and indices
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboid);
+        eboid = GL15.glGenBuffers();
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, eboid);
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indices,
-                GL15.GL_STATIC_DRAW);
+                GL15.GL_DYNAMIC_DRAW);
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
         
         // Try to generate FBO
@@ -207,7 +224,7 @@ public class IndexVertexBuffer implements Drawable {
         GL20.glEnableVertexAttribArray(tex);
 
         // Active the VBO
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboid);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, eboid);
 
         // Draw the triangles
         GL11.glDrawElements(GL11.GL_TRIANGLES, indexCount,
@@ -219,5 +236,16 @@ public class IndexVertexBuffer implements Drawable {
         GL20.glDisableVertexAttribArray(color);
         GL20.glDisableVertexAttribArray(tex);
         GL30.glBindVertexArray(0);        
+    }
+
+    public void clear() {
+        vertexCache.clear();
+        indexCache.clear();
+        indexCount = 0;
+        elementOffset = 0;
+        valid = false;
+        bound = false;
+        hasIndicies = false;
+        hasVertices = false;
     }
 }

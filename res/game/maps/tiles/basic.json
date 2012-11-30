@@ -1,10 +1,10 @@
 {
     "layer1": [
         {"comment": "World triggers"},
-        {"tile": "res/tests/img/fill.png", "x": 170, "y": 360, "w": 32, "h": 64, "id": "trigger_diglett"},
+        {"tile": "res/tests/img/fill.png", "x": 170, "y": 760, "w": 32, "h": 64, "id": "trigger_diglett"},
 
         {"comment": "Initial world"},
-        {"tile": "res/tests/img/rock-cliff.png", "x": -300, "y": 0, "w": 685, "h": 800, "tileable": true},
+        {"tile": "res/tests/img/rock-cliff.png", "x": -300, "y": 0, "w": 685, "h": 1200, "tileable": true},
         {"tile": "res/tests/img/trail1.png", "x": 0, "y": 0},
 
         {"comment": "These are the tetris pieces laid across the world"},
@@ -20,10 +20,10 @@
         {"tile": "res/game/sprites/characters/components/tetris-red-square.png", "x": -40, "y": 200},
         {"tile": "res/game/sprites/characters/components/tetris-orange-square.png", "x": 180, "y": 200, "solid": true},
 
-        {"sprite": "fire", "frames": 3, "time": 100, "x": 80, "y": 160, "class": "fire"},
-        {"sprite": "fire", "frames": 3, "time": 100, "x": 70, "y": 200, "class": "fire"},
-        {"sprite": "fire", "frames": 3, "time": 100, "x": 65, "y": 240, "class": "fire"},
-        {"sprite": "fire", "frames": 3, "time": 100, "x": 50, "y": 220, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 80, "y": 560, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 70, "y": 600, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 65, "y": 640, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 50, "y": 620, "class": "fire"},
 
         {"comment": "Batman scene"},
         {"tile": "res/game/sprites/characters/components/tetris-red-square.png", "x": 240, "y": 200},
@@ -31,15 +31,15 @@
         {"sprite": "batman-jump", "frames": 5, "time": 100, "x": 240, "y": 210},
 
         {"comment": "Collision meshes"},
-        {"tile": "res/tests/img/fill.png", "x": 210, "y": 0, "w": 175, "h": 475, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 100, "y": 0, "w": 55, "h": 380, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 50, "h": 638, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 0, "y": 600, "w": 382, "h": 50, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 45, "y": 525, "w": 65, "h": 8, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 145, "y": 525, "w": 80, "h": 8, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 215, "y": 525, "w": 8, "h": 70, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 270, "y": 525, "w": 110, "h": 65, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 210, "y": 0, "w": 175, "h": 875, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 100, "y": 0, "w": 55, "h": 780, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 50, "h": 1038, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 1000, "w": 382, "h": 50, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 45, "y": 925, "w": 65, "h": 8, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 145, "y": 925, "w": 80, "h": 8, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 215, "y": 925, "w": 8, "h": 70, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 270, "y": 925, "w": 110, "h": 65, "solid": true},
         {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 140, "h": 120, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 370, "y": 555, "w": 15, "h": 50, "id": "nextWorld"}
+        {"tile": "res/tests/img/fill.png", "x": 370, "y": 955, "w": 15, "h": 50, "id": "nextWorld"}
         ]
 }

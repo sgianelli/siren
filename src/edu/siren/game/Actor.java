@@ -35,12 +35,14 @@ public abstract class Actor extends Entity implements Interactable {
     
     protected Actor() {
         super();
+        try { statusFont = new Font("res/tests/fonts/proggy.png"); }
+        catch (IOException e) { }
     }
 
     protected Actor(String config, AI ai) {
         super(config, ai);
         initializeAnimations();
-        try { statusFont = new Font("res/tests/fonts/nostalgia.png", 24); } 
+        try { statusFont = new Font("res/tests/fonts/proggy.png"); }
         catch (IOException e) { }
     }
 
