@@ -24,7 +24,7 @@ public class Layer implements Comparable<Layer>, Drawable {
     protected BufferType type;
     protected Layer parent;
     protected Rectangle bounds;
-    protected ArrayList<Drawable> tiles;
+    public ArrayList<Drawable> tiles;
     public ArrayList<Tile> triggerTiles;
     protected ArrayList<Layer> children;
     protected HashMap<String, Tile> tileHashMap = null;
