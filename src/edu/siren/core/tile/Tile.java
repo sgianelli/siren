@@ -296,4 +296,9 @@ public class Tile implements Drawable {
             }
         }
     }
+
+	public boolean contains(float x, float y) {
+		return bounds.contains(x, y);
+		
+	}
 }

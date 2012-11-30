@@ -171,6 +171,26 @@ public class Layer implements Comparable<Layer>, Drawable {
     public void remove(Tile what) {
         removeNext.add(what);
     }
+    public void remove(float x, float y){
+        for (Drawable tile : tiles) {
+        	//System.out.println(((Tile) tile).contains(x,y) + " x = " + x +" y = "+ y + "bounds " + ((Tile)tile).bounds.top() + ' ' + ((Tile)tile).bounds.bottom() + ' ' + ((Tile)tile).bounds.left() +' ' + ((Tile)tile).bounds.right());
+//            if(((Tile) tile).contains(x,y)){
+        	if(
+        			((Tile)tile).bounds.top() < y &&
+        			((Tile)tile).bounds.bottom() > y &&
+        			((Tile)tile).bounds.left()  < x &&
+        			((Tile)tile).bounds.right() > x){
+            	remove((Tile) tile);
+            }
+           
+        }
+        for (Drawable tile : triggerTiles) {
+          //  if(((Tile) tile).contains(x,y)){
+            	remove((Tile) tile);
+           // }
+           
+        }
+    }
 
     public void checkEvents() {
         for (Tile tile : triggerTiles) {
