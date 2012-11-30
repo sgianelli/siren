@@ -29,9 +29,9 @@ public class WorldCreator {
 
      public static int WORLD_WIDTH = 5000;
      public static int WORLD_HEIGHT = 5000;
-     public static int WINDOW_WIDTH = 505;
-     public static int WINDOW_HEIGHT = 475;
-     public static int GRID = 32;
+     public static int WINDOW_WIDTH = 512;
+     public static int WINDOW_HEIGHT = 448;
+     public static int GRID = 64;
 
 	 Screen screen;
 	 
@@ -45,24 +45,6 @@ public class WorldCreator {
 	        
 	        // Create a new layer
 	        Layer layer = new Layer();
-	        
-	        
-	        
-	        
-	        // Add some grass
-	        layer.addTile(new Tile("res/tests/img/grass.png", 0, 0, WORLD_WIDTH, WORLD_HEIGHT));
-	        
-            // Add random trees
-            for (int i = 0; i < 100; i++) {
-                int x = random.nextInt(9000) - random.nextInt(50);
-                int y = random.nextInt(9000) - random.nextInt(50);
-                
-                // Place the tree somewhere in the world
-                Tile tile = new Tile("res/tests/img/tree.png", x, y);
-                
-                // Add the tile to the current layer
-                layer.addTile(tile);
-            }
 	        
 	        
 
@@ -104,37 +86,41 @@ public class WorldCreator {
 	            {    
 	                if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
 	                    world.zoomIn();
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+	                } if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
 	                    world.zoomOut();
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+	                }  if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
 	        	        System.out.println(world.addLayer(layer));
 	                    world.changeEnvironment(World.Environment.NIGHT, 5000);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+	                } if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
 	                    world.changeEnvironment(World.Environment.MORNING, 5000);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+	                } if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
 	                    world.changeEnvironment(World.Environment.AFTERNOON, 5000);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+	                } if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
 	                    world.changeEnvironment(World.Environment.DUSK, 5000);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_A)) {//Move the world
+	                }if (Keyboard.isKeyDown(Keyboard.KEY_A)) {//Move the world
 	                	world.move(-5, 0);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+	                }if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 	                	world.move(5, 0);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+	                } if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 	                	world.move(0, -5);
-	                } else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+	                }if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 	                	world.move(0, 5);
 	                }
-	                else if (Mouse.isButtonDown(0)) 
+	                if (Mouse.isButtonDown(0)) 
 	                {
 	                	System.out.println(Mouse.getX() + "/" + WINDOW_HEIGHT);
+	                	
+	                	
 	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
 	                	
 	                	System.out.println("camera" + -world.getCamera().getX());
 	                	System.out.println(xPercent);
+	                	
+	                	
 	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
 	                	
 	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
-	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/3;
+	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/2;
 	                	
 	               
 	            	    int x = Mouse.getX();
@@ -144,11 +130,15 @@ public class WorldCreator {
 //	            	    System.out.println(world.getCamera().getX());
 //	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
 	                    // Place the tree somewhere in the world
-	                    Tile tile = new Tile("res/tests/img/weeds.png",
+	            	    
+	            	  //  for(Tile tile : (Tile) layer.tiles)//check for intercecting tiles
+	            	    	
+	    
+	            	    	
+	                    Tile tile = new Tile("res/tests/img/tree.png",
 	                    		
-	                    		((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / GRID * GRID ,  
-	                    		((int)(yStart - (1-yPercent)*world.getCamera().getHeight())) / GRID * GRID);
-                    System.out.println("Tree at " +  ((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / 25 * 25  + ","+ (y + world.getCamera().getY()));
+	                    		(((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / GRID * GRID) - 36 ,  
+	                    		(((int)( yStart - (1-yPercent)*world.getCamera().getHeight())) / GRID * GRID) - 36 );
 //	                    
 //	                    System.out.println("Mouse: " + x + ", Camera: " + world.getCamera().getX() + ", Zoom: " + world.getCamera().getZoomLevel());
 	                    
@@ -158,6 +148,23 @@ public class WorldCreator {
 	                    
 	                    
 	                }
+	                if (Mouse.isButtonDown(1)) 
+	                {
+	                	
+	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
+	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
+	                	
+	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
+	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/2;
+
+	                	layer.remove(
+	                    		((( xStart - (1-xPercent)*world.getCamera().getWidth()))) - 36 ,  
+	                    		((( yStart - (1-yPercent)*world.getCamera().getHeight()))) - 36 );
+	                    
+	                    
+	                }
+	    
+	            
 	            }
 	            
 	            
