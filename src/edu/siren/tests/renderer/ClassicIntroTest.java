@@ -20,9 +20,9 @@ import edu.siren.renderer.Shader;
 public class ClassicIntroTest {
     
     public static void main(String[] args) throws IOException, LWJGLException {
-        Screen screen = new Screen("Screen", 640, 480);
+        Screen screen = new Screen("Screen", 512, 448);
         World world = new TestBox(1024, 1024);
-        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
+        Font font = new Font("res/tests/fonts/proggy.png");
         Random random = new Random();
         
         screen.sync = 60;
@@ -42,7 +42,7 @@ public class ClassicIntroTest {
                 "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
         
-        AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg");
+        AudioUtil.playBackgroundMusic("res/game/sound/ff7-intro.ogg");
         
         final String beep = "res/tests/sounds/beep.wav";
         
@@ -59,7 +59,7 @@ public class ClassicIntroTest {
                 new FontFrame("\"Help us and fulfill your destiny.\"", 1700, 1000, beep),
                 new FontFrame("          SIREN", 500, 5000));
         
-        Tile white = new Tile("res/tests/img/bg.png", 0, 0, 640.0f, 480.0f, 1, 1);
+        Tile white = new Tile("res/tests/img/bg.png", 0, 0, 512.0f, 448.0f, 1, 1);
         boolean intro = true;
         
 
@@ -69,11 +69,11 @@ public class ClassicIntroTest {
             screen.clear();
             
             world.draw();
-
+            
             if (intro) {
                 shader.use();
-                // white.draw();
-                sequence.draw(150, 260, 2);
+                white.draw();
+                sequence.draw(100, 260, 2);
                 if (sequence.end()) {
                     intro = false;
                     world.getCamera().enable = true;

@@ -33,6 +33,7 @@ public class Tile implements Drawable {
     public Layer layer = null;
     public boolean solid = false;
     public Layer parent;
+    public byte[] indices = { 0, 1, 2, 2, 3, 0 };
     
     class Events {
         public ArrayList<TileEvent> touch, aboutToTouch, visible, interact;
@@ -254,9 +255,13 @@ public class Tile implements Drawable {
         v3.st(xbr, ybr);
         
         // Fill the index vertex buffer
-        ivb = new IndexVertexBuffer(BufferType.STATIC);
+        if (ivb == null) {
+            ivb = new IndexVertexBuffer(BufferType.STATIC);
+        } else {
+            ivb.clear();
+        }
+        
         ivb.put(v0, v1, v2, v3);
-        byte[] indices = { 0, 1, 2, 2, 3, 0 };
         ivb.put(indices);
         
         if (texture != null)

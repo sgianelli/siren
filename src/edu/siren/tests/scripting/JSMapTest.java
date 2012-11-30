@@ -2,7 +2,6 @@ package edu.siren.tests.scripting;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -19,17 +18,13 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.scripting.JSWorld;
+import edu.siren.core.sprite.Animation;
+import edu.siren.core.sprite.Sprite;
+import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.core.tile.Tile;
-import edu.siren.core.tile.World;
 import edu.siren.game.Player;
-import edu.siren.game.ai.Follower;
-import edu.siren.game.ai.RandomWalker;
-import edu.siren.game.characters.Villager;
-import edu.siren.game.gui.BattleScreen;
 import edu.siren.game.players.Diglett;
 import edu.siren.game.players.Link;
-import edu.siren.game.players.Pikachu;
-import edu.siren.gui.Gui;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
@@ -69,14 +64,14 @@ public class JSMapTest {
         Screen screen = new Screen("JSMapTest", 512, 448);
         JSWorld jsworld = reload();
         Player player = new Link();
-        player.x = 190;
-        player.y = 64;
+        player.x = 180;
+        player.y = 128;
         // player.snapToGrid(32, 32);
         player.controllable = true;
         player.follow = true;
         
         Player diglett = new Diglett();
-        diglett.setPosition(180, 370);
+        diglett.setPosition(180, 770);
         diglett.lastMovement = 2;
         diglett.controllable = false;
         diglett.id = "diglett";
@@ -90,6 +85,8 @@ public class JSMapTest {
                 "res/tests/glsl/2d-perspective.frag");
         gui.bindToShader(shader);
         
+        jsworld.world.zoomIn();
+        
         // Add the overlays
         Tile veryCloudy = new Tile("res/tests/img/very-cloudy.png", 0, 0, 8096, 8096, 1, 1);
         Tile slightlyCloudy = new Tile("res/tests/img/slightly-cloudy.png", 0, 0, 8096, 8096, 1, 1);
@@ -97,12 +94,29 @@ public class JSMapTest {
         Tile plasma = new Tile("res/tests/img/plasma.png", 0, 0, 8096, 8096, 1, 1);
         Tile activeOverlay = slightlyCloudy;
         
+        SpriteSheet rainsheet = SpriteSheet.fromCSS
+                ("res/game/sprites/rain.png",
+                "res/game/sprites/rain.css");
+        
+        Sprite rain = rainsheet.createSprite(
+                new Animation("dark-rain", "rain-", 1, 4, 100));
+        
+       rain.spriteY = 0;
+       rain.spriteX = 0;
+       rain.bounds.width = 8096;
+       rain.bounds.height = 8096;
+        
         // Draw as usual
         boolean down = false;
         while (screen.nextFrame()) {
             jsworld.world.draw();
             
             shader.use();   
+            rain.bounds.x -= 0.5f;
+            rain.bounds.y -= 0.75f;
+            rain.bounds.y %= 4096;
+            rain.bounds.x %= 4096;
+            rain.draw();
             activeOverlay.bounds.x -= 0.5f;
             activeOverlay.bounds.y -= 0.75f;
             activeOverlay.bounds.x %= 4096;
@@ -124,6 +138,8 @@ public class JSMapTest {
             }
         }
         
+        if (jsworld.musicThread != null)
+            jsworld.musicThread.interrupt();
         screen.cleanup();
     }
 }

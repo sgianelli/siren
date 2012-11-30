@@ -1,5 +1,7 @@
 World.load("Testing Map", "tiles/basic.json");
 
+World.music("dark-world");
+
 // A simple jQuery-like wrapper
 var $ = function (x) { 
     if (x[0] == '#') {
@@ -7,7 +9,6 @@ var $ = function (x) {
     } else if (x[0] == '%') {
         return World.asEntity(World.$(x));
     }
-
     return null;
 };
 
@@ -19,6 +20,7 @@ var $ = function (x) {
         if (!e.is(':controlledPlayer'))
             return;
 
+        World.music("pokemon-battle");
         $trigger1.remove();
 
         var saved = World.save();
@@ -45,10 +47,4 @@ var $ = function (x) {
             }
         );
     });
-})();
-
-// Enemy handling
-(function () {
-    // var $diglett = World.spawn("diglett", 180, 375);
-    // World.fightable(180, 375, 64, 64, [$diglett], function (e) { $diglett.remove(); });
 })();
