@@ -214,6 +214,32 @@ public class Camera {
     public int getX() {
         return (int) position.m30;
     }
+    /**
+     * Retrieves the Y position from the matrix.
+     */
+    public int getY() {
+        return (int) position.m31;
+    }
+    
+    /**
+     * Retrieves the X position from the matrix.
+     */
+    public int getWidth() {
+        return (int) width;
+    }
+    /**
+     * Retrieves the Y position from the matrix.
+     */
+    public int getHeight() {
+        return (int) height;
+    }
+    
+    /**
+     * Retrieves the Zoom Level.
+     */
+    public float getZoomLevel() {
+        return zoomLevel;
+    }
 
     /**
      * Apply an HSV transition to the scene.

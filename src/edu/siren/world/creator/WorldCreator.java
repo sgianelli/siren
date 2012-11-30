@@ -29,6 +29,9 @@ public class WorldCreator {
 
      public static int WORLD_WIDTH = 5000;
      public static int WORLD_HEIGHT = 5000;
+     public static int WINDOW_WIDTH = 505;
+     public static int WINDOW_HEIGHT = 475;
+     public static int GRID = 32;
 
 	 Screen screen;
 	 
@@ -36,7 +39,7 @@ public class WorldCreator {
 	 WorldCreator() throws LWJGLException, IOException {
 	        Random random = new Random();
 		 
-	        screen = new Screen("World Creator", 512, 448);
+	        screen = new Screen("World Creator", WINDOW_WIDTH, WINDOW_HEIGHT);
 	        
 	        World world = new BasicWorld(WORLD_WIDTH, WORLD_HEIGHT);
 	        
@@ -74,10 +77,10 @@ public class WorldCreator {
 	        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 
 	        // Create a new player and put them somewhere in the world
-	        Player player = new Link();
-	        player.setPosition(0, 0);
-	        world.addEntity(player);// Create a new player and put them somewhere in the world
-	        
+//	        Player player = new Link();
+//	        player.setPosition(0, 0);
+//	        world.addEntity(player);// Create a new player and put them somewhere in the world
+//	        
 	
 	            for (int j = 0; j < 30; j++) {
 	                Villager v = new Villager(
@@ -112,14 +115,43 @@ public class WorldCreator {
 	                    world.changeEnvironment(World.Environment.AFTERNOON, 5000);
 	                } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
 	                    world.changeEnvironment(World.Environment.DUSK, 5000);
-	                } else if (Mouse.isButtonDown(0)) 
+	                } else if (Keyboard.isKeyDown(Keyboard.KEY_A)) {//Move the world
+	                	world.move(-5, 0);
+	                } else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+	                	world.move(5, 0);
+	                } else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+	                	world.move(0, -5);
+	                } else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+	                	world.move(0, 5);
+	                }
+	                else if (Mouse.isButtonDown(0)) 
 	                {
+	                	System.out.println(Mouse.getX() + "/" + WINDOW_HEIGHT);
+	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
+	                	
+	                	System.out.println("camera" + -world.getCamera().getX());
+	                	System.out.println(xPercent);
+	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
+	                	
+	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
+	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/3;
+	                	
+	               
 	            	    int x = Mouse.getX();
 	            	    int y = Mouse.getY();
-	             
-	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
+	            	    System.out.println("x="+xPercent + " Start = " + xStart);
+//	            	    
+//	            	    System.out.println(world.getCamera().getX());
+//	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
 	                    // Place the tree somewhere in the world
-	                    Tile tile = new Tile("res/tests/img/tree.png", x, y);
+	                    Tile tile = new Tile("res/tests/img/weeds.png",
+	                    		
+	                    		((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / GRID * GRID ,  
+	                    		((int)(yStart - (1-yPercent)*world.getCamera().getHeight())) / GRID * GRID);
+                    System.out.println("Tree at " +  ((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / 25 * 25  + ","+ (y + world.getCamera().getY()));
+//	                    
+//	                    System.out.println("Mouse: " + x + ", Camera: " + world.getCamera().getX() + ", Zoom: " + world.getCamera().getZoomLevel());
+	                    
 	                    
 	                    // Add the tile to the current layer
 	                    layer.addTile(tile);
