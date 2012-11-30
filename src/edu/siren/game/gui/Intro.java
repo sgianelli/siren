@@ -39,19 +39,19 @@ public class Intro implements Gui{
         // This is a subwindow for drawing the overlays
         Window introTextWindow = new Window("Intro Text");
         {
-            //final Thread audioThread = AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg", false);
+            final Thread audioThread = AudioUtil.playBackgroundMusic("res/tests/sounds/adagio.ogg", false);
             introTextWindow.onDraw(new ElementEvent() {
                 public boolean firstDraw = true;
                 @Override
 				public boolean event(Element e) {
                     if (firstDraw) {
-                        //audioThread.start(); 
+                        audioThread.start(); 
                         firstDraw = false;
                     }
-                    sequence.draw(150, 260, 2);
+                    sequence.draw(90, 260, 2);
                     if (sequence.end()) {
                         gui.disable();
-                        //audioThread.interrupt();
+                        audioThread.interrupt();
                     }
                     return false;
                 }

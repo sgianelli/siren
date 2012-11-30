@@ -27,7 +27,7 @@ public class Tile implements Drawable {
     public String klass = null;
     public TexturePNG texture;
     public Rectangle bounds;
-    public IndexVertexBuffer ivb;
+    public IndexVertexBuffer ivb = new IndexVertexBuffer(BufferType.STATIC);
     public static final HashMap<String, TexturePNG> cache = new HashMap<String, TexturePNG>();
     public Events events = null;
     public Layer layer = null;
@@ -255,11 +255,7 @@ public class Tile implements Drawable {
         v3.st(xbr, ybr);
         
         // Fill the index vertex buffer
-        if (ivb == null) {
-            ivb = new IndexVertexBuffer(BufferType.STATIC);
-        } else {
-            ivb.clear();
-        }
+        ivb.clear();
         
         ivb.put(v0, v1, v2, v3);
         ivb.put(indices);

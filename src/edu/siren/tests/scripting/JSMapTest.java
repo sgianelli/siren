@@ -23,8 +23,11 @@ import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
+import edu.siren.game.gui.Intro;
+import edu.siren.game.gui.Title;
 import edu.siren.game.players.Diglett;
 import edu.siren.game.players.Link;
+import edu.siren.gui.Gui;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
@@ -62,6 +65,20 @@ public class JSMapTest {
             throws IOException, ScriptException, LWJGLException 
     {    
         Screen screen = new Screen("JSMapTest", 512, 448);
+
+        // Start the intro
+        Gui intro = new Intro(screen);
+        while (intro.running()) {
+            intro.run();
+        }
+        
+        // Start the title
+        Gui title = new Title(screen);
+        while (title.running()) {
+            title.run();
+        }
+        
+        // Load the real world
         JSWorld jsworld = reload();
         Player player = new Link();
         player.x = 180;
@@ -105,6 +122,9 @@ public class JSMapTest {
        rain.spriteX = 0;
        rain.bounds.width = 8096;
        rain.bounds.height = 8096;
+       
+       // Disable the camera
+        jsworld.world.getCamera().disable();
         
         // Draw as usual
         boolean down = false;
