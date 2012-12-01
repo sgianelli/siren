@@ -41,12 +41,30 @@ public class GameLogin implements Gui {
 	private Shader shader;
 	private Perspective2D perspective;
 	
+	// Create Profile Manager
 	private ProfileManager profileManager;
 	
 	// Profile Input Shit
 	private TextInput characterName;
-	private String spriteName;
+	private String selectedSprite;
 	private Text profileError;
+	
+	// Sprite Click Images
+	private Image linkClick;
+	private Image pikachuClick;
+	private Image jesusClick;
+	
+	// Sprite Labels
+	private Text linkName;
+	private Text pikachuName;
+	private Text jesusName;
+	
+	// Register Login Complete
+	private boolean registerLoginComplete;
+	
+	// Profile Logged In
+	private Profile profile;
+	
 	
 	public GameLogin(Screen screen) throws IOException {
 		
@@ -67,6 +85,9 @@ public class GameLogin implements Gui {
 		
 		// Initialize the Gui components
 		initializeGui();
+		
+		// Register Login Complete
+		registerLoginComplete = false;
 				
 	}
 	
@@ -75,6 +96,7 @@ public class GameLogin implements Gui {
 		// Create the GUI Container
 		this.gui = new GuiContainer();
 		
+		// Create the 2D Perspective and the Shader
         perspective = new Perspective2D();
         shader = new Shader("res/tests/glsl/2d-perspective.vert", 
                             "res/tests/glsl/2d-perspective.frag");
@@ -88,7 +110,6 @@ public class GameLogin implements Gui {
 		profileError.position(20, 10);
 		profileError.fontColor(1.0f, 0.0f, 0.0f);
 		profileError.fontScaling(2);
-
 		
 		// Build the Login Components
 		buildMenuLogin();
@@ -119,20 +140,19 @@ public class GameLogin implements Gui {
 		// Create Login
 		Text createProfileText = new Text("Create Profile", 2);
 		{
+			// create Profile Properties
 			createProfileText.position(171, 330);
-			
-			
 			createProfileText.onMouseDown(new ElementEvent(){
 
 				@Override
 				public boolean event(Element element) {
-
 					toggleWindow(WindowNames.Register);
-					
 					return false;
 				}
 				
 			});
+			
+			// Add Text To Window
 			window.add(createProfileText);
 		}
 		
@@ -230,78 +250,86 @@ public class GameLogin implements Gui {
         chooseSprite.fontScaling(2);
         window.add(chooseSprite);
         
-        // Put The little bastard somewhere
-        link.spriteX = 220;
-        link.spriteY = 265;
-        Text linkName = new Text("Link");
+        // Link Name
+        linkName = new Text("Link");
         linkName.fontScaling(3);
         linkName.position(210, 250);
         window.add(linkName);
 
-        // Sprite Clickers
-        final Image pikachuClick = new Image("res/game/gui/sprite-click.png");
-        final Image jesusClick = new Image("res/game/gui/sprite-click.png");
-        
-        // Sprite Lables
-        final Text pikachuName = new Text("Pikachu");
-        final Text jesusName = new Text("Chesus");
-        
-        // Place the Pikachu
-        // Set X and Y
-    	pikachu.spriteX = 275;
-        pikachu.spriteY = 265;
-        
-        // Label it
+        // Pikachu Name
+        pikachuName = new Text("Pikachu");
         pikachuName.fontScaling(3);
         pikachuName.position(255, 250);
-        
-        // Add It
         window.add(pikachuName);
         
-        // Sprite Clicker
+        // Jesus Name
+        jesusName = new Text("Chesus");
+        jesusName.fontScaling(3);
+        jesusName.position(325, 250);
+        window.add(jesusName);
+        
+        // Sprite Locations
+    	pikachu.spriteX = 275;
+        pikachu.spriteY = 265;
+        link.spriteX = 220;
+        link.spriteY = 265;
+        jesus.spriteX = 335;
+        jesus.spriteY = 265;
+
+        // Sprite Clickers
+        pikachuClick = new Image("res/game/gui/sprite-click.png");
+        jesusClick = new Image("res/game/gui/sprite-click.png");
+        linkClick = new Image("res/game/gui/sprite-click.png");
+
+        // Link Click
+        linkClick.position(210, 250);
+        linkClick.priority(10);
+        linkClick.onMouseDown(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Link";
+				linkName.fontColor(1.0f, 0.0f, 0.0f);
+				pikachuName.fontColor(1.0f, 1.0f, 1.0f);
+				jesusName.fontColor(1.0f, 1.0f, 1.0f);
+				return false;
+			}
+        	
+        });
+        window.add(linkClick);        
+        
+        // Pikachu Click
         pikachuClick.position(255, 250);
         pikachuClick.priority(10);
         pikachuClick.onMouseDown(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
-				GameLogin.this.spriteName = "Pikachu";
+				GameLogin.this.selectedSprite = "Pikachu";
+				linkName.fontColor(1.0f, 1.0f, 1.0f);
 				pikachuName.fontColor(1.0f, 0.0f, 0.0f);
 				jesusName.fontColor(1.0f, 1.0f, 1.0f);
 				return false;
 			}
         	
         });
-
         window.add(pikachuClick);
-        
-        // Place the Jesus
-        jesus.spriteX = 335;
-        jesus.spriteY = 265;
-        
-        // Label Jesus
-        jesusName.fontScaling(3);
-        jesusName.position(325, 250);
-        
-        // Add Jesus
-        window.add(jesusName);
-        
-
-        
+                
+        // Jesus Click
         jesusClick.position(325, 250);
         jesusClick.priority(10);
         jesusClick.onMouseDown(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
-				GameLogin.this.spriteName = "Chesus";
+				GameLogin.this.selectedSprite = "Chesus";
+				linkName.fontColor(1.0f, 1.0f, 1.0f);
 				pikachuName.fontColor(1.0f, 1.0f, 1.0f);
 				jesusName.fontColor(1.0f, 0.0f, 0.0f);
 				return false;
 			}
         	
         });
-
         window.add(jesusClick);
         
         
@@ -357,8 +385,30 @@ public class GameLogin implements Gui {
 		
 	}
 	
+	private void resetScreens() {
+
+		// Reset Errors
+		profileError.text("");
+		
+		// Set Sprite Name Colors
+		linkName.fontColor(1.0f, 1.0f, 1.0f);
+		pikachuName.fontColor(1.0f, 1.0f, 1.0f);
+		jesusName.fontColor(1.0f, 1.0f, 1.0f);
+		
+		// Selected Sprite
+		selectedSprite = "";
+		
+		// Login Name
+		characterName.text("");
+		
+	}
+	
 	private void toggleWindow(WindowNames windowName) {
 		
+		// Reset Screenas
+		resetScreens();
+		
+		// Find Window and Show it...
 		for (Window window : this.windows) {
 			if (window.name().equalsIgnoreCase("Window <" + windowName.toString() + ">")) {
 				currentWindow = windowName;
@@ -394,6 +444,11 @@ public class GameLogin implements Gui {
             // Update the Screen
             screen.update();
             
+            // If Profile/Login complete... Leave
+            if (registerLoginComplete) {
+            	break;
+            }
+            
         }
 		
 	}
@@ -420,13 +475,21 @@ public class GameLogin implements Gui {
 			// Validate the Profile
 			Profile profile = new Profile();
 			
-			// Set Stuff
+			// Set Character Name
 			profile.setName(characterName.text().trim());
+			
+			// Set Sprite Name
+			profile.setSpriteName(selectedSprite);
 			
 			try {
 				
 				// Validate hte Profile
 				profileManager.validate(profile);
+					
+				// If No Errors were thrown
+				// create the profile
+				profileManager.save(profile);
+				
 				
 			} catch(ProfileException pie ) {
 			
@@ -434,6 +497,12 @@ public class GameLogin implements Gui {
 				profileError.text(pie.getMessage());
 				
 			}
+			
+			// After Saving profile... Start the game
+			registerLoginComplete = true;
+			
+			// Save the Profile
+			GameLogin.this.profile = profile;
 			
 			// Returning false... why? I don't know... 
 			// Seems like a thing to do
@@ -443,4 +512,21 @@ public class GameLogin implements Gui {
 		
 	}
 
+
+	/**
+	 * @return the profile
+	 */
+	public Profile getProfile() {
+		return profile;
+	}
+
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	
+	
 }

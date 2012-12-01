@@ -1,6 +1,8 @@
 package edu.siren;
 
+import edu.siren.game.GamePlay;
 import edu.siren.game.gui.Title;
+import edu.siren.game.profile.Profile;
 import edu.siren.gui.GameLogin;
 import edu.siren.renderer.Screen;
 
@@ -23,16 +25,26 @@ public class Siren {
 			// Display the Game Splash
 			Title splashScreen = new Title(screen);
 			
+			// Game Profile
+			Profile profile = null;
+			
 			// If User wants to play.. 
 			if ( splashScreen.show() ) {
 				
 				// Show the Profile Login Screen
 				GameLogin gl = new GameLogin(screen);
+				
+				// Run the Game
 				gl.run();
 				
+				// Get the Profile
+				profile = gl.getProfile();
 				
 			}
 			
+			// Start the Game
+			GamePlay gamePlay = new GamePlay(screen, profile);
+			gamePlay.play();
 			
 			// Cleanup 
 			screen.cleanup();

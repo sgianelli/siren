@@ -2,6 +2,9 @@ package edu.siren.game.profile;
 
 import java.io.Serializable;
 
+import edu.siren.game.Player;
+import edu.siren.game.players.GeneratePlayer;
+
 public class Profile implements Serializable{
 
 	// Serial ID
@@ -10,6 +13,12 @@ public class Profile implements Serializable{
 	// Profile Information
 	private String name;
 	private String password;
+	
+	// Sprite Name
+	private String spriteName;
+	private Player player;
+	
+	
 	/**
 	 * @return the name
 	 */
@@ -33,6 +42,33 @@ public class Profile implements Serializable{
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	/**
+	 * @return the spriteName
+	 */
+	public String getSpriteName() {
+		return spriteName;
+	}
+	/**
+	 * @param spriteName the spriteName to set
+	 */
+	public void setSpriteName(String spriteName) {
+		this.spriteName = spriteName;
+	}
+	
+	public Player getPlayer() {
+		
+		// Load the Player based on Character Name
+		if (player == null) {
+			
+			// Generate the Player
+			player = GeneratePlayer.build(this.spriteName);
+			
+		}
+		
+		// Return the Player
+		return player;
+		
 	}
 		
 }
