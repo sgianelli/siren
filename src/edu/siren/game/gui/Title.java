@@ -12,14 +12,26 @@ import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 
 public class Title implements Gui {
+	
     final GuiContainer gui = new GuiContainer();
+    
     Screen screen;
     
-    public Title(Screen screen) throws IOException {    
+    private boolean startGame;
+    
+    public Title(Screen screen) throws IOException {   
+    	
+    	// Set the Screen
         this.screen = screen;
-        final Window title = new Window("Title");
-        Image background;
-        background = new Image("res/game/gui/intro.png");
+        
+        // create window for the Title 
+        Window title = new Window("Title");
+        
+        
+        startGame = false;
+        
+        // Load the Image Background
+        Image background = new Image("res/game/gui/intro.png");
         
         {
             background.xywh(0, 0, 640, 480);
@@ -27,6 +39,7 @@ public class Title implements Gui {
                 @Override
 				public boolean event(Element element) {
                     gui.disable();
+                    startGame = true;
                     return false;
                 }
             });
@@ -69,6 +82,25 @@ public class Title implements Gui {
         } else {
             screen.cleanup();
         }
+    }
+    
+    public boolean show() {
+    	
+        
+        while (screen.isOpened()) {
+            screen.clear();
+            gui.draw();
+            screen.update();
+            
+            if (startGame) {
+            	break;
+            }
+            
+        }    	
+    	
+    	return startGame;
+    	
+    	
     }
     
     @Override

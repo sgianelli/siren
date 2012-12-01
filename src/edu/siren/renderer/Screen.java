@@ -126,8 +126,13 @@ public class Screen {
      * Destroys the screen and runs any other cleanup routines.
      */
     public void cleanup() {
-        Display.destroy();
-        System.exit(0);
+        
+    	
+    	// Destroy the Display
+    	Display.destroy();
+
+    	// End the Program
+    	System.exit(0);
     }
 
     public boolean nextFrame() {
