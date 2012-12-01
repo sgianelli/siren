@@ -65,8 +65,6 @@ public class Screen {
         // Execution Context
         Display.setDisplayMode(new DisplayMode(width, height));
         Display.setTitle(title);
-        Display.setVSyncEnabled(true);
-        Display.sync(60);
         Display.setFullscreen(fullscreen);
         Display.create(pixelFormat, cntxt);
 
@@ -74,10 +72,10 @@ public class Screen {
         //GL11.glClearColor(0.25f, 0.5f, 0.25f, 1.0f);
         backgroundColor(0.25f, 0.5f, 0.25f, 1.0f);
         GL11.glDepthMask(false);
-        GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+        sync = 30;
         
         Keyboard.create();
         Mouse.create();

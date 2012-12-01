@@ -8,7 +8,7 @@ import edu.siren.game.Player;
 
 public class Link extends Player {
     public Link() throws IOException {
-        this.speed = 25;
+        this.speed = 40;
         this.name = "Link";
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(
