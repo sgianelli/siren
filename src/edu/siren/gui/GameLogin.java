@@ -106,7 +106,7 @@ public class GameLogin implements Gui {
 		
 		// Add Error to Screen
 		profileError = new Text("");
-		profileError.position(20, 10);
+		profileError.position(20, 210);
 		profileError.fontColor(1.0f, 0.0f, 0.0f);
 		profileError.fontScaling(2);
 		
@@ -208,10 +208,9 @@ public class GameLogin implements Gui {
 		window.add(loginSplash);
 		
 		// Set Title
-		Text title = new Text("---------   Create a Profile   ---------", 2);
-		title.position(15, y);
-		title.fontColor(0.99f, 1.0f, 0.04f);
-		window.add(title);
+		Image createProfileTitle = new Image("res/game/gui/create-profile-title.png");
+		createProfileTitle.position(0, 387);
+		window.add(createProfileTitle);
 		
 		// Character Name Text
 		Text characterText = new Text("Character Name");
@@ -416,10 +415,9 @@ public class GameLogin implements Gui {
 		window.add(loginSplash);
 		
 		// Set Title
-		Text title = new Text("---------   Load Profile   ---------", 2);
-		title.position(40, y);
-		title.fontColor(0.99f, 1.0f, 0.04f);
-		window.add(title);
+		Image loadProfileTitle = new Image("res/game/gui/load-profile-title.png");
+		loadProfileTitle.position(0, 387);
+		window.add(loadProfileTitle);
 		
 		// Character Name
 		Text characterText = new Text("Character Name");
