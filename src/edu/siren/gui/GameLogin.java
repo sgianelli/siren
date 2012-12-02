@@ -145,7 +145,7 @@ public class GameLogin implements Gui {
 		{
 			// create Profile Properties
 			createProfileText.position(x, y);
-			createProfileText.onMouseDown(new ElementEvent(){
+			createProfileText.onMouseUp(new ElementEvent(){
 
 				@Override
 				public boolean event(Element element) {
@@ -171,7 +171,7 @@ public class GameLogin implements Gui {
 		{
 			// create Profile Properties
 			loginText.position(x+10, y-84);
-			loginText.onMouseDown(new ElementEvent(){
+			loginText.onMouseUp(new ElementEvent(){
 
 				@Override
 				public boolean event(Element element) {
@@ -303,7 +303,7 @@ public class GameLogin implements Gui {
         // Link Click
         linkClick.position(210, y-125);
         linkClick.priority(10);
-        linkClick.onMouseDown(new ElementEvent(){
+        linkClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
@@ -320,7 +320,7 @@ public class GameLogin implements Gui {
         // Pikachu Click
         pikachuClick.position(255, y-125);
         pikachuClick.priority(10);
-        pikachuClick.onMouseDown(new ElementEvent(){
+        pikachuClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
@@ -337,7 +337,7 @@ public class GameLogin implements Gui {
         // Jesus Click
         jesusClick.position(325, y-125);
         jesusClick.priority(10);
-        jesusClick.onMouseDown(new ElementEvent(){
+        jesusClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
@@ -362,7 +362,7 @@ public class GameLogin implements Gui {
 		{
 		
 			createProfile.position(210, y-165);
-			createProfile.onMouseDown(new ProfileRegisterEvent(characterName));
+			createProfile.onMouseUp(new ProfileRegisterEvent(characterName));
 			window.add(createProfile);
 			
 		}
@@ -373,7 +373,7 @@ public class GameLogin implements Gui {
 		
 			// Set Button Characterstics
 			cancelButton.position(330, y-165);
-			cancelButton.onMouseDown(new ElementEvent(){
+			cancelButton.onMouseUp(new ElementEvent(){
 
 				@Override
 				public boolean event(Element element) {
@@ -450,7 +450,7 @@ public class GameLogin implements Gui {
 		{
 		
 			loadProfile.position(210, y-100);
-			loadProfile.onMouseDown(new ProfileLoadEvent(characterName));
+			loadProfile.onMouseUp(new ProfileLoadEvent(characterName));
 			window.add(loadProfile);
 			
 		}
@@ -461,7 +461,7 @@ public class GameLogin implements Gui {
 		
 			// Set Button Characterstics
 			cancelButton.position(330, y-100);
-			cancelButton.onMouseDown(new ElementEvent(){
+			cancelButton.onMouseUp(new ElementEvent(){
 
 				@Override
 				public boolean event(Element element) {
