@@ -34,7 +34,7 @@ public class Title implements Gui {
         Image background = new Image("res/game/gui/intro.png");
         
         {
-            background.xywh(0, 0, 640, 480);
+            background.xywh(0, 0, 512, 448);
             background.onMouseUp(new ElementEvent() {
                 @Override
 				public boolean event(Element element) {

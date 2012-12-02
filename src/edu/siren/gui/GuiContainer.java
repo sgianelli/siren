@@ -83,8 +83,8 @@ public class GuiContainer extends Element {
         }
         
         checkEvents();
+      
         
         shader.release();
     }
-
 }

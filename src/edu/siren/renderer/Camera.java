@@ -46,6 +46,7 @@ public class Camera {
     public void ortho(float w, float h, float z) {
         width = w;
         height = h;
+        zoomLevel = z;
         ortho(-w/2.0f * z, w/2.0f * z, h/2.0f * z, -h/2.0f * z, -1.0f, 1.0f);
     }
 
