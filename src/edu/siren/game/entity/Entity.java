@@ -122,7 +122,7 @@ public abstract class Entity implements Drawable {
     
     abstract public void think();
 
-    abstract public void moveTo(int x, int y);
+    abstract public void moveTo(float x, float y);
 
     public boolean stopped() {
         return !move;

@@ -25,8 +25,8 @@ var $ = function (x) {
 
         var saved = World.save();
 
-        var team_a = World.createTeam("Diglett", [$('%diglett')]);
-        var team_b = World.createTeam("You", [e]);
+        var team_a = World.createTeam("You", [e]);
+        var team_b = World.createTeam("Diglett", [$('%diglett')]);
         var battle_world = World.fightable("tiles/intro-battle.json", 
             team_a, team_b, 
 

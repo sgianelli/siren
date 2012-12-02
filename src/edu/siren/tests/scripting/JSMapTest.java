@@ -151,6 +151,10 @@ public class JSMapTest {
             } else {
                 down = false;
             }
+            
+            if (jsworld.world.battleManager != null) {
+                jsworld.world.battleManager.think();
+            }
         }
         
         if (jsworld.musicThread != null)

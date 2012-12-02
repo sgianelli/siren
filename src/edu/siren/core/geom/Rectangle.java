@@ -68,7 +68,7 @@ public class Rectangle {
 
     public boolean contains(float mx, float my) {        
         // If we're not in the bounding box, then just fail
-        return mx > left() && mx < right() && my > bottom() && my < top();
+        return mx > left() && mx < right() && my < bottom() && my > top();
     }
 
     public boolean contains(Rectangle rect) {

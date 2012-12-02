@@ -25,12 +25,15 @@ public abstract class Actor extends Entity implements Interactable {
     
     public int speed = 0;
     public int health = 100;
-    public int moves = 2;
+    public int moves = 4;
+    public int attack = 10;
     
     public boolean snap;
     public float gridWidth;
     public float gridHeight;
     public boolean drawStatus = false;
+    public boolean inMovement = false;
+    public boolean collisionDetection = true;
     public Font statusFont;
     
     protected Actor() {
@@ -93,7 +96,7 @@ public abstract class Actor extends Entity implements Interactable {
     abstract public void renderStatus();
 
     @Override
-	public void moveTo(int x, int y) {
+	public void moveTo(float x, float y) {
         this.desiredX = x;
         this.desiredY = y;
     }
@@ -105,15 +108,19 @@ public abstract class Actor extends Entity implements Interactable {
         float lastY = this.y;
         int lastMovementX = -1;
         int lastMovementY = -1;
+        
+        float ds = 0.1f * speed;
 
-        // Go twards X
-        if (Math.abs(x - desiredX) > speed) {
+        // Go towards X
+        if (Math.abs(x - desiredX) > ds) {
             if (x < desiredX) {
-                this.x += speed;
+                this.x += ds;
                 lastMovementX = 3;
+                sprite.animation("move-right");
             } else if (x > desiredX) {
-                this.x -= speed;
+                this.x -= ds;
                 lastMovementX = 4;
+                sprite.animation("move-left");
             }
         }
         
@@ -122,13 +129,15 @@ public abstract class Actor extends Entity implements Interactable {
         }
 
         // Go towards Y
-        if (Math.abs(y - desiredY) > speed) {
+        if (Math.abs(y - desiredY) > ds) {
             if (y < desiredY) {
-                y += speed;
+                y += ds;
                 lastMovementY = 1;
+                sprite.animation("move-forward");
             } else if (y > desiredY) {
-                y -= speed;
+                y -= ds;
                 lastMovementY = 2;
+                sprite.animation("move-backward");
             }
         }
         
@@ -136,58 +145,61 @@ public abstract class Actor extends Entity implements Interactable {
             movement = true;
         }
         
-        Rectangle o = this.getRect(); o.x = this.x; o.y = this.y;
-        Rectangle l = o.clone(); l.x -= 2;
-        Rectangle r = o.clone(); r.x += 2;
-        Rectangle t = o.clone(); t.y -= 2;
-        Rectangle b = o.clone(); b.y += 2;
-
-        for (Rectangle bounds : world.solids) {
-            if (bounds.x == this.x && bounds.y == this.y)
-                continue;
-            boolean touched = false;
-            if (l.touching(bounds)) {
-                touched = true;
-                if (lastMovementX == 3) {
-                    this.x = lastX;
-                    this.desiredX = lastX;
+        if (collisionDetection) {
+            Rectangle o = this.getRect(); o.x = this.x; o.y = this.y;
+            Rectangle l = o.clone(); l.x -= 2;
+            Rectangle r = o.clone(); r.x += 2;
+            Rectangle t = o.clone(); t.y -= 2;
+            Rectangle b = o.clone(); b.y += 2;
+    
+            for (Rectangle bounds : world.solids) {
+                if (bounds.x == this.x && bounds.y == this.y)
+                    continue;
+                boolean touched = false;
+                if (l.touching(bounds)) {
+                    touched = true;
+                    if (lastMovementX == 3) {
+                        this.x = lastX;
+                        this.desiredX = lastX;
+                    }
+                } else if (r.touching(bounds)) {
+                    touched = true;
+                    if (lastMovementX == 4) {
+                        this.x = lastX;
+                        this.desiredX = lastX;
+                    }
                 }
-            } else if (r.touching(bounds)) {
-                touched = true;
-                if (lastMovementX == 4) {
-                    this.x = lastX;
-                    this.desiredX = lastX;
+                
+                if (t.touching(bounds)) {
+                    touched = true;
+                    if (lastMovementY == 2) {
+                        this.y = lastY;
+                        this.desiredY = lastY;
+                    }
+                } else if (b.touching(bounds)) {
+                    touched = true;
+                    if (lastMovementY == 1) {
+                        this.y = lastY;
+                        this.desiredY = lastY;
+                    }
+                } 
+                
+                if (touched) {
+                    world.solids.remove(bounds);
+                    world.solids.add(0, bounds);
+                    break;
                 }
             }
             
-            if (t.touching(bounds)) {
-                touched = true;
-                if (lastMovementY == 2) {
-                    this.y = lastY;
-                    this.desiredY = lastY;
-                }
-            } else if (b.touching(bounds)) {
-                touched = true;
-                if (lastMovementY == 1) {
-                    this.y = lastY;
-                    this.desiredY = lastY;
-                }
-            } 
-            
-            if (touched) {
-                world.solids.remove(bounds);
-                world.solids.add(0, bounds);
-                break;
+            if (lastMovementX >= 0) {
+                lastMovement = lastMovementX;
+            } else if (lastMovementY >= 0) {
+                lastMovement = lastMovementY;
             }
-        }
-        
-        if (lastMovementX >= 0) {
-            lastMovement = lastMovementX;
-        } else if (lastMovementY >= 0) {
-            lastMovement = lastMovementY;
         }
             
         if (!movement) {
+            inMovement = false;
             switch (lastMovement) {
             case 1:
                 sprite.animation("idle-forward");
@@ -204,6 +216,7 @@ public abstract class Actor extends Entity implements Interactable {
             }
         } else {
             preventCollision.clear();
+            inMovement = true;
         }
     
         sprite.spriteX = this.x;

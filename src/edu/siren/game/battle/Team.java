@@ -14,4 +14,7 @@ public class Team {
         for (Player player : members)
             players.add(player);
     }
+
+    public void remove(Player member) {
+    }
 }

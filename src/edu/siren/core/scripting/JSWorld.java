@@ -120,12 +120,14 @@ public class JSWorld {
         // Add A team
         int x = 256 - (a.players.size() * 32), y = 32;
         for (Player player : a.players) {
-            player.setPosition(x + 16, y + 16);
             player.follow = false;
             player.controllable = false;
             player.lastMovement = 1;
             player.drawStatus = true;
+            player.collisionDetection = false;
             player.snapToGrid(32, 32);
+            player.setPosition(x + 16, y + 16);
+            player.createMoveOverlay();
             world.addEntity(player);
             x += 32;
         }
@@ -133,13 +135,15 @@ public class JSWorld {
         x = 256 - (b.players.size() * 32);
         y = 416;
         for (Player player : b.players) {
-            player.setPosition(x + 8, y + 8);
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;
+            player.collisionDetection = false;
             player.follow = false;
             player.drawStatus = true;
-            player.controllable = true;
+            player.controllable = false;
+            player.setPosition(x + 8, y + 8);
+            player.createMoveOverlay();
             world.addEntity(player);
         }
         
@@ -162,7 +166,7 @@ public class JSWorld {
             Display.update();
         }
         
-        world.battleManager = new BattleManager(a, b);
+        world.battleManager = new BattleManager(world, a, b);
         
         return world;
     }

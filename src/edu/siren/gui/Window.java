@@ -9,4 +9,8 @@ public class Window extends Element {
     public void close() {
         this.state.clearChildren = true;
     }
+
+    public void removeAll() {
+        this.state.clearChildren = true;
+    }
 }

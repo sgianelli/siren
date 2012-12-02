@@ -19,6 +19,7 @@ public class Player extends Actor {
     public boolean hadMovement = false;
     public ArrayList<Tile> possibleMoveOverlay = new ArrayList<Tile>();
     public int maxMoves = 4;
+    public boolean drawPossibleMoveOverlay = false;
     
     public Player(String config) {
         super(config, null);
@@ -38,7 +39,9 @@ public class Player extends Actor {
     public void draw() {
         think();
         
-        
+        if (!inMovement && possibleMoveOverlay.isEmpty()) {
+            createMoveOverlay();
+        }
         
         // Draw the status of the player, like health and movements
         if (drawStatus) {
@@ -46,6 +49,9 @@ public class Player extends Actor {
         }
         
         if (!controllable) {
+            if (snap && drawPossibleMoveOverlay) {
+                drawMoveOverlay();
+            }
             super.draw();
             return;
         }
@@ -136,42 +142,14 @@ public class Player extends Actor {
             hadMovement = false;
         }
         
-        
         // Draw the tiles that are available to move to
-        if (snap && hadMovement) {
-            int row = (int) (this.x / this.gridWidth);
-            int col = (int) (this.y / this.gridHeight);
-            possibleMoveOverlay.clear();
-            
-            try {
-                // Go through each row
-                for (int k = 0; k <= moves; k++) {
-                    // Determine the number of columns to print on each side
-                    for (int j = 0; j <= 2*k; j++) {
-                        possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
-                                ((row - moves) + k) * this.gridHeight,
-                                ((col - k) + j) * this.gridWidth,
-                                32, 32, true));
-                    }
-                    
-                    for (int j = 0; j <= 2*k; j++) {
-                        possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
-                                ((row + moves) - k) * this.gridHeight,
-                                ((col - k) + j) * this.gridWidth,
-                                32, 32, true));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if ((snap && hadMovement) || possibleMoveOverlay.isEmpty()) {
+            createMoveOverlay();
         }
         
         if (snap) {
-            for (Tile tile : possibleMoveOverlay) {
-                tile.draw();
-            }
+            drawMoveOverlay();
         }
-            
         
         if (!movement) {
             switch (lastMovement) {
@@ -238,7 +216,7 @@ public class Player extends Actor {
     public void bindCamera(Camera camera) {
         this.camera = camera;
     }
-
+    
     /**
      * Centers a player's position about x, y
      */
@@ -250,10 +228,46 @@ public class Player extends Actor {
 
     @Override
     public void renderStatus() {
-        statusFont.color(1.0f, 1.0f, 1.0f, 1.0f);
-        statusFont.print("H:" + health + "/100" + "\nM: " + moves,
+        statusFont.print("H:" + health + "/100" + "\nM:" + moves,
             3, 
             sprite.spriteX - sprite.getRect().width / 2.0f - 2.0f, 
             sprite.spriteY + sprite.getRect().height + 8.0f);
+    }
+    
+    public void createMoveOverlay() {
+        int row = (int) (this.x / (float) this.gridWidth);
+        int col = (int) (this.y / (float) this.gridHeight);
+        possibleMoveOverlay.clear();
+        
+        if (moves <= 0)
+            return;
+        
+        try {
+            // Go through each row
+            for (int k = 0; k <= moves; k++) {
+                // Determine the number of columns to print on each side
+                for (int j = 0; j <= 2*k; j++) {
+                    possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                            ((row - moves) + k) * this.gridHeight,
+                            ((col - k) + j) * this.gridWidth,
+                            32, 32, true));
+                }
+                
+                for (int j = 0; j <= 2*k; j++) {
+                    possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                            ((row + moves) - k) * this.gridHeight,
+                            ((col - k) + j) * this.gridWidth,
+                            32, 32, true));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void drawMoveOverlay() {
+        for (Tile tile : possibleMoveOverlay) {
+                tile.draw();
+        }
     }
 }

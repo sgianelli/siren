@@ -42,11 +42,9 @@ public class TurnBasedTest {
         world.getCamera().disable();
 
         // Start the intro
-        Gui battlescreen = new BattleScreen(screen);
         while (screen.isOpened()) {
             screen.clear();
             world.draw();
-            battlescreen.run();
             screen.update();
         }
         

@@ -107,4 +107,26 @@ public class Text extends Element {
     public void fontColor(float r, float g, float b) {
         textState.font.color(r, g, b, 1.0f);
     }
+    
+    public void hoverColor(final float r, final float g, final float b) {
+        this.onMouseEnter(new ElementEvent() {
+            public boolean event(Element e) {
+                try {
+                    Text text = (Text) e;
+                    text.background("res/game/gui/black.png");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                return false;
+            }
+        });
+        
+        this.onMouseExit(new ElementEvent() {
+             public boolean event(Element e) {
+                Text text = (Text) e;
+                text.state.background = null;
+                return false;
+            }
+        });
+    }
 }

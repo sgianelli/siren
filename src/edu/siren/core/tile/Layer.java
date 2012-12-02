@@ -19,7 +19,7 @@ import edu.siren.renderer.IndexVertexBuffer;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Layer implements Comparable<Layer>, Drawable {
-    protected int priority;
+    public int priority;
     protected int depth;
     protected BufferType type;
     protected Layer parent;
@@ -84,6 +84,8 @@ public class Layer implements Comparable<Layer>, Drawable {
             tile.layer = this;
             if (tile.solid) {
                 solids.add(tile.bounds);
+                if (world != null)
+                    world.solids.add(tile.bounds);
             }
         }        
     }

@@ -48,7 +48,6 @@ public abstract class World {
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     public Tile grid;
     
-    
     // Determines if a game should be playing or not
     private boolean pause = false;
     
@@ -69,7 +68,7 @@ public abstract class World {
 
     private Environment currentEnvironment = Environment.AFTERNOON;
     private boolean zoomPressed;
-    public BattleManager battleManager;
+    public BattleManager battleManager = null;
     
     /**
      * Constructs a new world of a given width and height. Note that this
@@ -285,7 +284,6 @@ public abstract class World {
         layer.extendHash(tiles);
         solids.addAll(layer.solids);
         bounds.extend(layer.bounds);
-        System.out.println("World size: " + bounds);
         return layers.add(layer);
     }
 
