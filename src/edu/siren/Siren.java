@@ -45,6 +45,17 @@ public class Siren {
 				// If we have a profile, let's play
 				if (profile != null) {	
 					
+					// New Profiles
+					if ( profile.isNewProfile()) {
+						
+						// Show the Intro
+						Intro intro = new Intro(screen);
+						while(intro.running()) {
+							intro.run();
+						}
+						
+					}
+					
 					// Start the Game
 					GamePlay gamePlay = new GamePlay(screen, profile);
 					gamePlay.play();
@@ -55,7 +66,6 @@ public class Siren {
 			
 			// Screen Cleanup
 			screen.cleanup();
-			
 		
 		} catch (Exception e) {
 			

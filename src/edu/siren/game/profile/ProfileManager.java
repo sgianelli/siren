@@ -85,6 +85,12 @@ public class ProfileManager implements Serializable {
 			// Create Profile object
 			profile = (Profile) inputStream.readObject();
 			
+			// If we are loading a profile... need to make it not new
+			if (profile.isNewProfile()) {
+				profile.setNewProfile(false);
+				save(profile);
+			}
+			
 			// Close the Stream
 			inputStream.close();
 

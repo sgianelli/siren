@@ -577,6 +577,9 @@ public class GameLogin implements Gui {
 			// Set Sprite Name
 			profile.setSpriteName(selectedSprite.trim());
 			
+			// Set New Profile
+			profile.setNewProfile(true);
+			
 			try {
 				
 				// Validate hte Profile
