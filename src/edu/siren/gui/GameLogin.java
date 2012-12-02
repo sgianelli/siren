@@ -52,11 +52,16 @@ public class GameLogin implements Gui {
 	private Image linkClick;
 	private Image pikachuClick;
 	private Image jesusClick;
+	private Image diglettClick;
+	private Image peachClick;
 	
 	// Sprite Labels
 	private Text linkName;
 	private Text pikachuName;
 	private Text jesusName;
+	private Text diglettName;
+	private Text peachName;
+	private Text[] spriteNames;
 	
 	// Register Login Complete
 	private boolean registerLoginComplete;
@@ -234,7 +239,8 @@ public class GameLogin implements Gui {
 		}
 		
 		// Sprites
-		sprites = new Sprite[3];
+		sprites = new Sprite[5];
+		spriteNames = new Text[5];
 		
 		// Get Sprite Sheet
         SpriteSheet spritesheet = SpriteSheet.fromCSS
@@ -247,18 +253,20 @@ public class GameLogin implements Gui {
         
         SpriteSheet pikachuspritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/pikachu.png",
-                "res/game/sprites/characters/pikachu.css");          
+                "res/game/sprites/characters/pikachu.css");            
         
-		
         // This demonstrates using contiguous animation sequences by using
         // a conventional naming to generate animations
         Sprite link = spritesheet.createSprite(
         		new Animation("move-backward", "link-backward-", 1, 7, 100));
         Sprite jesus = jesusspritesheet.createSprite(
-        		new Animation("move-right", "jesus-forward-", 1, 13, 50));
+        		new Animation("move-backward", "jesus-left-", 1, 13, 50));
         Sprite pikachu = pikachuspritesheet.createSprite(
-        		new Animation("move-right", "pikachu-left-", 1, 2, 50));        
-        
+        		new Animation("move-backward", "pikachu-left-", 1, 2, 50));        
+        Sprite diglett = spritesheet.createSprite(
+        		new Animation("move-backward", "diglett-backward-", 1, 2, 50));        
+        Sprite peach = spritesheet.createSprite(
+        		new Animation("move-backward", "peach-car-backward-", 1, 2, 50));        
 		
         // Choose a Sprite
         Text chooseSprite = new Text("Choose Sprite");
@@ -270,44 +278,66 @@ public class GameLogin implements Gui {
         linkName = new Text("Link");
         linkName.fontScaling(3);
         linkName.position(210, y-125);
+        spriteNames[0] = linkName;
         window.add(linkName);
 
         // Pikachu Name
         pikachuName = new Text("Pikachu");
         pikachuName.fontScaling(3);
-        pikachuName.position(255, y-125);
+        pikachuName.position(253, y-125);
+        spriteNames[1] = pikachuName;
         window.add(pikachuName);
         
         // Jesus Name
         jesusName = new Text("Chesus");
         jesusName.fontScaling(3);
-        jesusName.position(325, y-125);
+        jesusName.position(323, y-125);
+        spriteNames[2] = jesusName;
         window.add(jesusName);
+
+        // Diglett Name
+        diglettName = new Text("Diglett");
+        diglettName.fontScaling(3);
+        diglettName.position(382, y-125);
+        spriteNames[3] = diglettName;
+        window.add(diglettName);        
+
+        // Peach Name
+        peachName = new Text("Peach");
+        peachName.fontScaling(3);
+        peachName.position(450, y-125);
+        spriteNames[4] = peachName;
+        window.add(peachName);        
         
         // Sprite Locations
-    	pikachu.spriteX = 275;
-        pikachu.spriteY = y-110;
         link.spriteX = 220;
         link.spriteY = y-110;
+        pikachu.spriteX = 273;
+        pikachu.spriteY = y-110;
         jesus.spriteX = 335;
         jesus.spriteY = y-110;
+        diglett.spriteX = 402;
+        diglett.spriteY = y-110;
+        peach.spriteX = 457;
+        peach.spriteY = y-110;
 
+        
         // Sprite Clickers
         pikachuClick = new Image("res/game/gui/sprite-click.png");
         jesusClick = new Image("res/game/gui/sprite-click.png");
         linkClick = new Image("res/game/gui/sprite-click.png");
+        diglettClick = new Image("res/game/gui/sprite-click.png");
+        peachClick = new Image("res/game/gui/sprite-click.png");
 
         // Link Click
-        linkClick.position(210, y-125);
+        linkClick.position(linkName.x(), linkName.y());
         linkClick.priority(10);
         linkClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
 				GameLogin.this.selectedSprite = "Link";
-				linkName.fontColor(1.0f, 0.0f, 0.0f);
-				pikachuName.fontColor(1.0f, 1.0f, 1.0f);
-				jesusName.fontColor(1.0f, 1.0f, 1.0f);
+				toggleSpriteName();
 				return false;
 			}
         	
@@ -315,16 +345,14 @@ public class GameLogin implements Gui {
         window.add(linkClick);        
         
         // Pikachu Click
-        pikachuClick.position(255, y-125);
+        pikachuClick.position(pikachuName.x(), pikachuName.y());
         pikachuClick.priority(10);
         pikachuClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
 				GameLogin.this.selectedSprite = "Pikachu";
-				linkName.fontColor(1.0f, 1.0f, 1.0f);
-				pikachuName.fontColor(1.0f, 0.0f, 0.0f);
-				jesusName.fontColor(1.0f, 1.0f, 1.0f);
+				toggleSpriteName();
 				return false;
 			}
         	
@@ -332,27 +360,57 @@ public class GameLogin implements Gui {
         window.add(pikachuClick);
                 
         // Jesus Click
-        jesusClick.position(325, y-125);
+        jesusClick.position(jesusName.x(), jesusName.y());
         jesusClick.priority(10);
         jesusClick.onMouseUp(new ElementEvent(){
 
 			@Override
 			public boolean event(Element element) {
 				GameLogin.this.selectedSprite = "Chesus";
-				linkName.fontColor(1.0f, 1.0f, 1.0f);
-				pikachuName.fontColor(1.0f, 1.0f, 1.0f);
-				jesusName.fontColor(1.0f, 0.0f, 0.0f);
+				toggleSpriteName();
 				return false;
 			}
         	
         });
         window.add(jesusClick);
         
+        // diglett Click
+        diglettClick.position(diglettName.x(), diglettName.y());
+        diglettClick.priority(10);
+        diglettClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Diglett";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(diglettClick);        
+
+        // Peach Click
+        peachClick.position(peachName.x(), peachName.y());
+        peachClick.priority(10);
+        peachClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Peach";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(peachClick);        
+        
         
         // Save it...	
         sprites[0] = link;
         sprites[1] = jesus;
         sprites[2] = pikachu;
+        sprites[3] = diglett;
+        sprites[4] = peach;
         
 		// Create Profile Button
 		Image createProfile = new Image("res/game/gui/create-profile.png");
@@ -491,6 +549,7 @@ public class GameLogin implements Gui {
 		linkName.fontColor(1.0f, 1.0f, 1.0f);
 		pikachuName.fontColor(1.0f, 1.0f, 1.0f);
 		jesusName.fontColor(1.0f, 1.0f, 1.0f);
+		diglettName.fontColor(1.0f, 1.0f, 1.0f);
 		
 		// Selected Sprite
 		selectedSprite = "";
@@ -511,6 +570,26 @@ public class GameLogin implements Gui {
 			} else {
 				window.hide();
 				window.disable();
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * Toggle the Selected Sprite Name
+	 * 
+	 */
+	private void toggleSpriteName() {
+		
+		// Look through all sprites
+		for (Text spriteName : spriteNames) {
+			
+			// Set Color to Red for selected sprite
+			if (spriteName.textState.text.equalsIgnoreCase(this.selectedSprite)) {
+				spriteName.fontColor(1.0f, 0.0f, 0.0f);	
+			} else {
+				spriteName.fontColor(1.0f, 1.0f, 1.0f);
 			}
 			
 		}

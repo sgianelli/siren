@@ -2,79 +2,157 @@
     background: url(download.png) no-repeat;
 }
 
-.sprite-jesus-forward-1-png {
+.sprite-jesus-left-1-png {
+    width: 28px;
+    height: 31px;
+    background-position: -39px -168px;
+}
+
+.sprite-jesus-left-10-png {
+    width: 28px;
+    height: 31px;
+    background-position: -0px -168px;
+}
+
+.sprite-jesus-left-11-png {
+    width: 28px;
+    height: 31px;
+    background-position: -195px -126px;
+}
+
+.sprite-jesus-left-12-png {
+    width: 28px;
+    height: 31px;
+    background-position: -195px -84px;
+}
+
+.sprite-jesus-left-13-png {
+    width: 28px;
+    height: 31px;
+    background-position: -195px -42px;
+}
+
+.sprite-jesus-left-2-png {
+    width: 28px;
+    height: 31px;
+    background-position: -195px -0px;
+}
+
+.sprite-jesus-left-3-png {
+    width: 28px;
+    height: 31px;
+    background-position: -156px -126px;
+}
+
+.sprite-jesus-left-4-png {
+    width: 28px;
+    height: 31px;
+    background-position: -117px -126px;
+}
+
+.sprite-jesus-left-5-png {
+    width: 28px;
+    height: 31px;
+    background-position: -78px -126px;
+}
+
+.sprite-jesus-left-6-png {
+    width: 28px;
+    height: 31px;
+    background-position: -39px -126px;
+}
+
+.sprite-jesus-left-7-png {
     width: 28px;
     height: 31px;
     background-position: -0px -126px;
 }
 
-.sprite-jesus-forward-10-png {
+.sprite-jesus-left-8-png {
+    width: 28px;
+    height: 31px;
+    background-position: -156px -84px;
+}
+
+.sprite-jesus-left-9-png {
     width: 28px;
     height: 31px;
     background-position: -117px -84px;
 }
 
-.sprite-jesus-forward-11-png {
-    width: 28px;
-    height: 31px;
-    background-position: -117px -42px;
-}
-
-.sprite-jesus-forward-12-png {
-    width: 28px;
-    height: 31px;
-    background-position: -117px -0px;
-}
-
-.sprite-jesus-forward-13-png {
+.sprite-jesus-right-1-png {
     width: 28px;
     height: 31px;
     background-position: -78px -84px;
 }
 
-.sprite-jesus-forward-2-png {
+.sprite-jesus-right-10-png {
     width: 28px;
     height: 31px;
     background-position: -39px -84px;
 }
 
-.sprite-jesus-forward-3-png {
+.sprite-jesus-right-11-png {
     width: 28px;
     height: 31px;
     background-position: -0px -84px;
 }
 
-.sprite-jesus-forward-4-png {
+.sprite-jesus-right-12-png {
+    width: 28px;
+    height: 31px;
+    background-position: -156px -42px;
+}
+
+.sprite-jesus-right-13-png {
+    width: 28px;
+    height: 31px;
+    background-position: -117px -42px;
+}
+
+.sprite-jesus-right-2-png {
     width: 28px;
     height: 31px;
     background-position: -78px -42px;
 }
 
-.sprite-jesus-forward-5-png {
+.sprite-jesus-right-3-png {
     width: 28px;
     height: 31px;
     background-position: -39px -42px;
 }
 
-.sprite-jesus-forward-6-png {
+.sprite-jesus-right-4-png {
     width: 28px;
     height: 31px;
     background-position: -0px -42px;
 }
 
-.sprite-jesus-forward-7-png {
+.sprite-jesus-right-5-png {
+    width: 28px;
+    height: 31px;
+    background-position: -156px -0px;
+}
+
+.sprite-jesus-right-6-png {
+    width: 28px;
+    height: 31px;
+    background-position: -117px -0px;
+}
+
+.sprite-jesus-right-7-png {
     width: 28px;
     height: 31px;
     background-position: -78px -0px;
 }
 
-.sprite-jesus-forward-8-png {
+.sprite-jesus-right-8-png {
     width: 28px;
     height: 31px;
     background-position: -39px -0px;
 }
 
-.sprite-jesus-forward-9-png {
+.sprite-jesus-right-9-png {
     width: 28px;
     height: 31px;
     background-position: -0px -0px;
