@@ -69,6 +69,10 @@ public class GamePlay {
         // The close event can take a bit to propagate
         while (screen.nextFrame()) {     
 
+        	// If the Screen is Closed...
+        	if (!screen.isOpened())
+        		break;
+        	
         	// Handle the Zoom
         	if (Keyboard.isKeyDown(Keyboard.KEY_Z))
         		world.zoomIn();

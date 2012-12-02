@@ -34,17 +34,22 @@ public class Siren {
 				// Show the Profile Login Screen
 				GameLogin gl = new GameLogin(screen);
 				
-				// Run the Game
+				// Run the Game Login
 				gl.run();
-				
+									
 				// Get the Profile
 				profile = gl.getProfile();
 				
+				// If we have a profile, let's play
+				if (profile != null) {	
+					
+					// Start the Game
+					GamePlay gamePlay = new GamePlay(screen, profile);
+					gamePlay.play();
+					
+				}
+				
 			}
-			
-			// Start the Game
-			GamePlay gamePlay = new GamePlay(screen, profile);
-			gamePlay.play();
 			
 			// Cleanup 
 			screen.cleanup();

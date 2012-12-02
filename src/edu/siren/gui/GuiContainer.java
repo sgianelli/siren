@@ -50,7 +50,7 @@ public class GuiContainer extends Element {
 
         // Go through the elements
         for (Element element : elements) {
-            
+                    	
             // At any time an event can cause the other events to stop
             // propagating, this means that an event will stop altogether
             if (element.checkEvents(x, y, dx, dy, click)) {
