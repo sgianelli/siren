@@ -12,7 +12,7 @@ public class TextInput extends Element {
     class TextState {
         public String text;
         public Font font;
-        public int fontScaling;
+        public float fontScaling;
         public Rectangle padding = new Rectangle(0, 0, 0, 0);
         public boolean focused = false;
         public int maxLength = 24;
@@ -67,8 +67,8 @@ public class TextInput extends Element {
         padding(textState.padding.height, textState.padding.width);
     }
 
-    public void fontScaling(int scaling) {
-        textState.fontScaling = scaling;
+    public void fontScaling(float f) {
+        textState.fontScaling = f;
         textState.font.invalidate();
         h((textState.font.squareH / textState.fontScaling) * 1.5f);
         padding(textState.padding.height, textState.padding.width);
@@ -89,7 +89,7 @@ public class TextInput extends Element {
              h() + textState.padding.height);
     }
     
-    public int fontScaling() {
+    public float fontScaling() {
         return textState.fontScaling;
     }
     

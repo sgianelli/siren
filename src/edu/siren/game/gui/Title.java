@@ -31,7 +31,7 @@ public class Title implements Gui {
         startGame = false;
         
         // Load the Image Background
-        Image background = new Image("res/game/gui/intro.png");
+        Image background = new Image("res/game/gui/logo-full.png");
         
         {
             background.xywh(0, 0, 512, 448);
@@ -49,7 +49,7 @@ public class Title implements Gui {
         
         final Text prompt = new Text("click to start", 2);
         {
-            prompt.position(180, 180);
+            prompt.position(180, 190);
             prompt.positioning(Element.Position.ABSOLUTE);
             prompt.onDraw(new ElementEvent() {
                 public double dt = Element.getTime();
