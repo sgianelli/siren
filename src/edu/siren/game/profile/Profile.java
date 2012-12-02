@@ -14,15 +14,24 @@ public class Profile implements Serializable{
 	private String name;
 	private String password;
 	
-	// Sprite Name
+	// Sprite Info
 	private String spriteName;
-	
-	
 	private transient Player player;
+	
+	// Profile
+	private GameStats gameStats;
 	
 	// Is this a new Profile?
 	private boolean newProfile;
 	
+	/**
+	 * Create a New Profile
+	 * 
+	 */
+	public Profile() {
+		gameStats = new GameStats();
+		newProfile = true;
+	}
 	
 	/**
 	 * @return the name
@@ -87,5 +96,19 @@ public class Profile implements Serializable{
 	public void setNewProfile(boolean newProfile) {
 		this.newProfile = newProfile;
 	}
+	/**
+	 * @return the gameStats
+	 */
+	public GameStats getGameStats() {
+		return gameStats;
+	}
+	/**
+	 * @param gameStats the gameStats to set
+	 */
+	public void setGameStats(GameStats gameStats) {
+		this.gameStats = gameStats;
+	}
+	
+	
 		
 }
