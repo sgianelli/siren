@@ -4,8 +4,8 @@ import edu.siren.game.GamePlay;
 import edu.siren.game.gui.Intro;
 import edu.siren.game.gui.Title;
 import edu.siren.game.profile.Profile;
+import edu.siren.game.profile.ProfileManager;
 import edu.siren.gui.GameLogin;
-import edu.siren.gui.Gui;
 import edu.siren.renderer.Screen;
 
 /**
@@ -21,8 +21,11 @@ public class Siren {
 		
 		try {
 			
+			// Profile Manager
+			ProfileManager profileManager = new ProfileManager();
+			
 			// Create Screen for Game Play
-			Screen screen = new Screen("Gui Standalone Test", 512, 448);
+			Screen screen = new Screen("Siren", 512, 448);
 
 			// Create Splash
 			Title splashScreen = new Title(screen);
@@ -63,6 +66,9 @@ public class Siren {
 				}
 				
 			}
+			
+			// Save the Profile
+			profileManager.save(profile);
 			
 			// Screen Cleanup
 			screen.cleanup();

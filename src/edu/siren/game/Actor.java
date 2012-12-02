@@ -1,6 +1,7 @@
 package edu.siren.game;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -17,7 +18,7 @@ import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
 import edu.siren.renderer.Font;
 
-public abstract class Actor extends Entity implements Interactable {
+public abstract class Actor extends Entity implements Interactable,Serializable {
     public float desiredX = 0;
     public float desiredY = 0;
     public float x = 0;

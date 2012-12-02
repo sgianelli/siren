@@ -3,6 +3,7 @@ package edu.siren.renderer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.opengl.GL11;
@@ -18,7 +19,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class TexturePNG implements Texture {
+public class TexturePNG implements Texture , Serializable {
     public int textureID;
     public int width, height;
     private int unit;

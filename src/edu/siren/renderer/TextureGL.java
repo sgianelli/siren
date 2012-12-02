@@ -1,6 +1,7 @@
 package edu.siren.renderer;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * An explicitly defined Texture object suitable for external resources
@@ -8,7 +9,7 @@ import java.io.IOException;
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class TextureGL implements Texture {
+public class TextureGL implements Texture, Serializable {
     public int textureID, textureBinding;
 
     /**

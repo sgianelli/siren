@@ -1,13 +1,13 @@
 package edu.siren.core.geom;
 
-import edu.siren.gui.Element;
+import java.io.Serializable;
 
 /**
  * Defines a simple Rectangle object for tiling, bounds-checking, etc.
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class Rectangle {
+public class Rectangle implements Serializable {
     public float x, y;
     public float width, height;
 

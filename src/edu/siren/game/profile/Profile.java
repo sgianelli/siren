@@ -16,7 +16,9 @@ public class Profile implements Serializable{
 	
 	// Sprite Name
 	private String spriteName;
-	private Player player;
+	
+	
+	private transient Player player;
 	
 	// Is this a new Profile?
 	private boolean newProfile;
