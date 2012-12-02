@@ -146,7 +146,6 @@ public class GameLogin implements Gui {
 			// create Profile Properties
 			createProfileText.position(x, y);
 			createProfileText.onMouseUp(new ElementEvent(){
-
 				@Override
 				public boolean event(Element element) {
 					toggleWindow(WindowNames.Register);
@@ -172,7 +171,6 @@ public class GameLogin implements Gui {
 			// create Profile Properties
 			loginText.position(x+10, y-84);
 			loginText.onMouseUp(new ElementEvent(){
-
 				@Override
 				public boolean event(Element element) {
 					toggleWindow(WindowNames.Login);
@@ -374,7 +372,6 @@ public class GameLogin implements Gui {
 			// Set Button Characterstics
 			cancelButton.position(330, y-165);
 			cancelButton.onMouseUp(new ElementEvent(){
-
 				@Override
 				public boolean event(Element element) {
 
