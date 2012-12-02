@@ -459,6 +459,7 @@ public class GameLogin implements Gui {
 			// Set Button Characterstics
 			cancelButton.position(330, y-100);
 			cancelButton.onMouseUp(new ElementEvent(){
+
 				@Override
 				public boolean event(Element element) {
 
@@ -583,9 +584,6 @@ public class GameLogin implements Gui {
 			
 			// Set Sprite Name
 			profile.setSpriteName(selectedSprite.trim());
-			
-			// Set New Profile
-			profile.setNewProfile(true);
 			
 			try {
 				
