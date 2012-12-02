@@ -126,13 +126,17 @@ public class GameLogin implements Gui {
 	
 	private void buildMenuLogin() throws IOException {
 	
+		// Starting x 
+		int x = 171;
+		int y = 265;
+		
 		// Create the Window
 		Window window = new Window(WindowNames.Menu.toString());
 		window.dimensions(screen.width, screen.height);
 		windows.add(window);
 		
 		// Image for prettiness
-		Image loginSplash = new Image("res/game/gui/login-splash.png");
+		Image loginSplash = new Image("res/game/gui/intro.png");
 		loginSplash.position(0, 0);
 		window.add(loginSplash);
 		
@@ -140,7 +144,7 @@ public class GameLogin implements Gui {
 		Text createProfileText = new Text("Create Profile", 2);
 		{
 			// create Profile Properties
-			createProfileText.position(171, 330);
+			createProfileText.position(x, y);
 			createProfileText.onMouseDown(new ElementEvent(){
 
 				@Override
@@ -158,7 +162,7 @@ public class GameLogin implements Gui {
 		// The OR
 		Text orText = new Text("-- OR --", 2);
 		{
-			orText.position(210, 288);
+			orText.position(x+40, y-42);
 			window.add(orText);
 		}
 
@@ -166,7 +170,7 @@ public class GameLogin implements Gui {
 		Text loginText = new Text("Load Profile", 2);
 		{
 			// create Profile Properties
-			loginText.position(181, 246);
+			loginText.position(x+10, y-84);
 			loginText.onMouseDown(new ElementEvent(){
 
 				@Override
@@ -191,6 +195,9 @@ public class GameLogin implements Gui {
 	
 	private void buildRegister() throws IOException {
 		
+		// Initialize positions
+		int y = 400;
+		
 		// Create the Window
 		Window window = new Window(WindowNames.Register.toString());
 		window.dimensions(screen.width, screen.height);
@@ -198,25 +205,26 @@ public class GameLogin implements Gui {
 		
 		
 		// Image for prettiness
-		Image loginSplash = new Image("res/game/gui/login-splash.png");
+		Image loginSplash = new Image("res/game/gui/login.png");
 		loginSplash.position(0, 0);
 		window.add(loginSplash);
 		
 		// Set Title
 		Text title = new Text("---------   Create a Profile   ---------", 2);
-		title.position(15, 375);
+		title.position(15, y);
+		title.fontColor(0.99f, 1.0f, 0.04f);
 		window.add(title);
 		
 		// Character Name Text
 		Text characterText = new Text("Character Name");
-		characterText.position(20, 325);
+		characterText.position(20, y-50);
 		characterText.fontScaling(2);
 		window.add(characterText);
 		
 		// Enter Character Name
 		TextInput characterName = new TextInput();
 		{
-			characterName.position(220, 325);
+			characterName.position(220, y-50);
 			characterName.background("res/game/gui/text-input.png");
 			characterName.fontScaling(3);
 			characterName.maxLength(20);
@@ -257,35 +265,35 @@ public class GameLogin implements Gui {
 		
         // Choose a Sprite
         Text chooseSprite = new Text("Choose Sprite");
-        chooseSprite.position(20,270);
+        chooseSprite.position(20,y-105);
         chooseSprite.fontScaling(2);
         window.add(chooseSprite);
         
         // Link Name
         linkName = new Text("Link");
         linkName.fontScaling(3);
-        linkName.position(210, 250);
+        linkName.position(210, y-125);
         window.add(linkName);
 
         // Pikachu Name
         pikachuName = new Text("Pikachu");
         pikachuName.fontScaling(3);
-        pikachuName.position(255, 250);
+        pikachuName.position(255, y-125);
         window.add(pikachuName);
         
         // Jesus Name
         jesusName = new Text("Chesus");
         jesusName.fontScaling(3);
-        jesusName.position(325, 250);
+        jesusName.position(325, y-125);
         window.add(jesusName);
         
         // Sprite Locations
     	pikachu.spriteX = 275;
-        pikachu.spriteY = 265;
+        pikachu.spriteY = y-110;
         link.spriteX = 220;
-        link.spriteY = 265;
+        link.spriteY = y-110;
         jesus.spriteX = 335;
-        jesus.spriteY = 265;
+        jesus.spriteY = y-110;
 
         // Sprite Clickers
         pikachuClick = new Image("res/game/gui/sprite-click.png");
@@ -293,7 +301,7 @@ public class GameLogin implements Gui {
         linkClick = new Image("res/game/gui/sprite-click.png");
 
         // Link Click
-        linkClick.position(210, 250);
+        linkClick.position(210, y-125);
         linkClick.priority(10);
         linkClick.onMouseDown(new ElementEvent(){
 
@@ -310,7 +318,7 @@ public class GameLogin implements Gui {
         window.add(linkClick);        
         
         // Pikachu Click
-        pikachuClick.position(255, 250);
+        pikachuClick.position(255, y-125);
         pikachuClick.priority(10);
         pikachuClick.onMouseDown(new ElementEvent(){
 
@@ -327,7 +335,7 @@ public class GameLogin implements Gui {
         window.add(pikachuClick);
                 
         // Jesus Click
-        jesusClick.position(325, 250);
+        jesusClick.position(325, y-125);
         jesusClick.priority(10);
         jesusClick.onMouseDown(new ElementEvent(){
 
@@ -353,7 +361,7 @@ public class GameLogin implements Gui {
 		Image createProfile = new Image("res/game/gui/create-profile.png");
 		{
 		
-			createProfile.position(210, 210);
+			createProfile.position(210, y-165);
 			createProfile.onMouseDown(new ProfileRegisterEvent(characterName));
 			window.add(createProfile);
 			
@@ -364,7 +372,7 @@ public class GameLogin implements Gui {
 		{
 		
 			// Set Button Characterstics
-			cancelButton.position(330, 210);
+			cancelButton.position(330, y-165);
 			cancelButton.onMouseDown(new ElementEvent(){
 
 				@Override
@@ -379,7 +387,6 @@ public class GameLogin implements Gui {
 			window.add(cancelButton);
 			
 		}
-		
 		
 		// Add Error Message to Window
 		window.add(profileError);
@@ -398,31 +405,35 @@ public class GameLogin implements Gui {
 	 */
 	private void buildLogin() throws IOException {
 		
+		// Initial positions
+		int y = 400;
+		
 		// Create the Window
 		Window window = new Window(WindowNames.Login.toString());
 		window.dimensions(screen.width, screen.height);
 		windows.add(window);
 		
 		// Image for prettiness
-		Image loginSplash = new Image("res/game/gui/login-splash.png");
+		Image loginSplash = new Image("res/game/gui/login.png");
 		loginSplash.position(0, 0);
 		window.add(loginSplash);
 		
 		// Set Title
 		Text title = new Text("---------   Load Profile   ---------", 2);
-		title.position(40, 375);
+		title.position(40, y);
+		title.fontColor(0.99f, 1.0f, 0.04f);
 		window.add(title);
 		
 		// Character Name
 		Text characterText = new Text("Character Name");
-		characterText.position(20, 325);
+		characterText.position(20, y-50);
 		characterText.fontScaling(2);
 		window.add(characterText);
 		
 		// Enter Character Name
 		TextInput characterName = new TextInput();
 		{
-			characterName.position(220, 325);
+			characterName.position(220, y-50);
 			characterName.background("res/game/gui/text-input.png");
 			characterName.fontScaling(3);
 			characterName.maxLength(20);
@@ -434,22 +445,22 @@ public class GameLogin implements Gui {
 			window.add(characterName);
 		}
 		
-		// Create Profile Button
+		// Load Profile Button
 		Image loadProfile = new Image("res/game/gui/load-profile.png");
 		{
 		
-			loadProfile.position(210, 210);
+			loadProfile.position(210, y-100);
 			loadProfile.onMouseDown(new ProfileLoadEvent(characterName));
 			window.add(loadProfile);
 			
 		}
 		
-		// Create Profile Button
+		// Cancel Button
 		Image cancelButton = new Image("res/game/gui/cancel.png");
 		{
 		
 			// Set Button Characterstics
-			cancelButton.position(330, 210);
+			cancelButton.position(330, y-100);
 			cancelButton.onMouseDown(new ElementEvent(){
 
 				@Override

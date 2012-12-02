@@ -54,7 +54,7 @@ public class ProfileManager implements Serializable {
 		}
 		
 		// Sprite Name 
-		if (profile.getName().isEmpty()) {
+		if (profile.getSpriteName().isEmpty()) {
 			throw new ProfileException("You must select a sprite.");
 		}
 		
