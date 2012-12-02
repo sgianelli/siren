@@ -540,7 +540,7 @@ public class GameLogin implements Gui {
             }
             
         }
-		
+        		
 	}
 	
 	@Override
@@ -667,6 +667,10 @@ public class GameLogin implements Gui {
 	}
 
 
+	public boolean loginComplete() {
+		return registerLoginComplete;
+	}
+	
 	/**
 	 * @return the profile
 	 */
