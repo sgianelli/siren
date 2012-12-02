@@ -224,7 +224,7 @@ public class GameLogin implements Gui {
 		{
 			characterName.position(220, y-50);
 			characterName.background("res/game/gui/text-input.png");
-			characterName.fontScaling(3);
+			characterName.fontScaling(2.0f);
 			characterName.maxLength(20);
 
 			characterName.fontColor(1.0f, 1.0f, 1.0f);
