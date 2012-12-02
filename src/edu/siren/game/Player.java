@@ -18,6 +18,7 @@ public class Player extends Actor {
     public boolean controllable = true;
     public boolean hadMovement = false;
     public ArrayList<Tile> possibleMoveOverlay = new ArrayList<Tile>();
+    public int maxMoves = 4;
     
     public Player(String config) {
         super(config, null);

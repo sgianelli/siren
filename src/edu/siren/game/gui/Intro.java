@@ -18,23 +18,41 @@ public class Intro implements Gui{
         
         final FontSequence sequence = font.printFrames(
                 false,
-                new FontFrame("Long ago, in the beautiful\nkingdom of Siren surrounded\nby mountains and forests...", 2500, 1000, beep),
-                new FontFrame("Legends told of an omnipotent\nand omniscent Golden Power\nthat resided in a hidden land.", 2500, 1000, beep),
-                new FontFrame("Many creatures sought this\nGolden Power and failed.", 2000, 1000, beep),
-                new FontFrame("The Gods, aware of their\nmistake separated the world\ninto pieces.", 2300, 1000, beep),
-                new FontFrame("As generations carried through\nthe years the creatures forgot\nof their original kingdom of Siren.", 2800, 1000, beep),
-                new FontFrame("As the years grew, so did\na darkening and evil force.", 2000, 1000, beep),
-                new FontFrame("The Gods weakened by this force\nopened up a world for help.", 2100, 1000, beep),
-                new FontFrame("\"Help us!\", they cried.", 1500, 500, beep),
-                new FontFrame("\"Help us and fulfill your destiny.\"", 1700, 1000, beep),
-                new FontFrame("          SIREN", 500, 5000));
+                new FontFrame("Long ago there was a great kingdom.\nIt was a place of beauty sorrounded\nby lush forests and vast mountains.\nCreatures of many lands lived within the\nKingdom. It was a peaceful and unifying\nland of great power and resilence.", 3500, 2000, beep),
+                new FontFrame("However, like the kingdoms before it, a\ndark empire was marching its way to\nconquer the peace and create chaos.\nThe king, aware of the evil, called for\nhis people to spread throughout the land\nin hope to spread weak the evil's force.", 3500, 2000, beep),
+                new FontFrame("However, the evil did not spread, but\ninstead grew in numbers and strength.\nThe empire eventually conquered all.\nThese dark times told of slavery in\nthe form of games. Societies grew\nin time and slavery became the norm.", 3500, 2000, beep),
+                new FontFrame("The Gods, silent through this all,\ngrew tired and restless of the evil\nand decided to send a hero to help.\n\"Help them,\" the gods told to the hero\n\"Help them conquer the evil empire,\"\n\"Help them conquer and reclaim SIREN\".", 3500, 2000, beep));
         
         Window window = new Window("Intro");
         
         Image background = new Image("res/game/gui/intro.png");
         {
+            background.xywh(0, 0, 512, 448);
             window.add(background, -1);
         }
+        
+        final Text prompt = new Text("click to start", 2);
+        {
+            prompt.position(180, 220);
+            prompt.positioning(Element.Position.ABSOLUTE);
+            prompt.onDraw(new ElementEvent() {
+                public double dt = Element.getTime();
+                @Override
+				public boolean event(Element element) {                   
+                    if (element.disabled())
+                        return false;
+                    if ((Element.getTime() - dt) > 500.0f) {
+                        element.toggle();
+                        dt = Element.getTime();
+                    }
+                    return false;
+                }
+            });
+            prompt.disable();
+            prompt.hide();
+        }
+            
+        window.add(prompt, 10);
         
         // This is a subwindow for drawing the overlays
         Window introTextWindow = new Window("Intro Text");
@@ -48,10 +66,9 @@ public class Intro implements Gui{
                         audioThread.start(); 
                         firstDraw = false;
                     }
-                    sequence.draw(90, 260, 2);
+                    sequence.draw(10, 245, 2);
                     if (sequence.end()) {
-                        gui.disable();
-                        audioThread.interrupt();
+                        prompt.enable();
                     }
                     return false;
                 }
@@ -62,8 +79,7 @@ public class Intro implements Gui{
 				public boolean event(Element e) {
                     gui.disable();
                     AudioUtil.playWav("res/game/sound/click.wav");
-                    
-                    //audioThread.interrupt();
+                    audioThread.interrupt();
                     return false;
                 }
             });

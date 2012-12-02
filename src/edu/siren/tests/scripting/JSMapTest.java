@@ -16,6 +16,7 @@ import javax.script.ScriptException;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import edu.siren.core.scripting.JSWorld;
 import edu.siren.core.sprite.Animation;
@@ -70,12 +71,6 @@ public class JSMapTest {
         Gui intro = new Intro(screen);
         while (intro.running()) {
             intro.run();
-        }
-        
-        // Start the title
-        Gui title = new Title(screen);
-        while (title.running()) {
-            title.run();
         }
         
         // Load the real world

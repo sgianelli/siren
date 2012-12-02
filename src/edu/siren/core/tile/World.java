@@ -22,6 +22,7 @@ import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.entity.Entity;
 import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.Camera;
@@ -68,6 +69,7 @@ public abstract class World {
 
     private Environment currentEnvironment = Environment.AFTERNOON;
     private boolean zoomPressed;
+    public BattleManager battleManager;
     
     /**
      * Constructs a new world of a given width and height. Note that this

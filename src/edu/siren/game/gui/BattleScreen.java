@@ -32,18 +32,8 @@ public class BattleScreen implements Gui {
 		this.screen = screen;
         Font font = gui.font;
         Window window = new Window("Battle Screen");
-        
-        Image grid = new Image("res/game/gui/battle-grid.png");
-        {
-            window.add(grid, -1);
-        }
-        
-        gui.add(window);
 	}
 	
-	public void setBanner() {
-	}
-
 	@Override
 	public void run() {
         // Redraw the Gui

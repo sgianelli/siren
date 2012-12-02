@@ -1,9 +1,11 @@
 package edu.siren;
 
 import edu.siren.game.GamePlay;
+import edu.siren.game.gui.Intro;
 import edu.siren.game.gui.Title;
 import edu.siren.game.profile.Profile;
 import edu.siren.gui.GameLogin;
+import edu.siren.gui.Gui;
 import edu.siren.renderer.Screen;
 
 /**
@@ -22,26 +24,24 @@ public class Siren {
 			// Create Screen for Game Play
 			Screen screen = new Screen("Gui Standalone Test", 512, 448);
 
-			// Display the Game Splash
-			Title splashScreen = new Title(screen);
-			
 			// Game Profile
 			Profile profile = null;
 			
-			// If User wants to play.. 
-			if ( splashScreen.show() ) {
-				
-				// Show the Profile Login Screen
-				GameLogin gl = new GameLogin(screen);
-				
-				// Run the Game
-				gl.run();
-				
-				// Get the Profile
-				profile = gl.getProfile();
-				
-			}
+			Gui intro = new Intro(screen);
 			
+            while (intro.running()) {
+                intro.run();
+            }
+            
+			// Show the Profile Login Screen
+			GameLogin gl = new GameLogin(screen);
+			
+			// Run the Game
+			gl.run();
+			
+			// Get the Profile
+			profile = gl.getProfile();
+				
 			// Start the Game
 			GamePlay gamePlay = new GamePlay(screen, profile);
 			gamePlay.play();

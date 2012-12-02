@@ -26,6 +26,7 @@ import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.battle.Team;
 import edu.siren.game.battle.TeamMemberDieEvent;
 import edu.siren.game.battle.TeamVictoryEvent;
@@ -113,7 +114,6 @@ public class JSWorld {
                 
         
         load("Battle Sequence", jsonTiles);
-        
         Camera camera = world.getCamera();
         camera.setPosition(-256, -224);
         
@@ -161,6 +161,8 @@ public class JSWorld {
             shader.release();
             Display.update();
         }
+        
+        world.battleManager = new BattleManager(a, b);
         
         return world;
     }
