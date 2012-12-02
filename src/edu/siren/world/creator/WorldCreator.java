@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.swing.JFrame;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
@@ -25,18 +27,30 @@ import edu.siren.renderer.Shader;
 
 import org.lwjgl.input.Mouse;
 
-public class WorldCreator {
+public class WorldCreator extends JFrame {
 
      public static int WORLD_WIDTH = 5000;
      public static int WORLD_HEIGHT = 5000;
      public static int WINDOW_WIDTH = 512;
      public static int WINDOW_HEIGHT = 448;
-     public static int GRID = 64;
+     public static int GRID = 32; // default 32
 
 	 Screen screen;
+	 public String sprite = "tree.png";
+	 
+	 int index = 0;
+	 String[] sprites = {"tree.png","weeds.png","grass.png","rock-dirt.png","rock-cliff.png"};
+	 String dir = "res/tests/img/";
 	 
 
 	 WorldCreator() throws LWJGLException, IOException {
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 	        Random random = new Random();
 		 
 	        screen = new Screen("World Creator", WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -58,18 +72,6 @@ public class WorldCreator {
 	        gui.bindToShader(shader);
 	        Font font = new Font("res/tests/fonts/nostalgia.png", 24);
 
-	        // Create a new player and put them somewhere in the world
-//	        Player player = new Link();
-//	        player.setPosition(0, 0);
-//	        world.addEntity(player);// Create a new player and put them somewhere in the world
-//	        
-	
-	            for (int j = 0; j < 30; j++) {
-	                Villager v = new Villager(
-	                        "res/tests/scripts/entities/villager-justin.json");
-	                v.setPosition(random.nextInt(WORLD_WIDTH), random.nextInt(WORLD_HEIGHT));
-	                world.addEntity(v);
-	        }
 
 	        
 	        // These are some overlays that we will draw over the Gui to give
@@ -106,42 +108,53 @@ public class WorldCreator {
 	                }if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 	                	world.move(0, 5);
 	                }
+	                if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+	                	index -= 1;
+	                	if (index == -1)
+	                		index = sprites.length - 1;
+	                	
+	                    try {
+							Thread.sleep(100);
+							System.out.println("Boop");
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}  
+	                }
+	                if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+	                	index += 1;
+	                	if (index == sprites.length)
+	                		index = 0;
+	                	
+	                    try {
+							Thread.sleep(100);
+							System.out.println("Boop");
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}  
+	                }
 	                if (Mouse.isButtonDown(0)) 
-	                {
-	                	System.out.println(Mouse.getX() + "/" + WINDOW_HEIGHT);
-	                	
-	                	
-	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
-	                	
-	                	System.out.println("camera" + -world.getCamera().getX());
-	                	System.out.println(xPercent);
-	                	
-	                	
-	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
-	                	
-	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
-	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/2;
-	                	
-	               
-	            	    int x = Mouse.getX();
-	            	    int y = Mouse.getY();
-	            	    System.out.println("x="+xPercent + " Start = " + xStart);
-//	            	    
-//	            	    System.out.println(world.getCamera().getX());
-//	            	    System.out.println("MOUSE DOWN @ X: " + x + " Y: " + y);
-	                    // Place the tree somewhere in the world
-	            	    
-	            	  //  for(Tile tile : (Tile) layer.tiles)//check for intercecting tiles
-	            	    	
-	    
-	            	    	
-	                    Tile tile = new Tile("res/tests/img/tree.png",
-	                    		
-	                    		(((int)( xStart - (1-xPercent)*world.getCamera().getWidth())) / GRID * GRID) - 36 ,  
-	                    		(((int)( yStart - (1-yPercent)*world.getCamera().getHeight())) / GRID * GRID) - 36 );
-//	                    
-//	                    System.out.println("Mouse: " + x + ", Camera: " + world.getCamera().getX() + ", Zoom: " + world.getCamera().getZoomLevel());
+	                {	            	    	
+	            	    int x = (int)(-world.getCamera().getX() + world.getCamera().getZoomLevel() * (Mouse.getX() - world.getCamera().getWidth()/2));
+	            	    int y = (int)(-world.getCamera().getY() + world.getCamera().getZoomLevel() * (Mouse.getY() - world.getCamera().getHeight()/2));
+
 	                    
+	            	    if(x >= 0)
+		            	    x = x / GRID * (GRID  + 1);
+	            	    else
+		            	    x = x / GRID * (GRID) - GRID;
+	            	    
+	            	    
+	            	    if(y >= 0)
+		            	    y = y / GRID * (GRID);
+	            	    else
+		            	    y = (y / GRID * (GRID)) - GRID;
+	            	    
+	            	    
+
+
+	                    Tile tile = new Tile(dir+sprites[index],x,y);
 	                    
 	                    // Add the tile to the current layer
 	                    layer.addTile(tile);
@@ -150,16 +163,10 @@ public class WorldCreator {
 	                }
 	                if (Mouse.isButtonDown(1)) 
 	                {
-	                	
-	                	float xPercent = ((float)Mouse.getX()) /((float)WINDOW_HEIGHT);
-	                	float xStart = (float) (-world.getCamera().getX() + world.getCamera().getWidth()/2);
-	                	
-	                	float yPercent = Mouse.getY()/(world.getCamera().getZoomLevel() * world.getCamera().getHeight());
-	                	int yStart = -world.getCamera().getY() + world.getCamera().getHeight()/2;
 
 	                	layer.remove(
-	                    		((( xStart - (1-xPercent)*world.getCamera().getWidth()))) - 36 ,  
-	                    		((( yStart - (1-yPercent)*world.getCamera().getHeight()))) - 36 );
+	                    		-world.getCamera().getX() + world.getCamera().getZoomLevel() * (Mouse.getX() - world.getCamera().getWidth()/2),
+	                    		-world.getCamera().getY() + world.getCamera().getZoomLevel() * (Mouse.getY() - world.getCamera().getHeight()/2) );
 	                    
 	                    
 	                }
@@ -170,26 +177,6 @@ public class WorldCreator {
 	            
 	            // Draw the world in its entirety
 	            {
-//	                float x = Mouse.getX();
-//	                float y = Mouse.getY();
-////
-//////	                if (x < 50.0f && x > 0.0f) {
-//////	                    x = -0.05f;
-//////	                } else if (x > 590.0f && x < 640.0f) {
-//////	                    x = 0.05f;
-//////	                } else {
-//////	                    x = 0;
-//////	                }
-//////
-//////	                if (y < 50.0f && y > 0.0f) {
-//////	                    y = -0.05f;
-//////	                } else if (y > 430.0f && y < 480.0f) {
-//////	                    y = 0.05f;
-//////	                } else {
-//////	                    y = 0;
-//	                }
-//	            	world.camera.move(x, y);
-	            	
 	            	
 	                world.draw();
 	            }
@@ -203,7 +190,8 @@ public class WorldCreator {
 //	                activeOverlay.bounds.y %= 4096;
 //	                activeOverlay.createIndexVertexBuffer(10, 10);
 	               // layer.draw();
-	                font.print(world.getCurrentEnvironment().toString(), 2, 10, 10);    
+	                font.print(sprites[index], 2, 10, 10); 
+	                
 	                shader.release();
 	            }
 	            
@@ -218,7 +206,8 @@ public class WorldCreator {
 	    }
 	 
 	    public static void main(String[] args) throws LWJGLException, IOException {
-	        new WorldCreator();
+		  	WorldCreator wc = new WorldCreator();
+	    	
 	    }
 
 }
