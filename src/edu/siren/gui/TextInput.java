@@ -125,7 +125,6 @@ public class TextInput extends Element {
                         event.event(this);
                     }
                 } else if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {
-                    // blah
                 } else {
                     boolean draw = true;
                     textState.nextChar = Keyboard.getEventCharacter();

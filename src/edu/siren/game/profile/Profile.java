@@ -16,7 +16,12 @@ public class Profile implements Serializable{
 	
 	// Sprite Name
 	private String spriteName;
-	private Player player;
+	
+	
+	private transient Player player;
+	
+	// Is this a new Profile?
+	private boolean newProfile;
 	
 	
 	/**
@@ -69,6 +74,18 @@ public class Profile implements Serializable{
 		// Return the Player
 		return player;
 		
+	}
+	/**
+	 * @return the newProfile
+	 */
+	public boolean isNewProfile() {
+		return newProfile;
+	}
+	/**
+	 * @param newProfile the newProfile to set
+	 */
+	public void setNewProfile(boolean newProfile) {
+		this.newProfile = newProfile;
 	}
 		
 }

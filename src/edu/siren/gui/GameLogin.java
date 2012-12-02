@@ -45,7 +45,6 @@ public class GameLogin implements Gui {
 	private ProfileManager profileManager;
 	
 	// Profile Input Shit
-	private TextInput characterName;
 	private String selectedSprite;
 	private Text profileError;
 	
@@ -166,12 +165,24 @@ public class GameLogin implements Gui {
 		// Existing Login
 		Text loginText = new Text("Load Profile", 2);
 		{
+			// create Profile Properties
 			loginText.position(181, 246);
+			loginText.onMouseDown(new ElementEvent(){
+
+				@Override
+				public boolean event(Element element) {
+					toggleWindow(WindowNames.Login);
+					return false;
+				}
+				
+			});
+			
+			// Add Text To Window
 			window.add(loginText);
-		}
+		}		
 		
 		// Start Hidden
-		window.hide();
+		window.disable();
 		
 		// Add the Window
 		gui.add(window);
@@ -203,7 +214,7 @@ public class GameLogin implements Gui {
 		window.add(characterText);
 		
 		// Enter Character Name
-		characterName = new TextInput();
+		TextInput characterName = new TextInput();
 		{
 			characterName.position(220, 325);
 			characterName.background("res/game/gui/text-input.png");
@@ -343,7 +354,7 @@ public class GameLogin implements Gui {
 		{
 		
 			createProfile.position(210, 210);
-			createProfile.onMouseDown(new ProfileRegisterEvent());
+			createProfile.onMouseDown(new ProfileRegisterEvent(characterName));
 			window.add(createProfile);
 			
 		}
@@ -374,19 +385,99 @@ public class GameLogin implements Gui {
 		window.add(profileError);
 		
 		// Hide the Window
-		window.hide();
+		window.disable();
 		
 		// Add to Gui
 		gui.add(window);
 		
 	}
 	
-	private void buildLogin() {
+	/**
+	 * Build the Screen so the player can log in.
+	 * 
+	 */
+	private void buildLogin() throws IOException {
+		
+		// Create the Window
+		Window window = new Window(WindowNames.Login.toString());
+		window.dimensions(screen.width, screen.height);
+		windows.add(window);
+		
+		// Image for prettiness
+		Image loginSplash = new Image("res/game/gui/login-splash.png");
+		loginSplash.position(0, 0);
+		window.add(loginSplash);
+		
+		// Set Title
+		Text title = new Text("---------   Load Profile   ---------", 2);
+		title.position(40, 375);
+		window.add(title);
+		
+		// Character Name
+		Text characterText = new Text("Character Name");
+		characterText.position(20, 325);
+		characterText.fontScaling(2);
+		window.add(characterText);
+		
+		// Enter Character Name
+		TextInput characterName = new TextInput();
+		{
+			characterName.position(220, 325);
+			characterName.background("res/game/gui/text-input.png");
+			characterName.fontScaling(3);
+			characterName.maxLength(20);
+
+			characterName.fontColor(1.0f, 1.0f, 1.0f);
+			characterName.backgroundColor(1.0f, 0.0f, 0.0f);
+			characterName.padding(20.0f, 20.0f);
+						
+			window.add(characterName);
+		}
+		
+		// Create Profile Button
+		Image loadProfile = new Image("res/game/gui/load-profile.png");
+		{
+		
+			loadProfile.position(210, 210);
+			loadProfile.onMouseDown(new ProfileLoadEvent(characterName));
+			window.add(loadProfile);
+			
+		}
+		
+		// Create Profile Button
+		Image cancelButton = new Image("res/game/gui/cancel.png");
+		{
+		
+			// Set Button Characterstics
+			cancelButton.position(330, 210);
+			cancelButton.onMouseDown(new ElementEvent(){
+
+				@Override
+				public boolean event(Element element) {
+
+					toggleWindow(WindowNames.Menu);
+					
+					return false;
+				}
+				
+			});
+			window.add(cancelButton);
+			
+		}
+		
+		// Add Error Message to Window
+		window.add(profileError);
+		
+		// Hide the Window
+		window.disable();
+		
+		// Add Window to gui
+		gui.add(window);
 		
 	}
 	
 	private void resetScreens() {
-
+		
 		// Reset Errors
 		profileError.text("");
 		
@@ -397,9 +488,6 @@ public class GameLogin implements Gui {
 		
 		// Selected Sprite
 		selectedSprite = "";
-		
-		// Login Name
-		characterName.text("");
 		
 	}
 	
@@ -413,8 +501,10 @@ public class GameLogin implements Gui {
 			if (window.name().equalsIgnoreCase("Window <" + windowName.toString() + ">")) {
 				currentWindow = windowName;
 				window.show();
+				window.enable();
 			} else {
 				window.hide();
+				window.disable();
 			}
 			
 		}
@@ -450,7 +540,7 @@ public class GameLogin implements Gui {
             }
             
         }
-		
+        		
 	}
 	
 	@Override
@@ -466,6 +556,12 @@ public class GameLogin implements Gui {
 	
 	private class ProfileRegisterEvent implements ElementEvent {
 
+		private TextInput characterName;
+		
+		public ProfileRegisterEvent(TextInput characterName) {
+			this.characterName = characterName;
+		}
+		
 		@Override
 		public boolean event(Element element) {
 
@@ -479,7 +575,10 @@ public class GameLogin implements Gui {
 			profile.setName(characterName.text().trim());
 			
 			// Set Sprite Name
-			profile.setSpriteName(selectedSprite);
+			profile.setSpriteName(selectedSprite.trim());
+			
+			// Set New Profile
+			profile.setNewProfile(true);
 			
 			try {
 				
@@ -495,6 +594,61 @@ public class GameLogin implements Gui {
 			
 				// Show the Error message
 				profileError.text(pie.getMessage());
+				
+				// An Error Occurred... So, Let's not continue
+				return false;
+				
+			}
+			
+			// After Saving profile... Start the game
+			registerLoginComplete = true;
+			
+			// Save the Profile
+			GameLogin.this.profile = profile;
+			
+			// Returning false... why? I don't know... 
+			// Seems like a thing to do
+			return false;
+		
+		}
+		
+	}
+
+	private class ProfileLoadEvent implements ElementEvent {
+
+		private TextInput characterName;
+		
+		public ProfileLoadEvent(TextInput characterName) {
+			this.characterName = characterName;
+		}
+		
+		@Override
+		public boolean event(Element element) {
+
+			// Clear Error Message 
+			profileError.text("");
+			
+			// Validate the Profile
+			Profile profile = null;
+						
+			try {
+				
+				// Get the Profile
+				profile = profileManager.get(characterName.text().trim());
+				
+				// If we don't have a profile, 
+				if (profile == null) {
+					profileError.text("Could not load profile for " 
+							+ characterName.text().trim());
+				}	
+				
+			} catch(ProfileException pie ) {
+			
+				// Show the Error message
+				profileError.text(pie.getMessage());
+				
+				// An Error Occurred... So, Let's not continue
+				return false;
 				
 			}
 			
@@ -513,6 +667,10 @@ public class GameLogin implements Gui {
 	}
 
 
+	public boolean loginComplete() {
+		return registerLoginComplete;
+	}
+	
 	/**
 	 * @return the profile
 	 */

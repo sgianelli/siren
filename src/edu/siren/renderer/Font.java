@@ -1,9 +1,8 @@
 package edu.siren.renderer;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
 import edu.siren.core.geom.Rectangle;
@@ -16,7 +15,7 @@ import edu.siren.core.geom.Rectangle;
  *
  * @author Justin Van Horne <justinvh@gmail.com>
  */
-public class Font {
+public class Font implements Serializable {
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;

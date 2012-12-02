@@ -13,7 +13,13 @@ import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
 
 public class Player extends Actor {
-    public Camera camera = null;
+	
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2363703736908492621L;
+	public Camera camera = null;
     public boolean follow = false;
     public boolean controllable = true;
     public boolean hadMovement = false;

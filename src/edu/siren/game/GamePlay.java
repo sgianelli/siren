@@ -64,11 +64,18 @@ public class GamePlay {
 	}
 	
 	
-	public void play() {
+	public boolean play() {
+		
+		// Game Play
+		boolean gamePlay = true;
 		
         // The close event can take a bit to propagate
         while (screen.nextFrame()) {     
 
+        	// If the Screen is Closed...
+        	if (!screen.isOpened())
+        		break;
+        	
         	// Handle the Zoom
         	if (Keyboard.isKeyDown(Keyboard.KEY_Z))
         		world.zoomIn();
@@ -100,6 +107,10 @@ public class GamePlay {
 		            	helpMenu.show();
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 		            	world.play();
+		            } else if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
+		            	// Quit game plays
+		            	gamePlay = false;
+		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_K ) {
 		            	
 		            	gameStatus.setHealth(gameStatus.getHealth() - 1);
@@ -122,7 +133,14 @@ public class GamePlay {
             // Update Game Status
             gameStatus.update();
             
+            // Quit Game
+            if (!gamePlay)
+            	break;
+            
         }
+        
+        // Return to indicate that we are playin
+        return gamePlay;
         
 	}
 	

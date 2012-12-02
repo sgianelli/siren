@@ -1,11 +1,15 @@
 package edu.siren;
 
+import java.io.IOException;
+
+import org.lwjgl.LWJGLException;
+
 import edu.siren.game.GamePlay;
 import edu.siren.game.gui.Intro;
 import edu.siren.game.gui.Title;
 import edu.siren.game.profile.Profile;
+import edu.siren.game.profile.ProfileManager;
 import edu.siren.gui.GameLogin;
-import edu.siren.gui.Gui;
 import edu.siren.renderer.Screen;
 
 /**
@@ -17,37 +21,32 @@ import edu.siren.renderer.Screen;
 public class Siren {
 	
 	
+	private ProfileManager profileManager;
+	private Screen screen;
+	private Profile currentProfile;
+
+	private boolean gamePlay;
+	
+	public Siren() throws LWJGLException {
+		
+		// Profile Manager
+		this.profileManager = new ProfileManager();
+		
+		// Create Screen for Game Play
+		this.screen = new Screen("Siren", 512, 448);
+		
+		// Assume game Play to start
+		gamePlay = true;
+		
+	}
+	
 	public static void main(String[] args) {
 		
 		try {
-			
-			// Create Screen for Game Play
-			Screen screen = new Screen("Gui Standalone Test", 512, 448);
 
-			// Game Profile
-			Profile profile = null;
-			
-			Gui intro = new Intro(screen);
-			
-            while (intro.running()) {
-                intro.run();
-            }
-            
-			// Show the Profile Login Screen
-			GameLogin gl = new GameLogin(screen);
-			
-			// Run the Game
-			gl.run();
-			
-			// Get the Profile
-			profile = gl.getProfile();
-				
-			// Start the Game
-			GamePlay gamePlay = new GamePlay(screen, profile);
-			gamePlay.play();
-			
-			// Cleanup 
-			screen.cleanup();
+			Siren siren = new Siren();
+			siren.play();
+
 		
 		} catch (Exception e) {
 			
@@ -59,5 +58,66 @@ public class Siren {
 		
 	}
 	
+	public void play() throws IOException, LWJGLException {
+		
+		
+		// Create Splash
+		Title splashScreen = new Title(screen);
+
+		// Show Splash screen
+		gamePlay = splashScreen.show();
+		
+		// Play the Game
+		while(gamePlay) {
+						
+			// Show the Profile Login Screen
+			GameLogin gl = new GameLogin(screen);
+			gl.run();
+
+			// Do we Continue?
+			if (!gl.loginComplete())
+				break;
+			
+			// Get the Profile
+			currentProfile = gl.getProfile();
+
+			// Play Game 
+			showGame();
+			
+			// Save the Profile
+			if (currentProfile != null) {
+				profileManager.save(currentProfile);
+			}
+			
+		}
+			
+					
+		// Screen Cleanup
+		screen.cleanup();
+		
+	}
+	
+	private void showGame() throws IOException, LWJGLException {
+		
+		// If we have a profile, let's play
+		if (currentProfile == null)
+			return;
+			
+			// New Profiles
+			if ( currentProfile.isNewProfile()) {
+				
+				// Show the Intro
+				Intro intro = new Intro(screen);
+				while(intro.running()) {
+					intro.run();
+				}
+				
+			}
+			
+			// Start the Game
+			GamePlay gamePlay = new GamePlay(screen, currentProfile);
+			gamePlay.play();
+			
+	}
 
 }

@@ -88,6 +88,7 @@ public class Title implements Gui {
     	
         
         while (screen.isOpened()) {
+        	
             screen.clear();
             gui.draw();
             screen.update();
