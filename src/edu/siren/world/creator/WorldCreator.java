@@ -33,14 +33,29 @@ public class WorldCreator extends JFrame {
      public static int WORLD_HEIGHT = 5000;
      public static int WINDOW_WIDTH = 512;
      public static int WINDOW_HEIGHT = 448;
-     public static int GRID = 32; // default 32
+     public static int GRID = 16; // default 32
 
 	 Screen screen;
 	 public String sprite = "tree.png";
 	 
 	 int index = 0;
-	 String[] sprites = {"tree.png","weeds.png","grass.png","rock-dirt.png","rock-cliff.png"};
-	 String dir = "res/tests/img/";
+	 String[] sprites = {
+			 
+			 "hill-top-left.png","hill-top-left-2.png","hill-top.png","hill-top-right-2.png","hill-top-right.png",
+			 "hill-left.png","hill-right.png",
+			 "hill-bottom-left.png","hill-bottom.png","hill-bottom-right.png","stone.png",
+			 "grass.png","stairs.png",
+			 
+			 "water-top-left.png","water-top.png","water-top-right.png","water-left.png","water.png","water-right.png",
+			 "water-bottom-left.png","water-bottom.png","water-bottom-right.png",
+			 
+	 
+	 
+	 
+	 
+	 
+	 };
+	 String dir = "res/game/sprites/tiles/";
 	 
 
 	 WorldCreator() throws LWJGLException, IOException {
@@ -141,7 +156,7 @@ public class WorldCreator extends JFrame {
 
 	                    
 	            	    if(x >= 0)
-		            	    x = x / GRID * (GRID  + 1);
+		            	    x = x / GRID * (GRID );
 	            	    else
 		            	    x = x / GRID * (GRID) - GRID;
 	            	    
