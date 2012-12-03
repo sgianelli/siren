@@ -1,7 +1,21 @@
 package edu.siren.world.creator;
 
 
+import java.awt.Canvas;
 import java.io.IOException;
+import static org.lwjgl.opengl.GL11.GL_NICEST;
+import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
+import static org.lwjgl.opengl.GL11.glHint;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.ContextAttribs;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
+
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,7 +41,7 @@ import edu.siren.renderer.Shader;
 
 import org.lwjgl.input.Mouse;
 
-public class WorldCreator extends JFrame {
+public class WorldCreator extends Thread{
 
      public static int WORLD_WIDTH = 5000;
      public static int WORLD_HEIGHT = 5000;
@@ -35,7 +49,7 @@ public class WorldCreator extends JFrame {
      public static int WINDOW_HEIGHT = 448;
      public static int GRID = 16; // default 32
 
-	 Screen screen;
+	 WorldCanvas screen;
 	 public String sprite = "tree.png";
 	 
 	 int index = 0;
@@ -49,6 +63,8 @@ public class WorldCreator extends JFrame {
 			 "water-top-left.png","water-top.png","water-top-right.png","water-left.png","water.png","water-right.png",
 			 "water-bottom-left.png","water-bottom.png","water-bottom-right.png",
 			 
+			 "sign.png","pot.png"
+			 
 	 
 	 
 	 
@@ -59,8 +75,10 @@ public class WorldCreator extends JFrame {
 	 
 
 	 WorldCreator() throws LWJGLException, IOException {
+	 
+	 }
 		 
-		 
+		 public void run(){
 		 
 		 
 		 
@@ -68,7 +86,9 @@ public class WorldCreator extends JFrame {
 		 
 	        Random random = new Random();
 		 
-	        screen = new Screen("World Creator", WINDOW_WIDTH, WINDOW_HEIGHT);
+	       try {
+			screen = new WorldCanvas();
+
 	        
 	        World world = new BasicWorld(WORLD_WIDTH, WORLD_HEIGHT);
 	        
@@ -169,7 +189,7 @@ public class WorldCreator extends JFrame {
 	            	    
 
 
-	                    Tile tile = new Tile(dir+sprites[index],x,y);
+	                    Tile tile = new Tile(sprite,x,y);
 	                    
 	                    // Add the tile to the current layer
 	                    layer.addTile(tile);
@@ -205,7 +225,7 @@ public class WorldCreator extends JFrame {
 //	                activeOverlay.bounds.y %= 4096;
 //	                activeOverlay.createIndexVertexBuffer(10, 10);
 	               // layer.draw();
-	                font.print(sprites[index], 2, 10, 10); 
+	                font.print(sprite, 2, 10, 10); 
 	                
 	                shader.release();
 	            }
@@ -218,6 +238,14 @@ public class WorldCreator extends JFrame {
 	        
 	        // Do any sort of LWJGL cleanups
 	        screen.cleanup();
+	        
+			} catch (LWJGLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 	    }
 	 
 	    public static void main(String[] args) throws LWJGLException, IOException {
@@ -225,4 +253,18 @@ public class WorldCreator extends JFrame {
 	    	
 	    }
 
+	    
+	    public Canvas getCanvas(){
+			return screen;
+	    }
+
+		public void setCanvas(Canvas canvas) throws LWJGLException {
+			screen.setCanvas(canvas);
+			
+		}
+
+		public void setTile(String sprite) {
+			this.sprite = sprite;
+			
+		}
 }
