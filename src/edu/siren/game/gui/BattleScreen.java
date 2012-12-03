@@ -100,6 +100,7 @@ public class BattleScreen implements Gui {
                 window.add(battlebar);
             }
             
+            // moves
             final Image attackhover = new Image("res/game/gui/battle/attack-hover.png");
             final Image movehover = new Image("res/game/gui/battle/defend-hover.png");
             final Image specialhover = new Image("res/game/gui/battle/special-hover.png");

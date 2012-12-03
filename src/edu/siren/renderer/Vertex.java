@@ -7,7 +7,7 @@ package edu.siren.renderer;
  */
 public class Vertex {
     public float[] vxyzw = new float[] { 0f, 0f };
-    public float[] vrgba = new float[] { 1f, 1f, 1f };
+    public float[] vrgba = new float[] { 1f, 1f, 1f, 1.0f};
     public float[] vst = new float[] { 0f, 0f };
     
     /**
@@ -45,6 +45,7 @@ public class Vertex {
         vrgba[0] = r;
         vrgba[1] = g;
         vrgba[2] = b;
+        vrgba[3] = a;
     }
 
     /**
@@ -54,6 +55,7 @@ public class Vertex {
         vrgba[0] = r;
         vrgba[1] = g;
         vrgba[2] = b;
+        vrgba[3] = 1.0f;
     }
 
     /**
@@ -68,7 +70,7 @@ public class Vertex {
      */
     public final class Size {
         static final int position = 2;
-        static final int color = 3;
+        static final int color = 4;
         static final int texture = 2;
         static final int total = position + color + texture;
     }
@@ -124,6 +126,7 @@ public class Vertex {
         this.vrgba[0] = rgba[0];
         this.vrgba[1] = rgba[1];
         this.vrgba[2] = rgba[2];
+        this.vrgba[3] = rgba[3];
     }
         
 }

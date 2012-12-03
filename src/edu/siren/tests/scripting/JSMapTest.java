@@ -23,6 +23,7 @@ import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.core.tile.Tile;
+import edu.siren.core.tile.World.Environment;
 import edu.siren.game.Player;
 import edu.siren.game.gui.Intro;
 import edu.siren.game.gui.Title;
@@ -119,6 +120,7 @@ public class JSMapTest {
        rain.bounds.height = 8096;
        
        // Disable the camera
+        jsworld.world.changeEnvironment(Environment.DUSK, 500.0f);
         jsworld.world.getCamera().disable();
         
         // Draw as usual

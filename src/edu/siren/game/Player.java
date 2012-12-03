@@ -232,10 +232,10 @@ public class Player extends Actor {
 
     @Override
     public void renderStatus() {
-        statusFont.print("H:" + health + "/100" + "\nM:" + moves,
-            3, 
+        statusFont.color(0.0f, 0.0f, 0.0f, 0.50f);
+        statusFont.print("" + health, 2, 
             sprite.spriteX - sprite.getRect().width / 2.0f - 2.0f, 
-            sprite.spriteY + sprite.getRect().height + 8.0f);
+            sprite.spriteY + sprite.getRect().height + 4.0f);
     }
     
     public void createMoveOverlay() {
