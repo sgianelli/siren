@@ -22,7 +22,7 @@ import edu.siren.renderer.Drawable;
 
 public abstract class Entity implements Drawable {
     protected AI ai;
-    protected String name;
+    public String name;
     protected JSONObject json;
     protected EntityStats entityStats = new EntityStats();
     public Sprite sprite = new Sprite();

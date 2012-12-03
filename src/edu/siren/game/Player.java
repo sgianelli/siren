@@ -13,8 +13,6 @@ import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
 
 public class Player extends Actor {
-	
-	
     /**
 	 * 
 	 */

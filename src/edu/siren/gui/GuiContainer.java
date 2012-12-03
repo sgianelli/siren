@@ -37,7 +37,7 @@ public class GuiContainer extends Element {
     
     @Override
 	public Element add(Element element) {
-        add(element, 0);
+        add(element, element.priority());
         return element;
     }
     

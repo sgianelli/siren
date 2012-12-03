@@ -23,7 +23,7 @@ public class BattleScreen implements Gui {
 
 	// Game Components
     final private GuiContainer gui = new GuiContainer();
-    public enum Action { NONE, MOVE, ATTACK };
+    public enum Action { NONE, MOVE, ATTACK, DEFEND, SPECIAL, RUN, SKIP_TURN, USE_ITEM, HELP };
     private Action action = Action.NONE;
     private Action nextAction = null;
 	private Screen screen;
@@ -51,6 +51,11 @@ public class BattleScreen implements Gui {
         if (nextAction != null) {
             action = nextAction;
             nextAction = null;
+            if (action == Action.SKIP_TURN) {
+                clear();
+                battleManager.next();
+                return;
+            }
         }
         gui.draw();
 	}
@@ -89,60 +94,282 @@ public class BattleScreen implements Gui {
                 window.add(overlayTile);
             }
             
-            final Text attack = new Text("attack", 2);
+            final Image battlebar = new Image("res/game/gui/battle/battle-bar.png");
             {
-                attack.xy(x, y);
-                
-                attack.onMouseUp(new ElementEvent() {
+                battlebar.xy(0, 8);
+                window.add(battlebar);
+            }
+            
+            final Image attackhover = new Image("res/game/gui/battle/attack-hover.png");
+            final Image movehover = new Image("res/game/gui/battle/defend-hover.png");
+            final Image specialhover = new Image("res/game/gui/battle/special-hover.png");
+            final Image runhover = new Image("res/game/gui/battle/run-hover.png");
+            final Image skipturnhover = new Image("res/game/gui/battle/skip-turn-hover.png");
+            final Image useitemhover = new Image("res/game/gui/battle/use-item-hover.png");
+            final Image helphover = new Image("res/game/gui/battle/help-hover.png");
+            
+            // attackhover
+            {
+                attackhover.xy(116, 34);
+                attackhover.hide();
+                attackhover.onMouseEnter(new ElementEvent() {
                     public boolean event(Element element) {
-                        attack.text("Select a tile / enemy");
-                        attack.x(attack.x() + 16);
+                        attackhover.show();
+                        return false;
+                    }
+                });
+                attackhover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        attackhover.hide();
+                        return false;
+                    }
+                });
+                attackhover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        attackhover.show();
+                        attackhover.disable();
+                        movehover.enable();
+                        specialhover.enable();
+                        runhover.enable();
+                        skipturnhover.enable();
+                        useitemhover.enable();
+                        helphover.enable();
                         nextAction = Action.ATTACK;
                         overlayTile.show();
                         return true;
                     }
                 });
-                        
-                y += dy;
-                window.add(attack);
+                window.add(attackhover);
             }
             
-            final Text move = new Text("move", 2);
+            // movehover
             {
-                move.xy(x, y);
-                move.hoverColor(0.75f, 1.0f, 1.0f);
-                y += dy;
-                move.onMouseUp(new ElementEvent() {
+                movehover.xy(attackhover.x() + attackhover.w(), 34);
+                movehover.hide();
+                movehover.onMouseEnter(new ElementEvent() {
                     public boolean event(Element element) {
-                        move.text("Select a tile");
-                        move.x(move.x() + 16);
+                        movehover.show();
+                        return false;
+                    }
+                });
+                movehover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        movehover.hide();
+                        return false;
+                    }
+                });
+                movehover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        movehover.show();
+                        attackhover.enable();
+                        movehover.disable();
+                        specialhover.enable();
+                        runhover.enable();
+                        skipturnhover.enable();
+                        useitemhover.enable();
+                        helphover.enable();
                         nextAction = Action.MOVE;
-                        overlayTile.hide();
+                        overlayTile.show();
                         return true;
                     }
                 });
-                    
-                window.add(move);
+                window.add(movehover);
             }
             
-            final Text defend = new Text("defend", 2);
+            // specialhover
             {
-                defend.xy(x, y);
-                defend.hoverColor(0.75f, 1.0f, 1.0f);
-                y += dy;
-                window.add(defend);
+                specialhover.xy(movehover.x() + movehover.w(), 34);
+                specialhover.hide();
+                specialhover.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        specialhover.show();
+                        return false;
+                    }
+                });
+                specialhover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        specialhover.hide();
+                        return false;
+                    }
+                });
+                specialhover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        specialhover.show();
+                        attackhover.enable();
+                        movehover.enable();
+                        specialhover.disable();
+                        runhover.enable();
+                        skipturnhover.enable();
+                        useitemhover.enable();
+                        helphover.enable();
+                        nextAction = Action.SPECIAL;
+                        overlayTile.show();
+                        return true;
+                    }
+                });
+                window.add(specialhover);
             }
             
-            final Text special = new Text("special", 2);
+            // runhover
             {
-                special.xy(x, y);
-                special.hoverColor(0.75f, 0.0f, 0.0f);
-                y += dy;
-                window.add(special);
+                runhover.xy(specialhover.x() + specialhover.w(), 34);
+                runhover.hide();
+                runhover.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        runhover.show();
+                        return false;
+                    }
+                });
+                runhover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        runhover.hide();
+                        return false;
+                    }
+                });
+                runhover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        runhover.show();
+                        attackhover.enable();
+                        movehover.enable();
+                        specialhover.enable();
+                        runhover.disable();
+                        skipturnhover.enable();
+                        useitemhover.enable();
+                        helphover.enable();
+                        nextAction = Action.RUN;
+                        overlayTile.show();
+                        
+                        return true;
+                    }
+                });
+                window.add(runhover);
             }
             
+             // skipturnhover
+            {
+                skipturnhover.xy(125, 11);
+                skipturnhover.hide();
+                skipturnhover.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        skipturnhover.show();
+                        return false;
+                    }
+                });
+                skipturnhover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        skipturnhover.hide();
+                        return false;
+                    }
+                });
+                skipturnhover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        skipturnhover.show();
+                        attackhover.enable();
+                        movehover.enable();
+                        specialhover.enable();
+                        runhover.enable();
+                        skipturnhover.disable();
+                        useitemhover.enable();
+                        helphover.enable();
+                        nextAction = Action.SKIP_TURN;
+                        overlayTile.show();
+                        return true;
+                    }
+                });
+                window.add(skipturnhover);
+            }            
+            
+            // useitemhover
+            {
+                useitemhover.xy(skipturnhover.x() + skipturnhover.w(), 11);
+                useitemhover.hide();
+                useitemhover.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        useitemhover.show();
+                        return false;
+                    }
+                });
+                useitemhover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        useitemhover.hide();
+                        return false;
+                    }
+                });
+                useitemhover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        runhover.show();
+                        attackhover.enable();
+                        movehover.enable();
+                        specialhover.enable();
+                        runhover.enable();
+                        skipturnhover.enable();
+                        useitemhover.disable();
+                        helphover.enable();
+                        nextAction = Action.USE_ITEM;
+                        overlayTile.show();
+                        return true;
+                    }
+                });
+                window.add(useitemhover);
+            }            
+            
+            // helphover
+            {
+                helphover.xy(useitemhover.x() + useitemhover.w(), 11);
+                helphover.hide();
+                helphover.onMouseEnter(new ElementEvent() {
+                    public boolean event(Element element) {
+                        helphover.show();
+                        return false;
+                    }
+                });
+                helphover.onMouseExit(new ElementEvent() {
+                    public boolean event(Element element) {
+                        helphover.hide();
+                        return false;
+                    }
+                });
+                helphover.onMouseUp(new ElementEvent() {
+                    public boolean event(Element element) {
+                        runhover.show();
+                        attackhover.enable();
+                        movehover.enable();
+                        specialhover.enable();
+                        runhover.enable();
+                        skipturnhover.enable();
+                        useitemhover.enable();
+                        helphover.disable();
+                        nextAction = Action.HELP;
+                        overlayTile.show();
+                        return true;
+                    }
+                });
+                window.add(helphover);
+            }  
+            
+            final Image earth = new Image("res/game/gui/battle/earth.png");
+            {
+                earth.xy(455, 35);
+                window.add(earth);
+            }
+            
+            final Image actions = new Image("res/game/gui/battle/actions.png");
+            {
+                actions.xy(120, 12);
+                window.add(actions);
+            }
+            
+            String playertype = member.name.toLowerCase();
+            final Image playericon = new Image("res/game/gui/battle/" + playertype + ".png");
+            {
+                playericon.xy(0, 28);
+                window.add(playericon);
+            }
+                
             Window actionWindow = new Window("Action Window");
             {
+                actionWindow.xy(0, 128);
+                actionWindow.priority(100);
                 actionWindow.onMouseUp(new ElementEvent() {
                     public boolean event(Element what) {
                         switch (action) {
@@ -150,7 +377,6 @@ public class BattleScreen implements Gui {
                             handleAttack(member, Mouse.getX(), Mouse.getY());
                             break;
                         case MOVE:
-                            overlayTile.hide();
                             handleMove(member, Mouse.getX(), Mouse.getY());
                             break;
                         default:
@@ -179,7 +405,7 @@ public class BattleScreen implements Gui {
                         }
                     }
                 });
-                gui.add(actionWindow);
+                window.add(actionWindow);
             }
             
             gui.add(window);

@@ -447,7 +447,7 @@ public abstract class Element implements Comparable<Element> {
             state.lastEntered = false;
             for (ElementEvent event : this.events.mouseExit) {
                 if (event.event(this))
-                    break;
+                    return true;
             }            
         // If we are in bounds then handle the base cases.
         // These events always fire
@@ -456,7 +456,7 @@ public abstract class Element implements Comparable<Element> {
             if (!state.lastEntered) {
                 for (ElementEvent event : this.events.mouseEnter) {
                     if (event.event(this))
-                        break;
+                        return true;
                 }
             }
             
@@ -465,7 +465,7 @@ public abstract class Element implements Comparable<Element> {
             // Handle mouse hover
             for (ElementEvent event : this.events.mouseHover) {
                 if (event.event(this))
-                    break;
+                    return true;
             }
         }
                 
@@ -478,20 +478,20 @@ public abstract class Element implements Comparable<Element> {
                 state.dragging = true;
                 for (ElementEvent event : this.events.dragStart) {
                     if (event.event(this))
-                        break;
+                        return true;
                 }
             } else if (click && state.dragging) {
                 state.x += mdx;
                 state.y += mdy;                
                 for (ElementEvent event : this.events.dragging) {
                     if (event.event(this))
-                        break;
+                        return true;
                 }
             } else if (state.dragging && !click && state.lastClickState) {
                 state.dragging = false;
                 for (ElementEvent event : this.events.dragEnd) {
                     if (event.event(this))
-                        break;
+                        return true;
                 }
             }            
         }
@@ -512,14 +512,14 @@ public abstract class Element implements Comparable<Element> {
         if (mouseDown) {             
             for (ElementEvent event : this.events.mouseDown) {
                 if (event.event(this))
-                    break;
+                    return true;
             }
             
         // Handle state for mouse release
         } else if (mouseUp) {
             for (ElementEvent event : this.events.mouseUp) {
                 if (event.event(this))
-                    break;
+                    return true;
             }
         }
         

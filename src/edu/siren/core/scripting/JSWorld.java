@@ -118,7 +118,7 @@ public class JSWorld {
         camera.setPosition(-256, -224);
         
         // Add A team
-        int x = 256 - (a.players.size() * 32), y = 32;
+        int x = 256 - (a.players.size() * 32), y = 128;
         for (Player player : a.players) {
             player.follow = false;
             player.controllable = false;
@@ -133,7 +133,7 @@ public class JSWorld {
         }
         
         x = 256 - (b.players.size() * 32);
-        y = 416;
+        y = 352;
         for (Player player : b.players) {
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
