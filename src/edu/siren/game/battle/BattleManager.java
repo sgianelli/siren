@@ -2,6 +2,7 @@ package edu.siren.game.battle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
@@ -234,6 +235,7 @@ public class BattleManager {
         float x = Mouse.getX();
         float y = Mouse.getY();
         boolean click = Mouse.isButtonDown(0);
+        Random random = new Random();
         
         boolean valid = false;
         for (int i = 0; i < active.players.size(); i++) {
@@ -247,6 +249,26 @@ public class BattleManager {
             
             if (member.moves > 0) {
                 valid = true;
+                if (member.hasAI() && member.possibleMoveOverlay.size() > 0) {
+                    int n = random.nextInt(member.possibleMoveOverlay.size());
+                    boolean doBreak = false;
+                    for (int k = 0; k < member.possibleMoveOverlay.size(); k++) {
+                        Tile tile = member.possibleMoveOverlay.get(k);
+                        for (Player player : red.players) {
+                            if (tile.contains(player.x, player.y)) {
+                                actionAttack(member, (int)player.x, (int)player.y);
+                                doBreak = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (doBreak)
+                        break;
+                    
+                    Rectangle r = member.possibleMoveOverlay.get(n).bounds;
+                    actionMove(member, (int) r.x, (int) r.y);
+                }
                 break;
             }
         }

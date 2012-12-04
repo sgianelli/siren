@@ -31,6 +31,7 @@ import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.ai.Swarmer;
 import edu.siren.game.battle.BattleManager;
 import edu.siren.game.battle.Team;
 import edu.siren.game.battle.TeamMemberDieEvent;
@@ -151,6 +152,7 @@ public class JSWorld {
         for (Player player : b.players) {
             player.px = player.x;
             player.py = player.y;
+            player.setAI(new Swarmer());
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;

@@ -12,6 +12,7 @@ public class Pikachu extends Player {
     public Pikachu() throws IOException {
         this.speed = 40;
         this.moves = 6;
+        this.maxMoves= 6;
         this.name = "Pikachu";
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(

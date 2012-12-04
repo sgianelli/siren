@@ -366,4 +366,8 @@ public class Player extends Actor {
             world.entities.remove(this);
         }
     }
+
+    public boolean hasAI() {
+        return ai != null;
+    }
 }

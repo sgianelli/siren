@@ -9,6 +9,8 @@ import edu.siren.game.Player;
 public class Red extends Player {
     public Red() throws IOException {
         this.speed = 25;
+        this.maxMoves = 6;
+        this.moves = 6;
         this.name = "Red";
         SpriteSheet redsheet;
             redsheet = SpriteSheet.fromCSS(

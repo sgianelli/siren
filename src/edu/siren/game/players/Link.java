@@ -12,6 +12,8 @@ public class Link extends Player {
     public Link() throws IOException {
         this.speed = 40;
         this.name = "Link";
+        this.maxMoves = 5;
+        this.moves = 5;
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(
                     "res/game/sprites/characters/link.png",

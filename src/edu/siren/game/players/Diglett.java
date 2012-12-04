@@ -11,6 +11,8 @@ public class Diglett extends Player {
 
     public Diglett() throws IOException {
         this.speed = 25;
+        this.maxMoves = 4;
+        this.moves = 4;
         this.name = "Diglett";
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(
