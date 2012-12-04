@@ -69,6 +69,9 @@ public class GameLogin implements Gui {
 	// Profile Logged In
 	private Profile profile;
 	
+	// World Selection
+	private WorldSelection worldSelection;
+	
 	
 	public GameLogin(Screen screen) throws IOException {
 		
@@ -80,6 +83,9 @@ public class GameLogin implements Gui {
 		
 		// Create Profile manager
 		profileManager = new ProfileManager();
+		
+		// Create World Selector
+		worldSelection = new WorldSelection(screen);
 		
 		// Create the LIst of Windows
 		windows = new ArrayList<Window>();
@@ -625,6 +631,9 @@ public class GameLogin implements Gui {
             }
             
         }
+        
+        // Before we Leave
+        profile.setWorld(worldSelection.selectWorld());
         		
 	}
 	

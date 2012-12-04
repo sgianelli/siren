@@ -34,6 +34,7 @@ public class Siren {
 		
 		// Create Screen for Game Play
 		this.screen = new Screen("Siren", 512, 448);
+		this.screen.backgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		// Assume game Play to start
 		gamePlay = true;
