@@ -43,6 +43,7 @@ public abstract class World {
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
     public HashMap<String, Tile> tiles = new HashMap<String, Tile>();
+    public ArrayList<Thread> musicThreads = new ArrayList<Thread>();
     public SpriteSheet sprites;
     public boolean collisionGrid[];
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
@@ -59,7 +60,7 @@ public abstract class World {
     private int fboid = -1, fbotid = -1;
     protected Perspective2D fboPerspective = new Perspective2D();
     protected Font font;
-    private Shader fboShader = null;
+    protected Shader fboShader = null;
     public Tile fboTile = new Tile(0.0f, 0.0f, 512.0f, 448.0f);
 
     public enum Environment {
@@ -69,6 +70,7 @@ public abstract class World {
     private Environment currentEnvironment = Environment.AFTERNOON;
     private boolean zoomPressed;
     public BattleManager battleManager = null;
+    public World battleWorld = null;
     
     /**
      * Constructs a new world of a given width and height. Note that this
@@ -114,6 +116,9 @@ public abstract class World {
     }
 
     public abstract void create() throws IOException;    
+    public void preDraw() { }
+    public void guiDraw() { }
+    
     /**
      * Environment transitions. These HSV values correspond to an environment.
      * Additional effects can be created by simply setting a new state.
@@ -198,6 +203,11 @@ public abstract class World {
      * Draws the layers, followed by the entities, and then the Hud
      */
     public void draw() {
+        if (battleWorld != null) {
+            battleWorld.draw();
+            return;
+        }
+        
         // If the engine is paused just re-render the FBO tile with the
         // previous frame
         if (isPaused()) {
@@ -233,6 +243,10 @@ public abstract class World {
         }
         worldShader.release();
         
+        fboShader.use();
+        guiDraw();
+        fboShader.release();
+        
         drawFBO();
         
         // Initial pass for the content
@@ -243,6 +257,10 @@ public abstract class World {
         // Check layer events
         for (Layer layer : layers) {
             layer.checkEvents();
+        }
+        
+        if (battleManager != null) {
+            battleManager.think();
         }
     }
 
@@ -340,5 +358,18 @@ public abstract class World {
             }
         }
         return null;
+    }
+    
+    public void cleanup() {
+        for (Thread thread : musicThreads) {
+            thread.interrupt();
+        }
+        if (battleWorld != null) {
+            battleWorld.cleanup();
+        }
+    }
+
+    public boolean inBattle() {
+        return battleWorld != null;
     }
 }
