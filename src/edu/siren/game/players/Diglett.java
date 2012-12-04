@@ -23,8 +23,8 @@ public class Diglett extends Player {
         int idleframe = 1;
         
         this.sprite = linksheet.createSprite(
+            new Animation("idle-backward", prefix + "-backward-", start, end, msec),
             new Animation("idle-forward", prefix + "-forward-" + idleframe),
-            new Animation("idle-backward", prefix + "-backward-" + idleframe),
             new Animation("idle-right", prefix + "-right-" + idleframe),
             new Animation("idle-left", prefix + "-left-" + idleframe),
             new Animation("move-right", prefix + "-right-", start, end, msec),

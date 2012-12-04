@@ -38,6 +38,7 @@ import edu.siren.game.battle.Team;
 import edu.siren.game.battle.TeamMemberDieEvent;
 import edu.siren.game.battle.TeamVictoryEvent;
 import edu.siren.game.entity.Entity;
+import edu.siren.game.players.GeneratePlayer;
 import edu.siren.gui.Gui;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Perspective2D;
@@ -144,7 +145,7 @@ public class JSWorld {
             x += 32;
         }
         
-        x = 256 - (b.players.size() * 32);
+        x = (512 - (b.players.size() * 32)) / 2;
         y = 352;
         for (Player player : b.players) {
             player.snapToGrid(32, 32);
@@ -157,6 +158,8 @@ public class JSWorld {
             player.setPosition(x + 8, y + 8);
             battleWorld.addEntity(player);
             player.createMoveOverlay();
+            
+            x += 32;
         }
         
         ftime = getTime();
@@ -278,6 +281,22 @@ public class JSWorld {
                         sprite.klass = klass;
                         sprite.id = id;
                         layer.addDrawable(sprite);
+                        
+                        continue;
+                    }
+                    
+                    String playername = tileEntry.optString("player");
+                    
+                    if (playername.length() > 0) {
+                        Player p = GeneratePlayer.build(klass);
+                        p.controllable = false;
+                        p.setPositionCenter(x, y);
+                        p.canMove(false);
+                        p.id = id;
+//                        p.sprite.active = p.sprite.animations.get("backward");
+
+                        world.addEntity(p);
+                        
                         continue;
                     }
                     

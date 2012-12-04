@@ -8,13 +8,13 @@
         
         {"comment": "Sprites"},
         
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 232, "y": 780, "id": "diglett1"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 222, "y": 760, "id": "diglett2"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 212, "y": 800, "id": "diglett3"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 252, "y": 770, "id": "diglett4"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 252, "y": 800, "id": "diglett5"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 202, "y": 780, "id": "diglett6"},
-        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 222, "y": 790, "id": "diglett7"},
+        {"player": "diglett", "x": 232, "y": 750, "id": "diglett1", "class": "Diglett"},
+        {"player": "diglett", "x": 256, "y": 790, "id": "diglett2", "class": "Diglett"},
+        {"player": "diglett", "x": 278, "y": 820, "id": "diglett3", "class": "Diglett"},
+        {"player": "diglett", "x": 200, "y": 790, "id": "diglett4", "class": "Diglett"},
+        {"player": "diglett", "x": 256, "y": 780, "id": "diglett5", "class": "Diglett"},
+        {"player": "diglett", "x": 282, "y": 750, "id": "diglett6", "class": "Diglett"},
+        {"player": "diglett", "x": 202, "y": 710, "id": "diglett7", "class": "Diglett"},
         
         {"sprite": "fire", "frames": 3, "time": 100, "x": 192, "y": 766, "class": "fire"},
         {"sprite": "fire", "frames": 3, "time": 100, "x": 200, "y": 800, "class": "fire"},

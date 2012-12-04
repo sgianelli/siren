@@ -27,7 +27,7 @@ var $ = function(x) {
 
 		var team_a = World.createTeam("You", [ e ]);
 		var team_b = World.createTeam("Diglett", [ $('%diglett1'), $('%diglett2'), $('%diglett3'), $('%diglett4'), $('%diglett5'), $('%diglett6'), $('%diglett7') ]);
-		var battle_world = World.fightable("tiles/intro-battle.json", team_a,
+		var battle_world = World.fightable("tiles/viridian-battle.json", team_a,
 				team_b,
 
 				// If a member from team A dies

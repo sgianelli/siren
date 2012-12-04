@@ -50,13 +50,14 @@ public class GamePlay {
 		player = this.profile.getPlayer();
         player.setPosition(0, 0);
         player.follow = true;
-        world.addEntity(player);		
+        world.addPlayer(player);
         
 		// Enable the Camera
 		world.getCamera().enable();
 
 		// Create Game Stuatus
 		gameStatus = new GameStatus(screen);
+		gameStatus.player = player;
 		
 		// Create HelpMenu
 		helpMenu = new HelpMenu(screen);
@@ -108,10 +109,10 @@ public class GamePlay {
 		            	helpMenu.show();
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 		            	world.play();
-		            } else if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
-		            	// Quit game plays
-		            	gamePlay = false;
-		            	
+//		            } else if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
+//		            	// Quit game plays
+//		            	gamePlay = false;
+//		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_K ) {
 		            	
 		            	// Remove Experience
