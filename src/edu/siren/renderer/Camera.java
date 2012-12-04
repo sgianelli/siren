@@ -1,5 +1,6 @@
 package edu.siren.renderer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.Sys;
