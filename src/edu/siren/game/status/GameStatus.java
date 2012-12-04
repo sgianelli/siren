@@ -20,9 +20,11 @@ public class GameStatus extends GuiContainer {
 	private String timeOfDay;
 	private int experience;
 	private int coins;
+	private int strength;
 	
 	// Components
 	private Text coinsText;
+	private Text strengthText;
 	private Text timeOfDayText;
 	private Text timeOfDayValue;
 	private Text experienceText;
@@ -72,6 +74,16 @@ public class GameStatus extends GuiContainer {
 			coinsText.fontScaling(2);
 			coinsText.position(80, 415);
 			add(coinsText);
+			
+			// Set Strength
+			Text strengthLabel = new Text("Strength: ");
+			strengthLabel.position(2, 400);
+			strengthLabel.fontScaling(2);
+			add(strengthLabel);
+			strengthText = new Text("0000");
+			strengthText.fontScaling(2);
+			strengthText.position(115, 400);
+			add(strengthText);			
 			
 			// Create the Status Bottom Panel
 			Image statusPanel = new Image("res/game/menu/status-panel.png", "");
@@ -137,6 +149,9 @@ public class GameStatus extends GuiContainer {
 		String coinString = String.format("%07d", profile.getGameStats().getCoins());
 		coinsText.text(coinString);
 		
+		// Update Strength
+		String strengthString = String.format("%04d", profile.getGameStats().getStrength());
+		strengthText.text(strengthString);
 		
 		Player player = profile.getPlayer();
 		this.coordinatesText.text(String.format("(%.02f, %.02f)",player.getRect().x,player.getRect().y));
@@ -224,6 +239,20 @@ public class GameStatus extends GuiContainer {
 	 */
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+
+	/**
+	 * @return the strength
+	 */
+	public int getStrength() {
+		return strength;
+	}
+
+	/**
+	 * @param strength the strength to set
+	 */
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 	
 	

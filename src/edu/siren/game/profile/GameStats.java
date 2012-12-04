@@ -17,6 +17,7 @@ public class GameStats implements Serializable {
 	// Profile Stats
 	private int experience;
 	private int health;
+	private int strength;
 	private int attack;
 	private int defense;
 	private int special;
@@ -28,6 +29,7 @@ public class GameStats implements Serializable {
 	public static final int MAX_EXPERIENCE = 10;
 	public static final int DEFAULT_EXPERIENCE = 1;
 	public static final int DEFAULT_COINS = 100;
+	public static final int DEFAULT_STRENGTH = 10;
 	
 	public GameStats() {
 
@@ -36,6 +38,7 @@ public class GameStats implements Serializable {
 		this.movesAllowed = DEFAULT_MOVES;
 		this.experience = DEFAULT_EXPERIENCE;
 		this.coins = DEFAULT_COINS;
+		this.strength = DEFAULT_STRENGTH;
 		
 	}
 
@@ -167,6 +170,22 @@ public class GameStats implements Serializable {
 	 */
 	public void setCoins(int coins) {
 		this.coins = coins;
+	}
+
+
+	/**
+	 * @return the strength
+	 */
+	public int getStrength() {
+		return strength;
+	}
+
+
+	/**
+	 * @param strength the strength to set
+	 */
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 	
 	

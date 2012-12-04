@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.tile.World;
 import edu.siren.game.menu.HelpMenu;
+import edu.siren.game.menu.PowerStoreMenu;
 import edu.siren.game.profile.Profile;
 import edu.siren.game.status.GameStatus;
 import edu.siren.game.worlds.Rocko;
@@ -31,6 +32,7 @@ public class GamePlay {
 	
 	// Game Menus
 	private HelpMenu helpMenu;
+	private PowerStoreMenu powerStoreMenu;
 	
 	public GamePlay(Screen screen, Profile profile) throws IOException, LWJGLException {
 		
@@ -57,6 +59,9 @@ public class GamePlay {
 		
 		// Create HelpMenu
 		helpMenu = new HelpMenu(screen);
+		
+		// Power Store Menu
+		powerStoreMenu = new PowerStoreMenu(screen);
 		
 	}
 	
@@ -103,6 +108,9 @@ public class GamePlay {
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_H) {
 		            	world.pause();
 		            	helpMenu.show();
+		            } else if (Keyboard.getEventKey() == Keyboard.KEY_B) {
+		            	world.pause();
+		            	powerStoreMenu.show();		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 		            	world.play();
 //		            } else if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
