@@ -3,7 +3,9 @@ package edu.siren;
 import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
+import org.newdawn.easyogg.OggClip;
 
+import edu.siren.audio.AudioUtil;
 import edu.siren.game.GamePlay;
 import edu.siren.game.gui.GameLogin;
 import edu.siren.game.gui.Intro;
@@ -60,7 +62,7 @@ public class Siren {
 	}
 	
 	public void play() throws IOException, LWJGLException {
-		
+		Thread t = AudioUtil.playBackgroundMusic("res/game/sound/balamb.ogg"); 
 		
 		// Create Splash
 		Title splashScreen = new Title(screen);
@@ -82,6 +84,8 @@ public class Siren {
 			// Get the Profile
 			currentProfile = gl.getProfile();
 
+			t.interrupt();
+			
 			// Play Game 
 			showGame();
 			
