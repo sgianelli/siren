@@ -1,4 +1,4 @@
-package edu.siren.gui;
+package edu.siren.game.gui;
 
 import java.io.IOException;
 
@@ -7,6 +7,12 @@ import org.lwjgl.LWJGLException;
 import edu.siren.core.tile.World;
 import edu.siren.game.worlds.Pangea;
 import edu.siren.game.worlds.Sushi;
+import edu.siren.gui.Element;
+import edu.siren.gui.ElementEvent;
+import edu.siren.gui.Gui;
+import edu.siren.gui.GuiContainer;
+import edu.siren.gui.Image;
+import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 
 /**

@@ -38,6 +38,11 @@ public class Rocko extends World {
         addEntity(diglett);
     }
     
+    public void addPlayer(Player player) {
+    	super.addPlayer(player);
+    	player.setPositionCenter(120, 80);
+    }
+    
     public void create() throws IOException
     {    
         // Load the real world

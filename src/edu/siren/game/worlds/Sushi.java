@@ -17,6 +17,8 @@ import edu.siren.game.players.Diglett;
 import edu.siren.game.players.Pikachu;
 
 public class Sushi extends World {
+    private static final long serialVersionUID = -3685029586691077692L;
+
     public Sushi() throws IOException, LWJGLException {
         super();
     }

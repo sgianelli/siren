@@ -78,7 +78,7 @@ public class JSMapTest {
         JSWorld jsworld = reload();
         Player player = new Link();
         player.x = 180;
-        player.y = 128;
+        player.y = 200;
         // player.snapToGrid(32, 32);
         player.controllable = true;
         player.follow = true;

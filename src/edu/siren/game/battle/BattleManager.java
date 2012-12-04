@@ -1,8 +1,11 @@
 package edu.siren.game.battle;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.tile.Layer;
@@ -10,6 +13,8 @@ import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.gui.BattleScreen;
+import edu.siren.renderer.Perspective2D;
+import edu.siren.renderer.Shader;
 
 public class BattleManager {
     public Team red, blue;
@@ -233,18 +238,22 @@ public class BattleManager {
         boolean valid = false;
         for (int i = 0; i < active.players.size(); i++) {
             Player member = active.players.get(i);
+
+            if (member.health <= 0) {
+                member.remove();
+                active.players.remove(i--);
+                continue;
+            }
+            
             if (member.moves > 0) {
                 valid = true;
                 break;
-            }
-            if (member.health <= 0) {
-                System.out.println("removing player");
-                active.players.remove(i--);
             }
         }
         
         if (active.players.size() <= 0) {
             System.out.println("Game is over");
+            close();
         }
         
         if (!valid) {
@@ -273,8 +282,77 @@ public class BattleManager {
     public void showPossibleActions(Player member) {
         battleScreen.showPossibleActions(member);
     }
+    
+    private double getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
 
     public void close() {
+        world.battleManager = null;
+        world.battleWorld = null;
+        world.getCamera().zoomIn();
+        
+        for (Player player : blue.players) {
+            world.entities.remove(player);
+        }
+        
+        for (Player player : red.players) {
+            player.setWorld(world);
+            player.controllable = true;
+            player.collisionDetection = true;
+            player.setPosition(player.px, player.py);
+            player.snap = false;
+            player.lastMovement = 2;
+            player.follow = true;
+            player.drawStatus = false;
+            player.controllable = true;
+        }
+        
+        Perspective2D gui = new Perspective2D();
+        Shader shader = null;
+        try {
+            shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                    "res/tests/glsl/2d-perspective.frag");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        gui.bindToShader(shader);
+        
+        // Draw the battle sequence
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        for (int i = 0; i < Display.getWidth(); i += 96) {
+            for (int j = 0; j < Display.getHeight(); j+= 96) {
+                Tile tile;
+                try {
+                    tile = new Tile("res/game/gui/black.png", i, j, 96, 96);
+                    tiles.add(tile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+        double ftime = getTime();
+        int drawTiles = 0;
+        
+        while (drawTiles < tiles.size()) {
+            double ctime = getTime();
+            if ((ctime - ftime) > 5) {
+                drawTiles++;
+                ftime = ctime;
+            }
+            
+            shader.use();
+            for (int i = 0; i < drawTiles; i++) {
+                tiles.get(i).draw();
+            }
+            shader.release();
+            Display.update();
+        }
+        
+        if (red.players.size() == 0) {
+            world.gameOver = true;
+        }
     }
 
     

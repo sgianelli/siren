@@ -26,6 +26,8 @@ public class BattleScreen implements Gui {
     private Window window;
     private BattleManager battleManager;
     public Image overlayTile;
+    private Player lastMember;
+    public int dieSize = 16;
 	
 	/**
 	 * Constructor to initialize the Menu
@@ -48,7 +50,7 @@ public class BattleScreen implements Gui {
             nextAction = null;
             if (action == Action.SKIP_TURN) {
                 clear();
-                battleManager.next();
+                lastMember.moves = 0;
                 return;
             }
         }
@@ -67,6 +69,7 @@ public class BattleScreen implements Gui {
 
     public void showPossibleActions(final Player member) {
         try {
+            lastMember = member;
             gui.elements.clear();
             window.children.clear();
             
@@ -230,14 +233,18 @@ public class BattleScreen implements Gui {
                         helphover.enable();
                         nextAction = Action.RUN;
                         
+                        System.out.println("Needs to roll below an 8 with a " + dieSize + " sided die");
+                        
                         // Throw a role
-                        if (Dice.roll(16) >= Dice.roll(8)) {
+                        if (Dice.roll(dieSize) <= Dice.roll(8)) {
                             System.out.println("Rolled and escaped");
                             battleManager.close();
                             return true;
                         } else {
-                            System.out.println("Rolled and stayed");
+                            System.out.println("Rolled and stayed.");
+                            clear();
                             battleManager.next();
+                            dieSize *= 2;
                         }
                         
                         return true;
@@ -273,7 +280,7 @@ public class BattleScreen implements Gui {
                         useitemhover.enable();
                         helphover.enable();
                         nextAction = Action.SKIP_TURN;
-                        overlayTile.show();
+                        overlayTile.hide();
                         return true;
                     }
                 });
