@@ -30,6 +30,7 @@ public class BattleScreen implements Gui {
 	private Image banner;
     private Window window;
     private BattleManager battleManager;
+    public Image overlayTile;
 	
 	/**
 	 * Constructor to initialize the Menu
@@ -79,7 +80,7 @@ public class BattleScreen implements Gui {
             gui.elements.clear();
             window.children.clear();
             
-            final Image overlayTile = new Image("res/game/gui/attack-tile.png");
+            overlayTile = new Image("res/game/gui/attack-tile.png");
             {
                 overlayTile.hide();
                 overlayTile.xywh(0, 0, 32, 32);

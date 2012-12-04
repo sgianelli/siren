@@ -9,7 +9,7 @@ import edu.siren.core.tile.World;
 import edu.siren.game.menu.HelpMenu;
 import edu.siren.game.profile.Profile;
 import edu.siren.game.status.GameStatus;
-import edu.siren.game.worlds.TestBox;
+import edu.siren.game.worlds.PokemonWorld;
 import edu.siren.renderer.Screen;
 
 public class GamePlay {
@@ -44,7 +44,7 @@ public class GamePlay {
 		this.profile = profile;
 		
 		// Create a New World
-		world = new TestBox(WORLD_SIZE, WORLD_SIZE);
+		world = new PokemonWorld();
 		
 		// Get the Player and add him to the world
 		player = this.profile.getPlayer();
@@ -68,6 +68,7 @@ public class GamePlay {
 		
 		// Game Play
 		boolean gamePlay = true;
+		world.zoomIn();
 		
         // The close event can take a bit to propagate
         while (screen.nextFrame()) {     
@@ -138,7 +139,8 @@ public class GamePlay {
             gameStatus.setTimeOfDay(world.getCurrentEnvironment().name());
             
             // Update Game Status
-            gameStatus.update(profile.getGameStats());
+            if (!world.inBattle())
+                gameStatus.update(profile.getGameStats());
             
             // Quit Game
             if (!gamePlay)
@@ -146,6 +148,7 @@ public class GamePlay {
             
         }
         
+        world.cleanup();
         // Return to indicate that we are playin
         return gamePlay;
         

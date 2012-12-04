@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.script.Bindings;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +69,7 @@ public class JSWorld {
         }
         
         musicThread = AudioUtil.playBackgroundMusic("res/game/sound/" + name + ".ogg");
+        world.musicThreads.add(musicThread);
     }
     
     public World save() {
@@ -80,6 +88,7 @@ public class JSWorld {
             TeamMemberDieEvent bMemberDieEvent, TeamVictoryEvent bVictoryEvent) 
                     throws IOException, LWJGLException
     {
+        String battleTiles = "res/game/maps/" + jsonTiles;
         Perspective2D gui = new Perspective2D();
         Shader shader = new Shader("res/tests/glsl/2d-perspective.vert",
                 "res/tests/glsl/2d-perspective.frag");
@@ -113,8 +122,11 @@ public class JSWorld {
         }
                 
         
-        load("Battle Sequence", jsonTiles);
-        Camera camera = world.getCamera();
+        loadBattleWorld(battleTiles);
+        
+        World battleWorld = world.battleWorld;
+        
+        Camera camera = battleWorld.getCamera();
         camera.setPosition(-256, -224);
         
         // Add A team
@@ -127,8 +139,8 @@ public class JSWorld {
             player.collisionDetection = false;
             player.snapToGrid(32, 32);
             player.setPosition(x + 16, y + 16);
+            battleWorld.addEntity(player);
             player.createMoveOverlay();
-            world.addEntity(player);
             x += 32;
         }
         
@@ -143,15 +155,15 @@ public class JSWorld {
             player.drawStatus = true;
             player.controllable = false;
             player.setPosition(x + 8, y + 8);
+            battleWorld.addEntity(player);
             player.createMoveOverlay();
-            world.addEntity(player);
         }
         
         ftime = getTime();
         drawTiles = tiles.size() - 1;
         while (drawTiles >= 0) {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-            world.draw();
+            battleWorld.draw();
             double ctime = getTime();
             if ((ctime - ftime) > 15) {
                 drawTiles--;
@@ -166,7 +178,7 @@ public class JSWorld {
             Display.update();
         }
         
-        world.battleManager = new BattleManager(world, a, b);
+        battleWorld.battleManager = new BattleManager(battleWorld, a, b);
         
         return world;
     }
@@ -189,87 +201,136 @@ public class JSWorld {
     
     public JSWorld() { }
         
-    public void load(String map, String jsonTiles) throws IOException, LWJGLException {
-        final String mapTiles = "res/game/maps/" + jsonTiles;
-
-        world = new World() {
+    public JSWorld(World world) {
+        this.world = world;
+    }
+    
+    public void loadBattleWorld(final String mapTiles) throws IOException, LWJGLException {
+        final JSWorld self = this;
+        world.battleWorld = new World() {
             public void create() throws IOException {                  
-                // Read in the JSON file
-                String content = "";
-                FileInputStream stream = new FileInputStream(new File(mapTiles));
-                FileChannel fc = stream.getChannel();
-                MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0,
-                        fc.size());
-                stream.close();
-                content = Charset.defaultCharset().decode(bb).toString();  
-                                
-                // Load the tiles
-                try {
-                    JSONObject json = new JSONObject(content);  
-                    Iterator<String> keys = json.keys();
-                    while (keys.hasNext()) {
-                        String key = keys.next();
-                        JSONArray jsonTiles = json.getJSONArray(key);
-
-                        // Create a new layer
-                        Layer layer = new Layer(key);
-
-                        for (int i = 0; i < jsonTiles.length(); i++) {
-                            JSONObject tileEntry;
-                            tileEntry = jsonTiles.getJSONObject(i);
-                            String comment = tileEntry.optString("comment");
-                            if (comment.length() > 0) continue;
-                            
-                            int x = tileEntry.getInt("x");
-                            int y = tileEntry.getInt("y");
-                            
-                            // For a sprite
-                            String spritename = tileEntry.optString("sprite");
-                            String klass = tileEntry.optString("class");
-                            String id = tileEntry.optString("id");
-                            
-                            if (spritename.length() > 0) {
-                                int msec = tileEntry.getInt("time");
-                                int frames = tileEntry.getInt("frames");
-                                Sprite sprite = this.sprites.createSprite(
-                                        new Animation("idle", spritename + "-", 1, frames, msec));
-                                sprite.active = sprite.animations.get("idle");
-                                sprite.spriteX = x;
-                                sprite.spriteY = y;
-                                sprite.klass = klass;
-                                sprite.id = id;
-                                layer.addDrawable(sprite);
-                                continue;
-                            }
-                            
-                            // These are all required for a tile
-                            String tilename = tileEntry.getString("tile");
-                            int w = tileEntry.optInt("w");
-                            int h = tileEntry.optInt("h");
-                            boolean solid = tileEntry.optBoolean("solid");
-                            boolean tileable = tileEntry.optBoolean("tileable");
-                            
-                            // Create the new tile and add it to the layer.
-                            Tile tile = new Tile(tilename, x, y, w, h, tileable);                    
-                            tile.id = id;
-                            tile.klass = klass;
-                            tile.solid = solid;
-                            layer.addTile(tile);
-                        }
-                        
-                        // Add the layer to the world
-                        this.addLayer(layer);
-                    }
-
-                } catch (JSONException e) {
-                    System.err.println(e);
-                }
+                self.create(mapTiles, this);
+            }
+            public void guiDraw() {
+                world.guiDraw();
             }
         };
+    }
+
+    public void load(String map, String jsonTiles) throws IOException, LWJGLException {
+        final String mapTiles = "res/game/maps/" + jsonTiles;
+        final JSWorld self = this;
+
+        if (world == null) {
+            world = new World() {
+                public void create() throws IOException {                  
+                    self.create(mapTiles, this);
+                }
+            };
+        } else {
+            create(mapTiles, world);
+        }
+    }
+        
+    public void create(final String mapTiles, World nworld) throws IOException {
+        // Read in the JSON file
+        String content = "";
+        FileInputStream stream = new FileInputStream(new File(mapTiles));
+        FileChannel fc = stream.getChannel();
+        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0,
+                fc.size());
+        stream.close();
+        content = Charset.defaultCharset().decode(bb).toString();  
+                        
+        // Load the tiles
+        try {
+            JSONObject json = new JSONObject(content);  
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                JSONArray jsonTiles = json.getJSONArray(key);
+
+                // Create a new layer
+                Layer layer = new Layer(key);
+
+                for (int i = 0; i < jsonTiles.length(); i++) {
+                    JSONObject tileEntry;
+                    tileEntry = jsonTiles.getJSONObject(i);
+                    String comment = tileEntry.optString("comment");
+                    if (comment.length() > 0) continue;
+                    
+                    int x = tileEntry.getInt("x");
+                    int y = tileEntry.getInt("y");
+                    
+                    // For a sprite
+                    String spritename = tileEntry.optString("sprite");
+                    String klass = tileEntry.optString("class");
+                    String id = tileEntry.optString("id");
+                    
+                    if (spritename.length() > 0) {
+                        int msec = tileEntry.getInt("time");
+                        int frames = tileEntry.getInt("frames");
+                        Sprite sprite = nworld.sprites.createSprite(
+                                new Animation("idle", spritename + "-", 1, frames, msec));
+                        sprite.active = sprite.animations.get("idle");
+                        sprite.spriteX = x;
+                        sprite.spriteY = y;
+                        sprite.klass = klass;
+                        sprite.id = id;
+                        layer.addDrawable(sprite);
+                        continue;
+                    }
+                    
+                    // These are all required for a tile
+                    String tilename = tileEntry.getString("tile");
+                    int w = tileEntry.optInt("w");
+                    int h = tileEntry.optInt("h");
+                    boolean solid = tileEntry.optBoolean("solid");
+                    boolean tileable = tileEntry.optBoolean("tileable");
+                    
+                    // Create the new tile and add it to the layer.
+                    Tile tile = new Tile(tilename, x, y, w, h, tileable);                    
+                    tile.id = id;
+                    tile.klass = klass;
+                    tile.solid = solid;
+                    layer.addTile(tile);
+                }
+                
+                // Add the layer to the world
+                nworld.addLayer(layer);
+            }
+        } catch (JSONException e) {
+            System.err.println(e);
+        }
     }
 
     public void draw() {
         world.draw();
     }
 
+    public static void load(String javascriptsrc, World world) 
+            throws ScriptException, LWJGLException, IOException {
+        // Invoke a screen and a new JavaScript engine
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
+
+        // Read in all the data
+        FileInputStream stream = new FileInputStream(new File(javascriptsrc));
+        FileChannel fc = stream.getChannel();
+        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0,
+                fc.size());
+        stream.close();
+        String content = Charset.defaultCharset().decode(bb).toString();
+                
+        // Create some basic map bindings
+        Bindings bindings = engine.createBindings();
+
+        // Expose a wrapped JavaScript world object
+        JSWorld jsworld = new JSWorld(world);
+        bindings.put("World", jsworld);
+        
+        // Compile the engine
+        Compilable compEngine = (Compilable)engine;
+        CompiledScript cs = compEngine.compile(content);
+        cs.eval(bindings); 
+    }
 }
