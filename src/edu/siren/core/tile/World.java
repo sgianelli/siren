@@ -48,6 +48,7 @@ public abstract class World {
     public boolean collisionGrid[];
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     public Tile grid;
+    public Player player;
     
     // Determines if a game should be playing or not
     private boolean pause = false;
@@ -323,6 +324,12 @@ public abstract class World {
         player.setWorld(this);
         solids.add(player.getRect());
         entities.add(player);
+    }
+    
+    public void addPlayer(Player player) {
+    	this.player = player;
+    	
+    	addEntity(player);
     }
 
     public Environment getCurrentEnvironment() {

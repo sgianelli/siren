@@ -31,15 +31,21 @@ public class Pangea extends World {
     
     public void createEntities() throws IOException {
         diglett = new Diglett();
-        diglett.setPosition(180, 770);
+        diglett.setPosition(200, 770);
         diglett.lastMovement = 2;
         diglett.controllable = false;
         diglett.id = "diglett";
+        
         addEntity(diglett);
     }
     
-    public void create() throws IOException
-    {    
+    public void addPlayer(Player player) {
+    	super.addPlayer(player);
+    	
+    	player.setPositionCenter(20, 120);
+    }
+    
+    public void create() throws IOException {    
         // Load the real world
         try {
             JSWorld.load("res/game/maps/viridian.js", this);
@@ -49,7 +55,9 @@ public class Pangea extends World {
             e.printStackTrace();
         }
         
-        createEntities();
+//        createEntities();
+        
+//        player.setPositionCenter(0, 120);
         
         // Add the overlays
         veryCloudy = new Tile("res/tests/img/very-cloudy.png", 0, 0, 8096, 8096, 1, 1);

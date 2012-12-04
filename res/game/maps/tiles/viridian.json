@@ -2,6 +2,24 @@
     "layer1": [
         {"comment": "World"},
         {"tile": "res/game/gui/viridianForest.png", "w": 864, "h": 1104, "x": -432, "y": 0, "tileable": true},
+        
+        {"comment": "Triggers"},
+        {"tile": "res/tests/img/fill.png", "x": 192, "y": 786, "w": 74, "h": 12, "id": "trigger_diglett"},
+        
+        {"comment": "Sprites"},
+        
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 232, "y": 780, "id": "diglett1"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 222, "y": 760, "id": "diglett2"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 212, "y": 800, "id": "diglett3"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 252, "y": 770, "id": "diglett4"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 252, "y": 800, "id": "diglett5"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 202, "y": 780, "id": "diglett6"},
+        {"sprite": "diglett-backward", "frames": 2, "time": 10, "x": 222, "y": 790, "id": "diglett7"},
+        
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 192, "y": 766, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 200, "y": 800, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 270, "y": 800, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 275, "y": 766, "class": "fire"},
 
         {"comment": "fucking trees"},
         {"tile": "res/tests/img/fill.png", "x": -430, "y": -32, "w": 40, "h": 1104, "solid": true},
