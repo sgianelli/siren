@@ -52,6 +52,7 @@ public class GameLogin implements Gui {
 	
 	// Sprite Click Images
 	private Image linkClick;
+	private Image pinkLinkClick;
 	private Image pikachuClick;
 	private Image jesusClick;
 	private Image diglettClick;
@@ -59,6 +60,7 @@ public class GameLogin implements Gui {
 	
 	// Sprite Labels
 	private Text linkName;
+	private Text linkPinkName;
 	private Text pikachuName;
 	private Text jesusName;
 	private Text diglettName;
@@ -247,13 +249,17 @@ public class GameLogin implements Gui {
 		}
 		
 		// Sprites
-		sprites = new Sprite[5];
-		spriteNames = new Text[5];
+		sprites = new Sprite[6];
+		spriteNames = new Text[6];
 		
 		// Get Sprite Sheet
         SpriteSheet spritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/sprites.png",
                 "res/game/sprites/characters/sprites.css");
+
+        SpriteSheet linkpinksheet = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/link-pink.png",
+                "res/game/sprites/characters/link-pink.css");
         
         SpriteSheet jesusspritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/jesus.png",
@@ -267,6 +273,8 @@ public class GameLogin implements Gui {
         // a conventional naming to generate animations
         Sprite link = spritesheet.createSprite(
         		new Animation("move-backward", "link-backward-", 1, 7, 100));
+        Sprite linkpink = linkpinksheet.createSprite(
+        		new Animation("move-backward", "link-pink-backward-", 1, 7, 50));        
         Sprite jesus = jesusspritesheet.createSprite(
         		new Animation("move-backward", "jesus-left-", 1, 13, 50));
         Sprite pikachu = pikachuspritesheet.createSprite(
@@ -289,6 +297,13 @@ public class GameLogin implements Gui {
         spriteNames[0] = linkName;
         window.add(linkName);
 
+        // Pink Link Name
+        linkPinkName = new Text("Plink");
+        linkPinkName.fontScaling(3);
+        linkPinkName.position(210, y-175);
+        spriteNames[5] = linkPinkName;
+        window.add(linkPinkName);        
+        
         // Pikachu Name
         pikachuName = new Text("Pikachu");
         pikachuName.fontScaling(3);
@@ -320,6 +335,8 @@ public class GameLogin implements Gui {
         // Sprite Locations
         link.spriteX = 220;
         link.spriteY = y-110;
+        linkpink.spriteX = 220;
+        linkpink.spriteY = y-160;
         pikachu.spriteX = 273;
         pikachu.spriteY = y-110;
         jesus.spriteX = 335;
@@ -334,6 +351,7 @@ public class GameLogin implements Gui {
         pikachuClick = new Image("res/game/gui/sprite-click.png");
         jesusClick = new Image("res/game/gui/sprite-click.png");
         linkClick = new Image("res/game/gui/sprite-click.png");
+        pinkLinkClick = new Image("res/game/gui/sprite-click.png");
         diglettClick = new Image("res/game/gui/sprite-click.png");
         peachClick = new Image("res/game/gui/sprite-click.png");
 
@@ -351,6 +369,21 @@ public class GameLogin implements Gui {
         	
         });
         window.add(linkClick);        
+        
+        // Pink Link Click
+        pinkLinkClick.position(linkPinkName.x(), linkPinkName.y());
+        pinkLinkClick.priority(10);
+        pinkLinkClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Plink";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(pinkLinkClick);        
         
         // Pikachu Click
         pikachuClick.position(pikachuName.x(), pikachuName.y());
@@ -419,12 +452,13 @@ public class GameLogin implements Gui {
         sprites[2] = pikachu;
         sprites[3] = diglett;
         sprites[4] = peach;
+        sprites[5] = linkpink;
         
 		// Create Profile Button
 		Image createProfile = new Image("res/game/gui/create-profile.png");
 		{
 		
-			createProfile.position(210, y-165);
+			createProfile.position(30, y-250);
 			createProfile.onMouseUp(new ProfileRegisterEvent(characterName));
 			window.add(createProfile);
 			
@@ -435,7 +469,7 @@ public class GameLogin implements Gui {
 		{
 		
 			// Set Button Characterstics
-			cancelButton.position(330, y-165);
+			cancelButton.position(150, y-250);
 			cancelButton.onMouseUp(new ElementEvent(){
 				@Override
 				public boolean event(Element element) {
@@ -555,6 +589,7 @@ public class GameLogin implements Gui {
 		
 		// Set Sprite Name Colors
 		linkName.fontColor(1.0f, 1.0f, 1.0f);
+		linkPinkName.fontColor(1.0f, 1.0f, 1.0f);
 		pikachuName.fontColor(1.0f, 1.0f, 1.0f);
 		jesusName.fontColor(1.0f, 1.0f, 1.0f);
 		diglettName.fontColor(1.0f, 1.0f, 1.0f);
