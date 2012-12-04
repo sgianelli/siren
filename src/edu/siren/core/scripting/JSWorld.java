@@ -139,8 +139,8 @@ public class JSWorld {
             player.collisionDetection = false;
             player.snapToGrid(32, 32);
             player.setPosition(x + 16, y + 16);
-            player.createMoveOverlay();
             battleWorld.addEntity(player);
+            player.createMoveOverlay();
             x += 32;
         }
         
@@ -155,8 +155,8 @@ public class JSWorld {
             player.drawStatus = true;
             player.controllable = false;
             player.setPosition(x + 8, y + 8);
-            player.createMoveOverlay();
             battleWorld.addEntity(player);
+            player.createMoveOverlay();
         }
         
         ftime = getTime();

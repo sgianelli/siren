@@ -43,7 +43,7 @@ public class Player extends Actor {
     public void draw() {
         think();
         
-        if (!inMovement && possibleMoveOverlay.isEmpty()) {
+        if (snap && !inMovement && possibleMoveOverlay.isEmpty()) {
             createMoveOverlay();
         }
         
@@ -150,7 +150,7 @@ public class Player extends Actor {
         }
         
         // Draw the tiles that are available to move to
-        if ((snap && hadMovement) || possibleMoveOverlay.isEmpty()) {
+        if ((snap && hadMovement) || (snap && possibleMoveOverlay.isEmpty())) {
             createMoveOverlay();
         }
         
@@ -250,21 +250,105 @@ public class Player extends Actor {
             return;
         
         try {
-            // Go through each row
-            for (int k = 0; k <= moves; k++) {
-                // Determine the number of columns to print on each side
-                for (int j = 0; j <= 2*k; j++) {
+            // top of diamond
+            for (int h = 1; h <= moves; h++) {
+                for (int w = 0; w <= (moves - h); w++) {
+                    boolean doBreak = false;
+                    float x = (row + w) * this.gridWidth;
+                    float y = (col + h) * this.gridHeight;
+                    for (Rectangle rectangle : world.solids) {
+                        if (rectangle.x == x && rectangle.y == y) {
+                            doBreak = true;
+                            break;
+                        }
+                    }
+                    if (doBreak)
+                        break;
                     possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
-                            ((row - moves) + k) * this.gridHeight,
-                            ((col - k) + j) * this.gridWidth,
-                            32, 32, true));
+                            x, y, 32, 32, true));
                 }
-                
-                for (int j = 0; j <= 2*k; j++) {
+                for (int w = -1; w >= -(moves - h); w--) {
+                    boolean doBreak = false;
+                    float x = (row + w) * this.gridWidth;
+                    float y = (col + h) * this.gridHeight;
+                    for (Rectangle rectangle : world.solids) {
+                        if (rectangle.x == x && rectangle.y == y) {
+                            doBreak = true;
+                            break;
+                        }
+                    }
+                    if (doBreak)
+                        break;
                     possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
-                            ((row + moves) - k) * this.gridHeight,
-                            ((col - k) + j) * this.gridWidth,
-                            32, 32, true));
+                            x, y, 32, 32, true));
+                }
+            }
+            
+            // center left
+            for (int w = -1; w >= -moves; w--) {
+                float x = (row + w) * this.gridWidth;
+                float y = col * this.gridHeight;
+                boolean doBreak = false;
+                for (Rectangle rectangle : world.solids) {
+                    if (rectangle.x == x && rectangle.y == y) {
+                        doBreak = true;
+                        break;
+                    }
+                }
+                if (doBreak)
+                    break;
+                possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                        x, y, 32, 32, true));
+            }
+            
+            // center right
+            for (int w = 1; w <= moves; w++) {
+                float x = (row + w) * this.gridWidth;
+                float y = col * this.gridHeight;
+                boolean doBreak = false;
+                for (Rectangle rectangle : world.solids) {
+                    if (rectangle.x == x && rectangle.y == y) {
+                        doBreak = true;
+                        break;
+                    }
+                }
+                if (doBreak)
+                    break;
+                possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                        x, y, 32, 32, true));
+            }
+            
+            // bottom of diamond
+            for (int h = 1; h <= moves; h++) {
+                for (int w = 0; w <= (moves - h); w++) {
+                    boolean doBreak = false;
+                    float x = (row + w) * this.gridWidth;
+                    float y = (col - h) * this.gridHeight;
+                    for (Rectangle rectangle : world.solids) {
+                        if (rectangle.x == x && rectangle.y == y) {
+                            doBreak = true;
+                            break;
+                        }
+                    }
+                    if (doBreak)
+                        break;
+                    possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                            x, y, 32, 32, true));
+                }
+                for (int w = -1; w >= -(moves - h); w--) {
+                    boolean doBreak = false;
+                    float x = (row + w) * this.gridWidth;
+                    float y = (col - h) * this.gridHeight;
+                    for (Rectangle rectangle : world.solids) {
+                        if (rectangle.x == x && rectangle.y == y) {
+                            doBreak = true;
+                            break;
+                        }
+                    }
+                    if (doBreak)
+                        break;
+                    possibleMoveOverlay.add(new Tile("res/tests/img/yellow.png",
+                            x, y, 32, 32, true));
                 }
             }
         } catch (IOException e) {
