@@ -9,7 +9,7 @@ import edu.siren.core.tile.World;
 import edu.siren.game.menu.HelpMenu;
 import edu.siren.game.profile.Profile;
 import edu.siren.game.status.GameStatus;
-import edu.siren.game.worlds.PokemonWorld;
+import edu.siren.game.worlds.Rocko;
 import edu.siren.renderer.Screen;
 
 public class GamePlay {

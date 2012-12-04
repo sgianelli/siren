@@ -15,8 +15,8 @@ import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.players.Diglett;
 
-public class PokemonWorld extends World {
-    public PokemonWorld() throws IOException, LWJGLException {
+public class Rocko extends World {
+    public Rocko() throws IOException, LWJGLException {
         super();
     }
 

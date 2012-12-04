@@ -17,15 +17,19 @@ public class BattleManager {
     private boolean mouseDown = false;
     public BattleScreen battleScreen = null;
     public World world = null;
+    public World battleWorld = null;
     public Layer filler = new Layer("fill");
     public int lastTileR = -1, lastTileC = -1;
     public boolean replaceTile = false;
     
-    public BattleManager(World world, Team red, Team blue) throws IOException {
+    public BattleManager(World world, Team red, Team blue) 
+            throws IOException 
+    {
         battleScreen = new BattleScreen(this);
+        this.battleWorld = world.battleWorld;
         this.world = world;
         filler.priority = 1000;
-        world.addLayer(filler);
+        this.battleWorld.addLayer(filler);
         this.red = red;
         this.blue = blue;
         this.active = blue;
@@ -268,6 +272,9 @@ public class BattleManager {
 
     public void showPossibleActions(Player member) {
         battleScreen.showPossibleActions(member);
+    }
+
+    public void close() {
     }
 
     

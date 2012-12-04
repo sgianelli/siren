@@ -10,9 +10,6 @@ import edu.siren.core.tile.Tile;
 import edu.siren.renderer.Camera;
 
 public class Player extends Actor {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 2363703736908492621L;
 	public Camera camera = null;
     public boolean follow = false;
@@ -21,6 +18,7 @@ public class Player extends Actor {
     public ArrayList<Tile> possibleMoveOverlay = new ArrayList<Tile>();
     public int maxMoves = 4;
     public boolean drawPossibleMoveOverlay = false;
+    public float px, py;
     
     public Player(String config) {
         super(config, null);

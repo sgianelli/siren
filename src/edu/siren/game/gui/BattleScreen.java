@@ -1,12 +1,14 @@
 package edu.siren.game.gui;
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 
 import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;
+import edu.siren.game.battle.Dice;
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
@@ -227,7 +229,16 @@ public class BattleScreen implements Gui {
                         useitemhover.enable();
                         helphover.enable();
                         nextAction = Action.RUN;
-                        overlayTile.show();
+                        
+                        // Throw a role
+                        if (Dice.roll(16) >= Dice.roll(8)) {
+                            System.out.println("Rolled and escaped");
+                            battleManager.close();
+                            return true;
+                        } else {
+                            System.out.println("Rolled and stayed");
+                            battleManager.next();
+                        }
                         
                         return true;
                     }
@@ -394,6 +405,8 @@ public class BattleScreen implements Gui {
                             }
                         }
                     }
+                    
+                    
                 });
                 window.add(actionWindow);
             }

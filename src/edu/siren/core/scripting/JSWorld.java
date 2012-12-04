@@ -131,6 +131,8 @@ public class JSWorld {
         // Add A team
         int x = 256 - (a.players.size() * 32), y = 128;
         for (Player player : a.players) {
+            player.px = player.x;
+            player.py = player.y;
             player.follow = false;
             player.controllable = false;
             player.lastMovement = 1;
@@ -146,6 +148,8 @@ public class JSWorld {
         x = (512 - (b.players.size() * 32)) / 2;
         y = 352;
         for (Player player : b.players) {
+            player.px = player.x;
+            player.py = player.y;
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;
@@ -179,7 +183,7 @@ public class JSWorld {
             Display.update();
         }
         
-        battleWorld.battleManager = new BattleManager(battleWorld, a, b);
+        battleWorld.battleManager = new BattleManager(world, a, b);
         
         return world;
     }

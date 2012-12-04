@@ -25,8 +25,11 @@ public class WorldSelection implements Gui {
 	// Image Selections
 	private Image pangeaUnselect;
 	private Image sushiUnselect;
+	private Image rockoUnselect;
+	
 	private Image pangeaSelect;
 	private Image sushiSelect;
+	private Image rockoSelect;
 	
 	// Selected World
 	private String worldName;
@@ -50,18 +53,14 @@ public class WorldSelection implements Gui {
 
 	}
 	
-	public World selectWorld() throws IOException, LWJGLException {
-		
+	public World selectWorld() 
+	        throws IOException, LWJGLException, InstantiationException, 
+	        IllegalAccessException, ClassNotFoundException 
+    {
 		// Run the Selection Screen
 		run();
 		
-		// Get the world
-		if (worldName.equals("Pangea")) {
-			return new Pangea();
-		} else {
-			return new Sushi();
-		}
-				
+        return (World) Class.forName("edu.siren.game.worlds." + worldName).newInstance();
 	}
 	
 	private void buildTheFuckingGui() throws IOException {
@@ -72,31 +71,10 @@ public class WorldSelection implements Gui {
 		// Create Dimensions
 		window.dimensions(screen.width, screen.height);
 
-		// Image for prettiness
-		Image b = new Image("res/game/gui/black-background.png");
-		b.position(0, 0);
-		window.add(b);	
-		
-		// Image for prettiness
-		Image title = new Image("res/game/menu/world/choose-your-world.png");
-		title.position(0, 388);
-		window.add(title);
-
 		// Image for
-		Image worldsToChoose = new Image("res/game/menu/world/worlds-selection.png");
-		worldsToChoose.position(0, 222);
+		Image worldsToChoose = new Image("res/game/menu/world/menu.png");
+		worldsToChoose.position(0, 0);
 		window.add(worldsToChoose);
-		
-		// Image for Pangea
-		Image pangea = new Image("res/game/menu/world/pangea.png");
-		pangea.position(0, 189);
-		window.add(pangea);
-
-		// Image for Sushi
-		Image sushi = new Image("res/game/menu/world/sushi.png");
-		sushi.position(256, 189);
-		window.add(sushi);
-		
 		
 		// Image for Play Button
 		Image play = new Image("res/game/menu/world/play-game.png");
@@ -116,7 +94,7 @@ public class WorldSelection implements Gui {
 		
 		// Image pange unselect
 		pangeaUnselect = new Image("res/game/menu/world/radio-unselected.png");
-		pangeaUnselect.position(113, 158);
+		pangeaUnselect.position(95, 140);
 		pangeaUnselect.onMouseUp(new ElementEvent(){
 
 			@Override
@@ -124,6 +102,7 @@ public class WorldSelection implements Gui {
 
 				sushiSelect.hide();
 				pangeaSelect.show();
+				rockoSelect.hide();
 				WorldSelection.this.worldName = "Pangea";
 				return false;
 			}
@@ -133,7 +112,7 @@ public class WorldSelection implements Gui {
 
 		// Image sushi unselect
 		sushiUnselect = new Image("res/game/menu/world/radio-unselected.png");
-		sushiUnselect.position(378, 158);
+		sushiUnselect.position(250, 140);
 		sushiUnselect.onMouseUp(new ElementEvent(){
 
 			@Override
@@ -141,6 +120,7 @@ public class WorldSelection implements Gui {
 
 				sushiSelect.show();
 				pangeaSelect.hide();
+				rockoSelect.hide();
 				WorldSelection.this.worldName = "Sushi";
 				
 				return false;
@@ -149,17 +129,42 @@ public class WorldSelection implements Gui {
 		});		
 		window.add(sushiUnselect);
 		
+		// Image sushi unselect
+		rockoUnselect = new Image("res/game/menu/world/radio-unselected.png");
+		rockoUnselect.position(410, 140);
+		rockoUnselect.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+
+				sushiSelect.hide();
+				pangeaSelect.hide();
+				rockoSelect.show();
+				WorldSelection.this.worldName = "Rocko";
+				
+				return false;
+			}
+			
+		});		
+		window.add(rockoUnselect);
+		
 		// Image pange unselect
 		pangeaSelect = new Image("res/game/menu/world/radio-selected.png");
-		pangeaSelect.position(113, 158);
+		pangeaSelect.position(95, 140);
 		pangeaSelect.hide();
 		window.add(pangeaSelect);
 
 		// Image sushi unselect
 		sushiSelect = new Image("res/game/menu/world/radio-selected.png");
-		sushiSelect.position(378, 158);
+		sushiSelect.position(250, 140);
 		sushiSelect.hide();
 		window.add(sushiSelect);
+		
+		// Image rocko unselect
+		rockoSelect = new Image("res/game/menu/world/radio-selected.png");
+		rockoSelect.position(410, 140);
+		rockoSelect.hide();
+		window.add(rockoSelect);
 
 		// Add the gui 
 		gui.add(window);

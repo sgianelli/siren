@@ -57,27 +57,10 @@ public class Sushi extends World {
         slightlyCloudy = new Tile("res/tests/img/slightly-cloudy.png", 0, 0, 8096, 8096, 1, 1);
         pixelCloudy = new Tile("res/tests/img/pixel-cloudy.png", 0, 0, 8096, 8096, 1, 1);
         plasma = new Tile("res/tests/img/plasma.png", 0, 0, 8096, 8096, 1, 1);
-        activeOverlay = slightlyCloudy;
-        
-        rainsheet = SpriteSheet.fromCSS
-                ("res/game/sprites/rain.png",
-                "res/game/sprites/rain.css");
-        
-        rain = rainsheet.createSprite(
-                new Animation("dark-rain", "rain-", 1, 4, 100));
-        
-       rain.spriteY = 0;
-       rain.spriteX = 0;
-       rain.bounds.width = 8096;
-       rain.bounds.height = 8096;
+        activeOverlay = pixelCloudy;
     }
     
     public void guiDraw() {
-        rain.bounds.x -= 0.5f;
-        rain.bounds.y -= 0.75f;
-        rain.bounds.y %= 4096;
-        rain.bounds.x %= 4096;
-        rain.draw();
         activeOverlay.bounds.x -= 0.5f;
         activeOverlay.bounds.y -= 0.75f;
         activeOverlay.bounds.x %= 4096;

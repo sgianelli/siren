@@ -1,6 +1,6 @@
 World.load("Testing Map", "tiles/safari.json");
 
-World.music("dark-world");
+// World.music("dark-world");
 
 // A simple jQuery-like wrapper
 var $ = function(x) {
