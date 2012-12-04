@@ -53,8 +53,7 @@ public class GamePlay {
 		world.getCamera().enable();
 
 		// Create Game Stuatus
-		gameStatus = new GameStatus(screen);
-		gameStatus.player = player;
+		gameStatus = new GameStatus(screen, profile);
 		
 		// Create HelpMenu
 		helpMenu = new HelpMenu(screen);

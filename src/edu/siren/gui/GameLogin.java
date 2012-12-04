@@ -715,6 +715,7 @@ public class GameLogin implements Gui {
         	
         	
         } catch(Exception e) {
+        	e.printStackTrace();
         	System.err.println("Could Not Load World!");
         	System.exit(1);
         }

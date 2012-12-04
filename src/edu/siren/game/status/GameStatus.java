@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import edu.siren.game.Player;
 import edu.siren.game.profile.GameStats;
+import edu.siren.game.profile.Profile;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
@@ -18,23 +19,28 @@ public class GameStatus extends GuiContainer {
 	// Status Information
 	private String timeOfDay;
 	private int experience;
-
+	private int coins;
+	
 	// Components
+	private Text coinsText;
 	private Text timeOfDayText;
 	private Text timeOfDayValue;
 	private Text experienceText;
 	private Text coordinatesText;
 	private Image[] experienceImages;
 	
-	public Player player;
+	private Profile profile;
 	
-	public GameStatus(Screen screen) throws IOException {
+	public GameStatus(Screen screen, Profile profile) throws IOException {
 		
 		// Call Super
 		super();
 		
 		// Save the Screen
 		this.screen = screen;
+		
+		// Save the Profile
+		this.profile = profile;
 		
 		// Set Dimensions
 		this.dimensions(screen.width, screen.height);
@@ -50,6 +56,22 @@ public class GameStatus extends GuiContainer {
 
 			// Set the Font Sprite 
 			font = new Font("res/tests/fonts/proggy.png");
+			
+			// Set Character Name
+			Text characterName = new Text(profile.getName());
+			characterName.position(2, 430);
+			characterName.fontScaling(2);
+			add(characterName);
+			
+			// Set Coins
+			Text coinTextLabel = new Text("Coins: ");
+			coinTextLabel.position(2, 415);
+			coinTextLabel.fontScaling(2);
+			add(coinTextLabel);
+			coinsText = new Text("0000000");
+			coinsText.fontScaling(2);
+			coinsText.position(80, 415);
+			add(coinsText);
 			
 			// Create the Status Bottom Panel
 			Image statusPanel = new Image("res/game/menu/status-panel.png", "");
@@ -111,7 +133,13 @@ public class GameStatus extends GuiContainer {
 		// Update Experiece
 		this.experience = gameStats.getExperience();
 		
-		this.coordinatesText.text(String.format("(%.02f, %.02f)",this.player.getRect().x,this.player.getRect().y));
+		// Update Coins
+		String coinString = String.format("%07d", profile.getGameStats().getCoins());
+		coinsText.text(coinString);
+		
+		
+		Player player = profile.getPlayer();
+		this.coordinatesText.text(String.format("(%.02f, %.02f)",player.getRect().x,player.getRect().y));
 		
 		// Update experience Status
 		updateexperience();
@@ -168,6 +196,34 @@ public class GameStatus extends GuiContainer {
 		if (experience >= 0 && experience <= GameStats.MAX_EXPERIENCE) {
 			this.experience = experience;
 		}
+	}
+
+	/**
+	 * @return the coins
+	 */
+	public int getCoins() {
+		return coins;
+	}
+
+	/**
+	 * @param coins the coins to set
+	 */
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
+
+	/**
+	 * @return the profile
+	 */
+	public Profile getProfile() {
+		return profile;
+	}
+
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 	
 	

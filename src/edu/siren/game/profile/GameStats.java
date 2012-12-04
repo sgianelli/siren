@@ -9,6 +9,7 @@ public class GameStats implements Serializable {
 	private int games;
 	private int battlesWon;
 	private int battlesLost;
+	private int coins;
 	
 	// Moves Allowed in Battle
 	private int movesAllowed;
@@ -26,6 +27,7 @@ public class GameStats implements Serializable {
 	public static final int DEFAULT_MOVES = 1;
 	public static final int MAX_EXPERIENCE = 10;
 	public static final int DEFAULT_EXPERIENCE = 1;
+	public static final int DEFAULT_COINS = 100;
 	
 	public GameStats() {
 
@@ -33,6 +35,7 @@ public class GameStats implements Serializable {
 		this.health = MAX_HEALTH;
 		this.movesAllowed = DEFAULT_MOVES;
 		this.experience = DEFAULT_EXPERIENCE;
+		this.coins = DEFAULT_COINS;
 		
 	}
 
@@ -148,6 +151,22 @@ public class GameStats implements Serializable {
 	 */
 	public void setExperience(int experience) {
 		this.experience = experience;
+	}
+
+
+	/**
+	 * @return the coins
+	 */
+	public int getCoins() {
+		return coins;
+	}
+
+
+	/**
+	 * @param coins the coins to set
+	 */
+	public void setCoins(int coins) {
+		this.coins = coins;
 	}
 	
 	
