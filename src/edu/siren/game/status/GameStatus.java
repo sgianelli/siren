@@ -2,6 +2,7 @@ package edu.siren.game.status;
 
 import java.io.IOException;
 
+import edu.siren.game.profile.GameStats;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
@@ -16,16 +17,13 @@ public class GameStatus extends GuiContainer {
 	
 	// Status Information
 	private String timeOfDay;
-	private int health;
-	
-	// Game Constants
-	public final static int MAX_HEALTH = 11;
+	private int experience;
 
 	// Components
 	private Text timeOfDayText;
 	private Text timeOfDayValue;
-	private Text healthText;
-	private Image[] healthImages;
+	private Text experienceText;
+	private Image[] experienceImages;
 	
 	public GameStatus(Screen screen) throws IOException {
 		
@@ -37,10 +35,7 @@ public class GameStatus extends GuiContainer {
 		
 		// Set Dimensions
 		this.dimensions(screen.width, screen.height);
-		
-		// Set Health
-		setHealth(MAX_HEALTH);
-		
+				
 		// Build the Game Status
 		buildComponents();
 		
@@ -70,22 +65,22 @@ public class GameStatus extends GuiContainer {
 			timeOfDayValue.fontScaling(2);
 			add(timeOfDayValue);
 			
-			// Create Health
-			healthText = new Text("Health");
-			healthText.position(screen.width -105 -2, 25);
-			healthText.fontScaling(2);
-			add(healthText);
+			// Create Player Level
+			experienceText = new Text("Experience");
+			experienceText.position(screen.width -125 -2, 25);
+			experienceText.fontScaling(2);
+			add(experienceText);
 			
-			healthImages = new Image[MAX_HEALTH];
+			experienceImages = new Image[GameStats.MAX_EXPERIENCE];
 			int x = 373;
-			int y = 5;
-			for(int i=0; i<healthImages.length; i++) {
+			int y = 2;
+			for(int i=0; i<experienceImages.length; i++) {
 				
-				// Create Health Image
-				healthImages[i] = new Image("res/game/menu/health.png", "");
-				healthImages[i].position(x, y);
+				// Create experience Image
+				experienceImages[i] = new Image("res/game/menu/experience.png", "");
+				experienceImages[i].position(x, y);
 				
-				add(healthImages[i]);
+				add(experienceImages[i]);
 				
 				// Increment x Position
 				x += 12;
@@ -103,13 +98,16 @@ public class GameStatus extends GuiContainer {
 	
 
 	
-	public void update() {
+	public void update(GameStats gameStats) {
 
 		// Update Time of Day
 		timeOfDayValue.text(getTimeOfDay());
 
-		// Update Health Status
-		updateHealth();
+		// Update Experiece
+		this.experience = gameStats.getExperience();
+		
+		// Update experience Status
+		updateexperience();
 		
 		// Draw the World
 		draw();
@@ -117,14 +115,14 @@ public class GameStatus extends GuiContainer {
 	}
 	
 	
-	private void updateHealth() {
+	private void updateexperience() {
 		
-		for (int i=0; i<MAX_HEALTH; i++) {
+		for (int i=0; i<GameStats.MAX_EXPERIENCE; i++) {
 			
-			if (i < getHealth()) {
-				healthImages[i].show();
+			if (i < getExperience()) {
+				experienceImages[i].show();
 			} else {
-				healthImages[i].hide();
+				experienceImages[i].hide();
 			}
 			
 		}
@@ -148,18 +146,18 @@ public class GameStatus extends GuiContainer {
 	}
 
 	/**
-	 * @return the health
+	 * @return the experience
 	 */
-	public int getHealth() {
-		return health;
+	public int getExperience() {
+		return experience;
 	}
 
 	/**
-	 * @param health the health to set
+	 * @param experience the experience to set
 	 */
-	public void setHealth(int health) {
-		if (health >= 0 && health <= MAX_HEALTH) {
-			this.health = health;
+	public void setExperience(int experience) {
+		if (experience >= 0 && experience <= GameStats.MAX_EXPERIENCE) {
+			this.experience = experience;
 		}
 	}
 	

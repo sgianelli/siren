@@ -13,6 +13,7 @@ public class GameStats implements Serializable {
 	private int movesAllowed;
 	
 	// Profile Stats
+	private int experience;
 	private int health;
 	private int attack;
 	private int defense;
@@ -22,13 +23,15 @@ public class GameStats implements Serializable {
 	// Constants for Game
 	public static final int MAX_HEALTH = 100;
 	public static final int DEFAULT_MOVES = 1;
+	public static final int MAX_EXPERIENCE = 10;
+	public static final int DEFAULT_EXPERIENCE = 1;
 	
 	public GameStats() {
 
 		// Set the Default Stats
 		this.health = MAX_HEALTH;
 		this.movesAllowed = DEFAULT_MOVES;
-		
+		this.experience = DEFAULT_EXPERIENCE;
 		
 	}
 
@@ -128,6 +131,22 @@ public class GameStats implements Serializable {
 	 */
 	public void setMovesAllowed(int movesAllowed) {
 		this.movesAllowed = movesAllowed;
+	}
+
+
+	/**
+	 * @return the experience
+	 */
+	public int getExperience() {
+		return experience;
+	}
+
+
+	/**
+	 * @param experience the experience to set
+	 */
+	public void setExperience(int experience) {
+		this.experience = experience;
 	}
 	
 	
