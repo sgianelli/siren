@@ -31,7 +31,7 @@ public class MenuTest {
 			Screen screen = new Screen("Screen", 512, 448);
 	        
 	        World world = new TestBox(1024, 1024);
-	        GameStatus gameStatus = new GameStatus(screen); 
+	        //GameStatus gameStatus = new GameStatus(screen); 
 	        
 	        // Create a GUI using the Perspective2D camera
 	        
@@ -111,7 +111,7 @@ public class MenuTest {
 	
 	            
 
-	            gameStatus.setTimeOfDay(world.getCurrentEnvironment().name());
+	            //gameStatus.setTimeOfDay(world.getCurrentEnvironment().name());
 	            
 	            
 	            //gameStatus.update();
