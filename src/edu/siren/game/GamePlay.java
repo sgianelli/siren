@@ -112,6 +112,7 @@ public class GamePlay {
 		            	helpMenu.show();
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_B) {
 		            	world.pause();
+		            	powerStoreMenu.setGameStats(profile.getGameStats());
 		            	powerStoreMenu.show();		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 		            	world.play();
