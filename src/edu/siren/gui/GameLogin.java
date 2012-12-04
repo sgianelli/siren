@@ -57,6 +57,7 @@ public class GameLogin implements Gui {
 	private Image jesusClick;
 	private Image diglettClick;
 	private Image peachClick;
+	private Image redClick;
 	
 	// Sprite Labels
 	private Text linkName;
@@ -65,6 +66,7 @@ public class GameLogin implements Gui {
 	private Text jesusName;
 	private Text diglettName;
 	private Text peachName;
+	private Text redName;
 	private Text[] spriteNames;
 	
 	// Register Login Complete
@@ -249,8 +251,8 @@ public class GameLogin implements Gui {
 		}
 		
 		// Sprites
-		sprites = new Sprite[6];
-		spriteNames = new Text[6];
+		sprites = new Sprite[7];
+		spriteNames = new Text[7];
 		
 		// Get Sprite Sheet
         SpriteSheet spritesheet = SpriteSheet.fromCSS
@@ -268,6 +270,10 @@ public class GameLogin implements Gui {
         SpriteSheet pikachuspritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/pikachu.png",
                 "res/game/sprites/characters/pikachu.css");            
+
+        SpriteSheet redspritesheet = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/red.png",
+                "res/game/sprites/characters/red.css");         
         
         // This demonstrates using contiguous animation sequences by using
         // a conventional naming to generate animations
@@ -283,7 +289,10 @@ public class GameLogin implements Gui {
         		new Animation("move-backward", "diglett-backward-", 1, 2, 50));        
         Sprite peach = spritesheet.createSprite(
         		new Animation("move-backward", "peach-car-backward-", 1, 2, 50));        
-		
+        Sprite red = redspritesheet.createSprite(
+        		new Animation("move-backward", "red-backward-", 1, 2, 50));        
+
+        
         // Choose a Sprite
         Text chooseSprite = new Text("Choose Sprite");
         chooseSprite.position(20,y-105);
@@ -310,6 +319,13 @@ public class GameLogin implements Gui {
         pikachuName.position(253, y-125);
         spriteNames[1] = pikachuName;
         window.add(pikachuName);
+        
+        // Red Name
+        redName = new Text("Red");
+        redName.fontScaling(3);
+        redName.position(268, y-175);
+        spriteNames[6] = redName;
+        window.add(redName);          
         
         // Jesus Name
         jesusName = new Text("Chesus");
@@ -339,6 +355,8 @@ public class GameLogin implements Gui {
         linkpink.spriteY = y-160;
         pikachu.spriteX = 273;
         pikachu.spriteY = y-110;
+        red.spriteX = 273;
+        red.spriteY = y-160;
         jesus.spriteX = 335;
         jesus.spriteY = y-110;
         diglett.spriteX = 402;
@@ -354,6 +372,7 @@ public class GameLogin implements Gui {
         pinkLinkClick = new Image("res/game/gui/sprite-click.png");
         diglettClick = new Image("res/game/gui/sprite-click.png");
         peachClick = new Image("res/game/gui/sprite-click.png");
+        redClick = new Image("res/game/gui/sprite-click.png");        
 
         // Link Click
         linkClick.position(linkName.x(), linkName.y());
@@ -400,6 +419,21 @@ public class GameLogin implements Gui {
         });
         window.add(pikachuClick);
                 
+        // Red Click
+        redClick.position(redName.x(), redName.y());
+        redClick.priority(10);
+        redClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Red";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(redClick);             
+        
         // Jesus Click
         jesusClick.position(jesusName.x(), jesusName.y());
         jesusClick.priority(10);
@@ -453,6 +487,7 @@ public class GameLogin implements Gui {
         sprites[3] = diglett;
         sprites[4] = peach;
         sprites[5] = linkpink;
+        sprites[6] = red;
         
 		// Create Profile Button
 		Image createProfile = new Image("res/game/gui/create-profile.png");
