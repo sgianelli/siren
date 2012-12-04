@@ -2,7 +2,11 @@ package edu.siren.gui;
 
 import java.io.IOException;
 
+import org.lwjgl.LWJGLException;
+
 import edu.siren.core.tile.World;
+import edu.siren.game.worlds.Pangea;
+import edu.siren.game.worlds.Sushi;
 import edu.siren.renderer.Screen;
 
 /**
@@ -46,7 +50,7 @@ public class WorldSelection implements Gui {
 
 	}
 	
-	public World selectWorld() {
+	public World selectWorld() throws IOException, LWJGLException {
 		
 		// Run the Selection Screen
 		run();
@@ -57,10 +61,7 @@ public class WorldSelection implements Gui {
 		} else {
 			return new Sushi();
 		}
-		
-		// Oops... Not Sure how we'll get here
-		return null;
-		
+				
 	}
 	
 	private void buildTheFuckingGui() throws IOException {

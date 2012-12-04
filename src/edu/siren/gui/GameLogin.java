@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.LWJGLException;
+
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
@@ -632,8 +634,13 @@ public class GameLogin implements Gui {
             
         }
         
-        // Before we Leave
-        profile.setWorld(worldSelection.selectWorld());
+        try {
+        	// Before we Leave
+        	profile.setWorld(worldSelection.selectWorld());
+        } catch(Exception e) {
+        	System.err.println("Could Not Load World!");
+        	System.exit(1);
+        }
         		
 	}
 	
