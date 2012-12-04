@@ -14,6 +14,7 @@ import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.players.Diglett;
+import edu.siren.game.players.Pikachu;
 
 public class Sushi extends World {
     public Sushi() throws IOException, LWJGLException {
@@ -30,11 +31,11 @@ public class Sushi extends World {
     public Player diglett; 
     
     public void createEntities() throws IOException {
-        diglett = new Diglett();
-        diglett.setPosition(180, 770);
+        diglett = new Pikachu();
+        diglett.setPosition(100, 370);
         diglett.lastMovement = 2;
         diglett.controllable = false;
-        diglett.id = "diglett";
+        diglett.id = "Pikachu";
         addEntity(diglett);
     }
     
@@ -42,7 +43,7 @@ public class Sushi extends World {
     {    
         // Load the real world
         try {
-            JSWorld.load("res/game/maps/viridian.js", this);
+            JSWorld.load("res/game/maps/safari.js", this);
         } catch (ScriptException e) {
             e.printStackTrace();
         } catch (LWJGLException e) {
