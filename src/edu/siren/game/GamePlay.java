@@ -44,7 +44,7 @@ public class GamePlay {
 		this.profile = profile;
 		
 		// Create a New World
-		world = new PokemonWorld();
+		world = profile.getWorld();
 		
 		// Get the Player and add him to the world
 		player = this.profile.getPlayer();

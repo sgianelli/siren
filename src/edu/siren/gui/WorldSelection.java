@@ -53,12 +53,12 @@ public class WorldSelection implements Gui {
 		
 		// Get the world
 		if (worldName.equals("Pangea")) {
-			
+			return new Pangea();
 		} else {
-			
+			return new Sushi();
 		}
 		
-		
+		// Oops... Not Sure how we'll get here
 		return null;
 		
 	}
