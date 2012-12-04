@@ -86,6 +86,7 @@ public class Siren {
 			
 			// Save the Profile
 			if (currentProfile != null) {
+				System.out.println("Saving Profile");
 				profileManager.save(currentProfile);
 			}
 			

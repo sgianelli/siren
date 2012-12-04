@@ -10,6 +10,7 @@ import edu.siren.game.Player;
 import edu.siren.game.menu.HelpMenu;
 import edu.siren.game.menu.Menu;
 import edu.siren.game.players.Pikachu;
+import edu.siren.game.profile.Profile;
 import edu.siren.game.status.GameStatus;
 import edu.siren.game.worlds.TestBox;
 import edu.siren.gui.GuiContainer;
@@ -92,12 +93,12 @@ public class MenuTest {
 			            	world.play();
 			            } else if (Keyboard.getEventKey() == Keyboard.KEY_K ) {
 			            	
-			            	gameStatus.setHealth(gameStatus.getHealth() - 1);
+			            	//gameStatus.setHealth(gameStatus.getHealth() - 1);
 			            	
 			            	
 			            } else if (Keyboard.getEventKey() == Keyboard.KEY_L) {
 			            	
-			            	gameStatus.setHealth(gameStatus.getHealth()+1);
+			            	//gameStatus.setHealth(gameStatus.getHealth()+1);
 			            }
 	        		}
 	        	}
@@ -113,7 +114,7 @@ public class MenuTest {
 	            gameStatus.setTimeOfDay(world.getCurrentEnvironment().name());
 	            
 	            
-	            gameStatus.update();
+	            //gameStatus.update();
 	            //shader.release();
 	        }
 	        

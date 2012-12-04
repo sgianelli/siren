@@ -114,12 +114,19 @@ public class GamePlay {
 		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_K ) {
 		            	
-		            	gameStatus.setHealth(gameStatus.getHealth() - 1);
+		            	// Remove Experience
+		            	int experience = gameStatus.getExperience() - 1;
+		            	gameStatus.setExperience(experience );
+		            	profile.getGameStats().setExperience(experience);
 		            	
 		            	
 		            } else if (Keyboard.getEventKey() == Keyboard.KEY_L) {
 		            	
-		            	gameStatus.setHealth(gameStatus.getHealth()+1);
+		            	// Remove Experience
+		            	int experience = gameStatus.getExperience() + 1;
+		            	gameStatus.setExperience(experience );
+		            	profile.getGameStats().setExperience(experience);
+
 		            }
         		}
         	}
@@ -133,7 +140,7 @@ public class GamePlay {
             
             // Update Game Status
             if (!world.inBattle())
-                gameStatus.update();
+                gameStatus.update(profile.getGameStats());
             
             // Quit Game
             if (!gamePlay)
