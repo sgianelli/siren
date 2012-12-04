@@ -19,6 +19,8 @@ public class BattleManager {
     public BattleScreen battleScreen = null;
     public World world = null;
     public Layer filler = new Layer("fill");
+    public int lastTileR = -1, lastTileC = -1;
+    public boolean replaceTile = false;
     
     public BattleManager(World world, Team red, Team blue) throws IOException {
         battleScreen = new BattleScreen(this);
@@ -142,9 +144,6 @@ public class BattleManager {
         int dy = Math.abs(c - pc);
         if ((dr + dy) > player.moves)
             return false;
-        player.moves -= (dr + dy);
-        player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
-        player.possibleMoveOverlay.clear();
         
         // Attacks a player
         boolean hitPlayer = false;
@@ -186,19 +185,38 @@ public class BattleManager {
             }
         }
         
-        if (hitPlayer)
+        if (hitPlayer) {
+            player.moves -= (dr + dy);
+            player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
+            player.possibleMoveOverlay.clear();
             return true;
+        }
         
         // Attacks a tile
-        /*
         try {
-            Tile tile = new Tile("res/game/gui/black.png", r * 32, c * 32, 32, 32, true);
-            tile.solid = true;
-            filler.addTile(tile);
+            if (r == lastTileR && c == lastTileC && replaceTile) {
+                player.moves -= (dr + dy);
+                player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
+                player.possibleMoveOverlay.clear();
+                Tile tile = new Tile("res/game/gui/black.png", r * 32, c * 32, 32, 32, true);
+                tile.solid = true;
+                filler.addTile(tile);
+                replaceTile = false;
+                battleScreen.overlayTile.background("res/game/gui/attack-tile.png");
+            } else if ((r != lastTileR || c != lastTileC) && replaceTile) {
+                replaceTile = false;
+                System.out.println("attack tile fail #2");
+                battleScreen.overlayTile.background("res/game/gui/attack-tile.png");
+            } else if (!replaceTile) {
+                lastTileR = r;
+                lastTileC = c;
+                replaceTile = true;
+                System.out.println("attack tile verify");
+                battleScreen.overlayTile.background("res/game/gui/attack-tile-verify.png");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
         
         return true;
     }

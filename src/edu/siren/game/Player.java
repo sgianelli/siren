@@ -57,6 +57,9 @@ public class Player extends Actor {
                 drawMoveOverlay();
             }
             super.draw();
+            if (inMovement) {
+                possibleMoveOverlay.clear();
+            }
             return;
         }
         

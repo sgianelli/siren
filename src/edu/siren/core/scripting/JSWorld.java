@@ -178,7 +178,7 @@ public class JSWorld {
             Display.update();
         }
         
-        battleWorld.battleManager = new BattleManager(world, a, b);
+        battleWorld.battleManager = new BattleManager(battleWorld, a, b);
         
         return world;
     }
