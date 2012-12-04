@@ -1,0 +1,14 @@
+{
+    "layer1": [
+        {"comment": "World"},
+        {"tile": "res/game/gui/viridianBattle.png", "w": 512, "h": 448, "x": 0, "y": 0, "tileable": true},
+        
+        {"comment": "fucking trees"},
+        
+        {"comment": "fencing"},
+        {"tile": "res/game/gui/black.png", "x": -12, "y": -40, "w": 536, "h": 40, "solid": true},
+        {"tile": "res/game/gui/black.png", "x": 512, "y": 448, "w": 536, "h": 40, "solid": true},
+        {"tile": "res/game/gui/black.png", "x": -12, "y": -12, "w": 12, "h": 472, "solid": true},
+        {"tile": "res/game/gui/black.png", "x": -12, "y": -12, "w": 12, "h": 472, "solid": true}
+    ]
+}

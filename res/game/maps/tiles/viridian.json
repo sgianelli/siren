@@ -1,0 +1,49 @@
+{
+    "layer1": [
+        {"comment": "World"},
+        {"tile": "res/game/gui/viridianForest.png", "w": 864, "h": 1104, "x": -432, "y": 0, "tileable": true},
+        
+        {"comment": "Triggers"},
+        {"tile": "res/tests/img/fill.png", "x": 192, "y": 786, "w": 74, "h": 12, "id": "trigger_diglett"},
+        
+        {"comment": "Sprites"},
+        
+        {"player": "diglett", "x": 232, "y": 750, "id": "diglett1", "class": "Diglett"},
+        {"player": "diglett", "x": 256, "y": 790, "id": "diglett2", "class": "Diglett"},
+        {"player": "diglett", "x": 278, "y": 820, "id": "diglett3", "class": "Diglett"},
+        {"player": "diglett", "x": 200, "y": 790, "id": "diglett4", "class": "Diglett"},
+        {"player": "diglett", "x": 256, "y": 780, "id": "diglett5", "class": "Diglett"},
+        {"player": "diglett", "x": 282, "y": 750, "id": "diglett6", "class": "Diglett"},
+        {"player": "diglett", "x": 202, "y": 710, "id": "diglett7", "class": "Diglett"},
+        
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 192, "y": 766, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 200, "y": 800, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 270, "y": 800, "class": "fire"},
+        {"sprite": "fire", "frames": 3, "time": 100, "x": 275, "y": 766, "class": "fire"},
+
+        {"comment": "fucking trees"},
+        {"tile": "res/tests/img/fill.png", "x": -430, "y": -32, "w": 40, "h": 1104, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -424, "y": 48, "w": 864, "h": 48, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -424, "y": 64, "w": 424, "h": 48, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 80, "y": 64, "w": 424, "h": 48, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 392, "y": -32, "w": 40, "h": 1104, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -424, "y": 1044, "w": 864, "h": 48, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 290, "y": 248, "w": 110, "h": 120, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 100, "y": 248, "w": 90, "h": 536, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 275, "y": 440, "w": 42, "h": 186, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 292, "y": 728, "w": 100, "h": 88, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 84, "y": 884, "w": 232, "h": 90, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -142, "y": 440, "w": 242, "h": 88, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 20, "y": 196, "w": 40, "h": 30, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -156, "y": 244, "w": 136, "h": 126, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -420, "y": 244, "w": 176, "h": 156, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -420, "y": 500, "w": 278, "h": 60, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -44, "y": 520, "w": 160, "h": 166, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -42, "y": 756, "w": 38, "h": 296, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -172, "y": 708, "w": 38, "h": 218, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -140, "y": 628, "w": 38, "h": 92, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -104, "y": 628, "w": 68, "h": 58, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -300, "y": 692, "w": 40, "h": 300, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": -400, "y": 964, "w": 140, "h": 140, "solid": true}
+    ]
+}

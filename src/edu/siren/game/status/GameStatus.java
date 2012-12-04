@@ -2,6 +2,7 @@ package edu.siren.game.status;
 
 import java.io.IOException;
 
+import edu.siren.game.Player;
 import edu.siren.game.profile.GameStats;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
@@ -22,7 +23,10 @@ public class GameStatus extends GuiContainer {
 	private Text timeOfDayText;
 	private Text timeOfDayValue;
 	private Text experienceText;
+	private Text coordinatesText;
 	private Image[] experienceImages;
+	
+	public Player player;
 	
 	public GameStatus(Screen screen) throws IOException {
 		
@@ -64,6 +68,12 @@ public class GameStatus extends GuiContainer {
 			timeOfDayValue.fontScaling(2);
 			add(timeOfDayValue);
 			
+			// Coordinates
+			coordinatesText = new Text("Location");
+			coordinatesText.position(screen.width - 225, screen.height - 30);
+			coordinatesText.fontScaling(2);
+			add(coordinatesText);
+			
 			// Create Player Level
 			experienceText = new Text("Experience");
 			experienceText.position(screen.width -125 -2, 25);
@@ -85,17 +95,13 @@ public class GameStatus extends GuiContainer {
 				x += 12;
 				
 			}
-
 			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
-			
 		
 	}
-	
-
 	
 	public void update(GameStats gameStats) {
 
@@ -105,8 +111,12 @@ public class GameStatus extends GuiContainer {
 		// Update Experiece
 		this.experience = gameStats.getExperience();
 		
+		this.coordinatesText.text(String.format("(%.02f, %.02f)",this.player.getRect().x,this.player.getRect().y));
+		
 		// Update experience Status
 		updateexperience();
+		
+		
 		
 		// Draw the World
 		draw();

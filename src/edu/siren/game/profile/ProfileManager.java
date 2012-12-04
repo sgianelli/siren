@@ -97,8 +97,9 @@ public class ProfileManager implements Serializable {
 			throw new ProfileException("The Profile " + profileName + " does not exist.");
 		
 		} catch (IOException e) {
-			
+			e.printStackTrace();
 			throw new ProfileException("Could no load profile " + profileName + ".");
+			
 		} catch (ClassNotFoundException e) {
 
 			// Let's do nothing for this error

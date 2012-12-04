@@ -1,0 +1,51 @@
+.sprite {
+    background: url(download.png) no-repeat;
+}
+
+.sprite-red-backward-1-png {
+    width: 16px;
+    height: 15px;
+    background-position: -27px -52px;
+}
+
+.sprite-red-backward-2-png {
+    width: 16px;
+    height: 15px;
+    background-position: -0px -52px;
+}
+
+.sprite-red-forward-1-png {
+    width: 16px;
+    height: 15px;
+    background-position: -54px -26px;
+}
+
+.sprite-red-forward-2-png {
+    width: 16px;
+    height: 15px;
+    background-position: -54px -0px;
+}
+
+.sprite-red-left-1-png {
+    width: 16px;
+    height: 15px;
+    background-position: -27px -26px;
+}
+
+.sprite-red-left-2-png {
+    width: 16px;
+    height: 15px;
+    background-position: -0px -26px;
+}
+
+.sprite-red-right-1-png {
+    width: 16px;
+    height: 15px;
+    background-position: -27px -0px;
+}
+
+.sprite-red-right-2-png {
+    width: 16px;
+    height: 15px;
+    background-position: -0px -0px;
+}

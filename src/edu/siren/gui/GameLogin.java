@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.LWJGLException;
+
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
@@ -50,17 +52,21 @@ public class GameLogin implements Gui {
 	
 	// Sprite Click Images
 	private Image linkClick;
+	private Image pinkLinkClick;
 	private Image pikachuClick;
 	private Image jesusClick;
 	private Image diglettClick;
 	private Image peachClick;
+	private Image redClick;
 	
 	// Sprite Labels
 	private Text linkName;
+	private Text linkPinkName;
 	private Text pikachuName;
 	private Text jesusName;
 	private Text diglettName;
 	private Text peachName;
+	private Text redName;
 	private Text[] spriteNames;
 	
 	// Register Login Complete
@@ -68,6 +74,9 @@ public class GameLogin implements Gui {
 	
 	// Profile Logged In
 	private Profile profile;
+	
+	// World Selection
+	private WorldSelection worldSelection;
 	
 	
 	public GameLogin(Screen screen) throws IOException {
@@ -80,6 +89,9 @@ public class GameLogin implements Gui {
 		
 		// Create Profile manager
 		profileManager = new ProfileManager();
+		
+		// Create World Selector
+		worldSelection = new WorldSelection(screen);
 		
 		// Create the LIst of Windows
 		windows = new ArrayList<Window>();
@@ -239,13 +251,17 @@ public class GameLogin implements Gui {
 		}
 		
 		// Sprites
-		sprites = new Sprite[5];
-		spriteNames = new Text[5];
+		sprites = new Sprite[7];
+		spriteNames = new Text[7];
 		
 		// Get Sprite Sheet
         SpriteSheet spritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/sprites.png",
                 "res/game/sprites/characters/sprites.css");
+
+        SpriteSheet linkpinksheet = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/link-pink.png",
+                "res/game/sprites/characters/link-pink.css");
         
         SpriteSheet jesusspritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/jesus.png",
@@ -254,11 +270,17 @@ public class GameLogin implements Gui {
         SpriteSheet pikachuspritesheet = SpriteSheet.fromCSS
                 ("res/game/sprites/characters/pikachu.png",
                 "res/game/sprites/characters/pikachu.css");            
+
+        SpriteSheet redspritesheet = SpriteSheet.fromCSS
+                ("res/game/sprites/characters/red.png",
+                "res/game/sprites/characters/red.css");         
         
         // This demonstrates using contiguous animation sequences by using
         // a conventional naming to generate animations
         Sprite link = spritesheet.createSprite(
         		new Animation("move-backward", "link-backward-", 1, 7, 100));
+        Sprite linkpink = linkpinksheet.createSprite(
+        		new Animation("move-backward", "link-pink-backward-", 1, 7, 50));        
         Sprite jesus = jesusspritesheet.createSprite(
         		new Animation("move-backward", "jesus-left-", 1, 13, 50));
         Sprite pikachu = pikachuspritesheet.createSprite(
@@ -267,7 +289,10 @@ public class GameLogin implements Gui {
         		new Animation("move-backward", "diglett-backward-", 1, 2, 50));        
         Sprite peach = spritesheet.createSprite(
         		new Animation("move-backward", "peach-car-backward-", 1, 2, 50));        
-		
+        Sprite red = redspritesheet.createSprite(
+        		new Animation("move-backward", "red-backward-", 1, 2, 50));        
+
+        
         // Choose a Sprite
         Text chooseSprite = new Text("Choose Sprite");
         chooseSprite.position(20,y-105);
@@ -281,12 +306,26 @@ public class GameLogin implements Gui {
         spriteNames[0] = linkName;
         window.add(linkName);
 
+        // Pink Link Name
+        linkPinkName = new Text("Plink");
+        linkPinkName.fontScaling(3);
+        linkPinkName.position(210, y-175);
+        spriteNames[5] = linkPinkName;
+        window.add(linkPinkName);        
+        
         // Pikachu Name
         pikachuName = new Text("Pikachu");
         pikachuName.fontScaling(3);
         pikachuName.position(253, y-125);
         spriteNames[1] = pikachuName;
         window.add(pikachuName);
+        
+        // Red Name
+        redName = new Text("Red");
+        redName.fontScaling(3);
+        redName.position(268, y-175);
+        spriteNames[6] = redName;
+        window.add(redName);          
         
         // Jesus Name
         jesusName = new Text("Chesus");
@@ -312,8 +351,12 @@ public class GameLogin implements Gui {
         // Sprite Locations
         link.spriteX = 220;
         link.spriteY = y-110;
+        linkpink.spriteX = 220;
+        linkpink.spriteY = y-160;
         pikachu.spriteX = 273;
         pikachu.spriteY = y-110;
+        red.spriteX = 273;
+        red.spriteY = y-160;
         jesus.spriteX = 335;
         jesus.spriteY = y-110;
         diglett.spriteX = 402;
@@ -326,8 +369,10 @@ public class GameLogin implements Gui {
         pikachuClick = new Image("res/game/gui/sprite-click.png");
         jesusClick = new Image("res/game/gui/sprite-click.png");
         linkClick = new Image("res/game/gui/sprite-click.png");
+        pinkLinkClick = new Image("res/game/gui/sprite-click.png");
         diglettClick = new Image("res/game/gui/sprite-click.png");
         peachClick = new Image("res/game/gui/sprite-click.png");
+        redClick = new Image("res/game/gui/sprite-click.png");        
 
         // Link Click
         linkClick.position(linkName.x(), linkName.y());
@@ -344,6 +389,21 @@ public class GameLogin implements Gui {
         });
         window.add(linkClick);        
         
+        // Pink Link Click
+        pinkLinkClick.position(linkPinkName.x(), linkPinkName.y());
+        pinkLinkClick.priority(10);
+        pinkLinkClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Plink";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(pinkLinkClick);        
+        
         // Pikachu Click
         pikachuClick.position(pikachuName.x(), pikachuName.y());
         pikachuClick.priority(10);
@@ -359,6 +419,21 @@ public class GameLogin implements Gui {
         });
         window.add(pikachuClick);
                 
+        // Red Click
+        redClick.position(redName.x(), redName.y());
+        redClick.priority(10);
+        redClick.onMouseUp(new ElementEvent(){
+
+			@Override
+			public boolean event(Element element) {
+				GameLogin.this.selectedSprite = "Red";
+				toggleSpriteName();
+				return false;
+			}
+        	
+        });
+        window.add(redClick);             
+        
         // Jesus Click
         jesusClick.position(jesusName.x(), jesusName.y());
         jesusClick.priority(10);
@@ -411,12 +486,14 @@ public class GameLogin implements Gui {
         sprites[2] = pikachu;
         sprites[3] = diglett;
         sprites[4] = peach;
+        sprites[5] = linkpink;
+        sprites[6] = red;
         
 		// Create Profile Button
 		Image createProfile = new Image("res/game/gui/create-profile.png");
 		{
 		
-			createProfile.position(210, y-165);
+			createProfile.position(30, y-250);
 			createProfile.onMouseUp(new ProfileRegisterEvent(characterName));
 			window.add(createProfile);
 			
@@ -427,7 +504,7 @@ public class GameLogin implements Gui {
 		{
 		
 			// Set Button Characterstics
-			cancelButton.position(330, y-165);
+			cancelButton.position(150, y-250);
 			cancelButton.onMouseUp(new ElementEvent(){
 				@Override
 				public boolean event(Element element) {
@@ -547,6 +624,7 @@ public class GameLogin implements Gui {
 		
 		// Set Sprite Name Colors
 		linkName.fontColor(1.0f, 1.0f, 1.0f);
+		linkPinkName.fontColor(1.0f, 1.0f, 1.0f);
 		pikachuName.fontColor(1.0f, 1.0f, 1.0f);
 		jesusName.fontColor(1.0f, 1.0f, 1.0f);
 		diglettName.fontColor(1.0f, 1.0f, 1.0f);
@@ -624,6 +702,21 @@ public class GameLogin implements Gui {
             	break;
             }
             
+        }
+        
+        try {
+        	
+
+        	// Before we Leave
+        	if (profile != null && profile.getWorldName() == null) {
+        		profile.setWorld(worldSelection.selectWorld());
+        	}
+
+        	
+        	
+        } catch(Exception e) {
+        	System.err.println("Could Not Load World!");
+        	System.exit(1);
         }
         		
 	}

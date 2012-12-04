@@ -65,22 +65,26 @@ public class Player extends Actor {
         float lastX = this.x;
         float lastY = this.y;
         
+        
+        int lastMovementY = 2;
+        
         if (controllable && (!snap || (snap && !hadMovement))) {        
             if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
                 moveUp();
                 sprite.animation("move-forward");
                 lastMovement = 1;
                 movement = true;
+                lastMovementY = lastMovement;
             } else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
                 moveDown();
                 sprite.animation("move-backward");
                 lastMovement = 2;
                 movement = true;
+                lastMovementY = lastMovement;
             }
             
-            int lastMovementY = lastMovement;
             
-            if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            else if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
                 moveLeft();
                 sprite.animation("move-left");
                 lastMovement = 3;
