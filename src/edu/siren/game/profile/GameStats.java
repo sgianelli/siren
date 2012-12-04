@@ -9,11 +9,30 @@ public class GameStats implements Serializable {
 	private int battlesWon;
 	private int battlesLost;
 	
+	// Moves Allowed in Battle
+	private int movesAllowed;
+	
 	// Profile Stats
 	private int health;
 	private int attack;
 	private int defense;
 	private int special;
+	
+	
+	// Constants for Game
+	public static final int MAX_HEALTH = 100;
+	public static final int DEFAULT_MOVES = 1;
+	
+	public GameStats() {
+
+		// Set the Default Stats
+		this.health = MAX_HEALTH;
+		this.movesAllowed = DEFAULT_MOVES;
+		
+		
+	}
+
+	
 	/**
 	 * @return the games
 	 */
@@ -97,6 +116,18 @@ public class GameStats implements Serializable {
 	 */
 	public void setSpecial(int special) {
 		this.special = special;
+	}
+	/**
+	 * @return the movesAllowed
+	 */
+	public int getMovesAllowed() {
+		return movesAllowed;
+	}
+	/**
+	 * @param movesAllowed the movesAllowed to set
+	 */
+	public void setMovesAllowed(int movesAllowed) {
+		this.movesAllowed = movesAllowed;
 	}
 	
 	
