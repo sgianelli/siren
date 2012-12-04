@@ -3,6 +3,7 @@ package edu.siren.game.menu;
 import java.io.IOException;
 
 import edu.siren.game.profile.GameStats;
+import edu.siren.gui.Image;
 import edu.siren.gui.Text;
 import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
@@ -27,18 +28,21 @@ public class PowerStoreMenu extends Menu{
 	public void build(Window window) throws IOException {
 		
 		// Set the Title
-		Text text = new Text(getName());
-		text.fontScaling(1);
-		text.position(130, 420);
-		window.add(text);
+		//Text text = new Text(getName());
+		//text.fontScaling(1);
+		//text.position(130, 420);
+		//window.add(text);
+		Image powerUpTitle = new Image("res/game/menu/powerup.png", "");
+		powerUpTitle.position(0,0);
+		window.add(powerUpTitle);
 		
 		// Items 
 		Text items = new Text("Items");
 		items.fontScaling(2);
-		items.position(30, 375);
+		items.position(30, 300);
 		window.add(items);
 		
-		int y = 355;
+		int y = 280;
 		
 		// Power Up              Power Up        ==   10 Coins
 		Text powerUp = new Text("Power Up        ==   10 Coins");
