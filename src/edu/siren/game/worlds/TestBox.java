@@ -28,9 +28,6 @@ public class TestBox extends World {
         layer.addTile(new Tile("res/tests/img/grass.png", -1000, -1000, 10000, 10000));
         layer2.addTile(new Tile("res/tests/img/grass.png", -10000, 0, 10000, 10000));
 
-        // Create some catch phrases
-        String phrases[] = { "Whoa!", "Hi!", "What are you up to?" };
-
         // Add random weeds
         for (int i = 0; i < 100; i++) {
             int x = random.nextInt(9000) - random.nextInt(50);

@@ -3,8 +3,9 @@ package edu.siren.game.profile;
 import java.io.Serializable;
 
 public class GameStats implements Serializable {
-	
-	// Game Stats
+    private static final long serialVersionUID = 1746960259570862954L;
+    
+    // Game Stats
 	private int games;
 	private int battlesWon;
 	private int battlesLost;

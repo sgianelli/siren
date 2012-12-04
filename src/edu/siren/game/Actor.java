@@ -7,18 +7,17 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.sprite.Animation;
 import edu.siren.core.sprite.AnimationFrame;
-import edu.siren.core.tile.Tile;
 import edu.siren.game.ai.AI;
 import edu.siren.game.entity.Entity;
 import edu.siren.game.entity.Interactable;
 import edu.siren.renderer.Font;
 
-public abstract class Actor extends Entity implements Interactable,Serializable {
+public abstract class Actor extends Entity implements Interactable, Serializable {
+    private static final long serialVersionUID = 5800753789561647215L;
     public float desiredX = 0;
     public float desiredY = 0;
     public float x = 0;

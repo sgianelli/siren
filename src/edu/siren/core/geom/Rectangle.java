@@ -8,6 +8,8 @@ import java.io.Serializable;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Rectangle implements Serializable {
+    private static final long serialVersionUID = -4593746585805825787L;
+    
     public float x, y;
     public float width, height;
 

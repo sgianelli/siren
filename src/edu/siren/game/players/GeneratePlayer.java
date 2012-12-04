@@ -11,7 +11,6 @@ public class GeneratePlayer {
 	 * Generates a Player based upon Name
 	 * 
 	 * @param name
-	 * @return
 	 */
 	public static Player build(String name) {
 		
@@ -21,7 +20,7 @@ public class GeneratePlayer {
 		try {
 			
 			// Create Class Object
-			Class playerClass =  Class.forName(PLAYERS_LOCATION + name);
+			Class<?> playerClass =  Class.forName(PLAYERS_LOCATION + name);
 			if ( playerClass == null) {
 				System.err.println("Player Class Not Created");
 			}

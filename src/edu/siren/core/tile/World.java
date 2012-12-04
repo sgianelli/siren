@@ -19,7 +19,6 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
 import edu.siren.core.geom.Rectangle;
-import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;

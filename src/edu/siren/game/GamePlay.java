@@ -14,9 +14,6 @@ import edu.siren.renderer.Screen;
 
 public class GamePlay {
 
-	// Constants
-	private final static int WORLD_SIZE = 1024;
-	
 	// The Screen for the Game
 	private Screen screen;
 	

@@ -10,7 +10,6 @@ import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.gui.BattleScreen;
-import edu.siren.gui.Gui;
 
 public class BattleManager {
     public Team red, blue;

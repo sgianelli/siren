@@ -33,8 +33,6 @@ public class ProfileManager implements Serializable {
 	 * Validate that a profile is valid... 
 	 * 
 	 * That is, a sprite has been chosen and a name doens't exist
-	 * 
-	 * @return
 	 */
 	public void validate(Profile profile) throws ProfileException {
 		
@@ -120,7 +118,7 @@ public class ProfileManager implements Serializable {
 		try {
 			
 			// Save Location
-			String saveLocation = this.baseDir + profile.getName().toLowerCase() + extension;
+			String saveLocation = ProfileManager.baseDir + profile.getName().toLowerCase() + extension;
 			
 			// Write out the profile
 			FileOutputStream outFile = new FileOutputStream( saveLocation );
@@ -145,7 +143,6 @@ public class ProfileManager implements Serializable {
 	 * This checks to see if the profile has been saved to disk.
 	 * 
 	 * @param profile
-	 * @return
 	 */
 	public boolean exists(Profile profile) {
 				

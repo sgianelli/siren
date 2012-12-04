@@ -16,6 +16,7 @@ import edu.siren.core.geom.Rectangle;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class Font implements Serializable {
+    private static final long serialVersionUID = -1463331519066008044L;
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
     private IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;

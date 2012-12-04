@@ -3,11 +3,12 @@ package edu.siren.game.players;
 import java.io.IOException;
 
 import edu.siren.core.sprite.Animation;
-import edu.siren.core.sprite.AnimationFrame;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 
 public class Diglett extends Player {
+    private static final long serialVersionUID = -2555512161582430979L;
+
     public Diglett() throws IOException {
         this.speed = 25;
         this.name = "Diglett";

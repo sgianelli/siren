@@ -8,7 +8,6 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.script.Bindings;
 import javax.script.Compilable;
@@ -24,7 +23,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL30;
 
 import edu.siren.audio.AudioUtil;
 import edu.siren.core.sprite.Animation;
@@ -38,7 +36,6 @@ import edu.siren.game.battle.Team;
 import edu.siren.game.battle.TeamMemberDieEvent;
 import edu.siren.game.battle.TeamVictoryEvent;
 import edu.siren.game.entity.Entity;
-import edu.siren.gui.Gui;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;

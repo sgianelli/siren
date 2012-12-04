@@ -20,6 +20,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class TexturePNG implements Texture , Serializable {
+    private static final long serialVersionUID = -7444817009031185681L;
     public int textureID;
     public int width, height;
     private int unit;

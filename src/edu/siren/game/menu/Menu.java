@@ -9,7 +9,6 @@ import org.lwjgl.input.Keyboard;
 import edu.siren.gui.Gui;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.KeyEvent;
-import edu.siren.gui.Text;
 import edu.siren.gui.Window;
 import edu.siren.renderer.Screen;
 

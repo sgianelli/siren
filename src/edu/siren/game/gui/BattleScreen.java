@@ -2,10 +2,8 @@ package edu.siren.game.gui;
 
 import java.io.IOException;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import edu.siren.core.geom.Rectangle;
 import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;
@@ -14,10 +12,7 @@ import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
-import edu.siren.gui.Text;
 import edu.siren.gui.Window;
-import edu.siren.renderer.Font;
-import edu.siren.renderer.Screen;
 
 public class BattleScreen implements Gui {
 
@@ -26,8 +21,6 @@ public class BattleScreen implements Gui {
     public enum Action { NONE, MOVE, ATTACK, DEFEND, SPECIAL, RUN, SKIP_TURN, USE_ITEM, HELP };
     private Action action = Action.NONE;
     private Action nextAction = null;
-	private Screen screen;
-	private Image banner;
     private Window window;
     private BattleManager battleManager;
     public Image overlayTile;
@@ -41,7 +34,6 @@ public class BattleScreen implements Gui {
 	 */
 	public BattleScreen(BattleManager battleManager) throws IOException {
 		// Save the Screen
-        Font font = gui.font;
         window = new Window("Battle Screen");
         this.battleManager = battleManager;
 	}
@@ -73,10 +65,6 @@ public class BattleScreen implements Gui {
 
     public void showPossibleActions(final Player member) {
         try {
-            int x = (int) (member.x + 64);
-            int y = (int) (member.y);
-            int dy = 16;
-            
             gui.elements.clear();
             window.children.clear();
             

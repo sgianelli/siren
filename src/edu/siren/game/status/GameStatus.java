@@ -13,7 +13,6 @@ public class GameStatus extends GuiContainer {
 
 	// Window Elements 
 	private Screen screen;
-	private Font font;
 	
 	// Status Information
 	private String timeOfDay;

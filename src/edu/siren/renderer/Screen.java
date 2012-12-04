@@ -1,9 +1,5 @@
 package edu.siren.renderer;
 
-import static org.lwjgl.opengl.GL11.GL_NICEST;
-import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
-import static org.lwjgl.opengl.GL11.glHint;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -44,7 +40,6 @@ public class Screen {
             throws LWJGLException
     {
         this.fullscreen = fullscreen;
-        this.title = title;
         this.width = width;
         this.height = height;
         reload();

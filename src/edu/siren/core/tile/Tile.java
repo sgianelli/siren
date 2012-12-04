@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL13;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.game.entity.Entity;
-import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;

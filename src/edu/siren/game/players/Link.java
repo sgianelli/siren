@@ -7,6 +7,8 @@ import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 
 public class Link extends Player {
+    private static final long serialVersionUID = -1965490496437488291L;
+
     public Link() throws IOException {
         this.speed = 40;
         this.name = "Link";

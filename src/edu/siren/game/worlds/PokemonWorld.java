@@ -1,21 +1,10 @@
 package edu.siren.game.worlds;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 
-import javax.script.Bindings;
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 
 import edu.siren.core.scripting.JSWorld;
 import edu.siren.core.sprite.Animation;
@@ -23,15 +12,8 @@ import edu.siren.core.sprite.Sprite;
 import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
-import edu.siren.core.tile.World.Environment;
 import edu.siren.game.Player;
-import edu.siren.game.gui.Intro;
 import edu.siren.game.players.Diglett;
-import edu.siren.game.players.Link;
-import edu.siren.gui.Gui;
-import edu.siren.renderer.Perspective2D;
-import edu.siren.renderer.Screen;
-import edu.siren.renderer.Shader;
 
 public class PokemonWorld extends World {
     public PokemonWorld() throws IOException, LWJGLException {

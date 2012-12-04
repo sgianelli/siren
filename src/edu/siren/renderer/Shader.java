@@ -3,7 +3,6 @@ package edu.siren.renderer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;

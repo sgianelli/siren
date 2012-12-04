@@ -1,13 +1,9 @@
 package edu.siren.core.tile;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import edu.siren.core.geom.Rectangle;
-import edu.siren.core.sprite.Sprite;
 import edu.siren.renderer.BufferType;
 import edu.siren.renderer.Drawable;
 import edu.siren.renderer.IndexVertexBuffer;

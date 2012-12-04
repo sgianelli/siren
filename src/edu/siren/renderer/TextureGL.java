@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author Justin Van Horne <justinvh@gmail.com>
  */
 public class TextureGL implements Texture, Serializable {
+    private static final long serialVersionUID = -1757190376589137795L;
     public int textureID, textureBinding;
 
     /**

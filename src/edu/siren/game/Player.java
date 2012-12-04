@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 
 import edu.siren.core.geom.Rectangle;
 import edu.siren.core.tile.Tile;
-import edu.siren.core.tile.World;
 import edu.siren.renderer.Camera;
-import edu.siren.renderer.Font;
 
 public class Player extends Actor {
     /**

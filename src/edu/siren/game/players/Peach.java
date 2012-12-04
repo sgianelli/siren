@@ -7,7 +7,8 @@ import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.Player;
 
 public class Peach extends Player {
-	
+    private static final long serialVersionUID = 2939527610315198076L;
+
     public Peach() throws IOException {
     	
         this.speed = 25;

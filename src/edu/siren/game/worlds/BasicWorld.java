@@ -1,12 +1,9 @@
 package edu.siren.game.worlds;
 
 import java.io.IOException;
-import java.util.Random;
 
 import org.lwjgl.LWJGLException;
 
-import edu.siren.core.tile.Layer;
-import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 
 

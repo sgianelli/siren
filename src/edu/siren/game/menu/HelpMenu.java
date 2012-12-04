@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
-import edu.siren.gui.Image;
 import edu.siren.gui.KeyEvent;
 import edu.siren.gui.Text;
 import edu.siren.gui.Window;
