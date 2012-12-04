@@ -288,6 +288,7 @@ public class BattleManager {
     }
 
     public void close() {
+        battleWorld.cleanup();
         world.battleManager = null;
         world.battleWorld = null;
         world.getCamera().zoomIn();

@@ -107,7 +107,7 @@ public class JSWorld {
         
         while (drawTiles < tiles.size()) {
             double ctime = getTime();
-            if ((ctime - ftime) > 5) {
+            if ((ctime - ftime) > 15) {
                 drawTiles++;
                 ftime = ctime;
             }
@@ -119,7 +119,8 @@ public class JSWorld {
             shader.release();
             Display.update();
         }
-                
+        
+        world.musicThreads.get(0).interrupt();
         
         loadBattleWorld(battleTiles);
         

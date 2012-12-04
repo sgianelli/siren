@@ -1,6 +1,6 @@
 World.load("Testing Map", "tiles/pokemon-world.json");
 
-World.music("dark-world");
+// World.music("dark-world");
 
 // A simple jQuery-like wrapper
 var $ = function (x) { 
@@ -25,7 +25,7 @@ var $ = function (x) {
 
         var saved = World.save();
 
-        var team_a = World.createTeam("You", [e]);
+        var team_a = World.createTeam("You", [e, $('%pikachu')]);
         var team_b = World.createTeam("Diglett", [$('%diglett')]);
         var battle_world = World.fightable("tiles/intro-battle.json", 
             team_a, team_b, 

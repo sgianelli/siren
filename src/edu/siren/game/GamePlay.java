@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
+import edu.siren.audio.AudioUtil;
 import edu.siren.core.tile.World;
 import edu.siren.game.menu.HelpMenu;
 import edu.siren.game.profile.Profile;
@@ -68,6 +69,7 @@ public class GamePlay {
 		world.zoomIn();
 		
         // The close event can take a bit to propagate
+		world.musicThreads.add(AudioUtil.playBackgroundMusic("res/game/sound/ff4.ogg"));
         while (screen.nextFrame()) {     
 
         	// If the Screen is Closed...

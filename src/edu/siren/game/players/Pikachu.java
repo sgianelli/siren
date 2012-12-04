@@ -10,7 +10,8 @@ public class Pikachu extends Player {
     private static final long serialVersionUID = -2636079116194774975L;
 
     public Pikachu() throws IOException {
-        this.speed = 25;
+        this.speed = 40;
+        this.moves = 6;
         this.name = "Pikachu";
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(

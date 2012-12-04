@@ -82,7 +82,6 @@ public class Player extends Actor {
                 lastMovementY = lastMovement;
             }
             
-            
             if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
                 moveLeft();
                 sprite.animation("move-left");

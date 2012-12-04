@@ -14,6 +14,7 @@ import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.players.Diglett;
+import edu.siren.game.players.Pikachu;
 
 public class Rocko extends World {
     public Rocko() throws IOException, LWJGLException {
@@ -36,11 +37,18 @@ public class Rocko extends World {
         diglett.controllable = false;
         diglett.id = "diglett";
         addEntity(diglett);
+        
+        Player pikachu = new Pikachu();
+        pikachu.setPosition(180, 60);
+        pikachu.controllable = true;
+        pikachu.speed = 40;
+        pikachu.id = "pikachu";
+        addEntity(pikachu);
     }
     
     public void addPlayer(Player player) {
     	super.addPlayer(player);
-    	player.setPositionCenter(120, 80);
+    	player.setPositionCenter(180, 80);
     }
     
     public void create() throws IOException
