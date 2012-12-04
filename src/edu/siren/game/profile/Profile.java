@@ -2,6 +2,7 @@ package edu.siren.game.profile;
 
 import java.io.Serializable;
 
+import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.players.GeneratePlayer;
 
@@ -23,6 +24,9 @@ public class Profile implements Serializable{
 	
 	// Is this a new Profile?
 	private boolean newProfile;
+	
+	// The Current World
+	private World world;
 	
 	/**
 	 * Create a New Profile
@@ -108,6 +112,21 @@ public class Profile implements Serializable{
 	public void setGameStats(GameStats gameStats) {
 		this.gameStats = gameStats;
 	}
+
+	/**
+	 * @return the world
+	 */
+	public World getWorld() {
+		return world;
+	}
+
+	/**
+	 * @param world the world to set
+	 */
+	public void setWorld(World world) {
+		this.world = world;
+	}
+	
 	
 	
 		

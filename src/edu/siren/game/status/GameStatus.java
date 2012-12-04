@@ -86,17 +86,13 @@ public class GameStatus extends GuiContainer {
 				x += 12;
 				
 			}
-
 			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
-			
 		
 	}
-	
-
 	
 	public void update(GameStats gameStats) {
 
