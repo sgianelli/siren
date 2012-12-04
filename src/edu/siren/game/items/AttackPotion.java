@@ -1,5 +1,7 @@
 package edu.siren.game.items;
 
+import javax.swing.Icon;
+
 import edu.siren.game.profile.Profile;
 
 public class AttackPotion extends Item  {
@@ -8,6 +10,9 @@ public class AttackPotion extends Item  {
 	public AttackPotion(Profile profile) {
 		super("Attack Potion", profile);
 		// TODO Auto-generated constructor stub
+		Icon icon = createImageIcon("res/game/","");
+//		
+//		this.setIcon(icon);
 	}
 
 
