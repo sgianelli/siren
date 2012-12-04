@@ -1,6 +1,7 @@
 package edu.siren.core.tile;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -37,8 +38,9 @@ import edu.siren.renderer.Shader;
  *
  * @author Justin Van Horne
  */
-public abstract class World {
+public abstract class World implements Serializable {
     protected Set<Layer> layers;
+    
     private Camera camera = new Camera(512.0f / 448.0f);
     public Shader worldShader;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
