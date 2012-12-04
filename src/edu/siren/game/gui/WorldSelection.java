@@ -66,7 +66,12 @@ public class WorldSelection implements Gui {
 		// Run the Selection Screen
 		run();
 		
-        return (World) Class.forName("edu.siren.game.worlds." + worldName).newInstance();
+		// Create World;
+		World world = null;
+		if (worldName != null) {
+			world = (World) Class.forName("edu.siren.game.worlds." + worldName).newInstance();
+		}
+        return world;
 	}
 	
 	private void buildTheFuckingGui() throws IOException {

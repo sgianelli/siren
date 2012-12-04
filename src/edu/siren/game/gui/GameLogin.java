@@ -719,8 +719,8 @@ public class GameLogin implements Gui {
         		profile.setWorld(worldSelection.selectWorld());
         	}
         } catch(Exception e) {
-        	System.err.println("Could Not Load World");
         	e.printStackTrace();
+        	System.err.println("Could Not Load World!");
         	System.exit(1);
         }
         		
