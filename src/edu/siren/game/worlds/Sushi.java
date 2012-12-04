@@ -42,7 +42,7 @@ public class Sushi extends World {
     {    
         // Load the real world
         try {
-            JSWorld.load("res/game/maps/viridian.js", this);
+            JSWorld.load("res/game/maps/safari.js", this);
         } catch (ScriptException e) {
             e.printStackTrace();
         } catch (LWJGLException e) {
