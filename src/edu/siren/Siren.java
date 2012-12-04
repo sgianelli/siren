@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 
 import edu.siren.game.GamePlay;
+import edu.siren.game.gui.GameLogin;
 import edu.siren.game.gui.Intro;
 import edu.siren.game.gui.Title;
 import edu.siren.game.profile.Profile;
 import edu.siren.game.profile.ProfileManager;
-import edu.siren.gui.GameLogin;
 import edu.siren.renderer.Screen;
 
 /**
@@ -119,7 +119,6 @@ public class Siren {
 			// Start the Game
 			GamePlay gamePlay = new GamePlay(screen, currentProfile);
 			gamePlay.play();
-			
 	}
 
 }

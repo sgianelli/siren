@@ -25,8 +25,6 @@ public class Pangea extends World {
     public Tile pixelCloudy;
     public Tile plasma;
     public Tile activeOverlay;
-    public SpriteSheet rainsheet;
-    public Sprite rain;
     public Player diglett; 
     
     public void createEntities() throws IOException {
@@ -65,11 +63,6 @@ public class Pangea extends World {
         pixelCloudy = new Tile("res/tests/img/pixel-cloudy.png", 0, 0, 8096, 8096, 1, 1);
         plasma = new Tile("res/tests/img/plasma.png", 0, 0, 8096, 8096, 1, 1);
         activeOverlay = veryCloudy;
-        
-       rain.spriteY = 0;
-       rain.spriteX = 0;
-       rain.bounds.width = 8096;
-       rain.bounds.height = 8096;
     }
     
     public void guiDraw() {

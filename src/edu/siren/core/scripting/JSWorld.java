@@ -137,7 +137,7 @@ public class JSWorld {
             player.controllable = false;
             player.lastMovement = 1;
             player.drawStatus = true;
-            player.collisionDetection = false;
+            player.collisionDetection = true;
             player.snapToGrid(32, 32);
             player.setPosition(x + 16, y + 16);
             battleWorld.addEntity(player);
@@ -153,7 +153,7 @@ public class JSWorld {
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;
-            player.collisionDetection = false;
+            player.collisionDetection = true;
             player.follow = false;
             player.drawStatus = true;
             player.controllable = false;

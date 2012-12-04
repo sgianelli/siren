@@ -6,7 +6,7 @@ import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.Font;
 
 public class Text extends Element {
-    class TextState {
+    public class TextState {
         public String text;
         public Font font;
         public int fontScaling;

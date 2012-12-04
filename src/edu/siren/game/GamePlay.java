@@ -128,7 +128,10 @@ public class GamePlay {
 		            }
         		}
         	}
-            
+        	
+        	if (world.gameOver) {
+        	    break;
+        	}
             
             // Draw the World
             world.draw();

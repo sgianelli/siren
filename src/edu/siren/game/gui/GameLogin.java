@@ -1,4 +1,4 @@
-package edu.siren.gui;
+package edu.siren.game.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +12,14 @@ import edu.siren.core.sprite.SpriteSheet;
 import edu.siren.game.profile.Profile;
 import edu.siren.game.profile.ProfileException;
 import edu.siren.game.profile.ProfileManager;
+import edu.siren.gui.Element;
+import edu.siren.gui.ElementEvent;
+import edu.siren.gui.Gui;
+import edu.siren.gui.GuiContainer;
+import edu.siren.gui.Image;
+import edu.siren.gui.Text;
+import edu.siren.gui.TextInput;
+import edu.siren.gui.Window;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Screen;
 import edu.siren.renderer.Shader;
@@ -705,17 +713,14 @@ public class GameLogin implements Gui {
         }
         
         try {
-        	
-
         	// Before we Leave
+            System.out.println("Loading world: " + worldSelection.selectWorld());
         	if (profile != null && profile.getWorldName() == null) {
         		profile.setWorld(worldSelection.selectWorld());
         	}
-
-        	
-        	
         } catch(Exception e) {
-        	System.err.println("Could Not Load World!");
+        	System.err.println("Could Not Load World");
+        	e.printStackTrace();
         	System.exit(1);
         }
         		

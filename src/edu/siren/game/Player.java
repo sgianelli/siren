@@ -19,6 +19,7 @@ public class Player extends Actor {
     public int maxMoves = 4;
     public boolean drawPossibleMoveOverlay = false;
     public float px, py;
+    public int battleStatus = -2;
     
     public Player(String config) {
         super(config, null);
@@ -82,7 +83,7 @@ public class Player extends Actor {
             }
             
             
-            else if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
                 moveLeft();
                 sprite.animation("move-left");
                 lastMovement = 3;
@@ -358,6 +359,12 @@ public class Player extends Actor {
     public void drawMoveOverlay() {
         for (Tile tile : possibleMoveOverlay) {
                 tile.draw();
+        }
+    }
+
+    public void remove() {
+        if (world != null) {
+            world.entities.remove(this);
         }
     }
 }

@@ -11,7 +11,7 @@ public class Pikachu extends Player {
 
     public Pikachu() throws IOException {
         this.speed = 25;
-        this.name = "Link";
+        this.name = "Pikachu";
         SpriteSheet linksheet;
             linksheet = SpriteSheet.fromCSS(
                     "res/game/sprites/characters/pikachu.png",

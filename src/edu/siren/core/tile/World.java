@@ -73,6 +73,8 @@ public abstract class World implements Serializable {
     private boolean zoomPressed;
     public BattleManager battleManager = null;
     public World battleWorld = null;
+
+    public boolean gameOver = false;
     
     /**
      * Constructs a new world of a given width and height. Note that this
