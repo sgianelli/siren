@@ -2,6 +2,7 @@ package edu.siren.game.gui;
 
 import java.io.IOException;
 
+import edu.siren.audio.AudioUtil;
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
@@ -30,10 +31,33 @@ public class Title implements Gui {
         
         startGame = false;
         
-        // Load the Image Background
-        Image background = new Image("res/game/gui/logo-full.png");
+        // Java throwers
+        final Image javaThrowers = new Image("res/game/gui/java-thrower.png");
+        final Image background = new Image("res/game/gui/logo-full.png");
+        final Text prompt = new Text("click to start", 2);
         
+        // Java thrower
         {
+            AudioUtil.playWav("res/game/gui/sound/java-thrower.wav");
+            javaThrowers.xywh(0, 0, 512, 448);
+            javaThrowers.onMouseUp(new ElementEvent() {
+                public boolean event(Element element) {
+                    background.enable();
+                    background.show();
+                    javaThrowers.disable();
+                    javaThrowers.hide();
+                    prompt.enable();
+                    return true;
+                }
+            });
+            title.add(javaThrowers, 100);
+        }
+                
+        
+        // Load the Image Background
+        {
+            background.hide();
+            background.disable();
             background.xywh(0, 0, 512, 448);
             background.onMouseUp(new ElementEvent() {
                 @Override
@@ -47,8 +71,10 @@ public class Title implements Gui {
         }
         
         
-        final Text prompt = new Text("click to start", 2);
+        // prompt click
         {
+            prompt.hide();
+            prompt.disable();
             prompt.position(180, 190);
             prompt.positioning(Element.Position.ABSOLUTE);
             prompt.onDraw(new ElementEvent() {
