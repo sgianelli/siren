@@ -344,10 +344,8 @@ public abstract class Element implements Comparable<Element> {
     }
 
     private void reprioritize() {
-        System.out.println(this.state.name + ": Reprioritizing children");
         Collections.sort(this.children);
         for (Element element : this.children) {
-            System.out.println(element);
         }
     }
 
@@ -433,7 +431,6 @@ public abstract class Element implements Comparable<Element> {
         for (Element child : children) {
             if (child.checkEvents(mx, my, mdx, mdy, click)) {
                 state.lastClickState = click;
-                System.out.println("Preventing propagation of events");
                 return true;
             }
         }

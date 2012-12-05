@@ -8,13 +8,16 @@ import org.lwjgl.LWJGLException;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
 import edu.siren.game.players.GeneratePlayer;
+import edu.siren.game.worlds.ItemShop;
 import edu.siren.game.worlds.Pangea;
+import edu.siren.game.worlds.Rocko;
 import edu.siren.game.worlds.Sushi;
 
 public class Profile implements Serializable{
 
 	// Serial ID
 	private static final long serialVersionUID = 1L;
+	public static Profile active = null;
 	
 	// Profile Information
 	private String name;
@@ -41,6 +44,7 @@ public class Profile implements Serializable{
 	public Profile() {
 		gameStats = new GameStats();
 		newProfile = true;
+		Profile.active = this;
 	}
 	
 	/**
@@ -131,8 +135,12 @@ public class Profile implements Serializable{
 				
 				if (worldName.equals("Pangea")) {
 					world = new Pangea();
-				} else {
+				} else if (worldName.equals("Sushi")) {
 					world = new Sushi();
+				} else if (worldName.equals("Rocko")) {
+				    world = new Rocko();
+				} else if (worldName.equals("ItemShop")) {
+				    world = new ItemShop();
 				}
 				
 			} catch (IOException e) {
@@ -168,8 +176,8 @@ public class Profile implements Serializable{
 	public void setWorldName(String worldName) {
 		this.worldName = worldName;
 	}
-	
-	
-	
-		
+
+    public void addCoins(int n) {
+        this.gameStats.setCoins(this.gameStats.getCoins() + n);
+    }
 }

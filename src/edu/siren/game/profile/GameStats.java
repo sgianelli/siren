@@ -1,6 +1,9 @@
 package edu.siren.game.profile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import edu.siren.game.items.Item;
 
 public class GameStats implements Serializable {
     private static final long serialVersionUID = 1746960259570862954L;
@@ -21,7 +24,8 @@ public class GameStats implements Serializable {
 	private int attack;
 	private int defense;
 	private int special;
-	
+
+    private ArrayList<Item> items = new ArrayList<Item>();
 	
 	// Constants for Game
 	public static final int MAX_HEALTH = 100;
@@ -39,7 +43,6 @@ public class GameStats implements Serializable {
 		this.experience = DEFAULT_EXPERIENCE;
 		this.coins = DEFAULT_COINS;
 		this.strength = DEFAULT_STRENGTH;
-		
 	}
 
 	
@@ -187,7 +190,21 @@ public class GameStats implements Serializable {
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
-	
-	
-	
+
+
+    public void addExperience(int total) {
+        this.experience += total;
+    }
+
+
+    public void addItem(Item item) {
+        if (this.items == null) {
+            this.items = new ArrayList<Item>();
+        }
+        this.items.add(item);
+    }
+    
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 }

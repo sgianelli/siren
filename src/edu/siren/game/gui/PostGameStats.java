@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import edu.siren.audio.AudioUtil;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;
+import edu.siren.game.profile.Profile;
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
@@ -105,6 +106,7 @@ public class PostGameStats implements Gui {
         }
         
         int total = (100 * units) + (25 * health) + (50 * killed);
+        Profile.active.getGameStats().addExperience(total);
         manager.expGained = total;
         Text totalText = new Text("" + total);
         {

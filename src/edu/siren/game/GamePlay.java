@@ -42,6 +42,7 @@ public class GamePlay {
 		
 		// Save the Profile
 		this.profile = profile;
+		Profile.active = profile;
 		
 		// Create a New World
 		world = profile.getWorld();
@@ -64,6 +65,8 @@ public class GamePlay {
 		// Power Store Menu
 		powerStoreMenu = new PowerStoreMenu(screen);
 		
+		System.out.println("You currently have " + profile.getGameStats().getItems().size() + " items");
+		
 	}
 	
 	
@@ -75,7 +78,9 @@ public class GamePlay {
 		
         // The close event can take a bit to propagate
 		world.musicThreads.add(AudioUtil.playBackgroundMusic("res/game/sound/ff4.ogg"));
+		int frameCount = 0;
         while (screen.nextFrame()) {
+            frameCount++;
 
         	// If the Screen is Closed...
         	if (!screen.isOpened())
@@ -157,6 +162,9 @@ public class GamePlay {
             if (!gamePlay)
             	break;
             
+            if (frameCount % 10 == 0) {
+                profile.addCoins(1);
+            }
         }
         
         world.cleanup();

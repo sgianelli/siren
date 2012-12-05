@@ -62,7 +62,6 @@ public class Tile implements Drawable {
         if (events == null) {
             events = new Events(this);
         }
-        System.out.println("Creating aboutToTouch event");
         events.aboutToTouch.add(new AboutToTouchEvent(bounds.scaled(scalar), event));
     }
     
@@ -70,7 +69,6 @@ public class Tile implements Drawable {
         if (events == null) {
             events = new Events(this);
         }
-        System.out.println("Creating touch event");
         events.touch.add(event);
     }
     

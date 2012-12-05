@@ -11,16 +11,16 @@ var $ = function (x) {
 };
 
 var items = [
-    ["health", 100],
-    ["attack", 200],
-    ["defense", 300],
-    ["exp", 400],
-    ["transformation", 500],
-    ["increase", 600],
-    ["rock", 700],
-    ["special", 800],
-    ["cheat", 900],
-    ["magic-stone", 1000]
+    ["health", 100, "HealingPotion"],
+    ["attack", 200, "AttackPotion"],
+    ["defense", 300, "DefensePotion"],
+    ["exp", 400, "EXPPotion"],
+    ["transformation", 500, "TransformationPotion"],
+    ["increase", 600, "CheatWonBattles"],
+    ["rock", 700, "Rock"],
+    ["special", 800, "SpecialPotion"],
+    ["cheat", 900, "CheatLostBattles"],
+    ["magic-stone", 1000, "MagicMoveStone"]
 ];
 
 $('#exit').touch(function (e) {
@@ -31,12 +31,13 @@ for (var i = 0; i < items.length; i++) {
     (function (n) {
         var item = items[i][0];
         var cost = items[i][1];
+        var klass = items[i][2];
         var $item = $('#' + item);
         World.printFixed(item + "\n" + cost, 3, $item.bounds.x, $item.bounds.y);
         $item.touch(function (e) {
             if (!e.is(':controlledPlayer'))
                 return;
-            World.addMetaArray(item + ":" + cost);
+            World.addMetaArray(klass + ":" + cost);
         });
     })(i);
 }

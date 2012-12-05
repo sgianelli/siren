@@ -143,7 +143,7 @@ public class GameStatus extends GuiContainer {
 		timeOfDayValue.text(getTimeOfDay());
 
 		// Update Experiece
-		this.experience = gameStats.getExperience();
+		this.experience = gameStats.getExperience() / 1000;
 		
 		// Update Coins
 		String coinString = String.format("%07d", profile.getGameStats().getCoins());

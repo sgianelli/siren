@@ -10,6 +10,7 @@ import edu.siren.audio.AudioUtil;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;
 import edu.siren.game.battle.Dice;
+import edu.siren.game.profile.Profile;
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
@@ -58,7 +59,7 @@ public class AcquireUnits implements Gui {
             window.add(rollText);
         }
         
-        int lossExp = manager.expGained - (manager.expGained / diceSize);
+        final int lossExp = manager.expGained - (manager.expGained / diceSize);
         Text lossText = new Text("" + lossExp);
         {
             lossText.position(200, 145);
@@ -78,6 +79,7 @@ public class AcquireUnits implements Gui {
                             image = new Image("res/game/gui/battle/success-roll.png");
                         } else {
                             image = new Image("res/game/gui/battle/fail-roll.png");
+                            Profile.active.getGameStats().addExperience(-lossExp);
                         }
                         image.onMouseUp(new ElementEvent() {
                             public boolean event(Element element) {
