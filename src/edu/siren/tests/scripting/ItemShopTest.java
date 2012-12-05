@@ -66,6 +66,9 @@ public class ItemShopTest {
         
         while (screen.nextFrame()) {
             world.draw();
+            
+            if (world.gameOver)
+                break;
         }
         
         world.cleanup();

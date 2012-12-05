@@ -11,3 +11,7 @@ var $ = function(x) {
 	}
 	return null;
 };
+
+$("#exit").touch(function (e) {
+    World.exit();
+});

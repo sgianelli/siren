@@ -1,7 +1,5 @@
 World.load("Testing Map", "tiles/viridian.json");
 
-World.music("dark-world");
-
 // 222.5, 765
 // 192.5-265
 var $ = function(x) {
@@ -12,6 +10,10 @@ var $ = function(x) {
 	}
 	return null;
 };
+
+$("#exit").touch(function (e) {
+    World.exit();
+});
 
 (function() {
 	var $trigger1 = $('#trigger_diglett');

@@ -121,7 +121,6 @@ public class JSMapTest {
        
        // Disable the camera
         jsworld.world.changeEnvironment(Environment.DUSK, 500.0f);
-        jsworld.world.getCamera().disable();
         
         // Draw as usual
         boolean down = false;

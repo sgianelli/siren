@@ -71,7 +71,46 @@ public class JSWorld {
     }
     
     public void exit() {
-        world.gameOver = true;
+        try {
+            world.gameOver = true;
+            
+            Perspective2D gui = new Perspective2D();
+            Shader shader;
+                shader = new Shader("res/tests/glsl/2d-perspective.vert",
+                        "res/tests/glsl/2d-perspective.frag");
+    
+            gui.bindToShader(shader);
+            
+            // Draw the battle sequence
+            ArrayList<Tile> tiles = new ArrayList<Tile>();
+            for (int i = 0; i < Display.getWidth(); i += 96) {
+                for (int j = 0; j < Display.getHeight(); j+= 96) {
+                    Tile tile = new Tile("res/game/gui/black.png", i, j, 96, 96);
+                    tiles.add(tile);
+                }
+            }
+            
+            double ftime = getTime();
+            int drawTiles = 0;
+            
+            while (drawTiles < tiles.size()) {
+                double ctime = getTime();
+                if ((ctime - ftime) > 5) {
+                    drawTiles++;
+                    ftime = ctime;
+                }
+                
+                shader.use();
+                for (int i = 0; i < drawTiles; i++) {
+                    tiles.get(i).draw();
+                }
+                shader.release();
+                Display.update();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     public void printFixed(String str, float size, float x, float y) {

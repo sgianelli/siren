@@ -1,66 +1,420 @@
 {
     "layer1": [
-        {"comment": "World"},
-        {"tile": "res/game/gui/safariZone.png", "w": 592, "h": 529, "x": -296, "y": 0, "tileable": true},
-
-        {"comment": "borders"},
-        {"tile": "res/tests/img/fill.png", "x": -316, "y": 0, "w": 20, "h": 549, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -306, "y": -20, "w": 612, "h": 20, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 296, "y": -10, "w": 20, "h": 549, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -316, "y": 499, "w": 612, "h": 20, "solid": true},
-
-        {"comment": "bushes"},
-        {"tile": "res/tests/img/fill.png", "x": -216, "y": 68, "w": 126, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -246, "y": 80, "w": 12, "h": 136, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -230, "y": 218, "w": 12, "h": 86, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -86, "y": 52, "w": 92, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -126, "y": 436, "w": 180, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 10, "y": 68, "w": 28, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 42, "y": 83, "w": 12, "h": 60, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 42, "y": 51, "w": 60, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 104, "y": 68, "w": 126, "h": 12, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 218, "y": 116, "w": 12, "h": 334, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 138, "y": 244, "w": 12, "h": 200, "solid": true},
-        
-        {"comment": "trees"},
-        {"tile": "res/tests/img/fill.png", "x": -246, "y": 52, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 202, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 138, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 106, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 42, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -150, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -246, "y": 436, "w": 28, "h": 28, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -246, "y": 212, "w": 28, "h": 28, "solid": true},
-        
-        {"comment": "statues"},
-        {"tile": "res/tests/img/fill.png", "x": -231, "y": 302, "w": 14, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -231, "y": 334, "w": 14, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -231, "y": 368, "w": 14, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -231, "y": 402, "w": 14, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -151, "y": 402, "w": 14, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -151, "y": 368, "w": 14, "h": 30, "solid": true},
-        
-        {"comment": "cliffs"},
-        {"tile": "res/tests/img/fill.png", "x": -132, "y": 146, "w": 172, "h": 14, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -184, "y": 146, "w": 28, "h": 14, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -184, "y": 146, "w": 14, "h": 64, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -184, "y": 206, "w": 172, "h": 4, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -24, "y": 206, "w": 14, "h": 114, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -88, "y": 306, "w": 66, "h": 14, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -88, "y": 306, "w": 14, "h": 64, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -88, "y": 366, "w": 128, "h": 4, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 26, "y": 240, "w": 14, "h": 126, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 26, "y": 240, "w": 110, "h": 4, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 122, "y": 184, "w": 14, "h": 56, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 24, "y": 179, "w": 60, "h": 14, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 24, "y": 148, "w": 16, "h": 42, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": 108, "y": 179, "w": 28, "h": 14, "solid": true},
-        
-        {"comment": "buildings"},
-        {"tile": "res/tests/img/fill.png", "x": -214, "y": 402, "w": 60, "h": 30, "solid": true},
-        {"tile": "res/tests/img/fill.png", "x": -86, "y": 274, "w": 60, "h": 30, "solid": true},
-
-        {"comment": "water"},
-        {"tile": "res/tests/img/fill.png", "x": -214, "y": 242, "w": 124, "h": 62, "solid": true}
+        {
+            "comment": "World"
+        }, 
+        {
+            "h": 25,
+            "w": 10,
+            "x": 468,
+            "y": 52,
+            "tile": "res/tests/img/fill-colored.png", 
+            "id": "exit"
+        },
+        {
+            "h": 471, 
+            "y": -20, 
+            "w": 530, 
+            "tile": "res/game/gui/safari-ground.png", 
+            "x": -20, 
+            "tileable": true
+        }, 
+        {
+            "h": 431, 
+            "y": 0, 
+            "w": 490, 
+            "tile": "res/game/gui/safariZone.png", 
+            "x": 0, 
+            "tileable": true
+        }, 
+        {
+            "comment": "borders"
+        }, 
+        {
+            "solid": true, 
+            "h": 431, 
+            "y": 0, 
+            "w": 20, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": -20
+        }, 
+        {
+            "solid": true, 
+            "h": 20, 
+            "y": -20, 
+            "w": 490, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 0
+        }, 
+        {
+            "solid": true, 
+            "h": 431, 
+            "y": 0, 
+            "w": 20, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 490, 
+        }, 
+        {
+            "solid": true, 
+            "h": 20, 
+            "y": 471, 
+            "w": 490, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 0,
+        }, 
+        {
+            "comment": "bushes"
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 31, 
+            "w": 126, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 39
+        }, 
+        {
+            "solid": true, 
+            "h": 136, 
+            "y": 43, 
+            "w": 12, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 9
+        }, 
+        {
+            "solid": true, 
+            "h": 86, 
+            "y": 181, 
+            "w": 12, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 25
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 15, 
+            "w": 92, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 169
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 399, 
+            "w": 180, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 129
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 31, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 265
+        }, 
+        {
+            "solid": true, 
+            "h": 60, 
+            "y": 46, 
+            "w": 12, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 297
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 14, 
+            "w": 60, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 297
+        }, 
+        {
+            "solid": true, 
+            "h": 12, 
+            "y": 31, 
+            "w": 126, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 359
+        }, 
+        {
+            "solid": true, 
+            "h": 334, 
+            "y": 79, 
+            "w": 12, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 473
+        }, 
+        {
+            "solid": true, 
+            "h": 200, 
+            "y": 207, 
+            "w": 12, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 393
+        }, 
+        {
+            "comment": "trees"
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 15, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 9
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 457
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 393
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 361
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 297
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 105
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 399, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 9
+        }, 
+        {
+            "solid": true, 
+            "h": 28, 
+            "y": 175, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 9
+        }, 
+        {
+            "comment": "statues"
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 265, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 24
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 297, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 24
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 331, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 24
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 365, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 24
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 365, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 104
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 331, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 104
+        }, 
+        {
+            "comment": "cliffs"
+        }, 
+        {
+            "solid": true, 
+            "h": 14, 
+            "y": 109, 
+            "w": 172, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 123
+        }, 
+        {
+            "solid": true, 
+            "h": 14, 
+            "y": 109, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 71
+        }, 
+        {
+            "solid": true, 
+            "h": 64, 
+            "y": 109, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 71
+        }, 
+        {
+            "solid": true, 
+            "h": 4, 
+            "y": 169, 
+            "w": 172, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 71
+        }, 
+        {
+            "solid": true, 
+            "h": 114, 
+            "y": 169, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 231
+        }, 
+        {
+            "solid": true, 
+            "h": 14, 
+            "y": 269, 
+            "w": 66, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 167
+        }, 
+        {
+            "solid": true, 
+            "h": 64, 
+            "y": 269, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 167
+        }, 
+        {
+            "solid": true, 
+            "h": 4, 
+            "y": 329, 
+            "w": 128, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 167
+        }, 
+        {
+            "solid": true, 
+            "h": 126, 
+            "y": 203, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 281
+        }, 
+        {
+            "solid": true, 
+            "h": 4, 
+            "y": 203, 
+            "w": 110, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 281
+        }, 
+        {
+            "solid": true, 
+            "h": 56, 
+            "y": 147, 
+            "w": 14, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 377
+        }, 
+        {
+            "solid": true, 
+            "h": 14, 
+            "y": 142, 
+            "w": 60, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 279
+        }, 
+        {
+            "solid": true, 
+            "h": 42, 
+            "y": 111, 
+            "w": 16, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 279
+        }, 
+        {
+            "solid": true, 
+            "h": 14, 
+            "y": 142, 
+            "w": 28, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 363
+        }, 
+        {
+            "comment": "buildings"
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 365, 
+            "w": 60, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 41
+        }, 
+        {
+            "solid": true, 
+            "h": 30, 
+            "y": 237, 
+            "w": 60, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 169
+        }, 
+        {
+            "comment": "water"
+        }, 
+        {
+            "solid": true, 
+            "h": 62, 
+            "y": 205, 
+            "w": 124, 
+            "tile": "res/tests/img/fill-colored.png", 
+            "x": 41
+        }
     ]
 }

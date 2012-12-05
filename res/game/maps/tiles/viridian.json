@@ -2,7 +2,10 @@
     "layer1": [
         {"comment": "World"},
         {"tile": "res/game/gui/viridianForest.png", "w": 864, "h": 1104, "x": -432, "y": 0, "tileable": true},
-        
+
+        {"comment": "Exit the world"},
+        {"tile": "res/tests/img/fill.png", "x": -384, "y": 932, "w": 50, "h": 20, "id": "exit"},
+
         {"comment": "Triggers"},
         {"tile": "res/tests/img/fill.png", "x": 192, "y": 786, "w": 74, "h": 12, "id": "trigger_diglett"},
         

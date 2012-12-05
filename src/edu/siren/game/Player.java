@@ -178,7 +178,24 @@ public class Player extends Actor {
         
         // Only update the camera if necessary
         if (follow && (sprite.spriteX != this.x || sprite.spriteY != this.y)) {
-            camera.setPosition(-this.x, -this.y);
+            float camerax = camera.getX();
+            float cameray = camera.getY();
+            Rectangle b = world.bounds;
+            
+            boolean right = (x + 128) <= b.right();
+            boolean left = (x - 128) >= b.left();
+            boolean top = (y - 112) >= b.top();
+            boolean bottom = (y + 112) <= b.bottom(); 
+            
+            if (left && right) {
+                camerax = -this.x;
+            }
+            
+            if (top && bottom) {
+                cameray = -this.y;
+            }
+            
+            camera.setPosition(camerax, cameray);
         } 
         
         sprite.spriteX = this.x;

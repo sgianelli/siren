@@ -41,6 +41,11 @@ public class Sushi extends World {
         addEntity(diglett);
     }
     
+    public void addPlayer(Player player) {
+    	super.addPlayer(player);
+    	player.setPositionCenter(336, 172);
+    }
+    
     public void create() throws IOException
     {    
         // Load the real world
