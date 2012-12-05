@@ -39,8 +39,8 @@ public class Rocko extends World {
         addEntity(diglett);
         
         Player pikachu = new Pikachu();
-        pikachu.setPosition(180, 60);
-        pikachu.controllable = true;
+        pikachu.setPosition(180, 780);
+        pikachu.controllable = false;
         pikachu.speed = 40;
         pikachu.id = "pikachu";
         addEntity(pikachu);

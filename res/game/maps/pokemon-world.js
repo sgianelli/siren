@@ -12,6 +12,10 @@ var $ = function (x) {
     return null;
 };
 
+$('#exit').touch(function (e) {
+    World.exit();
+});
+
 // Handle logic for the first trigger
 (function () {
     var $trigger1 = $('#trigger_diglett');
