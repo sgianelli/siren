@@ -112,16 +112,17 @@ public abstract class Actor extends Entity implements Interactable, Serializable
         float ds = 0.1f * speed;
 
         // Go towards X
-        if (Math.abs(x - desiredX) > ds) {
-            if (x < desiredX) {
-                this.x += ds;
-                lastMovementX = 3;
-                sprite.animation("move-right");
-            } else if (x > desiredX) {
-                this.x -= ds;
-                lastMovementX = 4;
-                sprite.animation("move-left");
-            }
+        float dx = Math.abs(x - desiredX);
+        if (x < desiredX) {
+            if (dx > ds) this.x += ds;
+            else this.x = desiredX;
+            lastMovementX = 3;
+            sprite.animation("move-right");
+        } else if (x > desiredX) {
+            if (dx > ds) this.x -= ds;
+            else this.x = desiredX;
+            lastMovementX = 4;
+            sprite.animation("move-left");
         }
         
         if (lastMovementX != -1) {
@@ -129,16 +130,17 @@ public abstract class Actor extends Entity implements Interactable, Serializable
         }
 
         // Go towards Y
-        if (Math.abs(y - desiredY) > ds) {
-            if (y < desiredY) {
-                y += ds;
-                lastMovementY = 1;
-                sprite.animation("move-forward");
-            } else if (y > desiredY) {
-                y -= ds;
-                lastMovementY = 2;
-                sprite.animation("move-backward");
-            }
+        float dy = Math.abs(y - desiredY);
+        if (y < desiredY) {
+            if (dy > ds) y += ds;
+            else y = desiredY;
+            lastMovementY = 1;
+            sprite.animation("move-forward");
+        } else if (y > desiredY) {
+            if (dy > ds) y -= ds;
+            else y = desiredY;
+            lastMovementY = 2;
+            sprite.animation("move-backward");
         }
         
         if (lastMovementY != -1) {

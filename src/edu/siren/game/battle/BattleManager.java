@@ -13,12 +13,14 @@ import edu.siren.core.tile.Layer;
 import edu.siren.core.tile.Tile;
 import edu.siren.core.tile.World;
 import edu.siren.game.Player;
+import edu.siren.game.gui.AcquireUnits;
 import edu.siren.game.gui.BattleScreen;
+import edu.siren.game.gui.PostGameStats;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
 
 public class BattleManager {
-    public Team red, blue;
+    public Team red, redFull, blue, blueFull;
     public Team active, other;
     private boolean mouseDown = false;
     public BattleScreen battleScreen = null;
@@ -27,10 +29,21 @@ public class BattleManager {
     public Layer filler = new Layer("fill");
     public int lastTileR = -1, lastTileC = -1;
     public boolean replaceTile = false;
+    public int expGained = 0;
     
     public BattleManager(World world, Team red, Team blue) 
             throws IOException 
     {
+        redFull = new Team();
+        blueFull = new Team();
+        for (Player member : red.players) {
+            redFull.players.add(member);
+        }
+        
+        for (Player member : blue.players) {
+            blueFull.players.add(member);
+        }
+        
         battleScreen = new BattleScreen(this);
         this.battleWorld = world.battleWorld;
         this.world = world;
@@ -118,7 +131,7 @@ public class BattleManager {
         if ((dr + dy) > player.moves)
             return false;
         player.moves -= (dr + dy);
-        player.moveTo(x, y);
+        player.moveTo(r * 32, c * 32);
         player.inMovement = true;
         player.possibleMoveOverlay.clear();
         return true;
@@ -168,25 +181,25 @@ public class BattleManager {
                 member.health -= player.attack;
                 if (rbr < pr) {
                     if (rbc > pc) {
-                        player.moveTo((r + 1) * 32 + 8, (c - 1) * 32 + 8);
+                        player.moveTo((r + 1) * 32, (c - 1) * 32);
                     } else if (rbc < c) {
-                        player.moveTo((r + 1) * 32 + 8, (c + 1) * 32 + 8);
+                        player.moveTo((r + 1) * 32, (c + 1) * 32);
                     } else {
-                        player.moveTo((r + 1) * 32 + 8, (c) * 32 + 8);
+                        player.moveTo((r + 1) * 32, (c) * 32);
                     }
                 } else if (rbr > pr) {
                     if (rbc > pc) {
-                        player.moveTo((r - 1) * 32 + 8, (c - 1) * 32 + 8);
+                        player.moveTo((r - 1) * 32, (c - 1) * 32);
                     } else if (rbc < pc) {
-                        player.moveTo((r - 1) * 32 + 8, (c + 1) * 32 + 8);
+                        player.moveTo((r - 1) * 32, (c + 1) * 32);
                     } else {
-                        player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
+                        player.moveTo((r - 1) * 32, (c) * 32);
                     }
                 } else {
                     if (rbc > pc) {
-                        player.moveTo((r) * 32 + 8, (c - 1) * 32 + 8);
+                        player.moveTo((r) * 32, (c - 1) * 32);
                     } else if (rbc < c) {
-                        player.moveTo((r) * 32 + 8, (c + 1) * 32 + 8);
+                        player.moveTo((r) * 32, (c + 1) * 32);
                     }
                 }
                 hitPlayer = true;
@@ -196,7 +209,6 @@ public class BattleManager {
         
         if (hitPlayer) {
             player.moves -= (dr + dy);
-            player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
             player.possibleMoveOverlay.clear();
             return true;
         }
@@ -205,7 +217,7 @@ public class BattleManager {
         try {
             if (r == lastTileR && c == lastTileC && replaceTile) {
                 player.moves -= (dr + dy);
-                player.moveTo((r - 1) * 32 + 8, (c) * 32 + 8);
+                player.moveTo((r - 1) * 32, (c) * 32);
                 player.possibleMoveOverlay.clear();
                 Tile tile = new Tile("res/game/gui/black.png", r * 32, c * 32, 32, 32, true);
                 tile.solid = true;
@@ -255,8 +267,9 @@ public class BattleManager {
                     for (int k = 0; k < member.possibleMoveOverlay.size(); k++) {
                         Tile tile = member.possibleMoveOverlay.get(k);
                         for (Player player : red.players) {
+                            Rectangle rect = player.getRect();
                             if (tile.contains(player.x, player.y)) {
-                                actionAttack(member, (int)player.x, (int)player.y);
+                                actionAttack(member, (int)rect.x, (int) rect.y);
                                 doBreak = true;
                                 break;
                             }
@@ -315,21 +328,42 @@ public class BattleManager {
         world.battleWorld = null;
         world.getCamera().zoomIn();
         
-        for (Player player : blue.players) {
-            world.entities.remove(player);
+        for (Thread thread : world.musicThreads) {
+            thread.interrupt();
         }
         
-        for (Player player : red.players) {
-            player.setWorld(world);
+        try {
+            PostGameStats stats = new PostGameStats(this);
+            while (stats.running()) {
+                stats.run();
+            }
+            AcquireUnits units = new AcquireUnits(this);
+            while (units.running()) {
+                units.run();
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        
+        for (Player player : blueFull.players) {
+            player.world = world;
+            player.remove();
+        }
+        
+        for (Player player : redFull.players) {
+            player.world = world;
             player.controllable = true;
             player.collisionDetection = true;
             player.setPosition(player.px, player.py);
             player.snap = false;
             player.lastMovement = 2;
-            player.follow = true;
+            player.follow = false;
             player.drawStatus = false;
             player.controllable = true;
+            player.bindCamera(world.getCamera());
         }
+        
+        red.players.get(0).follow = true;
         
         Perspective2D gui = new Perspective2D();
         Shader shader = null;

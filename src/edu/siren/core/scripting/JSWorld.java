@@ -139,10 +139,11 @@ public class JSWorld {
             player.controllable = false;
             player.lastMovement = 1;
             player.drawStatus = true;
-            player.collisionDetection = true;
+            player.collisionDetection = false;
             player.snapToGrid(32, 32);
             player.setPosition(x + 16, y + 16);
             battleWorld.addEntity(player);
+            battleWorld.solids.removeLast();
             player.createMoveOverlay();
             x += 32;
         }
@@ -156,12 +157,13 @@ public class JSWorld {
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;
-            player.collisionDetection = true;
+            player.collisionDetection = false;
             player.follow = false;
             player.drawStatus = true;
             player.controllable = false;
             player.setPosition(x + 8, y + 8);
             battleWorld.addEntity(player);
+            battleWorld.solids.removeLast();
             player.createMoveOverlay();
             
             x += 32;
