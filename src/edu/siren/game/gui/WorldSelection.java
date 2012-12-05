@@ -100,6 +100,20 @@ public class WorldSelection implements Gui {
 			
 		});
 		window.add(play);
+		
+		Window itemshop = new Window("Item Shop");
+		{
+		    itemshop.dimensions(100, 100);
+		    itemshop.position(410, 5);
+		    itemshop.onMouseUp(new ElementEvent() {
+		        public boolean event(Element element) {
+		            WorldSelection.this.worldSelected = true;
+    				WorldSelection.this.worldName = "ItemShop";
+		            return false;
+		        }
+		    });
+		    window.add(itemshop);
+		}
 
 		// -- RADIO BUTTONS -- //
 		

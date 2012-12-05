@@ -11,6 +11,9 @@
         {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 512, "h": 32, "solid": true},
         {"tile": "res/tests/img/fill.png", "x": 0, "y": 448, "w": 512, "h": 32, "solid": true},
 
+        {"comment": "Exit"},
+        {"tile": "res/tests/img/fill.png", "x": 493, "y": 278, "w": 20, "h": 50, "id": "exit"},
+
         {"comment": "Potions"},
         {"tile": "res/game/maps/assets/item-shop/health-potion.png", "x": 90, "y": 360, "solid": true},
         {"tile": "res/tests/img/fill.png", "x": 65, "y": 325, "w": 60, "h": 15, "id": "health"},
@@ -48,7 +51,5 @@
         {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 235, "y": 70, "solid": true},
         {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 315, "y": 70, "solid": true},
         {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 393, "y": 70, "solid": true},
-
-
     ]
 }

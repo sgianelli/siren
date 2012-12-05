@@ -75,7 +75,7 @@ public class GamePlay {
 		
         // The close event can take a bit to propagate
 		world.musicThreads.add(AudioUtil.playBackgroundMusic("res/game/sound/ff4.ogg"));
-        while (screen.nextFrame()) {     
+        while (screen.nextFrame()) {
 
         	// If the Screen is Closed...
         	if (!screen.isOpened())

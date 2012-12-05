@@ -19,9 +19,9 @@ public class ItemShop extends World {
     }
 
     public void addPlayer(Player player) {
+        player.setPosition(458, 297);
+        player.follow = false;
         super.addPlayer(player);
-        
-        player.setPosition(470, 448-175);
     }
     
     public void create() throws IOException {    
@@ -34,6 +34,7 @@ public class ItemShop extends World {
         }
         
         this.getCamera().setPosition(-256, -224);
+        this.getCamera().zoomOut();
     }
     
     public void guiDraw() {

@@ -23,6 +23,10 @@ var items = [
     ["magic-stone", 1000]
 ];
 
+$('#exit').touch(function (e) {
+    World.exit();
+});
+
 for (var i = 0; i < items.length; i++) {
     (function (n) {
         var item = items[i][0];

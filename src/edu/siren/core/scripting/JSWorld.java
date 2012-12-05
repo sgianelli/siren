@@ -70,6 +70,10 @@ public class JSWorld {
         world.tempMetaArray.add(what);
     }
     
+    public void exit() {
+        world.gameOver = true;
+    }
+    
     public void printFixed(String str, float size, float x, float y) {
         world.printFixed(str, size, x, y);
     }
