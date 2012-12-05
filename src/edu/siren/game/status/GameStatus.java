@@ -1,13 +1,19 @@
 package edu.siren.game.status;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import edu.siren.game.Player;
+import edu.siren.game.items.Item;
 import edu.siren.game.profile.GameStats;
 import edu.siren.game.profile.Profile;
 import edu.siren.gui.GuiContainer;
 import edu.siren.gui.Image;
 import edu.siren.gui.Text;
+import edu.siren.gui.Window;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.Screen;
 
@@ -23,6 +29,7 @@ public class GameStatus extends GuiContainer {
 	private int strength;
 	
 	// Components
+	private Window itemWindow;
 	private Text coinsText;
 	private Text strengthText;
 	private Text timeOfDayText;
@@ -30,6 +37,7 @@ public class GameStatus extends GuiContainer {
 	private Text experienceText;
 	private Text coordinatesText;
 	private Image[] experienceImages;
+	private Map<String, Image> iconSet;
 	
 	private Profile profile;
 	
@@ -38,11 +46,15 @@ public class GameStatus extends GuiContainer {
 		// Call Super
 		super();
 		
+		this.iconSet = new HashMap<String, Image>();
+		
 		// Save the Screen
 		this.screen = screen;
 		
 		// Save the Profile
 		this.profile = profile;
+		
+		this.itemWindow = new Window("Item Window");
 		
 		// Set Dimensions
 		this.dimensions(screen.width, screen.height);
@@ -127,8 +139,9 @@ public class GameStatus extends GuiContainer {
 				
 				// Increment x Position
 				x += 12;
-				
 			}
+			
+			add(this.itemWindow);
 			
 		} catch (IOException e) {
 			
@@ -159,7 +172,23 @@ public class GameStatus extends GuiContainer {
 		// Update experience Status
 		updateexperience();
 		
-		
+		int x = 160;
+		itemWindow.children.clear();
+		Set<String> seen = new HashSet<String>();
+		for (Item item : profile.getGameStats().getItems()) {
+		    String src = item.getIcon();
+		    if (seen.contains(src))
+		        continue;
+		    seen.add(src);
+		    Image image = iconSet.get(src);
+		    if (image == null) {
+		        image = Image.nothrow(src);
+		        iconSet.put(src, image);
+		    }
+		    image.position(x, 15);
+		    x += image.w() + 10;
+		    itemWindow.add(image);
+		}
 		
 		// Draw the World
 		draw();

@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 /**
  * Constructs a GLSL shader suitable for loading into the Siren engine.
@@ -130,6 +131,11 @@ public class Shader {
 
     public static int getActiveShader() {
         return activeProgram;
+    }
+
+    public void update(String string, Vector4f hsv) {
+        int uniform = GL20.glGetUniformLocation(program, string);
+        GL20.glUniform4f(uniform, hsv.x, hsv.y, hsv.z, hsv.w);
     }
 
 }

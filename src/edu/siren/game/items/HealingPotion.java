@@ -1,7 +1,10 @@
 package edu.siren.game.items;
 
+import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.profile.GameStats;
 import edu.siren.game.profile.Profile;
+import edu.siren.gui.Image;
 
 /**
  * Healing potion that heals the player
@@ -36,25 +39,24 @@ public class HealingPotion extends Item {
 	 * @param healingPower
 	 */
 	public HealingPotion(Profile profile, int healingPower) {
-
 		// Call Super Constructor
 		super("Healing Potion", profile);
 
 		// Set Healing Power
 		this.healingPower = healingPower;
 		
+		this.setIcon("res/game/maps/assets/item-shop/health-potion.png");
 	}
 	
 	
 	@Override
-	public void use() {
-		
+    public void use(Player player, BattleManager state) {
 		// Get Health
-		int health = getProfile().getGameStats().getHealth(); 
+		int health = player.health;
 		
 		// Heal the Player if they are not at the Max
 		if ( health < GameStats.MAX_HEALTH) {
-			getProfile().getGameStats().setHealth(health + this.healingPower);
+		    player.health += 25;
 		}		
 		
 	}

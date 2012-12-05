@@ -2,10 +2,10 @@
     "layer1": [
         {"comment": "Initial world"},
         {"tile": "res/tests/img/trail1.png", "x": 0, "y": 0, "w": 384, "h": 1032},
-        {"tile": "res/tests/img/fill-colored.png", "x": 0, "y": -20, "w": 384, "h": 20, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": -20, "w": 384, "h": 20, "solid": true},
 
         {"comment": "World triggers"},
-        {"tile": "res/tests/img/fill-colored.png", "x": 170, "y": 760, "w": 32, "h": 64, "id": "trigger_diglett"},
+        {"tile": "res/tests/img/fill.png", "x": 170, "y": 760, "w": 32, "h": 64, "id": "trigger_diglett"},
 
         {"comment": "These are the tetris pieces laid across the world"},
         {"tile": "res/game/sprites/characters/components/tetris-orange-square.png", "x": 180, "y": 200, "solid": true},
@@ -21,15 +21,15 @@
         {"sprite": "batman-jump", "frames": 5, "time": 100, "x": 240, "y": 210},
 
         {"comment": "Collision meshes"},
-        {"tile": "res/tests/img/fill-colored.png", "x": 210, "y": 0, "w": 175, "h": 875, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 100, "y": 0, "w": 55, "h": 780, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 0, "y": 0, "w": 50, "h": 1038, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 0, "y": 1000, "w": 382, "h": 50, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 45, "y": 925, "w": 65, "h": 8, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 145, "y": 925, "w": 80, "h": 8, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 215, "y": 925, "w": 8, "h": 70, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 270, "y": 925, "w": 110, "h": 65, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 0, "y": 0, "w": 140, "h": 120, "solid": true},
-        {"tile": "res/tests/img/fill-colored.png", "x": 370, "y": 880, "w": 15, "h": 50, "id": "exit"}
+        {"tile": "res/tests/img/fill.png", "x": 210, "y": 0, "w": 175, "h": 875, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 100, "y": 0, "w": 55, "h": 780, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 50, "h": 1038, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 1000, "w": 382, "h": 50, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 45, "y": 925, "w": 65, "h": 8, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 145, "y": 925, "w": 80, "h": 8, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 215, "y": 925, "w": 8, "h": 70, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 270, "y": 925, "w": 110, "h": 65, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 140, "h": 120, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 370, "y": 880, "w": 15, "h": 50, "id": "exit"}
         ]
 }

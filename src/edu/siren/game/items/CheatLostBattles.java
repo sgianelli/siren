@@ -1,20 +1,19 @@
 package edu.siren.game.items;
 
+import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.profile.Profile;
+import edu.siren.gui.Image;
 
 public class CheatLostBattles  extends Item {
 	private int power = 1;
 	public CheatLostBattles(Profile profile) {
 		super("Cheatyface", profile);
-		// TODO Auto-generated constructor stub
+		this.setIcon("res/game/maps/assets/item-shop/cheat-win.png");
 	}
 
-
-
-	@Override
-	public void use() {
-		getProfile().getGameStats().setAttack(getProfile().getGameStats().getAttack() + this.power);
-		
+	public void use(Player player, BattleManager state) {
+	    player.attack += this.power;
 	}
 
 }

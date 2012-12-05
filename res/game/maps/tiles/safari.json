@@ -8,7 +8,7 @@
             "w": 10,
             "x": 468,
             "y": 52,
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "id": "exit"
         },
         {
@@ -35,7 +35,7 @@
             "h": 431, 
             "y": 0, 
             "w": 20, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": -20
         }, 
         {
@@ -43,7 +43,7 @@
             "h": 20, 
             "y": -20, 
             "w": 490, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 0
         }, 
         {
@@ -51,7 +51,7 @@
             "h": 431, 
             "y": 0, 
             "w": 20, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 490, 
         }, 
         {
@@ -59,7 +59,7 @@
             "h": 20, 
             "y": 471, 
             "w": 490, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 0,
         }, 
         {
@@ -70,7 +70,7 @@
             "h": 12, 
             "y": 31, 
             "w": 126, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 39
         }, 
         {
@@ -78,7 +78,7 @@
             "h": 136, 
             "y": 43, 
             "w": 12, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 9
         }, 
         {
@@ -86,7 +86,7 @@
             "h": 86, 
             "y": 181, 
             "w": 12, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 25
         }, 
         {
@@ -94,7 +94,7 @@
             "h": 12, 
             "y": 15, 
             "w": 92, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 169
         }, 
         {
@@ -102,7 +102,7 @@
             "h": 12, 
             "y": 399, 
             "w": 180, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 129
         }, 
         {
@@ -110,7 +110,7 @@
             "h": 12, 
             "y": 31, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 265
         }, 
         {
@@ -118,7 +118,7 @@
             "h": 60, 
             "y": 46, 
             "w": 12, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 297
         }, 
         {
@@ -126,7 +126,7 @@
             "h": 12, 
             "y": 14, 
             "w": 60, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 297
         }, 
         {
@@ -134,7 +134,7 @@
             "h": 12, 
             "y": 31, 
             "w": 126, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 359
         }, 
         {
@@ -142,7 +142,7 @@
             "h": 334, 
             "y": 79, 
             "w": 12, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 473
         }, 
         {
@@ -150,7 +150,7 @@
             "h": 200, 
             "y": 207, 
             "w": 12, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 393
         }, 
         {
@@ -161,7 +161,7 @@
             "h": 28, 
             "y": 15, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 9
         }, 
         {
@@ -169,7 +169,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 457
         }, 
         {
@@ -177,7 +177,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 393
         }, 
         {
@@ -185,7 +185,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 361
         }, 
         {
@@ -193,7 +193,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 297
         }, 
         {
@@ -201,7 +201,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 105
         }, 
         {
@@ -209,7 +209,7 @@
             "h": 28, 
             "y": 399, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 9
         }, 
         {
@@ -217,7 +217,7 @@
             "h": 28, 
             "y": 175, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 9
         }, 
         {
@@ -228,7 +228,7 @@
             "h": 30, 
             "y": 265, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 24
         }, 
         {
@@ -236,7 +236,7 @@
             "h": 30, 
             "y": 297, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 24
         }, 
         {
@@ -244,7 +244,7 @@
             "h": 30, 
             "y": 331, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 24
         }, 
         {
@@ -252,7 +252,7 @@
             "h": 30, 
             "y": 365, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 24
         }, 
         {
@@ -260,7 +260,7 @@
             "h": 30, 
             "y": 365, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 104
         }, 
         {
@@ -268,7 +268,7 @@
             "h": 30, 
             "y": 331, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 104
         }, 
         {
@@ -279,7 +279,7 @@
             "h": 14, 
             "y": 109, 
             "w": 172, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 123
         }, 
         {
@@ -287,7 +287,7 @@
             "h": 14, 
             "y": 109, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 71
         }, 
         {
@@ -295,7 +295,7 @@
             "h": 64, 
             "y": 109, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 71
         }, 
         {
@@ -303,7 +303,7 @@
             "h": 4, 
             "y": 169, 
             "w": 172, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 71
         }, 
         {
@@ -311,7 +311,7 @@
             "h": 114, 
             "y": 169, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 231
         }, 
         {
@@ -319,7 +319,7 @@
             "h": 14, 
             "y": 269, 
             "w": 66, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 167
         }, 
         {
@@ -327,7 +327,7 @@
             "h": 64, 
             "y": 269, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 167
         }, 
         {
@@ -335,7 +335,7 @@
             "h": 4, 
             "y": 329, 
             "w": 128, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 167
         }, 
         {
@@ -343,7 +343,7 @@
             "h": 126, 
             "y": 203, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 281
         }, 
         {
@@ -351,7 +351,7 @@
             "h": 4, 
             "y": 203, 
             "w": 110, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 281
         }, 
         {
@@ -359,7 +359,7 @@
             "h": 56, 
             "y": 147, 
             "w": 14, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 377
         }, 
         {
@@ -367,7 +367,7 @@
             "h": 14, 
             "y": 142, 
             "w": 60, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 279
         }, 
         {
@@ -375,7 +375,7 @@
             "h": 42, 
             "y": 111, 
             "w": 16, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 279
         }, 
         {
@@ -383,7 +383,7 @@
             "h": 14, 
             "y": 142, 
             "w": 28, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 363
         }, 
         {
@@ -394,7 +394,7 @@
             "h": 30, 
             "y": 365, 
             "w": 60, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 41
         }, 
         {
@@ -402,7 +402,7 @@
             "h": 30, 
             "y": 237, 
             "w": 60, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 169
         }, 
         {
@@ -413,7 +413,7 @@
             "h": 62, 
             "y": 205, 
             "w": 124, 
-            "tile": "res/tests/img/fill-colored.png", 
+            "tile": "res/tests/img/fill.png", 
             "x": 41
         }
     ]

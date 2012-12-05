@@ -2,6 +2,8 @@ package edu.siren.game.items;
 
 import java.io.Serializable;
 
+import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.profile.Profile;
 import edu.siren.gui.Image;
 
@@ -17,7 +19,7 @@ public abstract class Item implements Serializable {
 	private String name;
 	
 	// Icon of the item
-	private Image icon;
+	private String icon;
 	
 	// The Profile that owns the Item
 	private Profile profile;
@@ -31,7 +33,6 @@ public abstract class Item implements Serializable {
 	 * Use the Item for the owner of the item.
 	 * 
 	 */
-	public abstract void use();
 
 	/**
 	 * @return the name
@@ -50,14 +51,14 @@ public abstract class Item implements Serializable {
 	/**
 	 * @return the icon
 	 */
-	public Image getIcon() {
+	public String getIcon() {
 		return icon;
 	}
 
 	/**
 	 * @param icon the icon to set
 	 */
-	public void setIcon(Image icon) {
+	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 
@@ -74,6 +75,7 @@ public abstract class Item implements Serializable {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
-	
+
+    public abstract void use(Player player, BattleManager manager);
 	
 }

@@ -1,6 +1,9 @@
 package edu.siren.game.items;
 
+import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.profile.Profile;
+import edu.siren.gui.Image;
 
 public class CheatWonBattles  extends Item {
 	
@@ -8,15 +11,11 @@ public class CheatWonBattles  extends Item {
 	
 	public CheatWonBattles(Profile profile) {
 		super("Cheatyface", profile);
-		// TODO Auto-generated constructor stub
+		this.setIcon("res/game/maps/assets/item-shop/cheat-win.png");
 	}
 
-
-
-	@Override
-	public void use() {
-		// TODO Auto-generated method stub
-		
+	public void use(Player player, BattleManager state) {
+	    player.attack += this.power;
 	}
 
 }

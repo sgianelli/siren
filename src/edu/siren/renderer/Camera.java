@@ -7,6 +7,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 /**
  * The Camera object defines a world viewport. It must be bound to a shader
@@ -20,7 +21,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class Camera {
     public boolean enable = true, forceUpdate = false;
-    public Vector3f hsv = new Vector3f(1.0f, 1.0f, 1.0f);
+    public Vector4f hsv = new Vector4f(0.0f, 0.0f, 1.0f, 0.0f);
     public Matrix4f position = new Matrix4f();
     public Matrix4f projection = new Matrix4f();
     public Matrix4f scale = new Matrix4f();

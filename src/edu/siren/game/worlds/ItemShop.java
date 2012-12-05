@@ -43,6 +43,8 @@ public class ItemShop extends World {
     
     public void guiDraw() {
         try {
+            if (tempMetaArray.size() == 0)
+                return;
             if (!mouseDown && Keyboard.isKeyDown(Keyboard.KEY_E)) {
                 mouseDown = true;
                 int coins = Profile.active.getGameStats().getCoins();

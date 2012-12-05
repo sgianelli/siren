@@ -1,7 +1,11 @@
 package edu.siren.game.gui;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.lwjgl.input.Mouse;
 
@@ -9,6 +13,9 @@ import edu.siren.core.tile.Tile;
 import edu.siren.game.Player;
 import edu.siren.game.battle.BattleManager;
 import edu.siren.game.battle.Dice;
+import edu.siren.game.items.Item;
+import edu.siren.game.profile.GameStats;
+import edu.siren.game.profile.Profile;
 import edu.siren.gui.Element;
 import edu.siren.gui.ElementEvent;
 import edu.siren.gui.Gui;
@@ -28,6 +35,8 @@ public class BattleScreen implements Gui {
     public Image overlayTile;
     private Player lastMember;
     public int dieSize = 16;
+    private Map<String, Image> iconSet = new HashMap<String, Image>();
+    public Player activePlayer;
 	
 	/**
 	 * Constructor to initialize the Menu
@@ -69,6 +78,7 @@ public class BattleScreen implements Gui {
 
     public void showPossibleActions(final Player member) {
         try {
+            activePlayer = member;
             lastMember = member;
             gui.elements.clear();
             window.children.clear();
@@ -320,6 +330,68 @@ public class BattleScreen implements Gui {
                 });
                 window.add(useitemhover);
             }            
+            
+            // list of available items to use
+            {
+                final Window itemwin = new Window("items");
+                final GameStats gs = Profile.active.getGameStats();
+                itemwin.onDraw(new ElementEvent() {
+                    public Set<String> seen = new HashSet<String>();
+                    public Map<String, Integer> counter = new HashMap<String, Integer>();
+                    public int lastCount = 0;
+                    public boolean event(Element element) {
+                        if (gs.getItems().size() == lastCount)
+                            return false;
+                        int x = 4;
+                        seen = new HashSet<String>();
+                        counter = new HashMap<String, Integer>();
+                        lastCount = gs.getItems().size();
+                        itemwin.children.clear();
+                        for (final Item item : gs.getItems()) {
+                            String src = item.getIcon();
+                            if (seen.contains(src)) continue;
+                            seen.add(src);
+                            Image icon = iconSet.get(src);
+                            if (icon == null) {
+                                icon = Image.nothrow(src);
+                                icon.draggable(true);
+                                icon.onDragging(new ElementEvent() {
+                                    public boolean event(Element element) {
+                                        battleManager.mouseDown = true;
+                                        return false;
+                                    }
+                                });
+                                icon.onDragEnd(new ElementEvent() {
+                                    public boolean event(Element element) {
+                                        battleManager.mouseDown = false;
+                                        for (Player player : battleManager.active.players) {
+                                            if (player.getRect().contains(element.x(), element.y())) {
+                                                System.out.println("Using " + item.getName() + " on " + player.name);
+                                                item.use(player, battleManager);
+                                                Profile.active.getGameStats().getItems().remove(item);
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                });
+                            }
+                            icon.imageState.hoverTime = 100.0f;
+                            counter.put(src, 1);
+                            icon.position(x, 8);
+                            if (x > 110 && x < 395) {
+                                x += 285;
+                            } else {
+                                x += icon.w() + 10;
+                            }
+                            icon.titleText("" + counter.get(src));
+                            element.add(icon);
+                        }
+                        return false;
+                    }
+                });
+                
+                gui.add(itemwin);
+            }
             
             // helphover
             {

@@ -22,7 +22,7 @@ import edu.siren.renderer.Shader;
 public class BattleManager {
     public Team red, redFull, blue, blueFull;
     public Team active, other;
-    private boolean mouseDown = false;
+    public boolean mouseDown = false;
     public BattleScreen battleScreen = null;
     public World world = null;
     public World battleWorld = null;
@@ -80,11 +80,14 @@ public class BattleManager {
      * Attempt to select a team member at x, y
      */
     public Player select(Team team, int x, int y) {
+        Player returned = null;
         for (Player player : team.players) {
-            if (player.moves > 0 && player.getRect().contains(x, y))
-                return player;
+            if (player.moves > 0 && player.getRect().contains(x, y)) {
+                returned = player;
+                break;
+            }
         }
-        return null;
+        return returned;
     }
     
     /**
@@ -249,6 +252,36 @@ public class BattleManager {
         boolean click = Mouse.isButtonDown(0);
         Random random = new Random();
         
+        for (int i = 0; i < red.players.size(); i++) {
+            Player member = red.players.get(i);
+
+            if (member.health <= 0) {
+                member.remove();
+                red.players.remove(i--);
+                continue;
+            }
+        }
+        
+        if (red.players.size() <= 0) {
+            System.out.println("Game is over");
+            close();
+        }
+        
+        for (int i = 0; i < blue.players.size(); i++) {
+            Player member = blue.players.get(i);
+
+            if (member.health <= 0) {
+                member.remove();
+                blue.players.remove(i--);
+                continue;
+            }
+        }
+        
+        if (blue.players.size() <= 0) {
+            System.out.println("Game is over");
+            close();
+        }
+        
         boolean valid = false;
         for (int i = 0; i < active.players.size(); i++) {
             Player member = active.players.get(i);
@@ -290,6 +323,9 @@ public class BattleManager {
             System.out.println("Game is over");
             close();
         }
+        
+        if (battleScreen.activePlayer != null && battleScreen.activePlayer.moves == 0)
+            battleScreen.clear();
         
         if (!valid) {
             battleScreen.clear();

@@ -1,6 +1,7 @@
 package edu.siren.gui;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import org.lwjgl.input.Mouse;
 
@@ -8,25 +9,41 @@ import edu.siren.core.geom.Rectangle;
 import edu.siren.renderer.Font;
 import edu.siren.renderer.IndexVertexBuffer;
 
-public class Image extends Element {
-    class ImageState {
+public class Image extends Element implements Serializable {
+    public class ImageState implements Serializable {
         public String titleText = "";
+        public String pngFile = "";
         public double hoverDt = 0.0;
         public double titleTime = 2000.0;
         public double hoverTime = 0.0;
         public float titleX = 0.0f, titleY = 0.0f;
-        public IndexVertexBuffer titleBuffer;
+        public transient IndexVertexBuffer titleBuffer;
         public Font font;
         public int lastX = 0;
         public int lastY = 0;
     };
+    
+    public Image clone() {
+        Image image = Image.nothrow(imageState.pngFile);
+        return image;
+    }
  
     
-    ImageState imageState;
+    public ImageState imageState;
     
     public Image(String pngFile) throws IOException {
         this(pngFile, null);
     }        
+    
+    public static Image nothrow(String pngfile) {
+        Image image = null;
+        try {
+            image = new Image(pngfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
     
     /**
      * Creates a new image from `png` that uses `titleText` as the
@@ -40,6 +57,7 @@ public class Image extends Element {
         titleText(title);
         this.background(pngFile);
         this.imageState.hoverDt = 0.0f;
+        this.imageState.pngFile = pngFile;
         
         Rectangle bbox = this.state.background.getRect();
         this.dimensions(bbox.width, bbox.height);

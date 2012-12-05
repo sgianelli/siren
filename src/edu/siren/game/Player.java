@@ -18,6 +18,7 @@ public class Player extends Actor {
     public ArrayList<Tile> possibleMoveOverlay = new ArrayList<Tile>();
     public int maxMoves = 4;
     public boolean drawPossibleMoveOverlay = false;
+    public boolean selected = false;
     public float px, py;
     public int battleStatus = -2;
     

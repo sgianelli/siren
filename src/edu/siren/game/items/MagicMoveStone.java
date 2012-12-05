@@ -1,7 +1,10 @@
 package edu.siren.game.items;
 
+import edu.siren.game.Player;
+import edu.siren.game.battle.BattleManager;
 import edu.siren.game.profile.GameStats;
 import edu.siren.game.profile.Profile;
+import edu.siren.gui.Image;
 
 public class MagicMoveStone extends Item {
 
@@ -14,11 +17,9 @@ public class MagicMoveStone extends Item {
 	}
 	
 	public MagicMoveStone(Profile profile, int movesAllowed) {
-		
 		// Call the Super 
 		super("Magic Move Stone", profile);
-		
-		
+		this.setIcon("res/game/maps/assets/item-shop/magic-stone.png");
 	}
 
 	/**
@@ -35,16 +36,10 @@ public class MagicMoveStone extends Item {
 		this.movesAllowed = movesAllowed;
 	}
 
-	@Override
-	public void use() {
-		
-		// Add Moves Allowed to the Game Stats
-		int movesAllowed = getProfile().getGameStats().getMovesAllowed();
-		
+    public void use(Player player, BattleManager state) {
 		// Increase the Moves Allowed
-		getProfile().getGameStats().setMovesAllowed(movesAllowed + this.movesAllowed);
-		
-		
+		player.maxMoves += 1;
+		player.moves = player.maxMoves;
 	}
 
 	
