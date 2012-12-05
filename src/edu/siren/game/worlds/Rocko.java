@@ -48,7 +48,7 @@ public class Rocko extends World {
     
     public void addPlayer(Player player) {
     	super.addPlayer(player);
-    	player.setPositionCenter(180, 80);
+    	player.setPositionCenter(176, 116);
     }
     
     public void create() throws IOException
