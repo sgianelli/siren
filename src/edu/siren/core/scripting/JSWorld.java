@@ -63,6 +63,21 @@ public class JSWorld {
         return null;
     }
     
+    /**
+     * Add to a temporary array that is cleared each frame.
+     */
+    public void addMetaArray(String what) {
+        world.tempMetaArray.add(what);
+    }
+    
+    public void exit() {
+        world.gameOver = true;
+    }
+    
+    public void printFixed(String str, float size, float x, float y) {
+        world.printFixed(str, size, x, y);
+    }
+    
     public void music(String name) {
         if (musicThread != null) {
             musicThread.interrupt();
@@ -139,10 +154,11 @@ public class JSWorld {
             player.controllable = false;
             player.lastMovement = 1;
             player.drawStatus = true;
-            player.collisionDetection = true;
+            player.collisionDetection = false;
             player.snapToGrid(32, 32);
             player.setPosition(x + 16, y + 16);
             battleWorld.addEntity(player);
+            battleWorld.solids.removeLast();
             player.createMoveOverlay();
             x += 32;
         }
@@ -156,12 +172,13 @@ public class JSWorld {
             player.snapToGrid(32, 32);
             player.lastMovement = 2;
             player.moves = 3;
-            player.collisionDetection = true;
+            player.collisionDetection = false;
             player.follow = false;
             player.drawStatus = true;
             player.controllable = false;
             player.setPosition(x + 8, y + 8);
             battleWorld.addEntity(player);
+            battleWorld.solids.removeLast();
             player.createMoveOverlay();
             
             x += 32;

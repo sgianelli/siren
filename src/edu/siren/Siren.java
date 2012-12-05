@@ -62,8 +62,6 @@ public class Siren {
 	}
 	
 	public void play() throws IOException, LWJGLException {
-		Thread t = AudioUtil.playBackgroundMusic("res/game/sound/balamb.ogg"); 
-		
 		// Create Splash
 		Title splashScreen = new Title(screen);
 
@@ -84,8 +82,6 @@ public class Siren {
 			// Get the Profile
 			currentProfile = gl.getProfile();
 
-			t.interrupt();
-			
 			// Play Game 
 			showGame();
 			

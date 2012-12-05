@@ -26,7 +26,7 @@ public abstract class Entity implements Drawable {
     protected JSONObject json;
     protected EntityStats entityStats = new EntityStats();
     public Sprite sprite = new Sprite();
-    protected World world = null;
+    public World world = null;
     protected boolean move = true;
     protected int preventMovement = -1;
     public int lastMovement = 0;
