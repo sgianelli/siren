@@ -18,7 +18,7 @@ import edu.siren.core.geom.Rectangle;
 public class Font implements Serializable {
     private static final long serialVersionUID = -1463331519066008044L;
     public Rectangle bounds = new Rectangle(0, 0, 0, 0);
-    private IndexVertexBuffer[] ivbsCache = null;
+    public IndexVertexBuffer[] ivbsCache = null;
     public TexturePNG texture;
     private String lastPrinted = null;
     public int squareW = 0;

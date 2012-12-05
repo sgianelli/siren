@@ -63,6 +63,17 @@ public class JSWorld {
         return null;
     }
     
+    /**
+     * Add to a temporary array that is cleared each frame.
+     */
+    public void addMetaArray(String what) {
+        world.tempMetaArray.add(what);
+    }
+    
+    public void printFixed(String str, float size, float x, float y) {
+        world.printFixed(str, size, x, y);
+    }
+    
     public void music(String name) {
         if (musicThread != null) {
             musicThread.interrupt();

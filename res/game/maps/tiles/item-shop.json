@@ -1,0 +1,54 @@
+{
+    "layer1": [
+        {"comment": "Initial world"},
+        {"tile": "res/game/maps/assets/item-shop/item-shop.png", "x": 0, "y": 0},
+        {"tile": "res/tests/img/fill.png", "x": 210, "y": 190, "w": 18, "h": 73, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 280, "y": 190, "w": 18, "h": 73, "solid": true},
+
+        {"comment": "Collision meshes"},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 32, "h": 448, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 512, "y": 0, "w": 32, "h": 448, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 0, "w": 512, "h": 32, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 0, "y": 448, "w": 512, "h": 32, "solid": true},
+
+        {"comment": "Potions"},
+        {"tile": "res/game/maps/assets/item-shop/health-potion.png", "x": 90, "y": 360, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 65, "y": 325, "w": 60, "h": 15, "id": "health"},
+
+        {"tile": "res/game/maps/assets/item-shop/attack-potion.png", "x": 170, "y": 360, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 142, "y": 325, "w": 60, "h": 15, "id": "attack"},
+
+        {"tile": "res/game/maps/assets/item-shop/defense-potion.png", "x": 250, "y": 360, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 220, "y": 325, "w": 60, "h": 15, "id": "defense"},
+
+        {"tile": "res/game/maps/assets/item-shop/exp-potion.png", "x": 330, "y": 360, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 300, "y": 325, "w": 60, "h": 15, "id": "exp"},
+
+        {"tile": "res/game/maps/assets/item-shop/transformation-potion.png", "x": 410, "y": 360, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 380, "y": 325, "w": 60, "h": 15, "id": "transformation"},
+
+        {"comment": "Exotics"},
+        {"tile": "res/game/maps/assets/item-shop/increase-moves.png", "x": 80, "y": 200, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 65, "y": 172, "w": 60, "h": 15, "id": "increase"},
+
+        {"tile": "res/game/maps/assets/item-shop/rock.png", "x": 160, "y": 210, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 142, "y": 172, "w": 60, "h": 15, "id": "rock"},
+
+        {"tile": "res/game/maps/assets/item-shop/special-potion.png", "x": 325, "y": 210, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 300, "y": 172, "w": 60, "h": 15, "id": "special"},
+
+        {"tile": "res/game/maps/assets/item-shop/cheat-win.png", "x": 390, "y": 210, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 380, "y": 172, "w": 60, "h": 15, "id": "cheat"},
+
+        {"comment": "Really Exotic"},
+        {"tile": "res/game/maps/assets/item-shop/magic-stone.png", "x": 80, "y": 70, "solid": true},
+        {"tile": "res/tests/img/fill.png", "x": 65, "y": 30, "w": 60, "h": 15, "id": "magic-stone"},
+
+        {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 160, "y": 70, "solid": true},
+        {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 235, "y": 70, "solid": true},
+        {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 315, "y": 70, "solid": true},
+        {"tile": "res/game/maps/assets/item-shop/out-of-stock.png", "x": 393, "y": 70, "solid": true},
+
+
+    ]
+}

@@ -27,6 +27,7 @@ import edu.siren.game.entity.Entity;
 import edu.siren.gui.ElementEvent;
 import edu.siren.renderer.Camera;
 import edu.siren.renderer.Font;
+import edu.siren.renderer.IndexVertexBuffer;
 import edu.siren.renderer.Perspective2D;
 import edu.siren.renderer.Shader;
 
@@ -75,6 +76,10 @@ public abstract class World implements Serializable {
     public World battleWorld = null;
 
     public boolean gameOver = false;
+
+    public ArrayList<String> tempMetaArray = new ArrayList<String>();
+
+    private ArrayList<IndexVertexBuffer[]> textOverlays = new ArrayList<IndexVertexBuffer[]>();
     
     /**
      * Constructs a new world of a given width and height. Note that this
@@ -228,6 +233,12 @@ public abstract class World implements Serializable {
         
         grid.draw();
         
+        for (IndexVertexBuffer[] ivbs : textOverlays) {
+            for (int i = 0; i < ivbs.length; i++) {
+                ivbs[i].draw();
+            }
+        }
+        
         for (Entity entity : entities) {
         	entity.draw();
         }
@@ -254,6 +265,7 @@ public abstract class World implements Serializable {
         drawFBO();
         
         // Initial pass for the content
+        tempMetaArray.clear();
         for (Entity entity : entities) {
             entity.think();
         }
@@ -381,5 +393,10 @@ public abstract class World implements Serializable {
 
     public boolean inBattle() {
         return battleWorld != null;
+    }
+
+    public void printFixed(String str, float size, float x, float y) {
+        font.print(str, size, x, y);
+        textOverlays.add(font.ivbsCache);
     }
 }
